@@ -20,6 +20,7 @@ AWS_BEARER_TOKEN_BEDROCK=<bedrock api key>
 CLAUDE_CODE_USE_BEDROCK=1
 CLAUDE_CODE_MAX_OUTPUT_TOKENS=16000
 MAX_THINKING_TOKENS=1024
+CONTEXT7_API_KEY=<optional, you can get from https://context7.com/dashboard>
 ```
 
 ### 3. Run the setup script to create all necessary AWS resources:
@@ -59,7 +60,7 @@ uv run agentcore launch
 ## Invoke AgentCore Runtime
 - Run below command to test the agentcore, you will find a website url in the result.  
 ```bash
-uv run agentcore invoke '{"model":"us.anthropic.claude-3-7-sonnet-20250219-v1:0", "prompt": "create a interactive learning website to introduce Transformer in AI, targeting middle school students","system":"You are a web application develop. build and delopy the web application to aws elastic beanstalk using MCP tools. You working dir is /app/docs/"}' 
+uv run agentcore invoke '{"model":"us.anthropic.claude-3-7-sonnet-20250219-v1:0", "prompt": "create a interactive learning website to introduce Transformer in AI, targeting middle school students","system":"You are a web application develop. build and delopy the web application to aws elastic beanstalk using MCP tools. You working dir is /app/workspace/"}' 
 ```
 
 - agentcore response output 

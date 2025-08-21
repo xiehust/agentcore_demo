@@ -102,7 +102,7 @@ def get_aws_account_id():
         print(f"Error getting AWS account ID: {e}")
         return None
 
-def get_mcp_servers():
+def get_prebuilt_mcp_servers():
     """Get MCP servers configuration with dynamic S3 bucket creation."""
     # Get region from environment variable, default to us-west-2
     region = os.getenv('AWS_DEFAULT_REGION', 'us-west-2')
@@ -115,7 +115,7 @@ def get_mcp_servers():
     # Generate bucket name
     bucket_name = f"eb-deploy-{region}-{account_id}"
     
-    return {
+    servers = {
         "elastic_beanstalk": {
             "command": "uv",
             "args": [
@@ -128,20 +128,38 @@ def get_mcp_servers():
             }
         }
     }
+    
+    if ctx7_key:= os.getenv('CONTEXT7_API_KEY'):
+        servers = { **servers, 
+                     "context7": {
+                         "type": "http",
+                        "url": "https://mcp.context7.com/mcp",
+                        "headers": {
+                            "CONTEXT7_API_KEY": ctx7_key
+                        }
+                        }
+                   }
+    return servers
 
-async def agent_task(prompt,system=None,model=None):
+#"Read", "Write","TodoWrite","Task","LS","Bash","Edit","Grep","Glob"
+
+async def agent_task(prompt,system=None,model=None,mcp_configs=None,allowed_tools=[]):
     try:
         # Get MCP servers configuration with dynamic bucket creation
-        mcp_servers = get_mcp_servers()
+        mcp_servers = get_prebuilt_mcp_servers()
+        
+        if mcp_configs and 'mcpServers' in mcp_configs:
+            mcp_servers.update(mcp_configs)
         
         options=ClaudeCodeOptions(
             model= model if model else "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
             mcp_servers=mcp_servers,
-            allowed_tools=["mcp__elastic_beanstalk", "Read", "Write","TodoWrite","Task","LS","Bash","Edit","Grep","Glob"],
-            permission_mode='acceptEdits',
-            append_system_prompt=system if system else "You are a web application develop. build and delopy the web application to aws elastic beanstalk.",
+            allowed_tools=["mcp__elastic_beanstalk", "mcp__context7"]+allowed_tools,
+            disallowed_tools=["Bash(rm*)"],
+            # permission_mode='acceptEdits',
+            append_system_prompt=system if system else "",
             max_turns=100,
-            cwd="/app/docs"
+            cwd="/app/workspace"
         )
         # Monitor tool usage and responses
         async for message in query(prompt=prompt,options=options):
@@ -174,10 +192,16 @@ async def agent_invocation(payload):
         "prompt", 
         "No prompt found in input, please guide customer to create a JSON payload with prompt key"
     )
-    system_message = payload.get("system", None)
-    model = payload.get("model", None)
+    system_message = payload.get("system")
+    model = payload.get("model")
+    mcp_configs = payload.get("mcp_configs")
+    allowed_tools = payload.get("allowed_tools",[])
     # Create and start the agent task
-    task = asyncio.create_task(agent_task(prompt=user_message,system=system_message,model=model))
+    task = asyncio.create_task(agent_task(prompt=user_message,
+                                          system=system_message,
+                                          model=model,
+                                          mcp_configs=mcp_configs,
+                                          allowed_tools=allowed_tools))
     
     async def stream_with_task():
         """Stream results while ensuring task completion."""

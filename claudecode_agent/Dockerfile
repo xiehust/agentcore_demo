@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 RUN npm install -g @anthropic-ai/claude-code
 # Copy entire project (respecting .dockerignore)
 COPY . .
-RUN mkdir -p docs
+RUN mkdir -p workspace
 RUN uv sync 
 
 # Signal that this is running in Docker for host binding logic
