@@ -63,9 +63,9 @@ uv run agentcore invoke '{"model":"us.anthropic.claude-3-7-sonnet-20250219-v1:0"
 ```
 
 - agentcore response output 
-[image](assets/image1.png)
+![image](assets/image1.png)
 
 - visit the website url to see the result
-[image](assets/image2.png)
+![image](assets/image2.png)
 
 - for more details about invoke agentcore runtime, please refer to [Invoke an AgentCore Runtime agent](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-invoke-agent.html)
