@@ -1,0 +1,14 @@
+[project]
+name = "claudecode-sdk"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3>=1.40.13",
+    "claude-code-sdk>=0.0.20",
+    "mcp>=1.13.0",
+    "bedrock-agentcore>=0.1.2",
+    "bedrock-agentcore-starter-toolkit>=0.1.6",
+    "python-dotenv>=1.0.1"
+]

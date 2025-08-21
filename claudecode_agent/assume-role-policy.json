@@ -1,0 +1,22 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "AssumeRolePolicy",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "bedrock-agentcore.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole",
+        "Condition": {
+          "StringEquals": {
+            "aws:SourceAccount": "434444145045"
+          },
+          "ArnLike": {
+            "aws:SourceArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:*"
+          }
+        }
+      }
+    ]
+  }
+  

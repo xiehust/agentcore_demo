@@ -1,0 +1,31 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+*.so
+.Python
+*.manifest
+*.spec
+.bedrock_agentcore.yaml
+# Virtual environments
+.venv
+venv/
+ENV/
+env/
+.env
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local development
+.python-version
+.coverage
+htmlcov/
+.pytest_cache/
+.ruff_cache/
