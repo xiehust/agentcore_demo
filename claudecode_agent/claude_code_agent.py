@@ -141,7 +141,6 @@ def get_prebuilt_mcp_servers():
                    }
     return servers
 
-#"Read", "Write","TodoWrite","Task","LS","Bash","Edit","Grep","Glob"
 
 async def agent_task(prompt,system=None,model=None,mcp_configs=None,allowed_tools=[]):
     try:
@@ -154,7 +153,7 @@ async def agent_task(prompt,system=None,model=None,mcp_configs=None,allowed_tool
         options=ClaudeCodeOptions(
             model= model if model else "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
             mcp_servers=mcp_servers,
-            allowed_tools=["mcp__elastic_beanstalk", "mcp__context7"]+allowed_tools,
+            allowed_tools=["mcp__elastic_beanstalk", "mcp__context7","Read", "Write","TodoWrite","Task","LS","Bash","Edit","Grep","Glob"]+allowed_tools,
             disallowed_tools=["Bash(rm*)"],
             # permission_mode='acceptEdits',
             append_system_prompt=system if system else "",
