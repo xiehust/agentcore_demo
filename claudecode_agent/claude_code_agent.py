@@ -154,7 +154,7 @@ async def agent_task(prompt,system=None,model=None,mcp_configs=None,allowed_tool
             model= model if model else "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
             mcp_servers=mcp_servers,
             allowed_tools=["mcp__elastic_beanstalk", "mcp__context7","Read", "Write","TodoWrite","Task","LS","Bash","Edit","Grep","Glob"]+allowed_tools,
-            disallowed_tools=["Bash(rm*)"],
+            disallowed_tools=["Bash(rm*)","KillBash"],
             # permission_mode='acceptEdits',
             append_system_prompt=system if system else "",
             max_turns=100,
