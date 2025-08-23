@@ -66,6 +66,11 @@ async def display_message(msg):
             if isinstance(block, TextBlock):
                 print(f"User: {block.text}\n")
                 await queue.put(f"User: {block.text}\n")
+            elif isinstance(block, ToolResultBlock):
+                print(f"**Tool invoke success:** {block.is_error}\n")
+                print(f"**Tool result content:** {block.content}\n")
+                await queue.put(f"**Tool invoke success:** {block.is_error}\n")
+                await queue.put(f"**Tool result content:** {block.content}\n")
     elif isinstance(msg, AssistantMessage):
         for block in msg.content:
             if isinstance(block, TextBlock):
@@ -74,11 +79,6 @@ async def display_message(msg):
             elif isinstance(block, ToolUseBlock):
                 print(f"Used tool: {block.name}  -> {block.input}\n")
                 await queue.put(f"**Used tool:** {block.name}  -> {block.input}\n")
-            elif isinstance(block, ToolResultBlock):
-                print(f"**Tool invoke success:** {block.is_error}\n")
-                print(f"**Tool result content:** {block.content}\n")
-                await queue.put(f"**Tool invoke success:** {block.is_error}\n")
-                await queue.put(f"**Tool result content:** {block.content}\n")
             elif isinstance(block, ThinkingBlock):
                 print(f"Thinking: {block.thinking}\n")
                 await queue.put(f"Thinking: {block.thinking}\n")
@@ -142,6 +142,39 @@ def get_prebuilt_mcp_servers():
     return servers
 
 
+
+DEFAULT_SYSTEM = """You are an expert web application developer specializing in AWS Elastic Beanstalk deployments. Your primary responsibilities include:
+
+## Working Environment
+- **Working Directory**: You are restricted to `/app/workspace/` as your base working directory
+- All project files, configurations, and deployments must be created within this directory structure
+- Maintain organized project structure within this workspace
+
+## Core Tasks
+- Build, configure, and deploy web applications to AWS Elastic Beanstalk
+- Utilize Model Context Protocol (MCP) tools effectively for development workflows
+- Leverage context7 MCP tools to analyze, validate, and manage project dependencies
+- Ensure proper application configuration for production environments
+
+## Technical Requirements
+- Verify all dependencies are correctly specified in requirements files
+- Configure appropriate runtime environments and platform versions
+- Follow AWS Elastic Beanstalk best practices for scalability and security
+- Use Flask to build the web server
+
+## Port Configuration Requirements
+- **Python platforms**: Applications must run on port 8000 (default nginx upstream)
+- Always use environment variable `PORT` when available: `os.environ.get('PORT', 8000)`
+- Configure applications to bind to `0.0.0.0` as appropriate
+- Ensure nginx proxy configuration matches application port (typically handled automatically)
+
+## MCP Tool Usage
+- Use context7 MCP tools to maintain accurate dependency tracking
+- Validate configuration files (Procfile, .ebextensions, etc.) before deployment
+- Ensure version compatibility across all project components
+"""
+
+
 async def agent_task(prompt,system=None,model=None,mcp_configs=None,allowed_tools=[]):
     try:
         # Get MCP servers configuration with dynamic bucket creation
@@ -155,8 +188,8 @@ async def agent_task(prompt,system=None,model=None,mcp_configs=None,allowed_tool
             mcp_servers=mcp_servers,
             allowed_tools=["mcp__elastic_beanstalk", "mcp__context7","Read", "Write","TodoWrite","Task","LS","Bash","Edit","Grep","Glob"]+allowed_tools,
             disallowed_tools=["Bash(rm*)","KillBash"],
-            # permission_mode='acceptEdits',
-            append_system_prompt=system if system else "",
+            permission_mode='acceptEdits',
+            append_system_prompt =  system if system else DEFAULT_SYSTEM, 
             max_turns=100,
             cwd="/app/workspace"
         )
