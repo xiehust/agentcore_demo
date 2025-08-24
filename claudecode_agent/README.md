@@ -1,6 +1,8 @@
 # Claude Code AgentCore Runtime Example
 
-A simple example demonstrating how to run Claude Code in AWS AgentCore runtime
+A simple example demonstrating how to run Claude Code in AWS AgentCore runtime  
+
+[See Demo Video](https://mp.weixin.qq.com/s/htcP3VppLcxwusulZGuLFQ)  
 
 ## Setup
 ### 1. Generate an Bedrock API key
