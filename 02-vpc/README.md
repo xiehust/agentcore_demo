@@ -1,6 +1,5 @@
 # A Demo of AgentCore runtime in VPC with Internet Access
-## Setup VPC and VPC endpoints
-### 网络架构描述
+## 1.网络架构描述
 ![](aws_bedrock_agentcore_vpc_architecture.png)
 1. 公有网络
    - 互联网网关 (IGW): 提供与互联网的连接
@@ -63,7 +62,7 @@
 - NAT 网关仅允许出站互联网访问
 
 
-### VPC
+## 2. Setup VPC and VPC endpoints
 1. 创建VPC和Subnets 
 ```bash
 ./setup-vpc.sh
@@ -103,14 +102,14 @@ CloudWatch Logs端点 - 用于日志记录
 
 Bedrock端点 - 用于访问AWS Bedrock运行时服务
 ```
-## 创建IAM execution role
+## 3. 创建IAM execution role
 1. 运行脚本创建role
 ```bash
 ./create_vpc_strands_agent_role.sh
 ```
 这个role将包含BedrockAgentCoreFullAccess, AmazonBedrockFullAccess，ECR等权限用于后续创建runtime
 
-## Create ECR repository and deploy
+## 4. Create ECR repository and deploy
 ### Deploying to ECR
 1. Create an ECR repository:
 ```bash
@@ -132,7 +131,7 @@ aws ecr describe-images --repository-name vpc-strands-agent --region us-west-2
 ```
 
 
-## 部署agent runtime
+## 5.部署agent runtime
 修改`deploy_agent.py`代码中的 subnets为前面脚本创建的2个私有子网，安全组为前面创建的安全组。 
 ```python 
 subnets = ['subnet-xxx', 'subnet-xxx']
@@ -141,12 +140,12 @@ sgs = ['sg-xxx']
 运行`python deploy_agent.py`
 
 
-## 测试 agent runtime
+## 6.测试 agent runtime
 修改`invoke_agent.py`代码中的 agentRuntimeArn 为前面deploy的实际arn。   
 运行`python deploy_agent.py`
 
 
-## 清理VPC资源
+## 7.清理VPC资源
 ```bash
 ./cleanup_vpc.sh
 ```
