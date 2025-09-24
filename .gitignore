@@ -2,10 +2,11 @@
 __pycache__/
 *.py[codz]
 *$py.class
-
+.bedrock_agentcore.yaml
 # C extensions
 *.so
-
+vpc-resources.txt
+vpc-resources.backup.txt
 # Distribution / packaging
 .Python
 build/
