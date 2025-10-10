@@ -3,10 +3,10 @@ import asyncio
 import os
 import boto3
 from botocore.exceptions import ClientError
-from claude_code_sdk import CLINotFoundError, ProcessError,CLIJSONDecodeError,CLIConnectionError
-from claude_code_sdk import (
+from claude_agent_sdk import CLINotFoundError, ProcessError,CLIJSONDecodeError,CLIConnectionError
+from claude_agent_sdk import (
     AssistantMessage,
-    ClaudeCodeOptions,
+    ClaudeAgentOptions,
     ClaudeSDKClient,
     ResultMessage,
     SystemMessage,
@@ -183,14 +183,15 @@ async def agent_task(prompt,system=None,model=None,mcp_configs=None,allowed_tool
         if mcp_configs and 'mcpServers' in mcp_configs:
             mcp_servers.update(mcp_configs)
         
-        options=ClaudeCodeOptions(
-            model= model if model else "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+        options=ClaudeAgentOptions(
+            model= model if model else "us.anthropic.claude-sonnet-4-20250514-v1:0",
             mcp_servers=mcp_servers,
             allowed_tools=["mcp__elastic_beanstalk", "mcp__context7","Read", "Write","TodoWrite","Task","LS","Bash","Edit","Grep","Glob"]+allowed_tools,
             disallowed_tools=["Bash(rm*)","KillBash"],
             permission_mode='acceptEdits',
-            append_system_prompt =  system if system else DEFAULT_SYSTEM, 
+            system_prompt =  system if system else DEFAULT_SYSTEM, 
             max_turns=100,
+            setting_sources=["project"],
             cwd="/app/workspace"
         )
         # Monitor tool usage and responses

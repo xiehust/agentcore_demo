@@ -174,15 +174,16 @@ wheels = [
 ]
 
 [[package]]
-name = "claude-code-sdk"
-version = "0.0.20"
+name = "claude-agent-sdk"
+version = "0.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
+    { name = "mcp" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6b/c3/d40cf8bab3a5c75051914094990cff0a36ad13e4a2fe9ed85dbb4233a225/claude_code_sdk-0.0.20.tar.gz", hash = "sha256:5f9872f105563db8975de48ddc88c948d9c5e1244addca02241d6fcd2a47b3d6", size = 24329, upload-time = "2025-08-11T15:21:26.009Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e6/85/5e0364d8b567375bc5561a5ca30d73db46072573308677e3db1c435dec69/claude_agent_sdk-0.1.1.tar.gz", hash = "sha256:dcb224d4a65699cd9ceaddf4b9f9501606ba4f10d37fa691aff1ab60b9849b65", size = 43941, upload-time = "2025-10-07T00:21:14.018Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/1d/fa06e77d4e7440d2f4998d8375eedc7dbb740d7e552d63f23c8b23661c91/claude_code_sdk-0.0.20-py3-none-any.whl", hash = "sha256:6183771f9663a47e9bda3c4f03e5619f2e41f9272a9e9bd9775bf2537177e4a0", size = 17575, upload-time = "2025-08-11T15:21:24.904Z" },
+    { url = "https://files.pythonhosted.org/packages/bb/17/d18977ef5089064bced8cbf056a4317fc175e986a4a98391fc4121c3cb5b/claude_agent_sdk-0.1.1-py3-none-any.whl", hash = "sha256:4e95ed38786b045c5d42c942d5ce2870cd7e7c4c836cc22b5b9526b1543bfd8a", size = 33672, upload-time = "2025-10-07T00:21:12.717Z" },
 ]
 
 [[package]]
@@ -193,7 +194,7 @@ dependencies = [
     { name = "bedrock-agentcore" },
     { name = "bedrock-agentcore-starter-toolkit" },
     { name = "boto3" },
-    { name = "claude-code-sdk" },
+    { name = "claude-agent-sdk" },
     { name = "mcp" },
     { name = "python-dotenv" },
 ]
@@ -203,7 +204,7 @@ requires-dist = [
     { name = "bedrock-agentcore", specifier = ">=0.1.2" },
     { name = "bedrock-agentcore-starter-toolkit", specifier = ">=0.1.6" },
     { name = "boto3", specifier = ">=1.40.13" },
-    { name = "claude-code-sdk", specifier = ">=0.0.20" },
+    { name = "claude-agent-sdk", specifier = ">=0.1.1" },
     { name = "mcp", specifier = ">=1.13.0" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
 ]

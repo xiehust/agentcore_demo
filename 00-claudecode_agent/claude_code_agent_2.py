@@ -4,10 +4,10 @@ import json
 import os
 import boto3
 from botocore.exceptions import ClientError
-from claude_code_sdk import CLINotFoundError, ProcessError,CLIJSONDecodeError,CLIConnectionError
-from claude_code_sdk import (
+from claude_agent_sdk import CLINotFoundError, ProcessError,CLIJSONDecodeError,CLIConnectionError
+from claude_agent_sdk import (
     AssistantMessage,
-    ClaudeCodeOptions,
+    ClaudeAgentOptions,
     ClaudeSDKClient,
     ResultMessage,
     SystemMessage,
@@ -18,13 +18,16 @@ from claude_code_sdk import (
     UserMessage,
     query
 )
+from utils import  (get_global_server_configs,
+                    get_user_server_configs,
+                    session_lock,
+                    save_user_server_config)
 from pydantic import BaseModel, Field
 from typing import Dict, Any, List, Optional, Literal, AsyncGenerator, Union
 from bedrock_agentcore import BedrockAgentCoreApp
 from data_types import OperationsRequest
 from dotenv import load_dotenv
 import queue
-
 import time
 load_dotenv()
 
@@ -38,7 +41,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = BedrockAgentCoreApp()
-    
+claude_client = None
+cleanup_signal = None
 class StreamingQueue:
     """Simple async stream_queue for streaming responses."""
     
@@ -181,17 +185,19 @@ DEFAULT_SYSTEM = """You are an expert web application developer specializing in 
 - Ensure version compatibility across all project components
 """
 
-async def process_query(prompt,options):
+async def process_query(prompt,claude_client):
     text_started = False
     text_ended = False
     content_block_index = 0
     tool_results_dict ={}
-    async for msg in query(prompt=prompt,options=options):
+    await claude_client.query(prompt)
+    async for msg in claude_client.receive_response():
         # logger.info(msg)
         if isinstance(msg, UserMessage):
             for block in msg.content:
                 if isinstance(block, TextBlock):
-                    print(f"User: {block.text}\n")
+                    # print(f"User: {block.text}\n")
+                    pass
                 elif isinstance(block, ToolResultBlock):
                     toolUseId = block.tool_use_id
                     if toolUseId in tool_results_dict:
@@ -251,7 +257,7 @@ async def process_query(prompt,options):
                     event = {'type': 'block_stop', 'data': {'contentBlockIndex': content_block_index}}
                     await stream_queue.put(event)
                     content_block_index += 1
-                    print(f"Thinking: {block.thinking}\n")
+                    # print(f"Thinking: {block.thinking}\n")
             
         elif isinstance(msg, SystemMessage):
             # Ignore system messages
@@ -262,26 +268,14 @@ async def process_query(prompt,options):
         
     
     
-async def agent_task(prompt,system=None,model=None,mcp_configs=None,allowed_tools=[]):
+async def agent_task(prompt):
+    global claude_client
     try:
-        # Get MCP servers configuration with dynamic bucket creation
-        mcp_servers = get_prebuilt_mcp_servers()
-        
-        if mcp_configs and 'mcpServers' in mcp_configs:
-            mcp_servers.update(mcp_configs)
-        
-        options=ClaudeCodeOptions(
-            model= model if model else "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
-            mcp_servers=mcp_servers,
-            allowed_tools=["mcp__elastic_beanstalk", "mcp__context7","Read", "Write","TodoWrite","Task","LS","Bash","Edit","Grep","Glob"]+allowed_tools,
-            disallowed_tools=["Bash(rm*)","KillBash"],
-            permission_mode='acceptEdits',
-            append_system_prompt =  system if system else DEFAULT_SYSTEM,
-            max_turns=100,
-            # cwd="/app/workspace"
-        )
+        # Ensure Claude client is initialized (but don't create it here)
+        if not claude_client:
+            raise RuntimeError("Claude client not initialized. Call initialize_claude_client first.")
         # Monitor tool usage and responses
-        await process_query(prompt=prompt,options=options)
+        await process_query(prompt=prompt,claude_client=claude_client)
         
     except asyncio.CancelledError:
         logger.info("Agent task was cancelled")
@@ -417,10 +411,87 @@ async def pull_queue_stream(model):
             break
             # return
 
-        
+async def initialize_mcp_servers(user_id: str,mcp_server_ids = []):
+    """初始化用户特有的MCP服务器"""
+    mcp_configs = {}
+    # 获取用户服务器配置（现在是异步方法）
+    total_configs = await get_user_server_configs(user_id)
+    for server_id, config in total_configs.items():
+        if server_id not in mcp_server_ids:
+            continue
+        else:
+            mcp_configs[server_id] = config
+    return mcp_configs
+
+async def cleanup_monitor():
+    """Monitor for cleanup signals and handle disconnect in correct context"""
+    global claude_client, cleanup_signal
+
+    try:
+        while claude_client and cleanup_signal:
+            # Wait for cleanup signal
+            await cleanup_signal.wait()
+
+            if claude_client:
+                try:
+                    await claude_client.disconnect()
+                    logger.info("Client disconnected by cleanup monitor")
+                except Exception as e:
+                    logger.error(f"Cleanup monitor disconnect failed: {e}")
+                finally:
+                    claude_client = None
+                    cleanup_signal = None
+
+            # Exit the monitoring loop after cleanup
+            break
+
+    except asyncio.CancelledError:
+        logger.info("Cleanup monitor cancelled")
+        # Ensure cleanup even if cancelled
+        if claude_client:
+            claude_client = None
+            cleanup_signal = None
+
+async def initialize_claude_client(system=None, model=None, mcp_configs=None, allowed_tools=[]):
+    """Initialize Claude client with given configuration"""
+    global claude_client, cleanup_signal
+
+    # Only create client if it doesn't exist
+    if not claude_client:
+        # Get MCP servers configuration with dynamic bucket creation
+        # mcp_servers = get_prebuilt_mcp_servers()
+        mcp_servers = {}
+        if mcp_configs:
+            mcp_servers.update(mcp_configs)
+
+        options = ClaudeAgentOptions(
+            model=model if model else "us.anthropic.claude-sonnet-4-20250514-v1:0",
+            mcp_servers=mcp_servers,
+            allowed_tools=["TodoWrite","Task","WebFetch","WebSearch"]+allowed_tools,
+            disallowed_tools=["Bash","KillBash","Read","Write","LS","Glob","Grep","NotebookEditCell","Edit","MultiEdit"],
+            permission_mode='acceptEdits',
+            system_prompt=system if system else {"type": "preset", "preset": "claude_code"},
+            max_turns=100,
+            setting_sources=["project"]
+            # cwd="app/workspace"
+        )
+
+        claude_client = ClaudeSDKClient(options)
+        await claude_client.connect()
+
+        # Create cleanup signal for cross-task communication
+        cleanup_signal = asyncio.Event()
+
+        # Start background cleanup monitor in owner task
+        asyncio.create_task(cleanup_monitor())
+
+        logger.info("Claude client initialized and connected with cleanup monitor")
+
+    return claude_client
+
 @app.entrypoint
 async def agent_invocation(payload:OperationsRequest):
-    global current_agent_task
+    global current_agent_task, claude_client, cleanup_signal
     request = OperationsRequest(**payload)
     
     user_id = request.user_id
@@ -431,9 +502,19 @@ async def agent_invocation(payload:OperationsRequest):
     if request.request_type == 'chatcompletion':
         if stream_queue._queue.qsize() > 0 or stream_queue._finished:
             stream_queue.reset()
-            
+
+        server_configs = await initialize_mcp_servers(user_id=user_id,mcp_server_ids=data.mcp_server_ids)
+        logger.info(f"server_configs:{server_configs}")
+
+        allowed_tools = [f"mcp__{mcp_name}" for mcp_name in server_configs.keys()]
+        logger.info(f"allowed_tools:{allowed_tools}")
+
         model = data.model
+        messages = data.messages
         msg = data.messages[-1]
+        system = ""
+        if messages and messages[0].role == 'system':
+            system = messages[0].content if messages[0].content else ""
         if isinstance(msg.content, str):
             prompt = msg.content
         else:
@@ -441,6 +522,9 @@ async def agent_invocation(payload:OperationsRequest):
             if content_item.type == "text":
                 prompt = content_item.text
         if prompt:
+            # Initialize Claude client first (outside of agent_task)
+            await initialize_claude_client(system=system, model=data.model, mcp_configs=server_configs, allowed_tools=allowed_tools)
+
             # Create and start the agent task
             task = asyncio.create_task(agent_task(prompt=prompt))
             current_agent_task = task  # Store reference to current task
@@ -475,6 +559,44 @@ async def agent_invocation(payload:OperationsRequest):
         return {"status": "success", "message": "Stream stop requested"}
     elif request.request_type == 'removehistory':
         logger.info("=====REMOVE HISTORY REQUEST RECEIVED=======")
+
+        # Cancel any running agent tasks first
+        if current_agent_task and not current_agent_task.done():
+            current_agent_task.cancel()
+            try:
+                await asyncio.wait_for(current_agent_task, timeout=3.0)
+            except (asyncio.CancelledError, asyncio.TimeoutError):
+                pass
+
+        if claude_client and cleanup_signal:
+            # Signal cleanup to owner task via cleanup monitor
+            logger.info("Signaling cleanup to owner task")
+            cleanup_signal.set()
+
+            # Wait briefly for cleanup to complete
+            try:
+                # Give the cleanup monitor time to process the signal
+                await asyncio.sleep(0.2)
+
+                # Check if cleanup completed
+                if claude_client is None:
+                    logger.info("Cleanup completed successfully via signal")
+                else:
+                    logger.warning("Cleanup signal sent but client still exists")
+                    # Force cleanup as fallback
+                    claude_client = None
+                    cleanup_signal = None
+            except Exception as e:
+                logger.error(f"Error during signal-based cleanup: {e}")
+                # Force cleanup as fallback
+                claude_client = None
+                cleanup_signal = None
+        elif claude_client:
+            # No cleanup signal available, force cleanup
+            logger.info("No cleanup signal available, forcing cleanup")
+            claude_client = None
+            cleanup_signal = None
+
         return {"status": "success", "message": "Remove history requested"}
         
 

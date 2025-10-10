@@ -24,5 +24,5 @@ ENV CLAUDE_CODE_USE_BEDROCK=1
 EXPOSE 8080
 
 # CMD [".venv/bin/opentelemetry-instrument", ".venv/bin/python3", "src/agentcore_runtime.py"]
-CMD [".venv/bin/python3", "claude_code_agent.py"]
+CMD [".venv/bin/python3", "claude_code_agent_2.py"]
 
