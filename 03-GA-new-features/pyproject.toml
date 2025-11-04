@@ -1,0 +1,19 @@
+[project]
+name = "03-ga-new-features"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bedrock-agentcore>=0.1.7",
+    "bedrock-agentcore-starter-toolkit==0.1.21",
+    "boto3>=1.40.51",
+    "ddgs>=9.6.1",
+    "fastmcp>=2.12.4",
+    "langchain>=1.0.2",
+    "langgraph>=1.0.1",
+    "langgraph-checkpoint-aws>=1.0.0",
+    "pyyaml>=6.0.3",
+    "strands-agents-tools>=0.2.11",
+    "strands-agents[a2a]>=1.12.0",
+]

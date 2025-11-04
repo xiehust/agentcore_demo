@@ -1,0 +1,84 @@
+default_agent: agent_entry
+agents:
+  agent_entry:
+    name: agent_entry_2
+    entrypoint: /home/ubuntu/workspace/agentcore_demo/04-PressureTest/runtime/src/agent_entry.py
+    platform: linux/arm64
+    container_runtime: docker
+    source_path: /home/ubuntu/workspace/agentcore_demo/04-PressureTest/runtime/src
+    aws:
+      execution_role: arn:aws:iam::434444145045:role/AmazonBedrockAgentCoreSDKRuntime-us-west-2-332c3f28d6
+      execution_role_auto_create: false
+      account: '434444145045'
+      region: us-west-2
+      ecr_repository: 434444145045.dkr.ecr.us-west-2.amazonaws.com/bedrock-agentcore-agent_entry
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+        network_mode_config: null
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: agent_entry_2-d7c7qaF16U
+      agent_arn: arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/agent_entry_2-d7c7qaF16U
+      agent_session_id: null
+    codebuild:
+      project_name: bedrock-agentcore-agent_entry-builder
+      execution_role: arn:aws:iam::434444145045:role/AmazonBedrockAgentCoreSDKCodeBuild-us-west-2-332c3f28d6
+      source_bucket: bedrock-agentcore-codebuild-sources-434444145045-us-west-2
+    memory:
+      mode: NO_MEMORY
+      memory_id: null
+      memory_arn: null
+      memory_name: agent_entry_memory
+      event_expiry_days: 30
+      first_invoke_memory_check_done: false
+      was_created_by_toolkit: false
+    authorizer_configuration: 
+      customJWTAuthorizer:
+        discoveryUrl: https://cognito-idp.us-west-2.amazonaws.com/us-west-2_yWlPc2YEj/.well-known/openid-configuration
+        allowedClients:
+        - 771pr2uc6i26rmgkdntbvq41up
+    request_header_configuration: null
+    oauth_configuration: null
+  agent_entry_2:
+    name: agent_entry_2
+    entrypoint: /home/ubuntu/workspace/agentcore_demo/04-PressureTest/runtime/src/agent_entry.py
+    platform: linux/arm64
+    container_runtime: docker
+    source_path: /home/ubuntu/workspace/agentcore_demo/04-PressureTest/runtime/src
+    aws:
+      execution_role: arn:aws:iam::434444145045:role/AmazonBedrockAgentCoreSDKRuntime-us-west-2-332c3f28d6
+      execution_role_auto_create: false
+      account: '434444145045'
+      region: us-west-2
+      ecr_repository: 434444145045.dkr.ecr.us-west-2.amazonaws.com/bedrock-agentcore-agent_entry
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+        network_mode_config: null
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: agent_entry_2-d7c7qaF16U
+      agent_arn: arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/agent_entry_2-d7c7qaF16U
+      agent_session_id: null
+    codebuild:
+      project_name: bedrock-agentcore-agent_entry-builder
+      execution_role: arn:aws:iam::434444145045:role/AmazonBedrockAgentCoreSDKCodeBuild-us-west-2-332c3f28d6
+      source_bucket: bedrock-agentcore-codebuild-sources-434444145045-us-west-2
+    memory:
+      mode: NO_MEMORY
+      memory_id: null
+      memory_arn: null
+      memory_name: agent_entry_memory
+      event_expiry_days: 30
+      first_invoke_memory_check_done: false
+      was_created_by_toolkit: false
+    authorizer_configuration: null
+    request_header_configuration: null
+    oauth_configuration: null
