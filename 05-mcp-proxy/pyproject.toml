@@ -1,0 +1,14 @@
+[project]
+name = "05-mcp-proxy"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bedrock-agentcore>=1.0.6",
+    "bedrock-agentcore-starter-toolkit>=0.1.33",
+    "mcp>=1.21.1",
+    "fastmcp>=2.13.0",
+    "boto3>=1.40.73",
+    "pydantic<2.12"
+]
