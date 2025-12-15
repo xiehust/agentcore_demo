@@ -185,12 +185,12 @@ DEFAULT_SYSTEM = """You are an expert web application developer specializing in 
 - Ensure version compatibility across all project components
 """
 
-async def process_query(prompt,claude_client):
+async def process_query(prompt,claude_client,session_id):
     text_started = False
     text_ended = False
     content_block_index = 0
     tool_results_dict ={}
-    await claude_client.query(prompt)
+    await claude_client.query(prompt=prompt,session_id=session_id)
     async for msg in claude_client.receive_response():
         # logger.info(msg)
         if isinstance(msg, UserMessage):
@@ -268,14 +268,14 @@ async def process_query(prompt,claude_client):
         
     
     
-async def agent_task(prompt):
+async def agent_task(prompt,session_id):
     global claude_client
     try:
         # Ensure Claude client is initialized (but don't create it here)
         if not claude_client:
             raise RuntimeError("Claude client not initialized. Call initialize_claude_client first.")
         # Monitor tool usage and responses
-        await process_query(prompt=prompt,claude_client=claude_client)
+        await process_query(prompt=prompt,claude_client=claude_client,session_id=session_id)
         
     except asyncio.CancelledError:
         logger.info("Agent task was cancelled")
@@ -434,6 +434,7 @@ async def cleanup_monitor():
 
             if claude_client:
                 try:
+                    await claude_client.interrupt()
                     await claude_client.disconnect()
                     logger.info("Client disconnected by cleanup monitor")
                 except Exception as e:
@@ -465,7 +466,7 @@ async def initialize_claude_client(system=None, model=None, mcp_configs=None, al
             mcp_servers.update(mcp_configs)
 
         options = ClaudeAgentOptions(
-            model=model if model else "us.anthropic.claude-sonnet-4-20250514-v1:0",
+            model=model if model else "global.anthropic.claude-sonnet-4-5-20250929-v1:0",
             mcp_servers=mcp_servers,
             allowed_tools=["TodoWrite","Task","WebFetch","WebSearch"]+allowed_tools,
             disallowed_tools=["Bash","KillBash","Read","Write","LS","Glob","Grep","NotebookEditCell","Edit","MultiEdit"],
@@ -526,7 +527,7 @@ async def agent_invocation(payload:OperationsRequest):
             await initialize_claude_client(system=system, model=data.model, mcp_configs=server_configs, allowed_tools=allowed_tools)
 
             # Create and start the agent task
-            task = asyncio.create_task(agent_task(prompt=prompt))
+            task = asyncio.create_task(agent_task(prompt=prompt,session_id=user_id))
             current_agent_task = task  # Store reference to current task
             
             async def stream_with_task():
@@ -534,7 +535,7 @@ async def agent_invocation(payload:OperationsRequest):
                 try:
                     async for item in pull_queue_stream(model):
                         yield item
-                        logger.info(item)
+                        # logger.info(item)
                     await task
                 except asyncio.CancelledError:
                     logger.info("Agent task was cancelled")

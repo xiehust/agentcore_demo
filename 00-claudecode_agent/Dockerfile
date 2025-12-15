@@ -19,6 +19,7 @@ RUN uv sync
 # Signal that this is running in Docker for host binding logic
 ENV DOCKER_CONTAINER=1
 ENV CLAUDE_CODE_USE_BEDROCK=1
+ENV CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
 
 
 EXPOSE 8080
