@@ -1,0 +1,41 @@
+{
+  "name": "MyHarness1",
+  "model": {
+    "provider": "bedrock",
+    "modelId": "global.anthropic.claude-sonnet-4-6"
+  },
+  "tools": [
+    {
+      "type": "agentcore_browser",
+      "name": "browser"
+    },
+    {
+      "type": "agentcore_code_interpreter",
+      "name": "code-interpreter"
+    },
+    {
+      "type": "remote_mcp",
+      "name": "tavily-mcp",
+      "config": {
+        "remoteMcp": {
+          "url": "https://mcp.tavily.com/mcp/?tavilyApiKey=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"
+        }
+      }
+    }
+  ],
+  "skills": [],
+  "memory": {
+    "name": "MyHarness1Memory"
+  },
+  "maxIterations": 12,
+  "maxTokens": 32000,
+  "timeoutSeconds": 300,
+  "truncation": {
+    "strategy": "sliding_window"
+  },
+  "lifecycleConfig": {
+    "idleRuntimeSessionTimeout": 900,
+    "maxLifetime": 28800
+  },
+  "sessionStoragePath": "/mnt/data/"
+}

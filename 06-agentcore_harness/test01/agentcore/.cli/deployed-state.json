@@ -1,0 +1,26 @@
+{
+  "targets": {
+    "default": {
+      "resources": {
+        "memories": {
+          "MyHarness1Memory": {
+            "memoryId": "test01_MyHarness1Memory-61d350HVHm",
+            "memoryArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:memory/test01_MyHarness1Memory-61d350HVHm"
+          }
+        },
+        "harnesses": {
+          "MyHarness1": {
+            "harnessId": "test01_MyHarness1-tSvPzjcZor",
+            "harnessArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:harness/test01_MyHarness1-tSvPzjcZor",
+            "roleArn": "arn:aws:iam::434444145045:role/test01_MyHarness1",
+            "status": "READY",
+            "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/harness_test01_MyHarness1-MiOOgTHteH",
+            "memoryArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:memory/test01_MyHarness1Memory-61d350HVHm",
+            "configHash": "4c32a4947c48d840"
+          }
+        },
+        "stackName": "AgentCore-test01-default"
+      }
+    }
+  }
+}
