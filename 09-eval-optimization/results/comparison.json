@@ -1,0 +1,31 @@
+{
+  "loop_executed": true,
+  "promote": false,
+  "primary_evaluator": "Builtin.GoalSuccessRate",
+  "primary_regressed": true,
+  "recommendation_applied": true,
+  "rows": [
+    {
+      "evaluator": "Builtin.GoalSuccessRate",
+      "baseline": 1.0,
+      "improved": 0.6,
+      "delta": -0.4
+    },
+    {
+      "evaluator": "Builtin.Helpfulness",
+      "baseline": 0.88,
+      "improved": 0.85,
+      "delta": -0.03
+    },
+    {
+      "evaluator": "Builtin.Faithfulness",
+      "baseline": 1.0,
+      "improved": 1.0,
+      "delta": 0.0
+    }
+  ],
+  "baseline_status": "COMPLETED",
+  "improved_status": "COMPLETED",
+  "eval_target": "runtime (managed-harness sessions are not yet scoreable by AgentCore Evaluations)",
+  "verdict": "DO NOT PROMOTE. The loop ran end-to-end and the evaluation CAUGHT a regression: Builtin.GoalSuccessRate 1.0->0.6 (delta -0.4). This round's recommendation (generated from an all-success baseline, so it had no failure traces to learn from) added a 'wait for explicit approval before acting' safety invariant; that made the agent ask instead of completing tasks, which the goal-success judge penalizes. Keep the baseline prompt. This is exactly why you evaluate before promoting \u2014 the loop prevented a quality regression from shipping."
+}

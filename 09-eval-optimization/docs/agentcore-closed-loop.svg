@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 660" font-family="Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#475569"/></marker>
+    <marker id="arrLoop" markerWidth="11" markerHeight="9" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#7c3aed"/></marker>
+    <marker id="arrAb" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#ea580c"/></marker>
+    <filter id="sh" x="-12%" y="-12%" width="124%" height="124%"><feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.18"/></filter>
+  </defs>
+  <rect x="0" y="0" width="1240" height="660" fill="#ffffff"/>
+  <text x="620.0" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Amazon Bedrock AgentCore — Closed-Loop Demo</text>
+  <text x="620.0" y="64" text-anchor="middle" font-size="14" fill="#64748b">agent created &amp; deployed as a managed Harness · evaluate→optimize on a Runtime mirror</text>
+  <rect x="40" y="150" width="180" height="150" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.6" filter="url(#sh)"/>
+  <text x="130.0" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">1 · Build</text>
+  <text x="130.0" y="194" text-anchor="middle" font-size="11.5" fill="#475569">customer-support</text>
+  <text x="130.0" y="210" text-anchor="middle" font-size="11.5" fill="#475569">agent: 5 order</text>
+  <text x="130.0" y="226" text-anchor="middle" font-size="11.5" fill="#475569">tools + weak</text>
+  <text x="130.0" y="242" text-anchor="middle" font-size="11.5" fill="#475569">baseline prompt</text>
+  <rect x="300" y="132" width="180" height="206" rx="12" fill="#ecfeff" stroke="#0891b2" stroke-width="1.6" filter="url(#sh)"/>
+  <text x="390.0" y="156" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">2 · Deploy</text>
+  <rect x="314" y="172" width="152" height="58" rx="8" fill="#ffffff" stroke="#0891b2" stroke-width="1.6"/>
+  <text x="390.0" y="191" text-anchor="middle" font-size="12" font-weight="700" fill="#0e7490">Managed Harness ★</text>
+  <text x="390.0" y="207" text-anchor="middle" font-size="10" fill="#475569">CreateHarness/Invoke</text>
+  <text x="390.0" y="220" text-anchor="middle" font-size="10" fill="#475569">config + tools, no code</text>
+  <rect x="314" y="238" width="152" height="58" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,2"/>
+  <text x="390.0" y="257" text-anchor="middle" font-size="11" font-weight="700" fill="#475569">Runtime mirror</text>
+  <text x="390.0" y="272" text-anchor="middle" font-size="10" fill="#64748b">same agent + ADOT</text>
+  <text x="390.0" y="285" text-anchor="middle" font-size="10" fill="#64748b">→ eval-mappable</text>
+  <rect x="560" y="150" width="180" height="150" rx="12" fill="#f0fdf4" stroke="#059669" stroke-width="1.6" filter="url(#sh)"/>
+  <text x="650.0" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">3 · Observe</text>
+  <text x="650.0" y="194" text-anchor="middle" font-size="11.5" fill="#475569">GenAI trajectory</text>
+  <text x="650.0" y="210" text-anchor="middle" font-size="11.5" fill="#475569">spans + content</text>
+  <text x="650.0" y="226" text-anchor="middle" font-size="11.5" fill="#475569">→ CloudWatch</text>
+  <text x="650.0" y="242" text-anchor="middle" font-size="11.5" fill="#475569">Transaction Search</text>
+  <rect x="820" y="150" width="180" height="150" rx="12" fill="#fefce8" stroke="#ca8a04" stroke-width="1.6" filter="url(#sh)"/>
+  <text x="910.0" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">4 · Evaluate</text>
+  <text x="910.0" y="194" text-anchor="middle" font-size="11.5" fill="#475569">AgentCore Evaluations</text>
+  <text x="910.0" y="210" text-anchor="middle" font-size="11.5" fill="#475569">batch · LLM-judge</text>
+  <text x="910.0" y="226" text-anchor="middle" font-size="11.5" fill="#475569">Goal/Helpful/Faithful</text>
+  <text x="910.0" y="242" text-anchor="middle" font-size="11.5" fill="#475569">→ baseline scores</text>
+  <rect x="1040" y="150" width="180" height="150" rx="12" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.6" filter="url(#sh)"/>
+  <text x="1130.0" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">5 · Optimize</text>
+  <text x="1130.0" y="194" text-anchor="middle" font-size="11.5" fill="#475569">Recommendations →</text>
+  <text x="1130.0" y="210" text-anchor="middle" font-size="11.5" fill="#475569">improved prompt;</text>
+  <text x="1130.0" y="226" text-anchor="middle" font-size="11.5" fill="#475569">validate, then</text>
+  <text x="1130.0" y="242" text-anchor="middle" font-size="11.5" fill="#475569">PROMOTE or roll back</text>
+  <line x1="220" y1="225.0" x2="298" y2="225.0" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="260.0" y="217.0" text-anchor="middle" font-size="10.5" fill="#475569">deploy</text>
+  <line x1="480" y1="225.0" x2="558" y2="225.0" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="520.0" y="217.0" text-anchor="middle" font-size="10.5" fill="#475569">invoke→traces</text>
+  <line x1="740" y1="225.0" x2="818" y2="225.0" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="780.0" y="217.0" text-anchor="middle" font-size="10.5" fill="#475569">spans+events</text>
+  <line x1="1000" y1="225.0" x2="1038" y2="225.0" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="1020.0" y="217.0" text-anchor="middle" font-size="10.5" fill="#475569">scores</text>
+  <path d="M 1130.0,150 C 1130.0,96 390.0,96 390.0,132" fill="none" stroke="#7c3aed" stroke-width="2.6" marker-end="url(#arrLoop)"/>
+  <rect x="595.0" y="70" width="330" height="22" rx="6" fill="#faf5ff" stroke="#7c3aed" stroke-width="1"/>
+  <text x="760.0" y="85" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">CLOSED LOOP — apply to harness + mirror, re-evaluate</text>
+  <rect x="1020" y="370" width="220" height="74" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="1.6" filter="url(#sh)"/>
+  <text x="1130.0" y="394" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Validate · A/B test</text>
+  <text x="1130.0" y="414" text-anchor="middle" font-size="11.5" fill="#475569">live traffic split (Gateway) · online eval</text>
+  <text x="1130.0" y="430" text-anchor="middle" font-size="11.5" fill="#475569">statistical significance → promote winner</text>
+  <line x1="1130.0" y1="300" x2="1130.0" y2="368" stroke="#ea580c" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrAb)"/>
+  <text x="1138.0" y="335.0" font-size="10.5" fill="#ea580c">production</text>
+  <rect x="40" y="372" width="470" height="74" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="56" y="394" font-size="12" font-weight="700" fill="#334155">Legend</text>
+  <text x="56" y="412" font-size="11" fill="#475569">★ primary deployed agent (managed Harness)</text>
+  <line x1="56" y1="430" x2="92" y2="430" stroke="#7c3aed" stroke-width="2.6" marker-end="url(#arrLoop)"/>
+  <text x="100" y="434" font-size="11" fill="#475569">closed-loop apply + re-evaluate</text>
+  <line x1="320" y1="430" x2="356" y2="430" stroke="#ea580c" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrAb)"/>
+  <text x="364" y="434" font-size="11" fill="#475569">production validation</text>
+</svg>

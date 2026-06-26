@@ -1,0 +1,17 @@
+{
+  "region": "us-west-2",
+  "account": "434444145045",
+  "agent_model_id": "global.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "judge": "builtin-agentcore-evaluator",
+  "deploy_path": "agentcore-cli",
+  "transaction_search": "on (ACTIVE)",
+  "agentcore_cli": "present",
+  "agentcore_cli_version": "0.3.9",
+  "capabilities": {
+    "harness_api": true,
+    "runtime_api": true,
+    "evaluation_api": true,
+    "optimization_api": true,
+    "abtest_api": true
+  }
+}

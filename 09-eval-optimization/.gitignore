@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+.pytest_cache/
+# AgentCore toolkit build cache (large dependency bundles) — keep .bedrock_agentcore.yaml, ignore the dir
+.bedrock_agentcore/

@@ -1,0 +1,31 @@
+[project]
+name = "agentcore-eval-opti"
+version = "0.1.0"
+description = "Closed-loop demo: customer-support agent harness on Amazon Bedrock AgentCore, with Evaluations and Optimization."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "boto3>=1.40",
+    "strands-agents>=1.40",
+    "bedrock-agentcore>=1.10",
+    "bedrock-agentcore-starter-toolkit>=0.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+    "pytest>=8.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["."]

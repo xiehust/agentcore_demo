@@ -1,0 +1,8 @@
+# Runtime dependencies for the deployed AgentCore agent (installed in the container).
+strands-agents>=1.40
+bedrock-agentcore>=1.10
+boto3>=1.40
+# ADOT SDK: required for AgentCore observability so the agent emits GenAI trajectory
+# spans (model/tool calls) that AgentCore Evaluations reads. Without it, only the
+# runtime wrapper span is produced and evaluation finds nothing to score.
+aws-opentelemetry-distro>=0.10.0

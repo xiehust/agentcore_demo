@@ -1,0 +1,15 @@
+{
+  "description": "Acme Store customer-support evaluation prompts. 'expected' is human-readable ground truth describing the behavior a good agent should show (used as context, not exact-match).",
+  "prompts": [
+    {"id": "p01", "prompt": "What's the status of my order ORD-1001?", "expected": "Look up ORD-1001; report it was delivered on 2026-03-28 (Blue T-Shirt)."},
+    {"id": "p02", "prompt": "I need to return order ORD-1001, the shirt doesn't fit.", "expected": "Initiate a return for ORD-1001; mention the return label and 14-day window."},
+    {"id": "p03", "prompt": "What's the shipping status on ORD-1002?", "expected": "Report ORD-1002 in transit, in Portland OR, on schedule for April 5."},
+    {"id": "p04", "prompt": "My order ORD-1003 is delayed, can you help?", "expected": "Identify ORD-1003 is 5 days late; proactively note it qualifies for a 15% discount."},
+    {"id": "p05", "prompt": "I'd like to check on order ORD-1004 please.", "expected": "Report ORD-1004 is processing (Yoga Mat, ordered 2026-04-02)."},
+    {"id": "p06", "prompt": "Can you look up order ORD-1005 for me?", "expected": "Report ORD-1005 delivered 2026-03-20 (Coffee Maker)."},
+    {"id": "p07", "prompt": "ORD-1003 is really late, I want a discount.", "expected": "Confirm eligibility and apply a 15% discount to ORD-1003 with a clear reason."},
+    {"id": "p08", "prompt": "Where is my order ORD-1002? It should have arrived by now.", "expected": "Check shipping; reassure it's on schedule for April 5; offer follow-up."},
+    {"id": "p09", "prompt": "The coffee maker from ORD-1005 is defective, I want to return it.", "expected": "Initiate a return for ORD-1005 citing the defect; mention the label."},
+    {"id": "p10", "prompt": "Can you check order ORD-1001 and tell me when it was delivered?", "expected": "Look up ORD-1001 and state the delivery date 2026-03-28."}
+  ]
+}

@@ -204,9 +204,10 @@ async def invoke(payload, context):
     log.info("Invoking Agent.....")
 
     skill_paths = []
-    git_skill_sources = [
-        dict(url="https://github.com/anthropics/skills.git"),
-    ]
+    # Harness config declares no skills (skills=[]). The exporter hardcoded a default
+    # anthropics/skills.git source that contains no SKILL.md and hard-fails every invocation,
+    # so keep this empty to match the harness configuration.
+    git_skill_sources = []
     _git_identity_client = None
     skill_paths.extend(await asyncio.to_thread(resolve_git_skills, git_skill_sources, _git_identity_client))
     _skill_plugins = [AgentSkills(skills=skill_paths)] if skill_paths else []

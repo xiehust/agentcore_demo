@@ -1,0 +1,15 @@
+{
+  "region": "us-west-2",
+  "account": "434444145045",
+  "agent_name": "acmesupport",
+  "agent_id": "acmesupport-fOfv652Bjq",
+  "agent_runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/acmesupport-fOfv652Bjq",
+  "execution_role_arn": "arn:aws:iam::434444145045:role/AmazonBedrockAgentCoreSDKRuntime-us-west-2-6b8cf5ef59",
+  "log_group": "/aws/bedrock-agentcore/runtimes/acmesupport-fOfv652Bjq-DEFAULT",
+  "service_name": "acmesupport.DEFAULT",
+  "deploy_path": "agentcore-cli direct_code_deploy",
+  "harness_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:harness/AcmeSupportHarness-9dw7DNYPDv",
+  "harness_name": "AcmeSupportHarness",
+  "harness_service_name": "harness_AcmeSupportHarness.DEFAULT",
+  "harness_log_group": "/aws/bedrock-agentcore/runtimes/harness_AcmeSupportHarness-gF3SuR5DYn-DEFAULT"
+}

@@ -1,0 +1,33 @@
+{
+  "tag": "baseline",
+  "batch_evaluation_id": "eval_baseline_a958e0f1-8a383f5ba9",
+  "final_status": "COMPLETED",
+  "sessions": {
+    "total": 10,
+    "completed": 10,
+    "failed": 0,
+    "ignored": 0
+  },
+  "evaluators": [
+    "Builtin.GoalSuccessRate",
+    "Builtin.Helpfulness",
+    "Builtin.Faithfulness"
+  ],
+  "scores": {
+    "Builtin.GoalSuccessRate": {
+      "averageScore": 1.0,
+      "totalEvaluated": 10,
+      "totalFailed": 0
+    },
+    "Builtin.Faithfulness": {
+      "averageScore": 1.0,
+      "totalEvaluated": 10,
+      "totalFailed": 0
+    },
+    "Builtin.Helpfulness": {
+      "averageScore": 0.88,
+      "totalEvaluated": 10,
+      "totalFailed": 0
+    }
+  }
+}
