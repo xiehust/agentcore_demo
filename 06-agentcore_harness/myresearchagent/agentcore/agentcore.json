@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "myresearchagent",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "myresearchagent"
+  },
+  "runtimes": [
+    {
+      "name": "myresearchagent_myresearchagentAgent",
+      "build": "CodeZip",
+      "entrypoint": "main.py",
+      "codeLocation": "app/myresearchagent_myresearchagentAgent/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "lifecycleConfiguration": {
+        "idleRuntimeSessionTimeout": 900,
+        "maxLifetime": 28800
+      },
+      "connections": [
+        {
+          "id": "codeInterpreter-aws-codeinterpreter-v1",
+          "to": {
+            "type": "codeInterpreter",
+            "arn": "arn:aws:bedrock-agentcore:us-west-2:aws:code-interpreter/aws.codeinterpreter.v1"
+          }
+        }
+      ]
+    }
+  ],
+  "memories": [],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [
+    {
+      "name": "myresearchagent",
+      "path": "app/myresearchagent"
+    }
+  ],
+  "datasets": [],
+  "payments": []
+}

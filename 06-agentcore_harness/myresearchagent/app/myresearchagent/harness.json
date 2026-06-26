@@ -1,0 +1,30 @@
+{
+  "name": "myresearchagent",
+  "model": {
+    "provider": "bedrock",
+    "modelId": "global.anthropic.claude-sonnet-4-6"
+  },
+  "tools": [
+    {
+      "type": "remote_mcp",
+      "name": "aws-knowledge",
+      "config": {
+        "remoteMcp": {
+          "url": "https://knowledge-mcp.global.api.aws"
+        }
+      }
+    },
+    {
+      "type": "agentcore_browser",
+      "name": "browser"
+    },
+    {
+      "type": "agentcore_code_interpreter",
+      "name": "code-interpreter"
+    }
+  ],
+  "skills": [],
+  "memory": {
+    "mode": "disabled"
+  }
+}
