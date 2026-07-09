@@ -1,0 +1,6 @@
+[project]
+name = "coldstart-benchmark"
+version = "0.1.0"
+description = "AgentCore Runtime cold-start ping-pong benchmark (image size x concurrency)"
+requires-python = ">=3.11"
+dependencies = ["boto3>=1.40", "bedrock-agentcore>=0.1"]

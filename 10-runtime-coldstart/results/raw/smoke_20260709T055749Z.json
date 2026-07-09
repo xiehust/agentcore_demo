@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "mode": "smoke"
+  },
+  "requests": [
+    {
+      "size": "500mb",
+      "concurrency": 1,
+      "round": 1,
+      "request_idx": 0,
+      "session_id": "fb7262773dc3471a8fc8b96f5d81f238bc5761e8",
+      "wall_start_iso": "2026-07-09T05:57:48.509828+00:00",
+      "cold_ms": 427.7,
+      "warm_ms": 103.7,
+      "success": true,
+      "error_type": null,
+      "error_msg": null,
+      "status_code": 200,
+      "proc_start_ts": 1783576597.8368983,
+      "request_ts": 1783576668.9262676,
+      "stopped": true
+    }
+  ]
+}

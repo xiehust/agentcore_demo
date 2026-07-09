@@ -1,0 +1,30 @@
+{
+  "region": "us-west-2",
+  "account": "434444145045",
+  "ecr_repo": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong",
+  "runtimes": {
+    "500mb": {
+      "name": "coldstart_ping_500mb",
+      "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/coldstart_ping_500mb-hS5A2058Rp",
+      "image_uri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong:500mb",
+      "docker_size_bytes": 524944102,
+      "ecr_size_bytes": 401204053
+    },
+    "1gb": {
+      "name": "coldstart_ping_1gb",
+      "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/coldstart_ping_1gb-eIXKFLGU1X",
+      "image_uri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong:1gb",
+      "docker_size_bytes": 1074397926,
+      "ecr_size_bytes": 950825808
+    },
+    "2gb": {
+      "name": "coldstart_ping_2gb",
+      "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/coldstart_ping_2gb-KWuZSYFrco",
+      "image_uri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong:2gb",
+      "docker_size_bytes": 2045379302,
+      "ecr_size_bytes": 1922103892
+    }
+  },
+  "iam_role": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+  "deployed_at": "2026-07-09T06:21:56.656950+00:00"
+}
