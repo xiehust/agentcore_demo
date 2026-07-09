@@ -1,0 +1,11 @@
+{
+  "enabledMcpjsonServers": [
+    "bedrock-agentcore-mcp-server"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__bedrock-agentcore-mcp-server__search_agentcore_docs",
+      "mcp__bedrock-agentcore-mcp-server__fetch_agentcore_doc"
+    ]
+  }
+}

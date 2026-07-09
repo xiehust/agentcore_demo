@@ -10,8 +10,8 @@ vpc-resources.backup.txt
 # Distribution / packaging
 .Python
 build/
-.claude/
-.mcp.json
+**/.claude/*
+!/.claude/settings.json
 develop-eggs/
 dist/
 downloads/
