@@ -1,0 +1,102 @@
+{
+  "runtime": {
+    "region": "us-east-2",
+    "runtimeName": "strands_nova2_orderdesk",
+    "runtimeId": "strands_nova2_orderdesk-q7zQZQBBZi",
+    "runtimeArn": "arn:aws:bedrock-agentcore:us-east-2:434444145045:runtime/strands_nova2_orderdesk-q7zQZQBBZi",
+    "roleArn": "arn:aws:iam::434444145045:role/StrandsNova2RuntimeRole",
+    "imageUri": "434444145045.dkr.ecr.us-east-2.amazonaws.com/strands-nova2-orderdesk:latest",
+    "modelId": "global.amazon.nova-2-lite-v1:0",
+    "gatewayUrl": "https://acdemo-noegress-gw-ongnqn4b1t.gateway.bedrock-agentcore.us-east-2.amazonaws.com/mcp",
+    "networkMode": "PUBLIC",
+    "status": "READY"
+  },
+  "results": [
+    {
+      "prompt": "How many orders are pending, and what are their order references?",
+      "response": {
+        "result": "There are **2 pending orders** with order references **ORD-1002** and **ORD-1005**.\n",
+        "model": "global.amazon.nova-2-lite-v1:0",
+        "tools_available": [
+          "rdsApi___getDbInfo",
+          "rdsApi___listOrders",
+          "rdsLambda___db_info",
+          "rdsLambda___list_orders"
+        ],
+        "tool_calls": [
+          {
+            "name": "rdsLambda___list_orders",
+            "input": {
+              "status": "PENDING"
+            }
+          }
+        ]
+      },
+      "latency_ms": 1931.5
+    },
+    {
+      "prompt": "Which order was cancelled and how much was it for?",
+      "response": {
+        "result": "The cancelled order was ORD-1004 for $15.25.\n",
+        "model": "global.amazon.nova-2-lite-v1:0",
+        "tools_available": [
+          "rdsApi___getDbInfo",
+          "rdsApi___listOrders",
+          "rdsLambda___db_info",
+          "rdsLambda___list_orders"
+        ],
+        "tool_calls": [
+          {
+            "name": "rdsLambda___list_orders",
+            "input": {
+              "status": "CANCELLED"
+            }
+          }
+        ]
+      },
+      "latency_ms": 1814.4
+    },
+    {
+      "prompt": "What MySQL version is the database running, and what host is it on?",
+      "response": {
+        "result": "The database is running MySQL version **8.0.42** on host **ip-172-31-0-80**.\n",
+        "model": "global.amazon.nova-2-lite-v1:0",
+        "tools_available": [
+          "rdsApi___getDbInfo",
+          "rdsApi___listOrders",
+          "rdsLambda___db_info",
+          "rdsLambda___list_orders"
+        ],
+        "tool_calls": [
+          {
+            "name": "rdsLambda___db_info",
+            "input": {}
+          }
+        ]
+      },
+      "latency_ms": 1837.7
+    },
+    {
+      "prompt": "What is the total value of all shipped orders?",
+      "response": {
+        "result": "The total value of all shipped orders is $1,020.99, calculated from ORD-1001 ($129.99) and ORD-1003 ($891.00).\n",
+        "model": "global.amazon.nova-2-lite-v1:0",
+        "tools_available": [
+          "rdsApi___getDbInfo",
+          "rdsApi___listOrders",
+          "rdsLambda___db_info",
+          "rdsLambda___list_orders"
+        ],
+        "tool_calls": [
+          {
+            "name": "rdsLambda___list_orders",
+            "input": {
+              "status": "SHIPPED"
+            }
+          }
+        ]
+      },
+      "latency_ms": 2064.1
+    }
+  ]
+}

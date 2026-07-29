@@ -21,11 +21,15 @@ What it demonstrates, end to end:
 4. **Validate** in production with an **A/B test** (documented runbook).
 
 > ⚠️ **Eval runs on a Runtime mirror, by necessity.** The managed harness is the agent you create,
-> deploy, and invoke. But AgentCore Evaluations can't currently score the managed harness's
-> telemetry (its Strands content events use a double-nested shape the evaluator rejects —
-> `AgentSpanMappingException`). So the evaluate→optimize loop runs against a **Strands-on-Runtime
-> mirror of the same agent** (same tools/prompt, ADOT-instrumented → eval-mappable), and any
-> improvement is applied to **both**. Full explanation: [`docs/CONCEPTS.md`](docs/CONCEPTS.md) §2.
+> deploy, and invoke — and it emits full GenAI telemetry; its **no-tool** sessions evaluate fine. But
+> this agent is tool-driven, and harness inline-function tools run via a **client-side tool loop**:
+> each tool call needs a second `InvokeHarness` request (to return the `toolResult`), and AgentCore
+> records each request as a **separate trace** (its own root span) under one `session.id`. So a
+> tool-using session spans ≥2 disjoint traces, and AgentCore Evaluations — which expects one connected
+> agent trace per session — can't assemble it: `AgentSpanMappingException: Failed to parse user_query`
+> (verified live 2026-06-27). The Runtime mirror runs the same tool loop **server-side in one
+> invocation** → one trace → eval-mappable, so the evaluate→optimize loop runs there and any
+> improvement is applied to **both**. Full explanation + evidence: [`docs/CONCEPTS.md`](docs/CONCEPTS.md) §2.
 
 ---
 
@@ -103,9 +107,13 @@ run `agentcore destroy`.
 
 - **`preflight.py` says Bedrock access DISABLED** → enable an Anthropic Claude model in the Bedrock
   console (us-west-2 → *Model access*), wait for "Access granted", re-run.
-- **Harness eval fails: `AgentSpanMappingException: Failed to parse user_query`** → expected for the
-  managed harness (its content-event shape isn't mappable by Evaluations yet). Evaluate the Runtime
-  mirror (`--target runtime`); see CONCEPTS §2.
+- **Harness eval fails: `AgentSpanMappingException: Failed to parse user_query`** → expected for any
+  **tool-using** harness session (verified 2026-06-27). Inline-function tools run client-side, so each
+  tool call adds a second `InvokeHarness` request that AgentCore records as a separate trace; the
+  evaluator can't assemble a multi-trace session. (No-tool harness sessions evaluate fine; the
+  `content.content` telemetry nesting is *unrelated* — a passing runtime session has the identical
+  shape.) Evaluate the Runtime mirror (`--target runtime`); per-session errors land in
+  `/aws/bedrock-agentcore/evaluations/batch-evaluations/results/default`. See CONCEPTS §2.
 - **Runtime batch eval fails all sessions** → the runtime agent must emit GenAI spans: ensure
   `aws-opentelemetry-distro` is in `requirements.txt` and `StrandsTelemetry().setup_otlp_exporter()`
   runs in `agent/main.py`, then redeploy. First-launch span indexing lags ~5–10 min.

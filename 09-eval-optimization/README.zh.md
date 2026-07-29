@@ -20,11 +20,14 @@ Harness**,然后用 **AgentCore Evaluations(评估)** 和 **AgentCore Optimizati
    重新评估、**对比**——只有**不回退**才晋升。
 4. **验证**:在生产用 **A/B 测试**验证(以运行手册形式给出)。
 
-> ⚠️ **评估出于必要跑在 Runtime 镜像上。** 托管 Harness 是你创建、部署、调用的那个 Agent。但
-> AgentCore Evaluations 目前**评不了**托管 Harness 的遥测(它的 Strands 内容事件是一种双层嵌套结构,
-> 评估器解析不了——`AgentSpanMappingException`)。所以「评估→优化」回路跑在**同一个 Agent 的
-> Strands-on-Runtime 镜像**上(相同工具/提示词,带 ADOT 埋点 → 可被评估映射),任何改进都会
-> **同时应用到两边**。完整解释见 [`docs/CONCEPTS.md`](docs/CONCEPTS.md) §2。
+> ⚠️ **评估出于必要跑在 Runtime 镜像上。** 托管 Harness 是你创建、部署、调用的那个 Agent,它的遥测是
+> 完整的,**不调工具的会话也能正常评分**。但本 Agent 是工具驱动的,而 Harness 的内联函数工具走**客户端
+> 工具循环**:每次工具调用都要再发一次 `InvokeHarness`(回传 `toolResult`),而 AgentCore 把**每次
+> `InvokeHarness` 请求都记成一条独立的 trace**(各自有根 span),只共享同一个 `session.id`。于是一个用到
+> 工具的会话会横跨 ≥2 条互不相连的 trace,AgentCore Evaluations 期望「一个会话 = 一条连通的 Agent
+> trace」,拼不起来 → `AgentSpanMappingException: Failed to parse user_query`(2026-06-27 实测)。Runtime
+> 镜像把同样的工具循环**在一次调用里服务端跑完** → 一条 trace → 可被评估映射,所以「评估→优化」回路跑在
+> 那里,任何改进都会**同时应用到两边**。完整解释 + 证据见 [`docs/CONCEPTS.md`](docs/CONCEPTS.md) §2。
 
 ---
 
@@ -100,9 +103,12 @@ AgentCore Runtime + Harness 是无服务器 / 按用量付费(空闲成本可忽
 
 - **`preflight.py` 提示 Bedrock 访问 DISABLED** → 去 Bedrock 控制台(us-west-2 → *Model access*)
   开通一个 Anthropic Claude 模型,等「Access granted」后重跑。
-- **Harness 评估失败:`AgentSpanMappingException: Failed to parse user_query`** → 这是托管 Harness 的
-  预期表现(它的内容事件结构目前还不能被 Evaluations 映射)。请评估 Runtime 镜像
-  (`--target runtime`);见 CONCEPTS §2。
+- **Harness 评估失败:`AgentSpanMappingException: Failed to parse user_query`** → 这是任何**用到工具**的
+  Harness 会话的预期表现(2026-06-27 实测)。内联函数工具走客户端循环,每次工具调用都多发一次
+  `InvokeHarness`,被 AgentCore 记成独立 trace,评估器拼不起这种多 trace 会话。(不调工具的 Harness 会话
+  能正常评分;`content.content` 的内容嵌套与此**无关**——评分通过的 runtime 会话也是同样形状。)请评估
+  Runtime 镜像(`--target runtime`);逐会话报错写在
+  `/aws/bedrock-agentcore/evaluations/batch-evaluations/results/default`。见 CONCEPTS §2。
 - **Runtime 批量评估全部会话失败** → 该 Runtime Agent 必须发出 GenAI span:确认
   `requirements.txt` 里有 `aws-opentelemetry-distro`,且 `agent/main.py` 里运行了
   `StrandsTelemetry().setup_otlp_exporter()`,然后重新部署。首次启动的 span 索引滞后约 5–10 分钟。

@@ -57,17 +57,37 @@ Transaction Search, and converts them to a unified format for scoring.
   `filterConfig.sessionIds`, polls to terminal, and writes `results/<tag>_scores.json`.
 
 > ### ⚠️ Why evaluation runs on the Runtime mirror, not the Harness
-> AgentCore Evaluations supports the `strands.telemetry.tracer` scope, but the **managed harness's**
-> telemetry emits message content in a **double-nested `content.content` (stringified)** shape that
-> the evaluator's agent-span mapper cannot parse into `body.input.messages[].content`. Every harness
-> session therefore fails with **`AgentSpanMappingException: Failed to parse user_query`**, even with
-> content capture enabled. The eval-mappable path is a **Strands agent on AgentCore Runtime with
-> `aws-opentelemetry-distro` (ADOT)**, which emits the standard event shape. So the demo:
+> The managed harness emits full GenAI telemetry — Strands spans
+> (`invoke_agent`→`execute_event_loop_cycle`→`chat <model>`) in `aws/spans` plus per-message content
+> events — and harness sessions that make **no tool call evaluate fine**. The blocker is specific to
+> **tool use**: harness inline-function tools run via a **client-side tool loop**, where each tool call
+> requires a second `InvokeHarness` request (to return the `toolResult`). AgentCore records each
+> `InvokeHarness` request as a **separate trace** — its own root `POST /invocations` span — under the
+> same `session.id`. A tool-using session therefore spans **≥2 disjoint traces**, and AgentCore
+> Evaluations' span-mapper (which expects one connected agent trace per session) cannot assemble the
+> trajectory, failing with **`AgentSpanMappingException: Failed to parse user_query from agent-span`**
+> (scope `strands.telemetry.tracer`). Because this support agent is tool-driven, effectively every real
+> harness session fails. The eval-mappable path is the same agent on **AgentCore Runtime**, which runs
+> the tool loop **server-side in a single invocation** → one trace, one root (plus an
+> `AgentCore.Runtime.Invoke` span the harness doesn't emit). So the demo:
 > - **deploys + serves the agent as the managed Harness** (the requested create/deploy path), and
 > - runs **evaluation + optimization against the Runtime mirror of the same agent** (same 5 tools,
 >   same prompts), applying any improvement to **both**.
 >
-> Diagnosed precisely from the eval results stream; see `agentcore-api-surface` memory for evidence.
+> **Verified live on 2026-06-27** (discriminating experiment on the same harness): 3 sessions with
+> **no tool calls scored 3/3 evaluators**; 2 **tool-using** sessions failed all 3 with
+> `AgentSpanMappingException`. Structurally, the no-tool session = **1 trace / 1 root span**; each
+> tool-using session = **2 traces / 2 root spans**.
+>
+> > **Note — the `content.content` "double-nesting" is a red herring.** Strands telemetry serializes
+> > message content as a stringified `content.content` blob in **both** harness and runtime, yet a
+> > runtime session with that identical shape scores fine — so the mapper tolerates it. The real
+> > differentiator is the multi-trace fragmentation above, not the content encoding.
+>
+> **Strong (untested) corollary:** only *client-side* `inline_function` tools fragment the trace.
+> Server-side harness tools (MCP/Gateway/code-interpreter/browser) execute within one invocation and
+> would likely keep a single trace → may be evaluable. Re-check: invoke the harness with a no-tool
+> prompt vs a tool prompt, then `run_evaluation.py`.
 
 ---
 

@@ -11,7 +11,7 @@ from __future__ import annotations
 BASELINE_PROMPT = "You are a support bot for a store. Answer the customer."
 
 # Filled in by phase 5 from AgentCore Optimization recommendations.
-OPTIMIZED_PROMPT: str | None = None  # round-2 recommendation regressed GoalSuccessRate; not promoted (see results/comparison.json)
+OPTIMIZED_PROMPT: str | None = 'You are a support bot for a store. Answer the customer by using the appropriate tools: lookup_order for order details, check_shipping_status for delivery tracking, initiate_return for returns, and apply_discount for compensation. For read-only lookups, proceed directly. Before taking any action with real-world consequences (returns, discounts, cancellations), state the planned action in plain language and wait for explicit user approval. Do not treat silence as consent. Present results clearly and offer further assistance.'
 
 
 def get_active_prompt() -> str:

@@ -1,0 +1,94 @@
+{
+  "gateway": "https://acdemo-idp-gw-ojbahxxuik.gateway.bedrock-agentcore.us-east-2.amazonaws.com/mcp",
+  "issuer": "http://10.30.11.13:8081",
+  "cases": [
+    {
+      "case": "valid token",
+      "expected_pass": true,
+      "reached_tool": true,
+      "detail": {
+        "outbound_auth": {
+          "path": "tool Lambda (in VPC) -> private IdP /token -> downstream token",
+          "idp_issuer": "http://10.30.11.13:8081",
+          "idp_private_ip": "10.30.11.13",
+          "token_from_cache": true,
+          "client_id": "order-desk-agent",
+          "scope": "orders.read",
+          "expires_in_s": 561
+        },
+        "count": 2,
+        "orders": [
+          {
+            "order_ref": "ORD-1002",
+            "customer_email": "bob@example.com",
+            "status": "PENDING",
+            "amount": 42.5
+          },
+          {
+            "order_ref": "ORD-1005",
+            "customer_email": "erin@example.com",
+            "status": "PENDING",
+            "amount": 310.75
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case": "no Authorization header",
+      "expected_pass": false,
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 missing bearer token",
+      "verdict": "PASS"
+    },
+    {
+      "case": "malformed token",
+      "expected_pass": false,
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 token rejected",
+      "verdict": "PASS"
+    },
+    {
+      "case": "forged signature (attacker key)",
+      "expected_pass": false,
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 signature verification failed",
+      "verdict": "PASS"
+    },
+    {
+      "case": "expired token",
+      "expected_pass": false,
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 token expired",
+      "verdict": "PASS"
+    },
+    {
+      "case": "wrong audience",
+      "expected_pass": false,
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 wrong audience",
+      "verdict": "PASS"
+    },
+    {
+      "case": "wrong issuer",
+      "expected_pass": false,
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 wrong issuer",
+      "verdict": "PASS"
+    },
+    {
+      "case": "missing required scope",
+      "expected_pass": false,
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 missing required scope orders.read",
+      "verdict": "PASS"
+    },
+    {
+      "case": "unknown signing kid",
+      "expected_pass": false,
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 token rejected",
+      "verdict": "PASS"
+    }
+  ]
+}

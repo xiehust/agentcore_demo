@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><style id="qw-theme">:root {
+  --color-bg: #faf9fc;
+  --color-text: #131920;
+  --color-navbar-bg: #f9f9fb;
+  --color-bg-chat-view: #fcfcfd;
+  --color-bg-secondary: #fff;
+  --color-bg-tertiary: #f9fafb;
+  --color-bg-hover: #f3f4f6;
+  --color-surface: #f9fafb;
+  --color-surface-hover: #f3f4f6;
+  --color-surface-active: #e5e7eb;
+  --color-border: #0000001f;
+  --color-border-light: #0000000f;
+  --color-border-strong: #d1d5db;
+  --color-primary: #4200db;
+  --color-primary-dark: #35009e;
+  --color-primary-light: #8575ff;
+  --color-primary-bg: #e8e6ff;
+  --color-primary-hover-border: #35009e;
+  --color-nav-icon-active: #4200db;
+  --color-nav-hover-border: #4200db;
+  --color-primary-alpha-3: color-mix(in srgb, #4200db 3%, transparent);
+  --color-primary-alpha-5: color-mix(in srgb, #4200db 5%, transparent);
+  --color-primary-alpha-8: color-mix(in srgb, #4200db 8%, transparent);
+  --color-primary-alpha-12: color-mix(in srgb, #4200db 12%, transparent);
+  --color-primary-alpha-15: color-mix(in srgb, #4200db 15%, transparent);
+  --color-primary-alpha-20: color-mix(in srgb, #4200db 20%, transparent);
+  --color-primary-alpha-25: color-mix(in srgb, #4200db 25%, transparent);
+  --color-primary-alpha-30: color-mix(in srgb, #4200db 30%, transparent);
+  --color-primary-alpha-40: color-mix(in srgb, #4200db 40%, transparent);
+  --color-primary-alpha-50: color-mix(in srgb, #4200db 50%, transparent);
+  --color-primary-alpha-60: color-mix(in srgb, #4200db 60%, transparent);
+  --color-primary-subtle: color-mix(in srgb, #4200db 12%, transparent);
+  --color-primary-border: color-mix(in srgb, #4200db 30%, transparent);
+  --color-focus-ring: color-mix(in srgb, #4200db 50%, transparent);
+  --color-sidebar-hover: color-mix(in srgb, #4200db 12%, transparent);
+  --block-hover-outline: 1px dashed color-mix(in srgb, #4200db 50%, transparent);
+  --block-selected-outline: 1px solid #8575ff;
+  --block-selection-outline-offset: 2px;
+  --block-selected-halo: 0 0 8px color-mix(in srgb, #4200db 40%, transparent);
+  --color-accent: #4200db;
+  --color-accent-foreground: #4200db;
+  --color-accent-dark: #35009e;
+  --color-accent-light: #e8e6ff;
+  --color-accent-inverse: #fff;
+  --color-link: #4200db;
+  --color-primary-gradient-end: #e8e6ff;
+  --color-primary-bg-solid: #e8e6ff;
+  --color-user-bubble: #f3f3f7;
+  --color-user-bubble-text: #131920;
+  --color-text-secondary: #5e5e5e;
+  --color-text-tertiary: #656871;
+  --color-text-muted: #9ca3af;
+  --color-text-on-primary: #fff;
+  --color-success: #00802f;
+  --color-success-dark: #00471e;
+  --color-success-light: #d9ffd6;
+  --color-success-hover: #005c26;
+  --color-success-bg: #e6f5eb;
+  --color-success-border: #b3d9bf;
+  --color-success-foreground: #00802f;
+  --color-success-dark-foreground: #00471e;
+  --color-success-text: #00471e;
+  --color-error: #db0000;
+  --color-error-dark: #700000;
+  --color-error-light: #ffe0e0;
+  --color-error-hover: #ffe0e0;
+  --color-error-bg: #fceaea;
+  --color-error-border: #f2cccc;
+  --color-error-active-border: #db0000;
+  --color-error-foreground: #db0000;
+  --color-error-dark-foreground: #700000;
+  --color-error-inverse: #fff;
+  --color-error-text: #700000;
+  --color-warning: #f2b100;
+  --color-warning-dark: #573a00;
+  --color-warning-light: #fffbbd;
+  --color-warning-hover: #db9200;
+  --color-warning-bg: #fef7e6;
+  --color-warning-border: #f9dfa3;
+  --color-warning-foreground: #f2b100;
+  --color-warning-dark-foreground: #573a00;
+  --color-warning-inverse: #573a00;
+  --color-surface-warning: #fffbbd;
+  --color-text-warning: #573a00;
+  --color-info: #006ce0;
+  --color-info-dark: #002a66;
+  --color-info-light: #d1f1ff;
+  --color-info-hover: #003b8f;
+  --color-info-bg: #ebf3fc;
+  --color-info-border: #b3d1f0;
+  --color-info-foreground: #006ce0;
+  --color-info-dark-foreground: #002a66;
+  --color-info-inverse: #fff;
+  --color-overlay: #00000080;
+  --color-shadow: #00000014;
+  --color-hover: #0000000d;
+  --color-tooltip-bg: #000000d9;
+  --color-tooltip-text: #fff;
+  --color-voice-purple: #8575ff;
+  --color-voice-purple-dark: #4200db;
+  --color-voice-purple-light: #8575ff;
+  --color-voice-red: #db0000;
+  --color-voice-red-dark: #700000;
+  --color-voice-amber: #f2b100;
+  --color-voice-purple-glow: #4200db66;
+  --color-voice-red-glow: #db000066;
+  --font-sans: "Amazon Ember", "Helvetica Neue", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", "Monaco", "Menlo", "Consolas", monospace;
+  --text-2xs: .5625rem;
+  --text-xs: .625rem;
+  --text-sm: .6875rem;
+  --text-base: .75rem;
+  --text-md: .8125rem;
+  --text-lg: .875rem;
+  --text-xl: 1rem;
+  --text-2xl: 1.125rem;
+  --text-3xl: 1.25rem;
+  --text-4xl: 1.5rem;
+  --text-5xl: 2rem;
+  --spacing-1: calc(.25rem * 1);
+  --spacing-1-5: calc(.25rem * 1.5);
+  --spacing-2: calc(.25rem * 2);
+  --spacing-3: calc(.25rem * 3);
+  --spacing-4: calc(.25rem * 4);
+  --spacing-5: calc(.25rem * 5);
+  --spacing-6: calc(.25rem * 6);
+  --spacing-7: calc(.25rem * 7);
+  --spacing-8: calc(.25rem * 8);
+  --spacing-9: calc(.25rem * 9);
+  --spacing-10: calc(.25rem * 10);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-card: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 8px;
+  --shadow-sm: 0 1px 2px #0000000d;
+  --shadow-md: 0 4px 12px #00000014;
+  --color-success-bg-solid: #d9ffd6;
+  --color-error-bg-solid: #ffe0e0;
+  --color-error-border-solid: #ffe0e0;
+  --color-warning-bg-solid: #fffbbd;
+  --color-warning-text: #573a00;
+  --color-info-bg-solid: #d1f1ff;
+  --color-info-bg-solid-alt: #d1f1ff;
+  --color-info-text: #002a66;
+  --color-info-text-alt: #002a66;
+  --color-emerald: #10b981;
+  --color-teal: #4ecdc4;
+  --color-code-bg: #f3f3f7;
+  --color-code-header-bg: #f1f3f5;
+  --color-code-text: #24292e;
+  --color-code-border: #e1e4e8;
+  --color-code-muted: #6a737d;
+  --color-inline-code-bg: #f3f3f7;
+  --color-inline-code-text: #24292e;
+  --color-inline-code-border: #e1e4e8;
+  --color-scrollbar-thumb: #d1d5db;
+  --color-scrollbar-track: transparent;
+  --color-graph-node-text: #333;
+  --color-graph-node-text-dim: #7f8c8d;
+  --color-graph-edge-default: #95a5a6;
+  --color-graph-edge-cross: #e67e22;
+  --color-graph-edge-text: #666;
+  --color-graph-edge-stroke: #fff;
+  --color-graph-highlight-bg: #ff6b6b;
+  --color-graph-highlight-border: #e74c3c;
+  --color-graph-search-bg: gold;
+  --color-graph-search-border: orange;
+  --color-graph-focus-border: #c0392b;
+  --color-graph-external-border: #95a5a6;
+  --color-graph-cat-file: #3498db;
+  --color-graph-cat-folder: #7f8c8d;
+  --color-graph-cat-file-aggregate: #2980b9;
+  --color-graph-cat-class: #9b59b6;
+  --color-graph-cat-function: #2ecc71;
+  --color-graph-cat-method: #1abc9c;
+  --color-graph-cat-variable: #f39c12;
+  --color-graph-cat-import: #d35400;
+  --color-graph-cat-module: #5b6abf;
+  --color-graph-cat-concept: #e74c3c;
+  --color-graph-cat-person: #ff6b6b;
+  --color-graph-cat-org: #4ecdc4;
+  --color-graph-cat-organization: #4ecdc4;
+  --color-graph-cat-product: #a29bfe;
+  --color-graph-cat-metric: #fd79a8;
+  --color-graph-cat-location: #34495e;
+  --color-graph-cat-date: #e056a0;
+  --color-graph-cat-code: #3498db;
+  --color-graph-cat-doc: #7f8c8d;
+  --color-graph-cat-url: #00b894;
+  --color-graph-cat-email: #6c5ce7;
+  --color-graph-cat-unknown: #bdc3c7;
+  --color-graph-rel-contains: #bdc3c7;
+  --color-graph-rel-extends: #9b59b6;
+  --color-graph-rel-implements: #3498db;
+  --color-graph-rel-imports: #e67e22;
+  --color-graph-rel-uses: #2ecc71;
+  --color-graph-rel-calls: #27ae60;
+  --color-graph-rel-references: #f39c12;
+  --color-graph-rel-related-to: #95a5a6;
+  --color-graph-rel-works-on: #e74c3c;
+  --color-graph-rel-owns: #1abc9c;
+  --color-graph-rel-depends-on: #e67e22;
+  --color-graph-rel-parent-of: #bdc3c7;
+  --qs-content: #fff;
+  --qs-main: #fff;
+  --qs-primary-foreground: #131920;
+  --qs-secondary-foreground: #656871;
+  --qs-tertiary-foreground: #9ca3af;
+  --qs-placeholder-foreground: #8c8c94;
+  --qs-divider: #dedee3;
+  --qs-default-border: #8c8c94;
+  --qs-neutral-soft: #b4b4bb;
+  --qs-neutral-gray-50: #f9fafb;
+  --qs-tertiary-background: #f9fafb;
+  --qs-action-hover: #f3f3f7;
+  --qs-primary-default: #4200db;
+  --qs-primary-dark: #35009e;
+  --qs-primary-light: #e8e6ff;
+  --qs-success-default: #00802f;
+  --qs-error-default: #db0000;
+  --qs-font-sans: "Amazon Ember", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+  --safe-top: 0px;
+  --safe-bottom: 0px;
+  --safe-left: 0px;
+  --safe-right: 0px;
+  --qs-font-family: "Amazon Ember", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+  --qs-font-base-letter-spacing: .15px;
+  --qs-shadow-sm: 0 0 2px 0 #00000029, 0 0 4px 0 #00000029;
+  --qs-shadow-md: 0 0 2px 0 #00000029, 0 2px 8px 1px #00000029;
+  --qs-shadow-lg: 0 4px 16px 4px #00000029, 0 2px 6px 1px #00000029;
+  --qs-shadow-xl: 0 4px 8px 2px #00000029, 0 6px 20px 4px #00000029;
+  --qs-width-modal-sm: 384px;
+  --qs-width-modal-md: 600px;
+  --qs-width-modal-lg: 1136px;
+  --qs-grid-gap: 16px;
+  --qs-grid-gap-xl: 24px;
+  --qs-primary-medium: #8575ff;
+  --qs-primary-inverse: #fff;
+  --qs-neutral-lightest: #f9f9fb;
+  --qs-neutral-light: #f3f3f7;
+  --qs-neutral-default: #dedee3;
+  --qs-neutral-medium: #8c8c94;
+  --qs-neutral-deep: #656871;
+  --qs-neutral-dark: #333843;
+  --qs-neutral-strong: #131920;
+  --qs-neutral-white: #fff;
+  --qs-neutral-black: #000;
+  --qs-success-medium: #005c26;
+  --qs-success-dark: #00471e;
+  --qs-success-light: #d9ffd6;
+  --qs-success-inverse: #fff;
+  --qs-info-default: #006ce0;
+  --qs-info-medium: #003b8f;
+  --qs-info-dark: #002a66;
+  --qs-info-light: #d1f1ff;
+  --qs-info-inverse: #fff;
+  --qs-warning-default: #f2b100;
+  --qs-warning-medium: #db9200;
+  --qs-warning-dark: #573a00;
+  --qs-warning-light: #fffbbd;
+  --qs-warning-inverse: #573a00;
+  --qs-warning-experimental: #f2b100;
+  --qs-warning-experimental-light: #fffbbd;
+  --qs-warning-experimental-light-foreground: #fffbbd;
+  --qs-error-medium: #900;
+  --qs-error-dark: #700000;
+  --qs-error-light: #ffe0e0;
+  --qs-error-inverse: #fff;
+  --qs-connection-default: #db3300;
+  --qs-connection-soft: #ff997a;
+  --qs-connection-light: #ffe0d6;
+  --qs-connection-dark: #661800;
+  --qs-automation-default: #b3008f;
+  --qs-automation-medium: #d600ba;
+  --qs-automation-soft: #ff94f1;
+  --qs-automation-light: #ffe0fb;
+  --qs-automation-dark: #660052;
+  --qs-insight-default: #a000b8;
+  --qs-insight-soft: #f299ff;
+  --qs-insight-light: #fce6ff;
+  --qs-insight-dark: #590066;
+  --qs-visualization-default: #7300e5;
+  --qs-visualization-soft: #d4a8ff;
+  --qs-visualization-light: #f2e5ff;
+  --qs-visualization-dark: #45008a;
+  --qs-spice: #ff9800;
+  --qs-coachmark: #006ce0;
+  --qs-brand: #fff;
+  --qs-brand-foreground: #131920;
+  --qs-brand-navbar: #131920;
+  --qs-brand-navbar-foreground: #fff;
+  --qs-brand-navbar-light: #dedee3;
+  --qs-brand-navbar-dark: #000;
+  --qs-application-navbar: #4200db;
+  --qs-application-navbar-foreground: #fff;
+  --qs-application-navbar-light: #e8e6ff;
+  --qs-application-navbar-dark: #35009e;
+  --qs-dimension: #4200db;
+  --qs-dimension-foreground: #fff;
+  --qs-dimension-experimental: #4200db;
+  --qs-dimension-experimental-foreground: #4200db;
+  --qs-measure: #00802f;
+  --qs-measure-foreground: #fff;
+  --qs-measure-experimental: #f2b100;
+  --qs-measure-experimental-foreground: #f2b100;
+  --qs-content-inverse: #333843;
+  --qs-content-inverse-active: #131920;
+  --qs-secondary: #dedee3;
+  --qs-disabled: #8c8c94;
+  --qs-divider-light: #f3f3f7;
+  --qs-hover-border: #333843;
+  --qs-active-border: #4200db;
+  --qs-disabled-border: #dedee3;
+  --qs-error-border: #ffe0e0;
+  --qs-error-active-border: #db0000;
+  --qs-disabled-foreground: #b4b4bb;
+  --qs-primary-inverse-foreground: #fff;
+  --qs-error-foreground: #db0000;
+  --qs-contrast-foreground: #131920;
+  --qs-main-foreground: #131920;
+  --qs-main-secondary-foreground: #656871;
+  --qs-action-disabled: #f3f3f7;
+  --qs-action-active: #e8e6ff;
+  --qs-default-badge: #dedee3;
+  --qs-tag-default: #dedee3;
+  --qs-tag-soft-border: #b4b4bb;
+  --qs-focus-offset: 1px;
+  --qs-toggle-tile-sm: calc(.25rem * 8);
+  --qs-toggle-tile-md: calc(.25rem * 12);
+  --qs-toggle-tile-lg: calc(.25rem * 15);
+  --qs-shadow-pin-right: inset 4px 0 4px -4px #00000029;
+  --qs-shadow-pin-left: inset -4px 0 4px -4px #00000029;
+  --react-pdf-text-layer: 1;
+  --highlight-bg-color: #b400aa;
+  --highlight-selected-bg-color: #006400;
+  --react-pdf-annotation-layer: 1;
+  --annotation-unfocused-field-background: url("data:image/svg+xml;charset=UTF-8,<svg width='1px' height='1px' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' style='fill:rgba(0, 54, 255, 0.13);'/></svg>");
+  --input-focus-border-color: Highlight;
+  --input-focus-outline: 1px solid Canvas;
+  --input-unfocused-border-color: transparent;
+  --input-disabled-border-color: transparent;
+  --input-hover-border-color: black;
+  --link-outline: none;
+  color-scheme: light;
+}
+body { background: var(--color-bg); color: var(--color-text); }
+a { color: var(--color-link, var(--color-primary)); }</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentCore 中国区无 VPC Egress 的 Workaround 方案</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --border:#2d3646;
+    --text:#e6edf3; --muted:#9aa7b8; --accent:#ff9900; --accent2:#4493f8;
+    --green:#3fb950; --red:#f85149; --yellow:#d29922; --code:#0b0f16;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.7;font-size:15px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 80px;}
+  header{background:linear-gradient(135deg,#1a2332 0%,#0d1117 100%);
+    border-bottom:2px solid var(--accent);padding:48px 24px 36px;margin-bottom:8px;}
+  header .inner{max-width:1080px;margin:0 auto;}
+  .badge{display:inline-block;background:rgba(255,153,0,.15);color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 14px;font-size:12.5px;
+    font-weight:600;letter-spacing:.5px;margin-bottom:16px;}
+  .badge.verified{background:rgba(63,185,80,.15);color:var(--green);
+    border-color:var(--green);margin-left:8px;}
+  .tag.bad{background:rgba(248,81,73,.18);color:var(--red);border:1px solid var(--red);}
+  .fix{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.35);
+    border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .fix .t{font-weight:700;color:var(--green);display:block;margin-bottom:6px;}
+  del{color:var(--muted);text-decoration-color:var(--red);}
+  h1{margin:0 0 10px;font-size:30px;font-weight:700;letter-spacing:-.5px;}
+  .subtitle{color:var(--muted);font-size:15.5px;max-width:760px;}
+  .meta{margin-top:18px;font-size:12.5px;color:var(--muted);}
+  .layout{display:grid;grid-template-columns:220px 1fr;gap:36px;margin-top:32px;}
+  nav.toc{position:sticky;top:24px;align-self:start;background:var(--panel);
+    border:1px solid var(--border);border-radius:12px;padding:18px 16px;font-size:13.5px;}
+  nav.toc h4{margin:0 0 12px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);}
+  nav.toc a{display:block;color:var(--text);text-decoration:none;padding:6px 8px;border-radius:6px;
+    border-left:2px solid transparent;transition:.15s;}
+  nav.toc a:hover{background:var(--panel2);border-left-color:var(--accent);color:var(--accent);}
+  section{margin-bottom:40px;scroll-margin-top:24px;}
+  h2{font-size:22px;font-weight:700;margin:0 0 16px;padding-bottom:8px;
+    border-bottom:1px solid var(--border);}
+  h2 .num{color:var(--accent);margin-right:10px;}
+  h3{font-size:17px;font-weight:650;margin:24px 0 10px;color:var(--accent2);}
+  p{margin:0 0 14px;}
+  .callout{border-radius:10px;padding:16px 18px;margin:18px 0;border-left:4px solid;}
+  .callout.warn{background:rgba(210,153,34,.1);border-color:var(--yellow);}
+  .callout.info{background:rgba(68,147,248,.1);border-color:var(--accent2);}
+  .callout.ok{background:rgba(63,185,80,.1);border-color:var(--green);}
+  .callout .t{font-weight:700;margin-bottom:6px;display:block;}
+  ul,ol{margin:0 0 14px;padding-left:22px;}
+  li{margin-bottom:6px;}
+  code{background:var(--code);border:1px solid var(--border);border-radius:4px;
+    padding:1px 6px;font-size:13px;font-family:"SF Mono",Menlo,Consolas,monospace;color:#e3b341;}
+  pre{background:var(--code);border:1px solid var(--border);border-radius:10px;
+    padding:16px 18px;overflow-x:auto;margin:14px 0;}
+  pre code{background:none;border:none;padding:0;color:#c9d1d9;font-size:12.8px;line-height:1.6;}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.8px;}
+  th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  th{background:var(--panel2);font-weight:650;color:var(--text);}
+  td{background:var(--panel);}
+  .tag{display:inline-block;border-radius:5px;padding:2px 9px;font-size:11.5px;font-weight:600;}
+  .tag.best{background:rgba(63,185,80,.18);color:var(--green);border:1px solid var(--green);}
+  .tag.ok{background:rgba(68,147,248,.18);color:var(--accent2);border:1px solid var(--accent2);}
+  .tag.meh{background:rgba(210,153,34,.18);color:var(--yellow);border:1px solid var(--yellow);}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    padding:20px 22px;margin:16px 0;}
+  .card h3{margin-top:0;}
+  .flow{background:var(--code);border:1px solid var(--border);border-radius:8px;
+    padding:14px 16px;margin:12px 0;font-family:"SF Mono",Menlo,monospace;font-size:13px;
+    color:var(--accent2);overflow-x:auto;white-space:nowrap;}
+  .flow b{color:var(--accent);}
+  .flow .r{color:var(--green);}
+  .pro,.con{font-size:13.5px;}
+  .pro b{color:var(--green);} .con b{color:var(--red);}
+  a.src{color:var(--accent2);text-decoration:none;border-bottom:1px dotted var(--accent2);}
+  a.src:hover{color:var(--accent);}
+  .srclist{font-size:13px;}
+  .srclist li{margin-bottom:8px;}
+  footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--border);
+    font-size:12.5px;color:var(--muted);}
+  @media(max-width:820px){.layout{grid-template-columns:1fr;}nav.toc{position:static;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <span class="badge">AWS 中国区 · Bedrock AgentCore · 网络架构</span>
+    <span class="badge verified">✅ 方案一 / 方案二 / Private IdP 绕行 已实测验证</span>
+    <h1>AgentCore Runtime / Gateway 无 VPC Egress 时的 Workaround 方案</h1>
+    <p class="subtitle">假设 Bedrock AgentCore 在中国区（宁夏 cn-northwest-1 / 北京 cn-north-1）首发时，Runtime 与 Gateway 均未提供基于 VPC Lattice 的原生私有出站（VPC Egress），如何让 Agent 安全访问 VPC 内的私有资源（数据库、内部 API、自建 MCP Server）。</p>
+    <div class="meta">生成日期：2026-07-29 &nbsp;|&nbsp; 实测更新：2026-07-29（us-east-2，真实私有 RDS）<br>依据：AWS 官方文档（全球商用区）+ 社区实践 + <b>本文方案一与方案二的真机验证</b></div>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="layout">
+
+<nav class="toc">
+  <h4>目录</h4>
+  <a href="#overview">概述</a>
+  <a href="#concept">关键概念辨析</a>
+  <a href="#matrix">方案总览矩阵</a>
+  <a href="#s1">方案一 · Lambda 桥接</a>
+  <a href="#s2">方案二 · API Gateway + VPC Link</a>
+  <a href="#s3">方案三 · 公网暴露 + 强管控</a>
+  <a href="#s4">方案四 · Runtime 出站绕行</a>
+  <a href="#ingress">补充 · 入站（Ingress）</a>
+  <a href="#idp">补充 · Private IdP</a>
+  <a href="#verify">✅ 实测验证与勘误</a>
+  <a href="#recommend">选型建议</a>
+  <a href="#sources">参考来源</a>
+</nav>
+
+<main>
+
+<section id="overview">
+<h2><span class="num">01</span>概述</h2>
+<p>在全球商用区，AgentCore 已通过 <b>Amazon VPC Lattice</b> 为 Runtime 和 Gateway 提供了原生 VPC Egress（<code>privateEndpoint</code> / <code>managedVpcResource</code>），Agent 可直接、私有地访问 VPC 内资源。但新区域（尤其中国区）在服务首发时，往往<strong>先上线核心能力，VPC Lattice 集成、PrivateLink 等网络高级特性会滞后</strong>。</p>
+<p>好消息是：<strong>访问私有资源并不强依赖 Gateway/Runtime 自身的 VPC Egress</strong>。AgentCore 的两种目标类型——<b>Lambda target</b> 和 <b>API Gateway target</b>——通过 AWS 骨干网调用，再由这些"中间层"进入 VPC，本身就绕开了对原生 VPC egress 的需求。这是无 VPC Lattice 时最干净、最推荐的路径。</p>
+<div class="callout ok">
+  <span class="t">✅ 一句话结论</span>
+  首选 <b>Gateway → Lambda target（Lambda 挂 VPC）</b>：开箱即用、无需任何 VPC egress 配置、traffic 走骨干网。其次是 <b>Gateway → 区域型 REST API Gateway → VPC Link</b>。这两条在中国区几乎必然可用。
+</div>
+<div class="callout ok">
+  <span class="t">✅ 已实测验证（2026-07-29，us-east-2）</span>
+  方案一与方案二均已在真机上跑通：在一个<b>刻意构造为零互联网出口</b>的 VPC（无 IGW、无 NAT、路由表无 <code>0.0.0.0/0</code>）中，AgentCore Gateway 成功读取了私有 RDS MySQL（<code>PubliclyAccessible=false</code>）的真实数据。本文核心判断成立。
+  <br><br>
+  但实测同时发现文档原有的 <b>API Gateway 资源策略写法存在安全问题</b>（要么锁不住，要么把 Gateway 自己锁死），以及若干必填参数缺失。相关内容已就地修正，完整实测数据与勘误见 <a class="src" href="#verify">第 10 节 · 实测验证与勘误</a>。
+  <br><br>
+  <b>Private IdP 绕行方案（第 09 节）同样已实测通过（9/9）</b>：在 AgentCore Identity 无法访问的私有 IdP 场景下，interceptor Lambda 绕行完整可用；过程中又发现 3 个官方文档未记载的行为，其中 1 条会让所有请求失败。
+</div>
+</section>
+
+<section id="concept">
+<h2><span class="num">02</span>关键概念辨析：别把 Egress 和 Ingress 搞混</h2>
+<p>讨论 workaround 前，先厘清两个方向，否则容易选错方案：</p>
+<table>
+<tbody><tr><th>方向</th><th>含义</th><th>对应能力</th><th>是否是本文重点</th></tr>
+<tr>
+  <td><b>Egress（出站）</b></td>
+  <td>Agent / Gateway <i>主动出去</i>访问你 VPC 内的私有资源（RDS、内部 API、自建 MCP）</td>
+  <td>VPC Lattice <code>privateEndpoint</code>；Runtime VPC 配置（ENI）</td>
+  <td>✅ 本文核心（假设中国区缺失）</td>
+</tr>
+<tr>
+  <td><b>Ingress（入站）</b></td>
+  <td>你 VPC 内的应用<i>私有地调用</i> AgentCore 的 API（不走公网）</td>
+  <td>Interface VPC Endpoint / PrivateLink</td>
+  <td>补充章节讨论</td>
+</tr>
+</tbody></table>
+<div class="callout info">
+  <span class="t">ℹ️ 为什么 Egress 是难点</span>
+  Egress 需要 AgentCore 托管服务"钻进"你的 VPC，这依赖 VPC Lattice resource gateway / ENI 的编排能力。新区域这套编排最容易缺席。而 Lambda / API Gateway 这类"你已经在 VPC 里放好的中间层"，让 AgentCore 只需通过公开/骨干网端点调用即可，从根本上规避了 egress 依赖。
+</div>
+</section>
+
+<section id="matrix">
+<h2><span class="num">03</span>方案总览矩阵</h2>
+<table>
+<tbody><tr>
+  <th>方案</th><th>数据路径</th><th>是否需 VPC Egress</th>
+  <th>私有性</th><th>改造成本</th><th>推荐度</th><th>实测</th>
+</tr>
+<tr>
+  <td><b>① Lambda 桥接</b></td>
+  <td>Gateway → Lambda(挂VPC) → 私有资源</td>
+  <td class="pro"><b>否</b></td>
+  <td>高（不出公网）</td><td>低</td>
+  <td><span class="tag best">首选</span></td>
+  <td><span class="tag best">✅ 通过 730ms</span></td>
+</tr>
+<tr>
+  <td><b>② API GW + VPC Link</b></td>
+  <td>Gateway → 区域REST API → VPC Link → NLB → 私有资源</td>
+  <td class="pro"><b>否</b></td>
+  <td>高</td><td>中</td>
+  <td><span class="tag best">首选</span></td>
+  <td><span class="tag best">✅ 通过 737ms</span></td>
+</tr>
+<tr>
+  <td><b>③ 公网暴露 + 强管控</b></td>
+  <td>Gateway → 公网 ALB/API(WAF+Auth) → 私有资源</td>
+  <td class="pro"><b>否</b></td>
+  <td>中（暴露入口，靠鉴权收敛）</td><td>中</td>
+  <td><span class="tag meh">次选/过渡</span></td>
+  <td>未测</td>
+</tr>
+<tr>
+  <td><b>④ Runtime 出站绕行</b></td>
+  <td>把需私有访问的逻辑下沉到 Lambda/ECS/EKS，Agent 经 Gateway 工具调用</td>
+  <td class="pro"><b>否</b></td>
+  <td>高</td><td>中高</td>
+  <td><span class="tag ok">Runtime 场景</span></td>
+  <td>未测（复用①/②）</td>
+</tr>
+</tbody></table>
+</section>
+
+<section id="s1">
+<h2><span class="num">04</span>方案一 · Lambda 桥接（首选）</h2>
+<div class="card">
+<p>AgentCore Gateway 原生支持 <b>Lambda target</b>，且官方明确：<i>"This functionality is available out-of-the-box and requires no additional configuration"</i>。Gateway 通过 AWS 骨干网直接 invoke Lambda，Lambda 本身<strong>挂载到你的 VPC</strong>（配置 subnet + security group），即可访问 RDS、ElastiCache、内部 API 等私有资源。</p>
+<div class="flow">
+  <b>Agent</b> → AgentCore <b>Gateway</b> &nbsp;→(骨干网 invoke)→&nbsp; <b>Lambda</b>(VPC-attached) &nbsp;→&nbsp; <span class="r">RDS / 内部API / 自建MCP</span>
+</div>
+<h3>为什么它绕开了 VPC Egress</h3>
+<ul>
+  <li>Gateway 到 Lambda 是 <b>service-to-service invoke</b>，不需要 Gateway 进入你的 VPC。</li>
+  <li>"进入 VPC"这一步由 <b>Lambda 的原生 VPC 能力</b>完成——这是 Lambda 十年前就有的成熟功能，中国区完全支持。</li>
+  <li>因此整条链路<strong>不依赖 AgentCore 的任何 egress 特性</strong>。</li>
+</ul>
+<h3>落地要点</h3>
+<ul>
+  <li>Lambda 配置 <code>VpcConfig</code>（至少 2 个 AZ 的私有子网 + 安全组），放在能路由到目标资源的子网。</li>
+  <li>把每个"工具"实现为 Lambda 里的一个处理分支，或一个 Lambda 对应一个工具；Gateway 会把工具 schema 暴露给 Agent。</li>
+  <li>Gateway 执行角色遵循最小权限：<b>只允许 invoke 指定的 Lambda ARN</b>，不要给宽泛的 <code>lambda:InvokeFunction *</code>。</li>
+  <li>Lambda 如需再访问 AWS 服务（S3/DynamoDB）且子网无 NAT，配 VPC Endpoint 即可。</li>
+</ul>
+<p class="pro"><b>优点：</b>零 egress 依赖、开箱即用、流量私有、成本低、冷启动可控（Provisioned Concurrency）。</p>
+<p class="con"><b>限制：</b>受 Lambda 15 分钟超时/负载上限约束；长连接/流式 MCP 场景需评估；工具逻辑需封装进 Lambda。</p>
+<div class="callout ok">
+  <span class="t">✅ 实测结果</span>
+  在无 IGW / 无 NAT 的 VPC 中跑通，端到端 p50 <b>730 ms</b>。硬证据：MySQL 自身 <code>USER()</code> 返回的来源地址是
+  <code>agentadmin@10.30.11.161</code>，即 Lambda ENI 在私有子网内的地址——说明查询确实从 VPC 内部发起。
+  Lambda 的 <code>toolSchema</code> 会被 Gateway 强制校验（把 <code>limit</code> 传成字符串会被 <code>ValidationException</code> 拦下）。
+</div>
+</div>
+</section>
+
+<section id="s2">
+<h2><span class="num">05</span>方案二 · API Gateway + VPC Link（首选）</h2>
+<div class="card">
+<p>官方文档明确了这条路径：<i>"While direct VPC communication from the Gateway is not currently available … the gateway communicates with API Gateway over the AWS backbone … The API Gateway can then communicate with resources using VPC Link"</i>。这正是<strong>为"没有原生 VPC egress"量身准备的官方模式</strong>。</p>
+<div class="flow">
+  <b>Agent</b> → AgentCore <b>Gateway</b> →(骨干网)→ <b>REST API Gateway</b>(区域端点) → <b>VPC Link</b> → NLB → <span class="r">私有资源</span>
+</div>
+<h3>落地要点</h3>
+<ul>
+  <li>AgentCore Gateway <b>仅支持区域型（regional endpoint）REST API</b> 作为直接 target。</li>
+  <li>API Gateway 通过 <b>VPC Link</b>（私有集成，后端为 NLB / 私有 ALB）进入 VPC。</li>
+  <li>出站鉴权仅支持两种：<b>IAM（SigV4，用 Gateway 执行角色）</b> 或 <b>API Key（Gateway 托管）</b>；不支持 OAuth 和跨账号（跨账号/OAuth 请改用下面的 OpenAPI target）。<span class="tag best">实测确认</span></li>
+  <li><b>必填：</b>创建 target 时必须提供 <code>apiGatewayToolConfiguration.toolFilters</code>，白名单列出要暴露为工具的 path + method（详见 <a class="src" href="#verify">勘误 3</a>）。</li>
+  <li>用资源策略把 API Gateway 收敛到<b>只有你的 Gateway 执行角色</b>能调用。<b>注意：必须按执行角色 ARN（<code>aws:PrincipalArn</code>）来写，不能按 <code>aws:SourceArn</code> 写 Deny</b>——后者会把 Gateway 自己锁死，实测复现，见 <a class="src" href="#verify">勘误 1</a>：</li>
+</ul>
+<pre><code>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowAgentCoreGatewayRole",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws-cn:iam::ACCT:role/my-gateway-exec-role" },
+      "Action": "execute-api:Invoke",
+      "Resource": "arn:aws-cn:execute-api:cn-northwest-1:ACCT:api-id/stage/*/*"
+    },
+    {
+      "Sid": "DenyEveryoneElse",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "execute-api:Invoke",
+      "Resource": "arn:aws-cn:execute-api:cn-northwest-1:ACCT:api-id/stage/*/*",
+      "Condition": {
+        "ArnNotEquals": { "aws:PrincipalArn":
+          "arn:aws-cn:iam::ACCT:role/my-gateway-exec-role" }
+      }
+    }
+  ]
+}</code></pre>
+<div class="callout warn">
+  <span class="t">⚠️ 本文早期版本给出的策略已被实测证伪</span>
+  早期版本推荐 <code>Principal = bedrock-agentcore.amazonaws.com</code> + <code>ArnEquals aws:SourceArn</code>。
+  该 <code>Allow</code> 本身有效，但<b>只写 Allow 并不能收敛访问</b>（同账号会与身份策略取并集），
+  而一旦补上对称的 <code>aws:SourceArn</code> 取反 <code>Deny</code>，<b>Gateway 会被自己的策略拒绝</b>。
+  请使用上面基于 <code>aws:PrincipalArn</code> 的版本。完整 6 组对照实测见 <a class="src" href="#verify">第 10 节</a>。
+</div>
+<div class="callout warn">
+  <span class="t">⚠️ 中国区 ARN 注意</span>
+  中国区分区是 <code>aws-cn</code>，不是 <code>aws</code>。所有资源策略/IAM 里的 ARN 都要写成 <code>arn:aws-cn:...</code>，且服务主体在中国区是否为 <code>bedrock-agentcore.amazonaws.com</code> 需在上线后以实际文档为准（中国区服务主体有时带区域后缀）。
+</div>
+<div class="callout ok">
+  <span class="t">✅ 实测结果</span>
+  完整链路 <b>Gateway → 区域型 REST API（方法鉴权 AWS_IAM）→ VPC Link → 内网 NLB → 私有子网 EC2 → RDS</b> 跑通，端到端 p50 <b>737 ms</b>，与方案一基本持平。
+  硬证据：MySQL <code>USER()</code> 返回 <code>agentadmin@10.30.11.109</code>，即 EC2 的私有 IP。
+  收敛效果验证：无凭证直调 → <code>403 Missing Authentication Token</code>；用账号内管理员身份 SigV4 直调 → <code>403 explicit deny</code>；经 Gateway 调用 → <code>200</code> + 真实数据。
+</div>
+<h3>私有 REST API 的变体（OpenAPI target）</h3>
+<p>若你的 API Gateway 是<b>私有（private）REST API</b>，不能直接做 target。官方 workaround：导出为 OpenAPI schema，作为 <b>OpenAPI target</b> 导入，并把 <code>routingDomain</code> 指向 API Gateway 的 VPCE DNS。<i>不过这一步用到了 privateEndpoint / VPC Lattice——若中国区缺失，此变体不可用</i>，请退回方案一或方案三。</p>
+</div>
+</section>
+
+<section id="s3">
+<h2><span class="num">06</span>方案三 · 公网暴露 + 强管控（过渡/次选）</h2>
+<div class="card">
+<p>当私有资源本身是一个 HTTP 服务（如自建 MCP Server / 内部 REST API），且不想引入 Lambda/API Gateway 中间层时，可将其通过<strong>面向公网的 ALB 或 API</strong> 暴露，再用多层管控把攻击面收敛到极小——本质是"用鉴权换取免 egress"。</p>
+<div class="flow">
+  <b>Agent</b> → AgentCore <b>Gateway</b> → 公网 <b>ALB / API</b>（WAF + IP 白名单 + OAuth/mTLS）→ <span class="r">后端私有资源</span>
+</div>
+<h3>管控清单（缺一不可）</h3>
+<ul>
+  <li><b>身份鉴权：</b>Gateway 出站 OAuth（client credentials）或 API Key；后端强制校验。</li>
+  <li><b>网络收敛：</b>安全组 / WAF 仅放行 AgentCore 出口（若官方发布出口 IP 段或服务主体条件则据此收敛）。</li>
+  <li><b>传输加密：</b>公网 TLS（公有 ACM 证书或可信 CA）；敏感场景加 mTLS。</li>
+  <li><b>最小暴露面：</b>只暴露 MCP/工具所需路径，其余一律拒绝；开启访问日志与告警。</li>
+</ul>
+<div class="callout warn">
+  <span class="t">⚠️ 合规提醒</span>
+  中国区对数据出域、网络暴露的合规要求更严。公网暴露方案务必先过安全/合规评审；金融、政务等受监管场景通常应避免，优先方案一/二。
+</div>
+<p class="pro"><b>优点：</b>不依赖任何 AgentCore egress 特性；改造快；适合已有公网入口的服务。</p>
+<p class="con"><b>缺点：</b>暴露入口，安全责任重；不符合"绝不出公网"的强隔离诉求。</p>
+</div>
+</section>
+
+<section id="s4">
+<h2><span class="num">07</span>方案四 · Runtime 出站绕行（Agent 需直连私有资源时）</h2>
+<div class="card">
+<p>前三个方案解决的是"<b>Gateway 作为工具入口</b>访问私有资源"。但如果是 <b>AgentCore Runtime 里运行的 Agent 代码本身</b>要直连私有资源（例如 Agent 内部逻辑要查内网 DB），而 Runtime 又没有 VPC 配置能力，怎么办？</p>
+<h3>核心思路：不要让 Agent 直接出站，把"出站"下沉为一个工具</h3>
+<ul>
+  <li><b>下沉到工具层：</b>把所有需要访问私有资源的操作，改造成通过 <b>Gateway 工具（→ Lambda / API Gateway）</b>完成（即复用方案一/二）。Agent 只调用工具，不自己建连接——这是最符合 AgentCore 设计范式的做法。</li>
+  <li><b>逻辑外置到 in-VPC 计算：</b>把重逻辑放到 <b>Lambda / ECS / EKS（挂 VPC）</b>，Runtime 里的 Agent 仅做编排与对话，私有访问全部由 in-VPC 组件承担。</li>
+  <li><b>Runtime 出公网访问模型：</b>Runtime 访问 Bedrock 模型等属于服务调用，通常走 AWS 网络，不需要你的 VPC egress；真正缺的是"进你 VPC"，用上面两招补齐。</li>
+</ul>
+<div class="callout info">
+  <span class="t">ℹ️ 设计原则</span>
+  AgentCore 的推荐范式就是"Agent 逻辑轻、能力靠工具"。没有 Runtime VPC egress 时，把"访问私有资源"当成一个由 Gateway 暴露的工具，是最自然、也最可移植的方案——将来中国区补齐原生 egress，只需替换工具实现，Agent 代码不动。
+</div>
+</div>
+</section>
+
+<section id="ingress">
+<h2><span class="num">08</span>补充 · 入站（Ingress）方向的私有连接</h2>
+<p>如果你的诉求是反过来——<b>VPC 内的应用要私有地调用 AgentCore API（不走公网）</b>——这属于 Ingress，用 <b>Interface VPC Endpoint（AWS PrivateLink）</b>解决，与 egress 无关。若中国区连 PrivateLink 也未就绪，则临时经公网 + IAM/SigV4 调用 AgentCore API（走 HTTPS，鉴权严格），待 PrivateLink 上线后切换。</p>
+<div class="callout warn">
+  <span class="t">⚠️ 需上线后确认的中国区事项</span>
+  <ul style="margin:8px 0 0;">
+    <li>AgentCore 各子服务（Runtime / Gateway / Identity / Memory）在 cn-north-1、cn-northwest-1 的<b>具体可用性与 GA 时间</b>；</li>
+    <li>VPC Lattice 集成、PrivateLink、支持的可用区列表是否随首发提供；</li>
+    <li>服务主体名称、ARN 分区（<code>aws-cn</code>）、跨区域推理是否受限。</li>
+  </ul>
+  以上以中国区上线时的官方文档 / 控制台为准。
+</div>
+</section>
+
+<section id="idp">
+<h2><span class="num">09</span>补充 · AgentCore Identity 不支持 Private IdP 的 Workaround</h2>
+
+<p><b>Private IdP</b> = 自建在你 VPC 内网、公网访问不到的 OAuth2 / OIDC 授权服务器（如 Keycloak、PingFederate 或其他 OIDC 兼容授权服务器）。AgentCore Identity 需要在<strong>两个方向</strong>访问它：</p>
+
+<table>
+<tbody><tr><th>方向</th><th>AgentCore 要访问 IdP 的什么</th><th>用途</th><th>原生配置位置</th></tr>
+<tr>
+  <td><b>入站（Inbound）</b></td>
+  <td>OIDC discovery（<code>/.well-known/openid-configuration</code>）与 <b>JWKS</b> 端点</td>
+  <td>拉公钥，验证进来的 JWT</td>
+  <td><code>authorizerConfiguration.customJWTAuthorizer.privateEndpoint</code>（Runtime / Gateway 均可）</td>
+</tr>
+<tr>
+  <td><b>出站（Outbound）</b></td>
+  <td><b>token endpoint</b></td>
+  <td>用授权码或 client credentials 换下游访问令牌</td>
+  <td>OAuth credential provider 上的 <code>privateEndpoint</code></td>
+</tr>
+</tbody></table>
+
+<div class="callout info">
+  <span class="t">ℹ️ 与 VPC Egress 同根同源</span>
+  官方文档明确：Private IdP 的私有连接 <i>"is established using Amazon VPC Lattice resource gateways and resource configurations, <b>following the same pattern used by AgentCore Gateway VPC egress</b>"</i>（由 <code>AWSServiceRoleForBedrockAgentCoreIdentity</code> 服务关联角色代管 Lattice 资源）。
+  <br><br>
+  因此<b>中国区若缺失 VPC Lattice，访问私有数据资源与连接 Private IdP 会一起失效</b>——同一个根因，workaround 思路也一致：<b>把"连接 IdP"下沉到能进 VPC 的中间层</b>。
+</div>
+
+<h3>核心绕行点：interceptor Lambda</h3>
+<p><b>interceptor Lambda 是 Private IdP 缺失时的万能绕行点。</b>它挂在你的 VPC 里，天然能私有访问内网 IdP，把"AgentCore Identity 是否支持 Private IdP"这个依赖彻底解耦。官方文档也把它列为 Private IdP 的替代路径：<i>"you can use an interceptor Lambda function for inbound authentication and override the Authorization header in the interceptor Lambda for use with outbound auth"</i>。</p>
+
+<div class="flow">
+  <b>Agent</b> →(带 JWT)→ <b>Gateway</b> →<b>REQUEST interceptor Lambda</b>(挂 VPC)→ <span class="r">内网 IdP: JWKS / token</span> →(验签通过/换到令牌)→ <b>target</b>
+</div>
+
+<p>interceptor 有两类，<b>每种最多各配一个</b>，且<b>目前只能是 Lambda</b>：</p>
+<ul>
+  <li><b>REQUEST interceptor</b>——在 Gateway 调用 target <i>之前</i>执行，用于请求校验、改写、自定义授权。</li>
+  <li><b>RESPONSE interceptor</b>——在返回调用方 <i>之前</i>执行，用于脱敏、改写响应。</li>
+</ul>
+
+<h3>入站绕行：在 interceptor 里自己验 JWT</h3>
+<p>不再让 AgentCore Identity 去拉内网 JWKS，而是把 Gateway 入站鉴权换成 <code>AWS_IAM</code>（或 <code>NO_AUTH</code> + interceptor），JWT 校验完全由 VPC 内的 REQUEST interceptor 完成：</p>
+<ol>
+  <li>interceptor 从 <code>mcp.gatewayRequest.headers.Authorization</code> 取出 JWT（<b>必须</b>把 <code>passRequestHeaders</code> 设为 <code>true</code>，否则拿不到 headers）。</li>
+  <li>Lambda 私有访问内网 IdP 的 JWKS 端点拉公钥（<b>务必缓存</b>，见下方注意事项），本地验签 + 校验 <code>iss</code> / <code>aud</code> / <code>exp</code> / scope。</li>
+  <li>校验<b>不通过</b>时，直接在输出里返回 <code>transformedGatewayResponse</code>——Gateway 会<b>立即用该内容响应、不再调用 target</b>，等于短路拒绝：</li>
+</ol>
+<pre><code>{
+  "interceptorOutputVersion": "1.0",
+  "mcp": {
+    "transformedGatewayResponse": {
+      "statusCode": 403,
+      "body": { "jsonrpc": "2.0", "id": 1,
+                "error": { "code": -32001, "message": "token rejected" } }
+    }
+  }
+}</code></pre>
+<p>校验通过则什么都不返回（或只回 <code>transformedGatewayRequest</code>），请求正常流向 target。</p>
+
+<h3>出站绕行：两条路，优先第二条</h3>
+<ul>
+  <li><b>(a) interceptor 改写 Authorization：</b>interceptor 私有调用内网 IdP 的 token endpoint（client credentials）拿到下游令牌，写进转发请求的 header。
+    <br><span class="con"><b>注意：</b></span>官方 payload 示例里，<b>HTTP target</b>（AgentCore Runtime / passthrough）的 <code>transformedGatewayRequest</code> 明确带 <code>headers</code> 字段，而 <b>MCP target</b> 的示例只列了 <code>body</code>。因此"改写 Authorization"在 HTTP target 上是明确支持的，MCP target 请先在目标区域实测确认。</li>
+  <li><b>(b) 让 VPC 内的工具 Lambda 自己拿令牌（推荐）：</b>既然方案一已经把 target 做成挂 VPC 的 Lambda，那这个 Lambda 本来就能私有访问 IdP——<b>直接在工具实现里做 token 交换</b>，根本不需要 AgentCore Identity 的 outbound OAuth credential provider，也就不需要 Private IdP 支持。改造面最小、依赖最少。</li>
+</ul>
+
+<h3>配置示例</h3>
+<pre><code>// CreateGateway / UpdateGateway
+"interceptorConfigurations": [
+  {
+    "interceptor": { "lambda": {
+      "arn": "arn:aws-cn:lambda:cn-northwest-1:ACCT:function:my-jwt-interceptor" } },
+    "interceptionPoints": ["REQUEST"],
+    "inputConfiguration": { "passRequestHeaders": true }
+  }
+]</code></pre>
+<p>Gateway 执行角色需要 <code>lambda:InvokeFunction</code>——<b>只授权这个 interceptor 函数</b>，不要给通配。</p>
+
+<h3>落地注意事项</h3>
+<ul>
+  <li><b>⚠️ <code>passRequestHeaders</code> 会把 <code>Authorization</code> 明文交给 Lambda。</b>官方明确警告：headers 含认证令牌与凭证，<b>务必确认 interceptor 没有把它打进日志</b>。</li>
+  <li><b>必须幂等。</b>官方说明 Gateway 在失败或超时时<b>可能重试</b> interceptor，实现要能安全承受重复调用。</li>
+  <li><b>缓存 JWKS 与令牌。</b>interceptor 在<b>每次 Gateway 调用</b>时都会执行，每次都去拉一遍 JWKS 会把延迟和 IdP 压力放大；按 <code>kid</code> 缓存公钥、按过期时间缓存令牌，并利用 Lambda 执行环境复用。</li>
+  <li><b>冷启动。</b>加在关键路径上的 Lambda 冷启动会直接体现在工具调用延迟里，必要时配 Provisioned Concurrency。</li>
+  <li><b>顺带解锁一个限制：</b>官方限制"配了 <code>privateEndpoint</code> 的 target 不能用 <code>NO_AUTH</code> 入站——<b>除非</b>Gateway 上配了 interceptor Lambda"，可见 interceptor 本身就被设计为承担鉴权职责。</li>
+</ul>
+
+<h3>如果 VPC Lattice 可用（对照参考）</h3>
+<p>原生做法是在鉴权配置里直接挂 <code>privateEndpoint</code>，不需要任何 interceptor：</p>
+<pre><code>"customJWTAuthorizer": {
+  "discoveryUrl": "https://idp.internal.example.com/.well-known/openid-configuration",
+  "allowedAudiences": ["my-gateway-audience"],
+  "allowedClients": ["my-client-id"],
+  "privateEndpoint": { "managedVpcResource": {
+      "vpcIdentifier": "vpc-0abc123def456",
+      "subnetIds": ["subnet-0abc123", "subnet-0def456"],
+      "endpointIpAddressType": "IPV4",
+      "securityGroupIds": ["sg-0abc123def"] } }
+}</code></pre>
+<p>原生方式自身的限制（与是否中国区无关，迁移时同样要满足）：discovery URL <b>必须 HTTPS</b>；IdP 必须使用<b>公信 TLS 证书</b>，否则要在前面放一个带公有 ACM 证书的<b>内网 ALB</b>；<b>跨账号</b>只有 self-managed Lattice 支持。</p>
+
+<div class="callout ok">
+  <span class="t">✅ 本节已实测验证（us-east-2，9/9 通过）</span>
+  在一个 AgentCore Identity 无法访问的私有 IdP 场景下（IdP 无公网 IP、仅 Lambda 安全组可达、VPC 无任何出网路由），interceptor 绕行方案<b>完整跑通</b>：入站由 VPC 内的 REQUEST interceptor 拉私有 JWKS 验签，出站由工具 Lambda 自行 <code>client_credentials</code> 换令牌后查私有 RDS。
+  <br><br>
+  可复现代码、9 项验证矩阵与原始证据见 <code>13-private-idp-workaround/</code>。实测同时发现 <b>3 个官方文档没写的行为</b>，其中第 1 条会让所有请求失败——已补充在下方。
+</div>
+
+<h3>实测结果与关键数据</h3>
+<table>
+<tbody><tr><th>项目</th><th>实测值</th></tr>
+<tr><td>验证用例</td><td><span class="tag best">9 / 9 通过</span></td></tr>
+<tr><td>interceptor 温调用开销</td><td><b>p50 2.00 ms</b>（min 1.43 ms，n=216）</td></tr>
+<tr><td>interceptor 冷启动</td><td>init ≈ <b>250 ms</b> + 首次调用 254 ms（含拉 JWKS）</td></tr>
+<tr><td>IdP 公网可达性</td><td><code>PublicIpAddress = null</code>；从 VPC 外连接 → <code>TimeoutError</code></td></tr>
+</tbody></table>
+
+<p>9 项用例里最有说服力的两条：用<b>从未交给 IdP 的第二把 RSA 私钥</b>伪造签名 → 被
+<code>signature verification failed</code> 拦下，证明确实在用 IdP 公钥验签；令牌 <code>kid</code>
+在 JWKS 里不存在 → 被拦下，<b>反证 JWKS 真的是从私有 IdP 拉回来的</b>。其余
+过期 / 错误 aud / 错误 iss / 缺 scope 用例都带<b>合法签名</b>，证明校验不止看签名。</p>
+
+<div class="card">
+<h3 style="color:var(--red);">⚠️ 实测发现 1 · 放行时必须回显原始 body，否则请求全挂</h3>
+<p>MCP <b>REQUEST</b> interceptor 放行时，直觉写法是"什么都不改就返回空对象"：</p>
+<pre><code>{ "interceptorOutputVersion": "1.0", "mcp": {} }</code></pre>
+<p><b>实测：客户端收到 <code>HTTP 200</code> + JSON-RPC <code>Parse error - Invalid JSON format</code>，请求根本到不了 target。</b>更容易误判的是：此时 9 个负例<b>全部正常</b>（<code>transformedGatewayResponse</code> 短路路径没问题），<b>只有放行路径是坏的</b>——看起来很像拦截逻辑写错了。</p>
+<div class="fix">
+  <span class="t">✅ 正确写法</span>把原始 JSON-RPC body 回显出来：
+<pre style="margin:8px 0 0;"><code>{ "interceptorOutputVersion": "1.0",
+  "mcp": { "transformedGatewayRequest": { "body": &lt;原始 JSON-RPC body&gt; } } }</code></pre>
+</div>
+<p>官方文档里"原样透传就返回空对象"（<code>{"interceptorOutputVersion":"1.0","http":{}}</code>）是写在 <b>HTTP target 的 RESPONSE interceptor</b> 一节的，<b>不适用于 MCP target 的 REQUEST interceptor</b>。</p>
+</div>
+
+<div class="card">
+<h3 style="color:var(--red);">⚠️ 实测发现 2 · <code>passRequestHeaders=false</code> 给的是空字典，不是缺失字段</h3>
+<p>关掉 <code>passRequestHeaders</code> 后，interceptor 收到的是 <code>headers: {}</code>，而<b>不是</b>没有 <code>headers</code> 这个键。于是：</p>
+<pre><code>if headers is None:      # ← 永远不成立，检测不到配置错误</code></pre>
+<p>会把<b>配置错误伪装成"客户端没带令牌"</b>。我们实测时正是先看到 <code>missing bearer token</code>，真实原因却是 <code>passRequestHeaders</code> 没开——排查方向会被带偏。应按<b>空值</b>判断：</p>
+<pre><code>if not headers:          # ← 空字典也能捕获
+    return deny(request_id, "interceptor cannot see request headers",
+                "set inputConfiguration.passRequestHeaders=true")</code></pre>
+</div>
+
+<div class="card">
+<h3>实测发现 3 · <code>NONE</code> 入站 + interceptor 可以正常创建并工作</h3>
+<p><code>authorizerType=NONE</code> 搭配 REQUEST interceptor <b>可直接创建</b>，Gateway 正常 <code>READY</code>，且 <code>Authorization</code> 头能完整交给 interceptor。这点很关键：入站若换成 <code>AWS_IAM</code>，<code>Authorization</code> 会被 SigV4 签名占用，业务 JWT 就得改走自定义头。</p>
+<p class="con"><b>但要清楚风险：</b><code>NONE</code> 意味着 Gateway 端点<b>没有平台层鉴权</b>，interceptor 是唯一关卡——它报错、超时或被误删，就直接变成"敞口"或"全拒"。生产应给 interceptor 配 Provisioned Concurrency 与告警，Gateway 执行角色<b>只</b>授权这一个函数，并考虑 <code>AWS_IAM</code> + 自定义头做双层。</p>
+</div>
+
+<div class="callout ok">
+  <span class="t">✅ 绕行方案的一个意外优势：不受"公信证书"约束</span>
+  原生 <code>privateEndpoint</code> 路径要求 IdP 的 discovery URL <b>必须 HTTPS</b> 且证书必须<b>公信</b>（否则要加带公有 ACM 证书的内网 ALB）。走 interceptor 时<b>这两条约束都不存在</b>——HTTP 客户端是你自己的代码。实测 demo 的 IdP 就是纯 HTTP。内网短链路可以，但<b>生产仍建议 TLS</b>，只是不再被公信证书绑住。
+</div>
+
+<div class="callout info">
+  <span class="t">ℹ️ 仍未验证的一点</span>
+  上文出站方案 (a)"interceptor 改写 Authorization"在 MCP target 上<b>本次未能验证</b>：对 Lambda target 而言 HTTP 头不可观测（Lambda 收到的是工具入参，不是 HTTP 请求），构造不出干净的观测实验。由于方案 (b)（工具 Lambda 自行换令牌）已实测跑通并已解决出站需求，<b>建议直接采用 (b)</b>，不必依赖头改写。
+</div>
+</section>
+
+<section id="verify">
+<h2><span class="num">10</span>实测验证与勘误</h2>
+
+<p>由于 AgentCore 尚未在中国区上线，验证在 <b>us-east-2（俄亥俄）</b> 完成。为尽可能贴近"没有原生 VPC Egress、网络强隔离"的中国区首发假设，目标 VPC 被<strong>刻意构造成完全没有互联网出口</strong>：无 Internet Gateway、无 NAT Gateway、路由表里没有 <code>0.0.0.0/0</code>，出网能力仅有一个 S3 网关端点（用于把程序包送进隔离子网）与 SSM 接口端点（用于免公网调试）。</p>
+
+<h3>验证环境与结论</h3>
+<table>
+<tbody><tr><th>项目</th><th>内容</th></tr>
+<tr><td>区域 / 时间</td><td>us-east-2，2026-07-29</td></tr>
+<tr><td>目标 VPC</td><td>10.30.0.0/16，2 个私有子网；<b>IGW 数量 0、NAT 数量 0</b>，路由表仅 <code>local</code> + S3 前缀列表</td></tr>
+<tr><td>私有资源</td><td>RDS MySQL 8.0.42（db.t4g.micro），<code>PubliclyAccessible=false</code>，私有 IP <code>10.30.11.229</code></td></tr>
+<tr><td>Gateway</td><td>protocol <code>MCP</code>，入站鉴权 <code>AWS_IAM</code>，两个 target：<code>lambda</code> + <code>apiGateway</code></td></tr>
+<tr><td>方案一</td><td><span class="tag best">✅ 通过</span> 端到端 p50 730 ms</td></tr>
+<tr><td>方案二</td><td><span class="tag best">✅ 通过</span> 端到端 p50 737 ms</td></tr>
+<tr>
+  <td>Private IdP 绕行<br>（第 09 节）</td>
+  <td><span class="tag best">✅ 9/9 通过</span> 另起一个 Gateway：入站 <code>NONE</code> + REQUEST interceptor；
+      私有 IdP 跑在同一 VPC 的 EC2 上（<code>PublicIpAddress=null</code>，仅 Lambda 安全组可达）。
+      interceptor 温调用 p50 <b>2.00 ms</b>（n=216），冷启动 init ≈ 250 ms + 首次调用 254 ms（含拉 JWKS）</td>
+</tr>
+</tbody></table>
+
+<div class="callout info">
+  <span class="t">ℹ️ 关于延迟数字</span>
+  730 / 737 ms 含本地客户端进程启动与一次完整 MCP <code>initialize</code> 握手，<b>不是纯服务端耗时</b>；两条链路的差异在噪声范围内，不应作为选型依据。
+</div>
+
+<h3>硬证据：查询确实从 VPC 内部发起</h3>
+<p>最有力的证据不是"调通了"，而是 <b>MySQL 自己记录的客户端地址</b>。<code>USER()</code> 的返回值落在私有子网网段内：</p>
+<pre><code>// 方案一（Gateway → Lambda 挂 VPC → RDS）
+{ "path": "AgentCore Gateway -> Lambda (VPC-attached) -> RDS",
+  "rds_resolved_private_ip": "10.30.11.229",
+  "version": "8.0.42",
+  "db_user": "agentadmin@10.30.11.161" }   // ← Lambda ENI 私有 IP
+
+// 方案二（Gateway → API GW → VPC Link → NLB → EC2 → RDS）
+{ "path": "AgentCore Gateway -> API Gateway -> VPC Link -> NLB -> EC2 -> RDS",
+  "ec2_private_ip": "10.30.11.109",
+  "db_user": "agentadmin@10.30.11.109" }   // ← EC2 私有 IP</code></pre>
+<p>反向验证：从 VPC 外部直连 RDS 3306 → <code>TimeoutError</code>；参数透传正常，两个 target 都能按 <code>status</code> / <code>limit</code> 正确过滤。</p>
+
+<h2 style="font-size:19px;border:none;margin-top:34px;">勘误清单</h2>
+
+<div class="card">
+<h3 style="color:var(--red);">⚠️ 勘误 1（安全）· <code>Deny</code> 绝不能用 <code>aws:SourceArn</code> 收敛，会把 Gateway 自己锁死</h3>
+<p>本文早期版本与 AWS 官方文档 <code>gateway-vpc-egress.html</code> 给出的资源策略是：</p>
+<pre><code>{ "Principal": { "Service": "bedrock-agentcore.amazonaws.com" },
+  "Condition": { "ArnEquals": { "aws:SourceArn": "&lt;gateway ARN&gt;" } } }</code></pre>
+<p>这条 <code>Allow</code> <b>本身是有效的</b>。实测把执行角色身份策略里的 <code>execute-api:Invoke</code> 删掉后，仅凭这条资源策略 Gateway 依然返回 200——说明在那次授权判断中 <code>aws:SourceArn</code> 确实存在且等于 gateway ARN。</p>
+<p><b>问题出在 <code>Deny</code> 上。</b>由于勘误 2（只写 Allow 锁不住），收敛必须加显式 <code>Deny</code>；若顺着文档思路把 <code>Deny</code> 也写成 <code>aws:SourceArn</code> 取反，<b>Gateway 立刻被自己的策略拒绝</b>：</p>
+<pre><code>User: arn:aws:sts::ACCT:assumed-role/my-gateway-exec-role/gateway-session-e465e38c-...
+is not authorized to perform: execute-api:Invoke ...
+with an explicit deny in a resource-based policy</code></pre>
+<p>从报错可以看出机制：这次请求还会<b>以 Gateway 执行角色的临时会话身份</b>再被判定一次，而在那个上下文里 <code>aws:SourceArn</code> 是<b>缺失</b>的。IAM 的取反类操作符（<code>ArnNotEquals</code>、<code>StringNotEquals</code>）在键缺失时判定为 <b>true</b>，<code>...IfExists</code> 同样如此，于是 <code>Deny</code> 命中；而显式 <code>Deny</code> 永远优先于 <code>Allow</code>。</p>
+<div class="fix">
+  <span class="t">✅ 正确写法</span>
+  <code>Allow</code> 与 <code>Deny</code> 都按<b>执行角色 ARN</b>（<code>aws:PrincipalArn</code>）来写。该键对 SigV4 调用者一定存在，且 assumed-role 会话会解析成裸角色 ARN。完整策略见<a class="src" href="#s2">方案二</a>正文。
+  <br>附带发现：只要资源策略里有针对执行角色 ARN 的 <code>Allow</code>，执行角色的<b>身份策略就不再需要</b> <code>execute-api:Invoke</code>（实测删掉后仍能调通）；保留它无害，AWS 文档亦如此建议。
+</div>
+<h3>6 组策略对照实测矩阵</h3>
+<p>"其他主体" = 同账号内另一个持有宽泛 <code>execute-api:Invoke</code> 的管理员角色。每次改策略都需重新部署 stage，并再等约 1–2 分钟才实际生效。</p>
+<table>
+<tbody><tr><th>#</th><th>资源策略</th><th>执行角色身份策略给了 <code>execute-api:Invoke</code></th><th>Gateway 调用</th><th>其他主体</th><th>结论</th></tr>
+<tr><td>1</td><td>无</td><td>是</td><td class="pro">200</td><td class="con">200</td><td>完全没有收敛</td></tr>
+<tr><td>2</td><td>服务主体 <code>Allow</code> + <code>ArnEquals SourceArn</code>（原文档写法）</td><td>是</td><td class="pro">200</td><td class="con">200</td><td><span class="tag bad">锁不住</span> 同账号取并集</td></tr>
+<tr><td>3</td><td>同上</td><td><b>否</b></td><td class="pro">200</td><td class="con">200</td><td>证明该 <code>Allow</code> 确实生效</td></tr>
+<tr><td>4</td><td>#2 再加 <code>Deny *</code> + <code>ArnNotEqualsIfExists SourceArn</code></td><td>是</td><td class="con">403 explicit deny</td><td>403</td><td><span class="tag bad">把 Gateway 锁死</span></td></tr>
+<tr><td>5</td><td>角色 ARN <code>Allow</code> + <code>Deny *</code> + <code>ArnNotEquals PrincipalArn</code></td><td><b>否</b></td><td class="pro">200</td><td class="pro">403</td><td>可用；身份策略非必需</td></tr>
+<tr><td>6</td><td>同 #5</td><td>是</td><td class="pro">200</td><td class="pro">403</td><td><span class="tag best">推荐</span></td></tr>
+</tbody></table>
+<p>无 SigV4 的裸请求在全部 6 行中均返回 <code>403 Missing Authentication Token</code>（方法鉴权为 <code>AWS_IAM</code>）。</p>
+</div>
+
+<div class="card">
+<h3 style="color:var(--red);">⚠️ 勘误 2（安全）· 只写 <code>Allow</code> 的资源策略不等于"锁死"</h3>
+<p>本文早期版本称"用资源策略把 API Gateway 锁死到 AgentCore 服务主体"。实测：同账号调用时 API Gateway 会把<b>身份策略与资源策略取并集</b>，因此账号内任何持有 <code>execute-api:Invoke</code> 的主体照样能调进来——用管理员身份直接 SigV4 调用，返回了 <code>200</code> 和完整 RDS 数据。<b>必须补显式 <code>Deny</code></b> 才算真正收敛。</p>
+</div>
+
+<div class="card">
+<h3>勘误 3 · <code>apiGatewayToolConfiguration.toolFilters</code> 是必填项（官方文档未提及）</h3>
+<p><code>apiGateway</code> target 不能只给 <code>restApiId</code> + <code>stage</code>，否则直接报参数校验失败：</p>
+<pre><code>ParamValidation: Missing required parameter in
+targetConfiguration.mcp.apiGateway: "apiGatewayToolConfiguration"</code></pre>
+<p>必须用 <code>toolFilters</code> 白名单列出要暴露的 path + method；强烈建议再配 <code>toolOverrides</code> 给工具起 Agent 友好的名字与描述，否则工具名由 API 结构自动推导，可读性很差。</p>
+<pre><code>"apiGateway": {
+  "restApiId": "xxxxxxxxxx", "stage": "prod",
+  "apiGatewayToolConfiguration": {
+    "toolFilters": [ { "filterPath": "/orders", "methods": ["GET"] } ],
+    "toolOverrides": [ { "name": "listOrders", "description": "...",
+                         "path": "/orders", "method": "GET" } ]
+  }
+}</code></pre>
+</div>
+
+<div class="card">
+<h3>勘误 4 · Gateway 入站可以直接用 <code>AWS_IAM</code>，验证阶段不需要 Cognito</h3>
+<p>本文与多数示例都用 CUSTOM_JWT + Cognito。实测 <code>--authorizer-type AWS_IAM</code> 完全可用：用 SigV4 对服务名 <code>bedrock-agentcore</code> 签名，直接 POST 到 Gateway 的 MCP 端点即可完成 <code>initialize</code> / <code>tools/list</code> / <code>tools/call</code>。POC 与验证阶段能省掉整套 IdP，非常实用；生产仍建议 CUSTOM_JWT 以承载用户身份。</p>
+</div>
+
+<div class="card">
+<h3>勘误 5 · 两个工程时序坑</h3>
+<ul>
+  <li><b>IAM 传播：</b><code>CreateGatewayTarget</code> 会<b>立即校验</b>执行角色对 Lambda 的 <code>lambda:InvokeFunction</code> 权限。新建角色后马上创建 target 会失败（<code>Gateway execution role lacks permission to invoke Lambda function</code>），策略内容其实是对的，<b>重试即可</b>。</li>
+  <li><b>API Gateway 部署限流 + 策略生效延迟：</b><code>CreateDeployment</code> 限流很严（<code>TooManyRequestsException</code>），需退避重试；资源策略改完必须<b>重新部署 stage</b>，且实际生效还要再等约 1–2 分钟——我们第一次测"应该被拒绝"时仍返回 200，轮询后才变 403。写自动化校验时必须轮询，否则会得出错误结论。</li>
+</ul>
+</div>
+
+<div class="card">
+<h3 style="color:var(--red);">⚠️ 勘误 6 · MCP REQUEST interceptor 放行时必须回显原始 body</h3>
+<p>放行时返回 <code>{"interceptorOutputVersion":"1.0","mcp":{}}</code>，客户端会收到
+<code>HTTP 200</code> + JSON-RPC <code>Parse error - Invalid JSON format</code>，<b>请求根本到不了 target</b>。
+必须把原始 JSON-RPC body 回显在 <code>transformedGatewayRequest.body</code> 里。</p>
+<p class="con"><b>为什么容易误判：</b>此时所有<b>拒绝</b>用例（<code>transformedGatewayResponse</code> 短路）都完全正常，
+只有<b>放行</b>路径是坏的——看起来像自己的鉴权逻辑写错了。官方文档里"返回空对象即原样透传"是
+写在 <b>HTTP target 的 RESPONSE interceptor</b> 一节的，不适用于此。</p>
+<p>完整说明与正确代码见 <a class="src" href="#idp">第 09 节 · 实测发现 1</a>。</p>
+</div>
+
+<div class="card">
+<h3 style="color:var(--red);">⚠️ 勘误 7 · <code>passRequestHeaders=false</code> 给的是空字典，不是缺失字段</h3>
+<p>关掉该开关后 interceptor 收到 <code>headers: {}</code>，而<b>不是</b>没有 <code>headers</code> 键。
+于是 <code>if headers is None:</code> 永远不成立，<b>配置错误会伪装成"客户端没带令牌"</b>，
+把排查方向带偏（实测时看到的症状是 <code>missing bearer token</code>，真实原因是开关没开）。
+应改为按空值判断 <code>if not headers:</code> 并给出可操作的报错。详见
+<a class="src" href="#idp">第 09 节 · 实测发现 2</a>。</p>
+</div>
+
+<div class="card">
+<h3>勘误 8 · <code>NONE</code> 入站 + interceptor 组合可用，但 interceptor 成为唯一关卡</h3>
+<p><code>authorizerType=NONE</code> 搭配 REQUEST interceptor <b>可以正常创建并工作</b>，
+且 <code>Authorization</code> 头会完整交给 interceptor——这点很重要，因为入站换成 <code>AWS_IAM</code> 时
+该头会被 SigV4 占用，业务 JWT 必须改走自定义头。</p>
+<p class="con"><b>代价：</b>Gateway 端点没有平台层鉴权，interceptor 报错/超时/被误删就直接变成"敞口"或"全拒"。
+生产请配 Provisioned Concurrency 与告警，执行角色<b>只</b>授权该函数，并考虑 <code>AWS_IAM</code> + 自定义头做双层。
+详见 <a class="src" href="#idp">第 09 节 · 实测发现 3</a>。</p>
+</div>
+
+<div class="card">
+<h3>✅ 被实测证实正确的部分</h3>
+<ul>
+  <li>Lambda target"开箱即用、无需额外配置"——确认，挂 <code>VpcConfig</code> 即可访问 RDS。</li>
+  <li><code>apiGateway</code> target 仅支持<b>区域型 REST API</b>——确认（API 只接受 <code>restApiId</code> + <code>stage</code>）。</li>
+  <li>VPC Link 后端必须是 <b>NLB</b>——确认，REST API 的 VPC Link 不支持 ALB。</li>
+  <li>出站鉴权只有 <b>IAM / API Key</b> 两种——确认，无 OAuth 选项。</li>
+  <li>整条链路<b>不需要 Gateway 进入 VPC</b>——确认，VPC 无任何出网路由仍全程可用。这是本文最核心的判断，成立。</li>
+  <li><b>interceptor Lambda 可以完全替代 Private IdP 支持</b>——确认。入站 JWT 校验与出站令牌交换都能在 VPC 内完成，
+      9/9 验证通过，且 interceptor 温调用开销仅 2 ms。这是第 09 节的核心判断，成立。</li>
+  <li><b>把私有访问下沉为工具</b>（方案四）——确认。<code>12-strands-nova2-runtime/</code> 里的 Strands Agent 跑在
+      <code>networkMode=PUBLIC</code> 的 Runtime 上（无任何 VPC 配置），仍能经 Gateway 读到私有 RDS。</li>
+</ul>
+</div>
+
+<div class="callout warn">
+  <span class="t">⚠️ 迁移到中国区时的额外注意</span>
+  <ul style="margin:8px 0 0;">
+    <li>ARN 分区是 <code>aws-cn</code>，所有策略里的 <code>arn:aws:...</code> 都要改写。</li>
+    <li><b>勘误 1 在中国区影响更大：</b>中国区服务主体名有时带区域后缀，而实测表明正确写法根本不该依赖服务主体，应改用<b>执行角色 ARN</b>——该结论与分区无关，可直接沿用。</li>
+    <li>本次用到的 S3 网关端点、SSM 接口端点、VPC Link、内网 NLB 在中国区均为成熟能力。</li>
+  </ul>
+</div>
+</section>
+
+<section id="recommend">
+<h2><span class="num">11</span>选型建议（决策顺序）</h2>
+<ol>
+  <li><b>默认选方案一（Lambda 桥接）：</b>零 egress 依赖、开箱即用、私有、成本低。90% 的"工具访问私有资源"诉求都应从这里开始。<span class="tag best">✅ 已实测</span></li>
+  <li><b>已有大量 REST 内网服务 → 方案二（API Gateway + VPC Link）：</b>用区域型 REST API + VPC Link，统一治理、鉴权用 IAM SigV4。<span class="tag best">✅ 已实测</span>务必按<a class="src" href="#verify">勘误 1</a>用 <code>aws:PrincipalArn</code> 写资源策略。</li>
+  <li><b>Agent 代码本身要私有访问 → 方案四：</b>把私有访问下沉为 Gateway 工具，Agent 不直连。</li>
+  <li><b>过渡期 / 已有公网入口且合规允许 → 方案三：</b>公网暴露 + WAF + 强鉴权，务必过安全评审。</li>
+  <li><b>入站私有调用 AgentCore API → PrivateLink（就绪后）</b>，未就绪则公网 + SigV4 过渡。</li>
+  <li><b>用内网自建 IdP（Keycloak / PingFederate）→ interceptor Lambda：</b>Private IdP 与 VPC Egress 同样依赖 VPC Lattice，缺失时把 JWT 校验放进挂 VPC 的 REQUEST interceptor，下游令牌交换交给工具 Lambda 自己做。详见<a class="src" href="#idp">第 09 节</a>。</li>
+</ol>
+<div class="callout ok">
+  <span class="t">✅ 可移植性</span>
+  以上方案（尤其一、二、四）都把"访问私有资源"封装为工具/中间层。将来中国区补齐原生 VPC Lattice egress 后，可平滑切换到 <code>privateEndpoint</code>，Agent 逻辑无需改动，迁移成本极低。
+</div>
+</section>
+
+<section id="sources">
+<h2><span class="num">12</span>参考来源</h2>
+<ul class="srclist">
+  <li><a class="src" href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-vpc-egress.html">AWS Docs — Configure AgentCore Gateway VPC Egress for Gateway Targets</a>（Lambda / API Gateway / VPC Link / 私有 REST API workaround）</li>
+  <li><a class="src" href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/vpc-egress-private-endpoints.html">AWS Docs — Connect to private resources in your VPC using VPC Lattice</a>（Managed / Self-managed 模式、私有证书 ALB workaround）</li>
+  <li><a class="src" href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-vpc.html">AWS Docs — Configure AgentCore Runtime and tools for VPC</a>（Runtime ENI、可用区、VPC endpoint）</li>
+  <li><a class="src" href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/vpc-interface-endpoints.html">AWS Docs — Use interface VPC endpoints (PrivateLink) for AgentCore</a>（Ingress 私有连接）</li>
+  <li><a class="src" href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity-private-idp.html">AWS Docs — Connect to private identity providers</a>（Private IdP 入站/出站 <code>privateEndpoint</code>、服务关联角色、限制）</li>
+  <li><a class="src" href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-interceptors.html">AWS Docs — Using interceptors with Gateway</a>（REQUEST/RESPONSE interceptor、<code>passRequestHeaders</code>、幂等与重试、payload 契约）</li>
+  <li><a class="src" href="https://aws.amazon.com/blogs/machine-learning/configuring-amazon-bedrock-agentcore-gateway-for-secure-access-to-private-resources/">AWS ML Blog — Configuring AgentCore Gateway for secure access to private resources</a></li>
+  <li><a class="src" href="https://aws.amazon.com/blogs/networking-and-content-delivery/private-connectivity-patterns-for-amazon-bedrock-agentcore-gateway-targets/">AWS Networking Blog — Private connectivity patterns for AgentCore Gateway Targets</a></li>
+  <li><a class="src" href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html">AWS Docs — AgentCore 区域可用性</a></li>
+  <li><a class="src" href="https://www.repost.aws/questions/QUFSqmbGXbTMWD48izOZDfoA/connect-aws-agentcore-bedrock-gateway-target-to-private-apis-within-a-vpc">AWS re:Post — Connect AgentCore Gateway Target to private APIs within a VPC</a></li>
+</ul>
+</section>
+
+<footer>
+  本报告基于 AWS 全球商用区官方文档，针对"中国区缺失原生 VPC Egress"的假设场景推演整理，<b>其中方案一与方案二已于 2026-07-29 在 us-east-2 完成真机验证</b>（零互联网出口 VPC + 私有 RDS MySQL）。中国区实际能力、服务主体、ARN 分区与可用区列表请以上线时官方文档为准。<br>
+  可复现的部署脚本、原始实测输出与策略对照矩阵见同目录 <code>README.md</code>、<code>results/evidence.txt</code>、<code>results/policy-matrix.md</code>；
+  Private IdP 绕行方案的代码与 9 项验证矩阵见 <code>../13-private-idp-workaround/</code>。<br>
+  由 Knowledge Explainer 生成 · 2026-07-29 · 实测补充 2026-07-29
+</footer>
+
+</main>
+</div>
+</div>
+
+
+</body></html>

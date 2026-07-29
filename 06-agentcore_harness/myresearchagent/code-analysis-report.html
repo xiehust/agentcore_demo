@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代码解读报告 — myresearchagent_myresearchagentAgent</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --ink: #1a2233;
+    --ink-soft: #5b6577;
+    --line: #e4e8ee;
+    --accent: #2856c9;
+    --accent-soft: #eaf0fc;
+    --warn-bg: #fff7ed;
+    --warn-border: #f0c48a;
+    --warn-ink: #8a5a13;
+    --risk-bg: #fdf0f0;
+    --risk-border: #e8b4b4;
+    --risk-ink: #97383d;
+    --ok-bg: #eefaf2;
+    --ok-border: #a9dcbb;
+    --ok-ink: #1f6b3d;
+    --code-bg: #f2f4f8;
+    --mono: "SFMono-Regular", "JetBrains Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.75; font-size: 15.5px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 28px 96px; }
+  header.hero {
+    background: linear-gradient(135deg, #1c3466 0%, #2856c9 70%, #4a7de0 100%);
+    color: #fff; border-radius: 14px; padding: 40px 44px; margin-bottom: 36px;
+  }
+  header.hero h1 { margin: 0 0 8px; font-size: 27px; letter-spacing: .3px; }
+  header.hero .sub { opacity: .88; font-size: 14.5px; }
+  header.hero .meta { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+  header.hero .meta span {
+    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25);
+    border-radius: 20px; padding: 3px 14px; font-size: 12.5px;
+  }
+  h2 {
+    font-size: 21px; margin: 48px 0 16px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--line);
+  }
+  h2 .num { color: var(--accent); font-family: var(--mono); margin-right: 8px; font-size: 18px; }
+  h3 { font-size: 16.5px; margin: 28px 0 10px; color: var(--ink); }
+  p { margin: 10px 0; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 22px 26px; margin: 16px 0;
+  }
+  code {
+    font-family: var(--mono); font-size: 13px;
+    background: var(--code-bg); border-radius: 5px; padding: 1.5px 6px;
+    color: #263042;
+  }
+  pre {
+    background: #202636; color: #dbe2f0; border-radius: 10px;
+    padding: 16px 20px; overflow-x: auto; font-size: 13px; line-height: 1.65;
+    font-family: var(--mono);
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  pre .cm { color: #7c8aa5; }
+  pre .kw { color: #86b3f7; }
+  pre .st { color: #b9e0a5; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 9px 13px; text-align: left; vertical-align: top; }
+  th { background: var(--accent-soft); color: #1d3a7c; font-weight: 600; }
+  tr:nth-child(even) td { background: #fafbfd; }
+  .callout { border-radius: 10px; padding: 14px 20px; margin: 16px 0; border: 1px solid; }
+  .callout .tag { font-weight: 700; font-size: 13px; letter-spacing: .5px; display: block; margin-bottom: 4px; }
+  .warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn-ink); }
+  .risk { background: var(--risk-bg); border-color: var(--risk-border); color: var(--risk-ink); }
+  .ok   { background: var(--ok-bg);   border-color: var(--ok-border);   color: var(--ok-ink); }
+  .toc { columns: 2; column-gap: 40px; font-size: 14.5px; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc li { margin: 4px 0; }
+  .file-tag {
+    display: inline-block; font-family: var(--mono); font-size: 12.5px;
+    background: var(--accent-soft); color: #1d3a7c; border-radius: 6px;
+    padding: 2px 10px; margin-right: 6px;
+  }
+  /* 架构流程图 */
+  .flow { display: flex; flex-direction: column; gap: 0; align-items: center; margin: 24px 0; }
+  .flow-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; width: 100%; }
+  .node {
+    background: var(--card); border: 1.5px solid var(--accent); border-radius: 10px;
+    padding: 10px 18px; text-align: center; font-size: 13.5px; min-width: 150px;
+    box-shadow: 0 1px 3px rgba(30,50,100,.08);
+  }
+  .node b { display: block; font-size: 14px; color: var(--accent); }
+  .node small { color: var(--ink-soft); font-size: 12px; }
+  .node.dim { border-color: #b6bfce; }
+  .node.dim b { color: var(--ink-soft); }
+  .arrow { color: var(--accent); font-size: 20px; line-height: 1.4; text-align: center; margin: 2px 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } .toc { columns: 1; } }
+  .kv { font-size: 14px; }
+  .kv dt { font-weight: 600; margin-top: 10px; }
+  .kv dd { margin: 2px 0 0 0; color: var(--ink-soft); }
+  footer { margin-top: 60px; color: var(--ink-soft); font-size: 12.5px; text-align: center; }
+  .lineref { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>代码解读报告：myresearchagent_myresearchagentAgent</h1>
+  <div class="sub">AgentCore Harness 导出的可自托管 Strands Agent 运行时 — 源码逐模块分析</div>
+  <div class="meta">
+    <span>导出日期：2026-06-26</span>
+    <span>框架：Strands Agents ≥ 1.15.0</span>
+    <span>运行时：Bedrock AgentCore（CodeZip）</span>
+    <span>模型：xai.grok-4.3（Bedrock Mantle）</span>
+    <span>源码规模：9 个源文件 / 约 770 行</span>
+  </div>
+</header>
+
+<!-- ============ 目录 ============ -->
+<div class="card">
+  <h3 style="margin-top:0">目录</h3>
+  <ol class="toc">
+    <li><a href="#s1">项目概述与来源</a></li>
+    <li><a href="#s2">目录结构</a></li>
+    <li><a href="#s3">整体架构与请求生命周期</a></li>
+    <li><a href="#s4">main.py — 应用入口与事件循环</a></li>
+    <li><a href="#s5">内置工具（code_interpreter / shell / file_operations）</a></li>
+    <li><a href="#s6">model/ — Grok via Bedrock Mantle</a></li>
+    <li><a href="#s7">mcp_client/ — 远程 MCP 集成</a></li>
+    <li><a href="#s8">skills/fetcher.py — Skill 拉取与缓存</a></li>
+    <li><a href="#s9">hooks/execution_limits.py — 执行限制</a></li>
+    <li><a href="#s10">依赖与构建配置</a></li>
+    <li><a href="#s11">已知问题、风险与改进建议</a></li>
+    <li><a href="#s12">总结</a></li>
+  </ol>
+</div>
+
+<!-- ============ 1 ============ -->
+<h2 id="s1"><span class="num">01</span>项目概述与来源</h2>
+<div class="card">
+  <p>本项目是由 <b>AgentCore CLI</b> 的 <code>agentcore export harness</code> 命令从托管 Harness 配置
+  （<code>agentcore/app/myresearchagent_myresearchagent/harness.json</code>）<b>导出生成</b>的自托管 Agent 应用。
+  导出的目的是把原本运行在 AgentCore 托管 Harness 上的 Agent，转换为一份可以自行修改、部署到
+  Bedrock AgentCore Runtime 的 <b>Strands SDK</b> 代码工程。</p>
+  <p>核心特征：</p>
+  <ul>
+    <li>入口为 <code>main.py</code>，通过 <code>BedrockAgentCoreApp</code> 的 <code>@app.entrypoint</code> 装饰器暴露为 Starlette ASGI 服务（流式 SSE 输出）。</li>
+    <li>模型为 <b>xai.grok-4.3</b>，经由 <b>Bedrock Mantle</b> 的 OpenAI 兼容端点（<code>/openai/v1</code>，Responses API）调用，而非 Bedrock Converse API。</li>
+    <li>内置三个本地工具（代码解释器、shell、文件编辑器）+ 一个远程 MCP Server（AWS Knowledge）。</li>
+    <li>带有迭代次数 / 超时双重执行限制，以及滑动窗口对话管理。</li>
+  </ul>
+  <div class="callout warn">
+    <span class="tag">⚠ 导出说明（EXPORT_NOTES.md）</span>
+    浏览器工具（browser tool）依赖 Playwright Node 驱动，在 CodeZip（Lambda 风格）运行时无法执行，
+    因此被排除在本次导出之外。如需浏览器能力，需以 <code>--build Container</code> 重新导出。
+  </div>
+</div>
+
+<!-- ============ 2 ============ -->
+<h2 id="s2"><span class="num">02</span>目录结构</h2>
+<div class="card">
+<pre><code>myresearchagent_myresearchagentAgent/
+├── main.py                      <span class="cm"># 入口：ASGI app、Agent 装配、流式事件循环（259 行）</span>
+├── pyproject.toml               <span class="cm"># hatchling 构建 + 依赖声明</span>
+├── EXPORT_NOTES.md              <span class="cm"># 导出遗留事项（browser 工具被排除）</span>
+├── README.md                    <span class="cm"># CLI 生成的开发/部署说明</span>
+├── model/
+│   ├── load.py                  <span class="cm"># 构造 Grok/Mantle 模型客户端（23 行）</span>
+│   └── mantle_compat.py         <span class="cm"># Mantle 兼容层（本导出中未被使用，21 行）</span>
+├── mcp_client/
+│   └── client.py                <span class="cm"># AWS Knowledge 远程 MCP 客户端（16 行）</span>
+├── skills/
+│   └── fetcher.py               <span class="cm"># S3/Git skill 下载、校验、缓存（279 行）</span>
+└── hooks/
+    └── execution_limits.py      <span class="cm"># 迭代/token/超时限制 Hook（54 行）</span></code></pre>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2 id="s3"><span class="num">03</span>整体架构与请求生命周期</h2>
+<div class="card">
+  <div class="flow">
+    <div class="flow-row">
+      <div class="node"><b>调用方</b><small>agentcore invoke / InvokeAgentRuntime</small></div>
+    </div>
+    <div class="arrow">↓ &nbsp;payload（prompt / messages[] / tool_results[]）</div>
+    <div class="flow-row">
+      <div class="node"><b>BedrockAgentCoreApp</b><small>@app.entrypoint → invoke()（main.py:202）</small></div>
+    </div>
+    <div class="arrow">↓ &nbsp;_extract_prompt() 归一化 + 启动 3600s 看门狗</div>
+    <div class="flow-row">
+      <div class="node"><b>Strands Agent（进程级单例）</b><small>get_or_create_agent()（main.py:144）</small></div>
+    </div>
+    <div class="arrow">↓ &nbsp;agent.stream_async() 事件循环</div>
+    <div class="flow-row">
+      <div class="node"><b>模型层</b><small>OpenAIResponsesModel<br>→ Bedrock Mantle /openai/v1<br>→ xai.grok-4.3</small></div>
+      <div class="node"><b>工具层（串行执行）</b><small>code_interpreter · shell<br>file_operations · MCP 工具</small></div>
+      <div class="node"><b>治理层</b><small>ExecutionLimitsHook（75 次迭代）<br>SlidingWindow(150, per_turn)</small></div>
+    </div>
+    <div class="arrow">↓ &nbsp;过滤后逐条 yield SSE 事件</div>
+    <div class="flow-row">
+      <div class="node"><b>流式响应</b><small>contentBlock* / messageStop（含 timeout_exceeded 等自定义 stopReason）</small></div>
+    </div>
+  </div>
+  <p>一次调用的完整路径：payload 进入 <code>invoke()</code> → 归一化为 prompt 或消息列表 → 惰性创建单例 Agent →
+  <code>stream_async</code> 驱动"模型推理 ↔ 工具执行"循环 → 事件经过滤后原样透传给客户端 →
+  触发迭代/超时上限时以自定义 <code>messageStop.stopReason</code> 优雅收尾而非抛错。</p>
+</div>
+
+<!-- ============ 4 ============ -->
+<h2 id="s4"><span class="num">04</span>main.py — 应用入口与事件循环</h2>
+<div class="card">
+  <h3>4.1 Agent 装配（单例模式）<span class="lineref">　main.py:142-163</span></h3>
+  <p><code>get_or_create_agent()</code> 使用模块级全局变量 <code>_agent</code> 实现<b>进程级单例</b>：
+  同一个运行时容器内的多次调用复用同一个 Agent 实例，因此<b>对话历史在容器存活期间天然延续</b>（AgentCore 按 session 路由到同一容器，这就是会话连续性的实现方式）。装配参数：</p>
+  <table>
+    <tr><th>参数</th><th>取值</th><th>含义</th></tr>
+    <tr><td><code>model</code></td><td><code>load_model()</code></td><td>Grok-4.3 via Mantle（见 §6）</td></tr>
+    <tr><td><code>system_prompt</code></td><td><code>"You are a helpful assistant"</code></td><td>导出时的默认系统提示词（Harness 未自定义）</td></tr>
+    <tr><td><code>conversation_manager</code></td><td><code>SlidingWindowConversationManager(window_size=150, per_turn=True)</code></td><td>按轮次滑窗，保留最近 150 轮，防止上下文无限增长</td></tr>
+    <tr><td><code>tool_executor</code></td><td><code>SequentialToolExecutor()</code></td><td>工具<b>串行</b>执行，避免 shell/文件操作并发竞争</td></tr>
+    <tr><td><code>callback_handler</code></td><td><code>None</code></td><td>关闭默认 stdout 回显，事件全部经 <code>stream_async</code> 流出</td></tr>
+    <tr><td><code>hooks</code></td><td><code>ExecutionLimitsHook(max_iterations=75, timeout_seconds=3600)</code></td><td>事件循环治理（见 §9）</td></tr>
+    <tr><td><code>plugins</code></td><td><code>skill_plugins or None</code></td><td>AgentSkills 插件；当前恒为空（见 4.4）</td></tr>
+  </table>
+
+  <h3>4.2 payload 归一化<span class="lineref">　main.py:166-176</span></h3>
+  <p><code>_extract_prompt()</code> 接受三种输入形态，这正是它能承接 <b>Harness 风格客户端工具循环</b>的关键：</p>
+  <ul>
+    <li><code>{"messages": [...]}</code> — 完整消息数组，直接透传；</li>
+    <li><code>{"tool_results": [...]}</code> — 客户端侧工具执行结果，被封装为一条含 <code>toolResult</code> 块的 user 消息回传给模型（续接上一轮的 toolUse）；</li>
+    <li><code>{"prompt": "..."}</code> — 普通字符串提示词。</li>
+  </ul>
+
+  <h3>4.3 双层超时 + 优雅终止<span class="lineref">　main.py:220-255</span></h3>
+  <p>超时控制有两层，语义不同：</p>
+  <ul>
+    <li><b>异步看门狗</b>（invoke 内）：每次调用启动一个 3600s 的 <code>_timeout_watchdog</code> 任务，到点调用 <code>agent.cancel()</code> 硬中断流，随后补发 <code>{"messageStop": {"stopReason": "timeout_exceeded"}}</code>；<code>finally</code> 中保证看门狗被取消回收。</li>
+    <li><b>Hook 检查</b>（模型调用前）：<code>ExecutionLimitsHook</code> 在每次模型调用前检查迭代数与耗时，超限抛 <code>EventLoopException(ExecutionLimitExceeded)</code>，被 <code>invoke</code> 捕获后同样转化为自定义 <code>stopReason</code> 返回 —— 客户端拿到的是正常流结束事件而非 5xx。</li>
+  </ul>
+
+  <h3>4.4 Skills 装载（当前为空）<span class="lineref">　main.py:206-213</span></h3>
+  <div class="callout warn">
+    <span class="tag">⚠ 导出器缺陷的规避</span>
+    Harness 配置中声明 <code>skills=[]</code>，但导出器曾硬编码一个默认的 <code>anthropics/skills.git</code>
+    源 —— 该仓库根目录没有 <code>SKILL.md</code>，导致每次调用都在 skill 解析阶段硬失败。
+    代码中已手工把 <code>git_skill_sources</code> 置空（main.py:207-210 的注释记录了这一决策），与 Harness 的实际配置保持一致。
+  </div>
+
+  <h3>4.5 死代码（导出模板残留）</h3>
+  <p><code>_INLINE_FUNCTION_NAMES</code> 恒为空集合，<code>_has_inline_function_call()</code>（main.py:179）与
+  <code>_is_inline_function_call()</code>（main.py:191）定义后<b>从未被调用</b>——它们是导出模板为"内联函数工具"预留的钩子，本 Harness 未配置该特性，属于可安全删除的残留。同理 <code>_code_interpreter_id</code> 依赖的环境变量未设置时走无参默认路径。</p>
+
+  <h3>4.6 事件过滤<span class="lineref">　main.py:232-240</span></h3>
+  <p>流出前做两道过滤：只透传形如 <code>{"event": ...}</code> 的字典事件；丢弃 <code>start</code> 为空的
+  <code>contentBlockStart</code>（Mantle/Responses API 流中会出现的空占位块），保证下游消费者看到的事件流干净一致。</p>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2 id="s5"><span class="num">05</span>内置工具</h2>
+<div class="card">
+  <table>
+    <tr><th>工具</th><th>来源</th><th>说明</th></tr>
+    <tr>
+      <td><code>code_interpreter</code></td>
+      <td><code>strands_tools.code_interpreter.AgentCoreCodeInterpreter</code></td>
+      <td>托管代码解释器沙箱。若设置了 <code>CODE_INTERPRETER_CODEINTERPRETER_AWS_CODEINTERPRETER_V1_ID</code>
+      环境变量则绑定指定的 Code Interpreter 资源，否则用默认沙箱。<span class="lineref">main.py:32-33</span></td>
+    </tr>
+    <tr>
+      <td><code>shell</code></td>
+      <td>本地 <code>@tool</code> 函数</td>
+      <td>直接 <code>subprocess.run(shell=True)</code> 在<b>运行时容器内</b>执行任意 bash 命令，
+      默认 300s 超时，返回 stdout/stderr/exit_code。<span class="lineref">main.py:34-50</span></td>
+    </tr>
+    <tr>
+      <td><code>file_operations</code></td>
+      <td>本地 <code>@tool</code> 函数</td>
+      <td>仿 Anthropic text-editor 工具的四个子命令：<code>view</code>（带行号/区间查看，目录列表）、
+      <code>str_replace</code>（唯一性校验的精确替换）、<code>create</code>（自动建父目录）、
+      <code>insert</code>（按行插入）。所有错误都以字符串返回给模型而非抛异常，便于模型自我纠错。<span class="lineref">main.py:51-130</span></td>
+    </tr>
+    <tr>
+      <td>MCP 工具集</td>
+      <td><code>mcp_client/client.py</code></td>
+      <td>AWS Knowledge 远程 MCP Server 提供的文档检索类工具（见 §7）。<span class="lineref">main.py:133-136</span></td>
+    </tr>
+  </table>
+  <div class="callout risk">
+    <span class="tag">✗ 安全注意</span>
+    <code>shell</code> 与 <code>file_operations</code> 都直接作用于运行时容器文件系统，且 <code>shell=True</code>
+    允许任意命令。安全边界完全依赖 AgentCore Runtime 的<b>会话级微 VM 隔离</b>与执行角色的 IAM 最小权限
+    —— 容器内没有任何命令白名单或路径限制。若将来给执行角色附加宽泛权限（如 <code>s3:*</code>），
+    模型即可通过 shell 调用 AWS CLI 触达这些资源。
+  </div>
+</div>
+
+<!-- ============ 6 ============ -->
+<h2 id="s6"><span class="num">06</span>model/ — Grok via Bedrock Mantle</h2>
+<div class="card">
+  <h3>6.1 load.py — 实际使用的模型加载器</h3>
+<pre><code><span class="kw">def</span> load_model() -> OpenAIResponsesModel:
+    region = os.environ.get(<span class="st">"AWS_REGION"</span>, ...)
+    token = provide_token(region=region)          <span class="cm"># aws-bedrock-token-generator：短时效 Bearer token</span>
+    base_url = <span class="st">f"https://bedrock-mantle.{region}.api.aws/openai/v1"</span>
+    <span class="kw">return</span> OpenAIResponsesModel(
+        client_args={<span class="st">"api_key"</span>: token, <span class="st">"base_url"</span>: base_url},
+        model_id=<span class="st">"xai.grok-4.3"</span>,
+        params={<span class="st">"store"</span>: False},                 <span class="cm"># Mantle 不持久化 responses，必须关掉服务端存储</span>
+    )</code></pre>
+  <p>要点：</p>
+  <ul>
+    <li>Grok 不走 Bedrock Converse API，而是走 <b>Mantle 的 OpenAI 兼容端点</b>（<code>/openai/v1</code>，Responses API 而非 Chat Completions）。</li>
+    <li>鉴权用 <code>aws_bedrock_token_generator.provide_token()</code> 生成的短时效 Bedrock Bearer token 充当 OpenAI API key —— 底层是 SigV4 预签名，因此执行角色需要相应的 <code>bedrock:InvokeModel*</code> 权限。</li>
+    <li><code>store: False</code>：Mantle 不支持 Responses API 的服务端会话存储，必须显式关闭，否则请求被拒。</li>
+  </ul>
+  <div class="callout warn">
+    <span class="tag">⚠ Token 生命周期隐患</span>
+    <code>provide_token()</code> 只在 <code>load_model()</code> 时执行一次，而 Agent 是进程级单例（§4.1）——
+    即 token 与容器同寿。若容器存活超过 token 有效期（默认约 12 小时），后续模型调用将以 401 失败。
+    长会话/长驻场景应改为在每次请求前刷新 token（如自定义 httpx auth 或在 <code>invoke</code> 内重建 client）。
+  </div>
+
+  <h3>6.2 mantle_compat.py — 未被使用的兼容层</h3>
+  <p><code>MantleCompatResponsesModel</code> 继承 <code>OpenAIResponsesModel</code>，重写
+  <code>_format_request_messages</code>：把 assistant 消息的 <code>content</code> 数组（<code>output_text</code> 块）
+  压平为纯字符串。这是针对 Mantle <b>开源模型路径（<code>/v1</code>，gpt-oss-*）</b>的 Pydantic 校验限制的
+  workaround。<b>本导出使用的是专有模型路径 <code>/openai/v1</code>，load.py 用的是原生
+  <code>OpenAIResponsesModel</code>，此文件当前不参与任何执行路径</b>——保留是为了切换模型时可直接复用。</p>
+</div>
+
+<!-- ============ 7 ============ -->
+<h2 id="s7"><span class="num">07</span>mcp_client/ — 远程 MCP 集成</h2>
+<div class="card">
+  <p>结构极简（16 行）：<code>get_aws_knowledge_mcp_client()</code> 通过
+  <code>streamablehttp_client</code>（Streamable HTTP 传输）连接公开的
+  <code>https://knowledge-mcp.global.api.aws</code>，无需鉴权；<code>get_all_remote_mcp_clients()</code>
+  是聚合入口，返回非空客户端列表，供 main.py 逐个追加进 <code>tools</code>。</p>
+  <p>Strands 的 <code>MCPClient</code> 传入的是<b>工厂 lambda</b> 而非连接实例——连接在 Agent 使用时才惰性建立，
+  MCP Server 暴露的工具（AWS 文档搜索/阅读等）在运行时动态发现并注入模型的工具列表。这赋予该
+  "research agent" 检索 AWS 官方知识库的能力，是其研究能力的主要来源。</p>
+</div>
+
+<!-- ============ 8 ============ -->
+<h2 id="s8"><span class="num">08</span>skills/fetcher.py — Skill 拉取与缓存</h2>
+<div class="card">
+  <p>这是代码量最大（279 行）、工程质量最高的模块：负责把 Harness 声明的 S3 / Git skill 源下载到本地，
+  校验 <code>SKILL.md</code> 后交给 <code>AgentSkills</code> 插件。<b>注意：当前 Harness 配置 skills 为空，
+  此模块在本部署中实际不会执行下载逻辑</b>，但它体现了导出器的完整能力。</p>
+
+  <h3>8.1 缓存设计</h3>
+  <ul>
+    <li>缓存根：<code>&lt;tmpdir&gt;/.agents/skills/{s3,git}/</code> —— 选 tmp 是因为 CodeZip 运行时工作目录（<code>/var/task</code>）<b>只读</b>；</li>
+    <li>以源 URI 的 SHA-256 前 12 位作 key，<code>.map.json</code> 维护 hash → 目录名映射；命中即直接返回，首次调用后零网络开销；</li>
+    <li>下载先落到以 hash 命名的临时目录，校验通过后 <b>rename 为 SKILL.md 中声明的 skill 名</b>（重名时追加 hash 后缀），任何失败路径都 <code>_cleanup</code> 删除半成品，保证重试不见脏状态。</li>
+  </ul>
+
+  <h3>8.2 两条获取路径</h3>
+  <table>
+    <tr><th></th><th>S3（<code>_fetch_s3_skill</code>）</th><th>Git（<code>_fetch_git_skill</code>）</th></tr>
+    <tr><td>方式</td><td>boto3 分页列举 + 逐对象下载</td><td><code>git clone --depth 1</code>；带子路径时用 <code>--filter=blob:none --sparse</code> + sparse-checkout，只拉取所需子目录</td></tr>
+    <tr><td>体积/时间限制</td><td>累计 1 GB 上限，超限中止</td><td>每条 git 命令 60s 超时</td></tr>
+    <tr><td>安全防护</td><td>逐 key 做<b>路径穿越检测</b>（解析后必须落在临时目录内）</td><td>拒绝绝对路径与含 <code>..</code> 的 skill 子路径</td></tr>
+    <tr><td>私有源鉴权</td><td>可注入自定义 s3_client</td><td>Token Vault 凭据 ARN → AgentCore Identity 换取 API key → 以 <code>GIT_CONFIG_*</code> 环境变量注入 Basic Auth（避免凭据泄漏到 <code>/proc/*/cmdline</code>，且能传播到 sparse-checkout 触发的子命令）</td></tr>
+  </table>
+
+  <h3>8.3 失败语义：fail-fast</h3>
+  <p><code>resolve_s3_skills / resolve_git_skills</code> 对任何单个源的失败都直接抛异常、令整次调用失败——
+  注释写明理由："部分 skill 集会让 Agent 在缺失 Harness 声明能力的状态下静默运行"。这是一个正确的
+  完整性优先设计，也正是 §4.4 中导出器硬编码坏源导致每次调用必挂的原因。</p>
+</div>
+
+<!-- ============ 9 ============ -->
+<h2 id="s9"><span class="num">09</span>hooks/execution_limits.py — 执行限制</h2>
+<div class="card">
+  <p><code>ExecutionLimitsHook</code> 实现 Strands 的 <code>HookProvider</code> 接口，注册到
+  <code>BeforeModelCallEvent</code>（每次调用模型前触发），依次检查三项限制，超限即抛
+  <code>EventLoopException(ExecutionLimitExceeded)</code>：</p>
+  <table>
+    <tr><th>限制</th><th>本部署配置</th><th>判定逻辑</th></tr>
+    <tr><td>最大迭代数</td><td>75</td><td>每次模型调用计数 +1，超过阈值终止（防止工具调用死循环）</td></tr>
+    <tr><td>超时</td><td>3600s</td><td><code>time.monotonic()</code> 相对 <b>Hook 构造时刻</b>的耗时</td></tr>
+    <tr><td>最大输出 token</td><td>未启用</td><td>读取 <code>event_loop_metrics.accumulated_usage["outputTokens"]</code></td></tr>
+  </table>
+  <div class="callout warn">
+    <span class="tag">⚠ 计时/计数基准与单例冲突</span>
+    <code>_start_time</code> 与 <code>_iteration_count</code> 都在 Hook <b>构造时</b>初始化，而 Hook 随单例
+    Agent 只构造一次 —— 因此这两个限制实际是<b>容器生命周期累计值</b>，不是"每次调用"的限制：
+    容器启动 1 小时后（哪怕一直空闲），任何新调用的第一次模型请求就会命中 timeout；多次调用的迭代数也会累加、
+    逐渐逼近 75。对短生命周期容器影响不大，但长驻/高复用场景应把限制状态改为 per-invocation 重置
+    （例如在 <code>invoke</code> 中每次新建 Hook，或监听 invocation 开始事件重置计数）。
+  </div>
+</div>
+
+<!-- ============ 10 ============ -->
+<h2 id="s10"><span class="num">10</span>依赖与构建配置</h2>
+<div class="card">
+  <p><code>pyproject.toml</code>：hatchling 构建，Python ≥ 3.10，wheel 打包整个根目录。</p>
+  <table>
+    <tr><th>依赖</th><th>用途</th></tr>
+    <tr><td><code>bedrock-agentcore ≥ 1.9.1</code></td><td>Runtime SDK：<code>BedrockAgentCoreApp</code>、entrypoint、Identity 上下文</td></tr>
+    <tr><td><code>strands-agents ≥ 1.15.0</code></td><td>Agent 框架：Agent / tool / hooks / conversation manager / OpenAIResponsesModel</td></tr>
+    <tr><td><code>strands-agents-tools ≥ 0.1.0</code></td><td><code>AgentCoreCodeInterpreter</code> 托管代码解释器工具</td></tr>
+    <tr><td><code>aws-bedrock-token-generator ≥ 1.0.0</code></td><td>为 Mantle 端点生成 Bearer token</td></tr>
+    <tr><td><code>openai ≥ 1.0.0</code></td><td>OpenAIResponsesModel 底层客户端</td></tr>
+    <tr><td><code>mcp ≥ 1.19.0</code></td><td>Streamable HTTP MCP 客户端</td></tr>
+    <tr><td><code>aws-opentelemetry-distro</code></td><td>可观测性（AgentCore Observability / GenAI spans）</td></tr>
+    <tr><td><code>botocore[crt] ≥ 1.35.0</code></td><td>AWS SDK 基础 + CRT 加速</td></tr>
+  </table>
+</div>
+
+<!-- ============ 11 ============ -->
+<h2 id="s11"><span class="num">11</span>已知问题、风险与改进建议</h2>
+<div class="card">
+  <table>
+    <tr><th style="width:32%">问题</th><th>影响</th><th>建议</th></tr>
+    <tr>
+      <td><b>Mantle token 只在启动时获取一次</b>（model/load.py:17 + 单例 Agent）</td>
+      <td>容器存活超过 token 有效期后模型调用 401</td>
+      <td>每次 invoke 前刷新 token，或用自定义 httpx auth 钩子按需重签</td>
+    </tr>
+    <tr>
+      <td><b>ExecutionLimitsHook 状态跨调用累计</b>（hooks/execution_limits.py:24-25）</td>
+      <td>长驻容器上新调用会"继承"历史耗时与迭代数，提前触发限制</td>
+      <td>在 invoke 内 per-invocation 重建 Hook 或重置计数</td>
+    </tr>
+    <tr>
+      <td><b>shell 工具无任何命令约束</b>（main.py:34-48）</td>
+      <td>模型可执行任意容器内命令；爆破半径 = 执行角色 IAM 权限</td>
+      <td>保持执行角色最小权限；必要时加命令白名单/黑名单 Hook</td>
+    </tr>
+    <tr>
+      <td><b>skill_plugins 只在首个请求生效</b>（main.py:144-147，单例创建后忽略入参）</td>
+      <td>若将来 skills 非空且逐请求变化，后续请求拿不到新 skills</td>
+      <td>当前 skills=[] 无影响；启用 skills 后需注意此语义</td>
+    </tr>
+    <tr>
+      <td><b>死代码残留</b>：<code>_INLINE_FUNCTION_NAMES</code> 相关两个函数、<code>mantle_compat.py</code></td>
+      <td>无功能影响，仅增加阅读噪音</td>
+      <td>可删除，或保留 mantle_compat 备将来切换 gpt-oss 模型</td>
+    </tr>
+    <tr>
+      <td><b>浏览器工具缺失</b>（EXPORT_NOTES.md）</td>
+      <td>CodeZip 运行时无法承载 Playwright</td>
+      <td>需要时以 <code>--build Container</code> 重新导出</td>
+    </tr>
+    <tr>
+      <td><b>Prompt caching 未启用</b></td>
+      <td>长对话/大系统提示场景成本与延迟偏高</td>
+      <td>Mantle/Responses 路径下的缓存能力需按模型支持情况另行评估</td>
+    </tr>
+    <tr>
+      <td><b>system_prompt 为占位默认值</b>（main.py:24）</td>
+      <td>"research agent" 的角色定位未体现在提示词中</td>
+      <td>补充研究型系统提示（检索策略、引用规范、输出结构）</td>
+    </tr>
+  </table>
+  <div class="callout ok">
+    <span class="tag">✓ 值得肯定的设计</span>
+    超限时以自定义 <code>stopReason</code> 优雅收流而非报错；skill 获取的 fail-fast 完整性语义、
+    路径穿越防护与凭据不落 cmdline 的处理；工具串行执行避免文件竞争；<code>file_operations</code>
+    的错误以字符串回传便于模型自纠 —— 这些都是导出代码中成熟度较高的部分。
+  </div>
+</div>
+
+<!-- ============ 12 ============ -->
+<h2 id="s12"><span class="num">12</span>总结</h2>
+<div class="card">
+  <p><b>myresearchagent_myresearchagentAgent</b> 是一份结构清晰的 AgentCore Harness 导出工程：
+  <code>main.py</code> 负责装配与流式生命周期，<code>model/</code>、<code>mcp_client/</code>、
+  <code>skills/</code>、<code>hooks/</code> 各司其职。其能力画像是——以 Grok-4.3（经 Bedrock Mantle
+  OpenAI 兼容端点）为大脑，配备代码解释器、shell、文件编辑三个本地工具和 AWS Knowledge MCP
+  检索工具，在 75 次迭代 / 1 小时的双重限制下串行执行工具循环，并将全过程以 SSE 事件流回传。</p>
+  <p>代码整体质量良好，防御性细节（fail-fast skills、路径穿越检测、凭据保护、优雅终止）到位；
+  主要改进空间集中在<b>单例生命周期带来的三个副作用</b>（token 过期、限制计数累计、skills 只装配一次）
+  以及占位系统提示词。若计划长期运行或扩展 skills，应优先处理 §11 前两项。</p>
+</div>
+
+<footer>
+  报告生成于 2026-07-07 · 基于 commit 47baa48 时点的源码 ·
+  分析范围：app/myresearchagent_myresearchagentAgent（不含 __pycache__ 与 .gitignore）
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "Lambda target": {
+    "n": 6,
+    "p50_ms": 729.5,
+    "min_ms": 709.6,
+    "max_ms": 757.9,
+    "note": "includes local client process start + MCP initialize handshake"
+  },
+  "API GW + VPC Link target": {
+    "n": 6,
+    "p50_ms": 737.1,
+    "min_ms": 687.1,
+    "max_ms": 772.1,
+    "note": "includes local client process start + MCP initialize handshake"
+  }
+}

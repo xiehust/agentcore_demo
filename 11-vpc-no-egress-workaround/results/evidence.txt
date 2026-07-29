@@ -1,0 +1,110 @@
+AgentCore no-VPC-egress workaround verification
+region=us-east-2  account=434444145045  date=2026-07-29T09:52:35Z
+gateway=acdemo-noegress-gw-ongnqn4b1t  url=https://acdemo-noegress-gw-ongnqn4b1t.gateway.bedrock-agentcore.us-east-2.amazonaws.com/mcp
+
+############ Network isolation of the target VPC ############
+--- internet gateways attached to vpc-018b5902896224dc5 ---
+0
+--- NAT gateways in vpc-018b5902896224dc5 ---
+0
+--- routes in the only route table ---
+[
+    {
+        "DestinationCidrBlock": "10.30.0.0/16",
+        "GatewayId": "local",
+        "Origin": "CreateRouteTable",
+        "State": "active"
+    },
+    {
+        "DestinationPrefixListId": "pl-7ba54012",
+        "GatewayId": "vpce-0aec6655488be45b4",
+        "Origin": "CreateRoute",
+        "State": "active"
+    }
+]
+--- RDS public accessibility ---
+{
+    "PubliclyAccessible": false,
+    "Endpoint": "acdemo-noegress-mysql.csvj8vp4flfn.us-east-2.rds.amazonaws.com"
+}
+--- TCP 3306 reachability from outside the VPC (expect timeout) ---
+unreachable: TimeoutError
+
+############ Tools exposed by the gateway ############
+- rdsApi___getDbInfo: Return MySQL version/hostname plus the private IPs proving the call traversed the VPC Link into the private subnet.
+- rdsApi___listOrders: List orders from the private RDS MySQL database via API Gateway + VPC Link. Optional query params: status, limit.
+- rdsLambda___db_info: Return MySQL version, hostname and the private IPs proving the query ran inside the VPC.
+- rdsLambda___list_orders: List orders from the private RDS MySQL database. Optionally filter by status.
+
+############ Workaround 1: Gateway -> Lambda(VPC) -> RDS ############
+--- rdsLambda___db_info ---
+{
+  "rds_endpoint": "acdemo-noegress-mysql.csvj8vp4flfn.us-east-2.rds.amazonaws.com",
+  "rds_resolved_private_ip": "10.30.11.229",
+  "lambda_private_ip": "169.254.29.139",
+  "path": "AgentCore Gateway -> Lambda (VPC-attached) -> RDS",
+  "version": "8.0.42",
+  "db_hostname": "ip-172-31-0-80",
+  "db_name": "agentdemo",
+  "db_user": "agentadmin@10.30.12.213",
+  "server_time": "2026-07-29 09:52:51"
+}
+--- rdsLambda___list_orders {"status":"SHIPPED"} ---
+{
+  "count": 2,
+  "orders": [
+    {
+      "order_ref": "ORD-1001",
+      "customer_email": "alice@example.com",
+      "status": "SHIPPED",
+      "amount": 129.99
+    },
+    {
+      "order_ref": "ORD-1003",
+      "customer_email": "carol@example.com",
+      "status": "SHIPPED",
+      "amount": 891.0
+    }
+  ]
+}
+
+############ Workaround 2: Gateway -> API GW -> VPC Link -> NLB -> EC2 -> RDS ############
+--- rdsApi___getDbInfo ---
+{
+  "rds_endpoint": "acdemo-noegress-mysql.csvj8vp4flfn.us-east-2.rds.amazonaws.com",
+  "rds_resolved_private_ip": "10.30.11.229",
+  "ec2_private_ip": "10.30.11.109",
+  "ec2_hostname": "ip-10-30-11-109.us-east-2.compute.internal",
+  "path": "AgentCore Gateway -> API Gateway -> VPC Link -> NLB -> EC2 (private subnet) -> RDS",
+  "version": "8.0.42",
+  "db_hostname": "ip-172-31-0-80",
+  "db_name": "agentdemo",
+  "db_user": "agentadmin@10.30.11.109",
+  "server_time": "2026-07-29 09:52:52"
+}
+--- rdsApi___listOrders {"status":"PENDING"} ---
+{
+  "count": 2,
+  "orders": [
+    {
+      "order_ref": "ORD-1002",
+      "customer_email": "bob@example.com",
+      "status": "PENDING",
+      "amount": 42.5
+    },
+    {
+      "order_ref": "ORD-1005",
+      "customer_email": "erin@example.com",
+      "status": "PENDING",
+      "amount": 310.75
+    }
+  ]
+}
+
+############ API Gateway lockdown ############
+--- unauthenticated direct call (expect 403 Missing Authentication Token) ---
+{"message":"Missing Authentication Token"}HTTP 403
+--- SigV4 direct call as a non-gateway principal (expect 403 explicit deny) ---
+HTTP 403 {"Message":"User: arn:aws:sts::434444145045:assumed-role/admin_role_for_workshop/i-0785d8d0b8b950448 is not authorized to perform: execute-api:Invoke on resource: arn:aws:execute-api:us-east-2:********5045:ip8yrem2t4/pro
+--- effective resource policy ---
+{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"AllowAgentCoreGatewayRole\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::434444145045:role\/acdemo-noegress-gw-role\"},\"Action\":\"execute-api:Invoke\",\"Resource\":\"arn:aws:execute-api:us-east-2:434444145045:ip8yrem2t4\/prod\/*\/*\"},{\"Sid\":\"DenyEveryoneElse\",\"Effect\":\"Deny\",\"Principal\":\"*\",\"Action\":\"execute-api:Invoke\",\"Resource\":\"arn:aws:execute-api:us-east-2:434444145045:ip8yrem2t4\/prod\/*\/*\",\"Condition\":{\"ArnNotEquals\":{\"aws:PrincipalArn\":\"arn:aws:iam::434444145045:role\/acdemo-noegress-gw-role\"}}}]}

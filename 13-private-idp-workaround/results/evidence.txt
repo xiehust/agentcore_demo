@@ -1,0 +1,145 @@
+Private IdP workaround verification
+region=us-east-2 account=434444145045 date=2026-07-29T10:51:07Z
+gateway=acdemo-idp-gw-ojbahxxuik url=https://acdemo-idp-gw-ojbahxxuik.gateway.bedrock-agentcore.us-east-2.amazonaws.com/mcp
+idp=http://10.30.11.13:8081 instance=i-0233ba236d52ae014
+
+############ 1. The IdP is genuinely private ############
+--- instance networking ---
+{
+    "PrivateIp": "10.30.11.13",
+    "PublicIp": null,
+    "Subnet": "subnet-09c81e8f0eaba501e",
+    "State": "running"
+}
+--- who may reach the IdP port ---
+[
+    {
+        "IpProtocol": "tcp",
+        "FromPort": 8081,
+        "ToPort": 8081,
+        "UserIdGroupPairs": [
+            {
+                "UserId": "434444145045",
+                "GroupId": "sg-004dc80c53899cc07"
+            }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+    }
+]
+--- reaching the IdP from outside the VPC (expect failure) ---
+unreachable from outside: TimeoutError
+--- the VPC still has no internet egress ---
+IGWs: 0
+NATs: 0
+
+############ 2. Gateway config: NONE inbound + REQUEST interceptor ############
+{
+    "authorizerType": "NONE",
+    "status": "READY",
+    "interceptors": [
+        {
+            "interceptor": {
+                "lambda": {
+                    "arn": "arn:aws:lambda:us-east-2:434444145045:function:acdemo-idp-interceptor"
+                }
+            },
+            "interceptionPoints": [
+                "REQUEST"
+            ],
+            "inputConfiguration": {
+                "passRequestHeaders": true
+            }
+        }
+    ]
+}
+
+############ 3. Inbound: JWT validated against the private JWKS ############
+gateway : https://acdemo-idp-gw-ojbahxxuik.gateway.bedrock-agentcore.us-east-2.amazonaws.com/mcp
+IdP     : http://10.30.11.13:8081 (private, no public IP)
+audience: agentcore-gateway
+
+[PASS      ] valid token                        -> reached tool
+             2 orders, outbound token from 10.30.11.13
+[PASS      ] no Authorization header            -> blocked
+             HTTP 403 — missing bearer token
+[PASS      ] malformed token                    -> blocked
+             HTTP 403 — token rejected
+[PASS      ] forged signature (attacker key)    -> blocked
+             HTTP 403 — signature verification failed
+[PASS      ] expired token                      -> blocked
+             HTTP 403 — token expired
+[PASS      ] wrong audience                     -> blocked
+             HTTP 403 — wrong audience
+[PASS      ] wrong issuer                       -> blocked
+             HTTP 403 — wrong issuer
+[PASS      ] missing required scope             -> blocked
+             HTTP 403 — missing required scope orders.read
+[PASS      ] unknown signing kid                -> blocked
+             HTTP 403 — token rejected
+
+9/9 cases behaved as expected
+
+############ 4. Outbound: tool exchanges client_credentials at the private IdP ############
+{
+    "outbound_auth": {
+        "path": "tool Lambda (in VPC) -> private IdP /token -> downstream token",
+        "idp_issuer": "http://10.30.11.13:8081",
+        "idp_private_ip": "10.30.11.13",
+        "token_from_cache": true,
+        "client_id": "order-desk-agent",
+        "scope": "orders.read",
+        "expires_in_s": 851
+    },
+    "count": 2,
+    "orders": [
+        {
+            "order_ref": "ORD-1001",
+            "customer_email": "alice@example.com",
+            "status": "SHIPPED",
+            "amount": 129.99
+        },
+        {
+            "order_ref": "ORD-1003",
+            "customer_email": "carol@example.com",
+            "status": "SHIPPED",
+            "amount": 891.0
+        }
+    ]
+}
+
+############ 5. Interceptor logs (no secrets, JWKS cached across calls) ############
+REPORT RequestId: dca2de88-9ec7-4a97-89c4-53798405fd05	Duration: 2.00 ms	Billed Duration: 2 ms	Memory Size: 512 MB	Max Memory Used: 67 MB	
+XRAY TraceId: 1-6a69db02-6d476c7562a950c1616e4d7e	Sampled: true	
+	START RequestId: fd2ac27e-8c67-4a08-9753-7763a62e6d74 Version: $LATEST
+	{"method": "initialize", "id": 13, "has_headers": true}
+	END RequestId: fd2ac27e-8c67-4a08-9753-7763a62e6d74
+	REPORT RequestId: fd2ac27e-8c67-4a08-9753-7763a62e6d74	Duration: 1.59 ms	Billed Duration: 2 ms	Memory Size: 512 MB	Max Memory Used: 67 MB	
+XRAY TraceId: 1-6a69db03-7d2ea1e553989ecd30622ef7	Sampled: true	
+	START RequestId: 63942375-eed1-427b-b0e5-194ccbe3fc64 Version: $LATEST
+	{"method": "tools/call", "id": 14, "has_headers": true}
+	END RequestId: 63942375-eed1-427b-b0e5-194ccbe3fc64
+	REPORT RequestId: 63942375-eed1-427b-b0e5-194ccbe3fc64	Duration: 1.86 ms	Billed Duration: 2 ms	Memory Size: 512 MB	Max Memory Used: 67 MB	
+XRAY TraceId: 1-6a69db03-2d392ded43b661ec39cc876a	Sampled: true	
+	START RequestId: 56e7ad3e-8e12-48bb-bb24-5cedbd9d10d6 Version: $LATEST
+	{"method": "initialize", "id": 15, "has_headers": true}
+	END RequestId: 56e7ad3e-8e12-48bb-bb24-5cedbd9d10d6
+	REPORT RequestId: 56e7ad3e-8e12-48bb-bb24-5cedbd9d10d6	Duration: 1.68 ms	Billed Duration: 2 ms	Memory Size: 512 MB	Max Memory Used: 67 MB	
+XRAY TraceId: 1-6a69db03-03fb30247545691e0e445699	Sampled: true	
+	START RequestId: 1d9fc996-d68c-4b63-b318-ee8948b2c2b4 Version: $LATEST
+	{"method": "tools/call", "id": 16, "has_headers": true}
+	END RequestId: 1d9fc996-d68c-4b63-b318-ee8948b2c2b4
+	REPORT RequestId: 1d9fc996-d68c-4b63-b318-ee8948b2c2b4	Duration: 2.01 ms	Billed Duration: 3 ms	Memory Size: 512 MB	Max Memory Used: 67 MB	
+XRAY TraceId: 1-6a69db03-44a0b1c03c52eef60fcf5f75	Sampled: true	
+	START RequestId: 8d6da725-6ac2-472c-86e7-5f7ae7c34c15 Version: $LATEST
+	{"method": "initialize", "id": 17, "has_headers": true}
+	END RequestId: 8d6da725-6ac2-472c-86e7-5f7ae7c34c15
+	REPORT RequestId: 8d6da725-6ac2-472c-86e7-5f7ae7c34c15	Duration: 1.62 ms	Billed Duration: 2 ms	Memory Size: 512 MB	Max Memory Used: 67 MB	
+XRAY TraceId: 1-6a69db04-4e259e9b427c17fe61873ea0	Sampled: true	
+	START RequestId: 75055128-0a7e-45e5-bcee-f368fdaacdad Version: $LATEST
+	{"method": "tools/call", "id": 18, "has_headers": true}
+	END RequestId: 75055128-0a7e-45e5-bcee-f368fdaacdad
+	REPORT RequestId: 75055128-0a7e-45e5-bcee-f368fdaacdad	Duration: 4.54 ms	Billed Duration: 5 ms	Memory Size: 512 MB	Max Memory Used: 67 MB	
+XRAY TraceId: 1-6a69db04-2234789b420a5b124d2a21b6	Sampled: true	
+

@@ -5,11 +5,13 @@ __pycache__/
 .bedrock_agentcore.yaml
 # C extensions
 *.so
+.supergoal/
 vpc-resources.txt
 vpc-resources.backup.txt
 # Distribution / packaging
 .Python
 build/
+.claude/
 **/.claude/*
 !/.claude/settings.json
 develop-eggs/
