@@ -17,11 +17,14 @@ import boto3
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# The first four exercise the Lambda-target chain; the last one names an
+# apiGateway-target tool so the API Gateway + VPC Link chain is covered too.
 PROMPTS = [
     "How many orders are pending, and what are their order references?",
     "Which order was cancelled and how much was it for?",
     "What MySQL version is the database running, and what host is it on?",
     "What is the total value of all shipped orders?",
+    "Call rdsApi___getDbInfo and report the ec2_private_ip field verbatim.",
 ]
 
 

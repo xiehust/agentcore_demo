@@ -5,8 +5,6 @@
 对应设计文档 `AgentCore 中国区无 VPC Egress Workaround 方案.html` 第 09 节
 （补充 · AgentCore Identity 不支持 Private IdP 的 Workaround）的**真机验证**。
 
-> 该节原本标注"未实测"。**本目录已把它实测完毕，结论成立**，并在过程中发现 3 个
-> 文档没写的行为（其中一个会让请求全部失败）。文档已据此更新。
 
 已在 **us-east-2** 部署验证，复用 [`11-vpc-no-egress-workaround`](../11-vpc-no-egress-workaround)
 那个**零互联网出口 VPC**（无 IGW、无 NAT）与其中的私有 RDS。

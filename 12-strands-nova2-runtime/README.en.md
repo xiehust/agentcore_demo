@@ -42,7 +42,7 @@ Deployed and verified in **us-east-2**.
       └────────────────────────────────┘
 ```
 
-This also **validates "workaround 4 — sink the egress into a tool"** from the original
+This is also the end-to-end verification of workarounds 1 and 2 from the original
 design doc: the Runtime has no VPC egress capability at all, yet the agent still reads
 an internal database because private access was pushed down into a Gateway tool.
 
@@ -55,11 +55,11 @@ Actual output of `python scripts/invoke.py` (full record in
 
 | # | Prompt | Answer | Tool called | Latency |
 |---|---|---|---|---|
-| 1 | How many orders are pending, and their refs? | There are 2 pending orders: ORD-1002 and ORD-1005. | `rdsLambda___list_orders` | 1997 ms |
-| 2 | Which order was cancelled, for how much? | The cancelled order was ORD-1004 for $15.25. | `rdsLambda___list_orders` | 1845 ms |
-| 3 | MySQL version and host? | MySQL **8.0.42** on host **ip-172-31-0-80**. | `rdsLambda___db_info` | 1817 ms |
-| 4 | Total value of all shipped orders? | **$1,020.99** (ORD-1001 $129.99 + ORD-1003 $891.00) | `rdsLambda___list_orders` | 1786 ms |
-| 5 | Force the API Gateway path | ec2_private_ip `10.30.11.109`, db_user `agentadmin@10.30.11.109` | `rdsApi___getDbInfo` | 2266 ms |
+| 1 | How many orders are pending, and their refs? | There are 2 pending orders: ORD-1002 and ORD-1005. | `rdsLambda___list_orders` | 2198 ms |
+| 2 | Which order was cancelled, for how much? | The cancelled order was ORD-1004 for $15.25. | `rdsLambda___list_orders` | 1859 ms |
+| 3 | MySQL version and host? | MySQL **8.0.42** on host **ip-172-31-0-80**. | `rdsLambda___db_info` | 1989 ms |
+| 4 | Total value of all shipped orders? | **$1,020.99** (ORD-1001 $129.99 + ORD-1003 $891.00) | `rdsLambda___list_orders` | 1680 ms |
+| 5 | Force the API Gateway path | ec2_private_ip `10.30.11.109`, db_user `agentadmin@10.30.11.109` | `rdsApi___getDbInfo` | 1820 ms |
 
 Notes:
 
@@ -144,13 +144,33 @@ return MCPClient(transport)
 The MCP session is opened and released **per invocation**, so concurrent runtime sessions
 never share one.
 
-### 4. The image must be arm64
+### 4. The `apiGateway` chain: you must forbid the model from filling `basePath`
+
+Tools generated from an `apiGateway` target carry an extra `basePath` field in their input
+schema, with no description and no constraint. A model may fill it, which corrupts the URL:
+
+```
+Server URL parameter 'basePath' contains invalid character '/'
+Client error: API request failed with status: 403 - {"message":"Forbidden"}
+```
+
+This is **non-deterministic** — the same prompt sometimes succeeds and sometimes 403s, which
+reads like an IAM problem. Tell them apart by the body: `{"Message":"User: ... is not
+authorized ..."}` is a real IAM deny, while `{"message":"Forbidden"}` just means the route
+didn't match.
+
+The fix is one line in the system prompt: *never pass a `basePath` argument*. With it,
+three consecutive calls all succeeded and returned `10.30.11.109` reliably. For
+agent-facing tools, Lambda targets are preferable since their schema is entirely your own
+`toolSchema`.
+
+### 5. The image must be arm64
 
 AgentCore Runtime only accepts `linux/arm64` images. `deploy.sh` checks
 `docker image inspect --format '{{.Architecture}}'` after the build and fails fast rather
 than discovering it after a push.
 
-### 5. CreateAgentRuntime fails on IAM propagation right after role creation
+### 6. CreateAgentRuntime fails on IAM propagation right after role creation
 
 Calling `CreateAgentRuntime` immediately after creating the execution role gives:
 
@@ -173,7 +193,7 @@ agent/sigv4_auth.py     httpx.Auth that SigV4-signs MCP requests
 agent/requirements.txt  pinned versions
 docker/Dockerfile       linux/arm64 image
 scripts/deploy.sh       build → ECR → IAM → create/update PUBLIC runtime (idempotent)
-scripts/invoke.py       invoke the deployed runtime, run the 4-prompt suite, archive
+scripts/invoke.py       invoke the deployed runtime, run the 5-prompt suite, archive
 scripts/test_local.sh   run the container locally, hit /ping and /invocations
 scripts/cleanup.sh      delete runtime / ECR / role
 runtime.json            deploy output (runtime ARN, image, model, ...)

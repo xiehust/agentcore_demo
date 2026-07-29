@@ -11,7 +11,7 @@ End-to-end shape:
 
 The runtime itself has no VPC configuration at all, yet the agent reads data out
 of a private database in an isolated VPC. That is the "sink the egress into a
-tool" pattern (workaround 4 of the no-VPC-egress design doc) working in practice.
+tool" pattern, and the end-to-end verification of workarounds 1 and 2 in the design doc.
 
 Payload: {"prompt": "...", "session_id": "optional"}
 """
@@ -45,6 +45,9 @@ your tools. Rules:
 - Always call a tool to answer questions about orders or the database. Never invent
   order references, emails, amounts or statuses.
 - Valid statuses are SHIPPED, PENDING and CANCELLED.
+- Never pass a `basePath` argument. Tools generated from an API Gateway target expose
+  `basePath` as plumbing; filling it corrupts the request URL and the call comes back as
+  403 Forbidden. Leave it out entirely.
 - After a tool returns, answer in one or two short sentences and include the concrete
   values you retrieved.
 """

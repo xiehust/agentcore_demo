@@ -4,11 +4,6 @@ Real-deployment verification of section 09 of
 `AgentCore 中国区无 VPC Egress Workaround 方案.html`
 (*supplement — working around AgentCore Identity not supporting a private IdP*).
 
-> That section was originally marked "not yet verified". **This directory verifies it,
-> and the conclusion holds** — plus three behaviours the documentation does not
-> mention (one of which breaks every request). The design doc has been updated
-> accordingly.
-
 Deployed and verified in **us-east-2**, reusing the **zero-internet-egress VPC**
 (no IGW, no NAT) and private RDS from
 [`11-vpc-no-egress-workaround`](../11-vpc-no-egress-workaround).

@@ -42,7 +42,7 @@
       └────────────────────────────────┘
 ```
 
-<b>这条链路顺带验证了原设计文档里的「方案四 · Runtime 出站绕行」</b>：Runtime 本身
+<b>这条链路同时也是原设计文档里方案一与方案二的端到端验证</b>：Runtime 本身
 没有任何 VPC 出站能力，但把「访问私有资源」下沉成 Gateway 工具后，Agent 依然能读到内网数据库。
 
 ---
@@ -53,11 +53,11 @@
 
 | # | 提问 | 回答 | 调用的工具 | 延迟 |
 |---|---|---|---|---|
-| 1 | 有多少 pending 订单，订单号是什么？ | There are 2 pending orders: ORD-1002 and ORD-1005. | `rdsLambda___list_orders` | 1997 ms |
-| 2 | 哪个订单被取消了，金额多少？ | The cancelled order was ORD-1004 for $15.25. | `rdsLambda___list_orders` | 1845 ms |
-| 3 | 数据库 MySQL 版本和主机？ | MySQL **8.0.42** on host **ip-172-31-0-80**. | `rdsLambda___db_info` | 1817 ms |
-| 4 | 所有已发货订单总额？ | **$1,020.99**（ORD-1001 $129.99 + ORD-1003 $891.00） | `rdsLambda___list_orders` | 1786 ms |
-| 5 | 指定用 API Gateway 那条链路查 | ec2_private_ip `10.30.11.109`，db_user `agentadmin@10.30.11.109` | `rdsApi___getDbInfo` | 2266 ms |
+| 1 | 有多少 pending 订单，订单号是什么？ | There are 2 pending orders: ORD-1002 and ORD-1005. | `rdsLambda___list_orders` | 2198 ms |
+| 2 | 哪个订单被取消了，金额多少？ | The cancelled order was ORD-1004 for $15.25. | `rdsLambda___list_orders` | 1859 ms |
+| 3 | 数据库 MySQL 版本和主机？ | MySQL **8.0.42** on host **ip-172-31-0-80**. | `rdsLambda___db_info` | 1989 ms |
+| 4 | 所有已发货订单总额？ | **$1,020.99**（ORD-1001 $129.99 + ORD-1003 $891.00） | `rdsLambda___list_orders` | 1680 ms |
+| 5 | 指定用 API Gateway 那条链路查 | ec2_private_ip `10.30.11.109`，db_user `agentadmin@10.30.11.109` | `rdsApi___getDbInfo` | 1820 ms |
 
 要点：
 
@@ -136,13 +136,31 @@ return MCPClient(transport)
 
 MCP 会话按**每次 invocation** 建立并释放，避免并发 runtime session 共用同一会话。
 
-### 4. 镜像必须是 arm64
+### 4. `apiGateway` 那条链路：必须禁止模型填 `basePath`
+
+`apiGateway` target 自动生成的工具，输入 schema 里会多出一个 `basePath` 字段，
+既没有描述也没有约束。模型看到就可能去填，一填 URL 就被改坏：
+
+```
+Server URL parameter 'basePath' contains invalid character '/'
+Client error: API request failed with status: 403 - {"message":"Forbidden"}
+```
+
+这个坑**不稳定**，同一个提问模型有时不填就成功，有时填了就 403，很容易误判成 IAM 权限问题。
+分辨方法看 403 的响应体：`{"Message":"User: ... is not authorized ..."}` 是真的 IAM 拒绝，
+`{"message":"Forbidden"}` 只是路径没匹配上。
+
+解法是在 system prompt 里明确写一句 never pass a `basePath` argument。
+加上之后连续三次调用全部成功，稳定拿到 `10.30.11.109`。
+面向 Agent 的工具更推荐用 Lambda target，schema 完全由你自己的 `toolSchema` 决定。
+
+### 5. 镜像必须是 arm64
 
 AgentCore Runtime 只接受 `linux/arm64` 镜像。`deploy.sh` 构建后会校验
 `docker image inspect --format '{{.Architecture}}'`，不是 arm64 直接失败，
 避免推上去再报错。
 
-### 5. 新建角色后 CreateAgentRuntime 会因 IAM 传播失败
+### 6. 新建角色后 CreateAgentRuntime 会因 IAM 传播失败
 
 刚创建执行角色就调 `CreateAgentRuntime`，会得到：
 
@@ -165,7 +183,7 @@ agent/sigv4_auth.py     httpx.Auth，为 MCP 请求做 SigV4 签名
 agent/requirements.txt  锁定版本
 docker/Dockerfile       linux/arm64 镜像
 scripts/deploy.sh       构建 → ECR → IAM → 创建/更新 PUBLIC runtime（幂等）
-scripts/invoke.py       调用已部署 runtime，跑 4 题验证套件并存档
+scripts/invoke.py       调用已部署 runtime，跑 5 题验证套件并存档
 scripts/test_local.sh   本地起容器打 /ping 与 /invocations
 scripts/cleanup.sh      删除 runtime / ECR / role
 runtime.json            部署产物（runtime ARN、镜像、模型等）

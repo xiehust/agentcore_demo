@@ -15,7 +15,7 @@
     {
       "prompt": "How many orders are pending, and what are their order references?",
       "response": {
-        "result": "There are **2 pending orders** with order references **ORD-1002** and **ORD-1005**.\n",
+        "result": "There are two pending orders: ORD-1002 and ORD-1005.\n",
         "model": "global.amazon.nova-2-lite-v1:0",
         "tools_available": [
           "rdsApi___getDbInfo",
@@ -32,7 +32,7 @@
           }
         ]
       },
-      "latency_ms": 1931.5
+      "latency_ms": 2605.4
     },
     {
       "prompt": "Which order was cancelled and how much was it for?",
@@ -54,12 +54,12 @@
           }
         ]
       },
-      "latency_ms": 1814.4
+      "latency_ms": 1822.9
     },
     {
       "prompt": "What MySQL version is the database running, and what host is it on?",
       "response": {
-        "result": "The database is running MySQL version **8.0.42** on host **ip-172-31-0-80**.\n",
+        "result": "The database is running MySQL version **8.0.42** on host **acdemo-noegress-mysql.csvj8vp4flfn.us-east-2.rds.amazonaws.com**.\n",
         "model": "global.amazon.nova-2-lite-v1:0",
         "tools_available": [
           "rdsApi___getDbInfo",
@@ -74,12 +74,12 @@
           }
         ]
       },
-      "latency_ms": 1837.7
+      "latency_ms": 1978.6
     },
     {
       "prompt": "What is the total value of all shipped orders?",
       "response": {
-        "result": "The total value of all shipped orders is $1,020.99, calculated from ORD-1001 ($129.99) and ORD-1003 ($891.00).\n",
+        "result": "The total value of all shipped orders is $1,020.99, calculated from two shipped orders: ORD-1001 for $129.99 and ORD-1003 for $891.00.\n",
         "model": "global.amazon.nova-2-lite-v1:0",
         "tools_available": [
           "rdsApi___getDbInfo",
@@ -96,7 +96,27 @@
           }
         ]
       },
-      "latency_ms": 2064.1
+      "latency_ms": 2024.7
+    },
+    {
+      "prompt": "Call rdsApi___getDbInfo and report the ec2_private_ip field verbatim.",
+      "response": {
+        "result": "The `ec2_private_ip` field is **10.30.11.109**.\n",
+        "model": "global.amazon.nova-2-lite-v1:0",
+        "tools_available": [
+          "rdsApi___getDbInfo",
+          "rdsApi___listOrders",
+          "rdsLambda___db_info",
+          "rdsLambda___list_orders"
+        ],
+        "tool_calls": [
+          {
+            "name": "rdsApi___getDbInfo",
+            "input": {}
+          }
+        ]
+      },
+      "latency_ms": 1962.6
     }
   ]
 }
