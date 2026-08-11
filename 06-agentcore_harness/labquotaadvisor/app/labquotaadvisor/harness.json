@@ -1,0 +1,26 @@
+{
+  "name": "labquotaadvisor",
+  "model": {
+    "provider": "bedrock",
+    "modelId": "global.anthropic.claude-sonnet-4-6"
+  },
+  "tools": [
+    {
+      "type": "agentcore_code_interpreter",
+      "name": "code-interpreter"
+    }
+  ],
+  "skills": [
+    {
+      "awsSkills": {}
+    }
+  ],
+  "memory": {
+    "mode": "existing",
+    "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:memory/test01_MyHarness1Memory-61d350HVHm"
+  },
+  "truncation": {
+    "strategy": "summarization"
+  },
+  "sessionStoragePath": "/mnt/data/"
+}

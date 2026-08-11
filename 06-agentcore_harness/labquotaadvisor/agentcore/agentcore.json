@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "labquotaadvisor",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "labquotaadvisor"
+  },
+  "runtimes": [
+    {
+      "name": "labquotaadvisorAgent",
+      "build": "CodeZip",
+      "entrypoint": "main.py",
+      "codeLocation": "app/labquotaadvisorAgent/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "filesystemConfigurations": [
+        {
+          "sessionStorage": {
+            "mountPath": "/mnt/data"
+          }
+        }
+      ],
+      "connections": [
+        {
+          "id": "memory-test01_MyHarness1Memory-61d350HVHm",
+          "to": {
+            "type": "memory",
+            "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:memory/test01_MyHarness1Memory-61d350HVHm"
+          },
+          "access": "readwrite"
+        },
+        {
+          "id": "codeInterpreter-default",
+          "to": {
+            "type": "codeInterpreter"
+          }
+        }
+      ]
+    }
+  ],
+  "memories": [],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [
+    {
+      "name": "labquotaadvisor",
+      "path": "app/labquotaadvisor"
+    }
+  ],
+  "datasets": [],
+  "payments": []
+}
