@@ -1,0 +1,10 @@
+[project]
+name = "shared-runtime-instance"
+version = "0.1.0"
+description = "Multi-user shared AgentCore runtime session demo with per-user isolation"
+requires-python = ">=3.13"
+dependencies = [
+    "claude-agent-sdk>=0.1.1",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+]

@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+uv.lock
+
+# Generated deployment and load-test data
+runtime.json
+results/*.json
+results/*.log
