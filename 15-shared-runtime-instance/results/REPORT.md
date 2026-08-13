@@ -1,32 +1,35 @@
 # 共享 Runtime Session 多用户短程与长程任务并发测试报告
 
 - 报告日期：2026-08-13（UTC）
-- 测试日期：2026-08-12（UTC）
+- 测试日期：2026-08-12 至 2026-08-13（UTC）
 - 区域：us-west-2
 - 项目：`15-shared-runtime-instance/`
 - 模型：`us.anthropic.claude-sonnet-4-6`
 - 镜像：`launchpad-agents:shared-runtime-v1`（Agent 实现基于 Claude Agent SDK）
-- 计算资源：AgentCore EC2 Capacity Provider `capacity_provider_arm_kb-FQtDNVGq1t`
-  - 实例类型：`c7g.large`（2 vCPU / 4 GiB，实际可用内存约 3.7 GiB）
-  - 操作系统：Amazon Linux 2023 ARM64
-  - 持久卷：`scratch` 50 GiB gp3，容器内挂载 `/mnt/scratch`
-- 当前 Runtime：`shared_runtime_multiuser-X10bCH6p6u`
-  - 状态：`READY`
-  - 版本：5
-  - `MAX_PARALLEL_AGENTS=16`
-  - `MAX_TURNS=64`
+- 计算资源：
+  - `capacity_provider_arm_kb-FQtDNVGq1t`：`c7g.large`（2C / 4 GiB）
+  - `capacity_provider_arm_m7g_large-1HB6aXJTVr`：`m7g.large`（2C / 8 GiB）
+  - 两者均为 Amazon Linux ARM64，使用 50 GiB gp3 `scratch` 卷
+- Runtime：
+  - `shared_runtime_multiuser-X10bCH6p6u`：`c7g.large`，version 5，
+    `MAX_PARALLEL_AGENTS=16`
+  - `shared_runtime_multiuser_m7g-EZpQed4lPW`：`m7g.large`，version 1，
+    `MAX_PARALLEL_AGENTS=40`
+  - 两者状态均为 `READY`，`MAX_TURNS=64`
 
 ## TL;DR
 
-多个真实用户可以通过同一个 `runtimeSessionId` 安全复用一台 `c7g.large` 上的
-Claude Agent SDK 容器，但安全并发取决于任务持续时间和进程驻留方式。
+多个真实用户可以通过同一个 `runtimeSessionId` 安全复用同一台 AgentCore EC2
+Capacity Provider 实例上的 Claude Agent SDK 容器。安全并发取决于任务持续时间、
+进程驻留方式和实例内存。
 
 ### 容量结论
 
-| 场景 | Runtime 主要瓶颈 | 推荐活跃 Agent 并发 | 已验证边界 | 不可用边界 |
+| 实例与场景 | Runtime 主要瓶颈 | 建议活跃 Agent 并发 | 已验证边界 | 不可用边界 |
 |---|---|---:|---:|---:|
-| 短程任务（数秒） | CPU 峰值、进程启动、并发内存和队列延迟 | **12～16** | 24 真并行可完成，但 CPU 平均 94.6%、最低可用内存 447 MB | 32 真并行：0/32 |
-| 长程任务（5～10 分钟） | 内存余量、子进程长时间驻留、模型执行长尾 | **8～12** | 16 可完成，但最低可用内存仅 573 MB | 24 真并行：两次 0/24 |
+| `c7g.large`（2C / 4 GiB）短程任务 | CPU 峰值、进程启动、并发内存和队列延迟 | **12～16** | 24 真并行可完成，但 CPU 平均 94.6%、最低可用内存 447 MB | 32 真并行：0/32 |
+| `c7g.large`（2C / 4 GiB）长程任务 | 内存余量、子进程长时间驻留、模型执行长尾 | **8～12** | 16 可完成，但最低可用内存仅 573 MB | 24 真并行：两次 0/24 |
+| `m7g.large`（2C / 8 GiB）长程任务 | 高并发内存余量、CPU 瞬时峰值、模型执行长尾 | **最多 32** | 40 在两台实例上均 40/40，复测最低可用内存 425 MB | 40 以内未失败；41+ 未测试 |
 
 ### 核心判断
 
@@ -35,12 +38,16 @@ Claude Agent SDK 容器，但安全并发取决于任务持续时间和进程驻
    `MAX_PARALLEL_AGENTS=16` 下是 16 个执行、其余排队；164/164 请求全部成功。
 3. **应用层排队是实例保护机制。** 放开到 40 槽后，短程 24 真并行虽可完成，
    但最低可用内存仅 447 MB；32 真并行变为 0/32，并导致 SSM 失联。
-4. **长程任务首先受内存约束。** 16 并发已经只剩 573 MB 可用内存；24 并发在
-   两台不同实例上均无法完成第一阶段。
-5. **同一个 shared session 不能水平扩展。** ASG 扩容不会拆分同一个
+4. **长程任务首先受内存约束。** `c7g.large`（2C / 4 GiB）的 16 并发只剩
+   573 MB，24 并发两次 0/24；保持 2C 不变、升级到 `m7g.large`
+   （2C / 8 GiB）后，24、32、40 并发均 100% 完成。
+5. **40 是 `m7g.large`（2C / 8 GiB）的已验证运行边界，不是建议常态值。**
+   两台实例均
+   40/40，但复测最低可用内存只剩 425 MB；本轮建议持续运行上限为 32。
+6. **同一个 shared session 不能水平扩展。** ASG 扩容不会拆分同一个
    `runtimeSessionId`，更高总容量需要 session 分片。
-6. **当前安全配置是 `MAX_PARALLEL_AGENTS=16`。** 如果以长程任务为主，
-   建议进一步降到 8～12。
+7. **Runtime 配置按实例规格区分。** `c7g.large` 保持 16 槽；`m7g.large`
+   测试 Runtime 配置 40 槽，但生产容量建议不超过 32。
 
 ## 1. 方案架构与隔离模型
 
@@ -90,7 +97,8 @@ user C ─┘   runtimeSessionId = shared-session
 |---|---|---|
 | 隔离功能 | `shared_runtime_multiuser-efbkaT7141` | 3 用户文件与记忆隔离 |
 | 短程压测 | `shared_runtime_multiuser-HNft74DB4i` | 2～40 并发 `pong` |
-| 长程压测 | `shared_runtime_multiuser-X10bCH6p6u` | 2～24 并发 Web 项目 |
+| `c7g.large`（2C / 4 GiB）长程压测 | `shared_runtime_multiuser-X10bCH6p6u` | 2～24 并发 Web 项目 |
+| `m7g.large`（2C / 8 GiB）长程压测 | `shared_runtime_multiuser_m7g-EZpQed4lPW` | 16～40 并发 Web 项目 |
 
 ### 2.2 通用并发方法
 
@@ -287,6 +295,9 @@ MAX_PARALLEL_AGENTS=40
 
 ## 5. 长程任务并发结果
 
+以下 5.1～5.4 为 `c7g.large`（2C / 4 GiB）基线，5.5 为
+`m7g.large`（2C / 8 GiB）纵向扩容复测。
+
 原始数据：
 
 - `results/load_test_longrun_20260812T134627Z.json`（2 并发）
@@ -346,7 +357,7 @@ MAX_PARALLEL_AGENTS=40
 现有证据强烈符合用户态内存或进程资源耗尽。由于实例失联后无法读取 `dmesg`，
 不能把内核 OOM kill 作为已确认事实。
 
-### 5.4 长程容量建议
+### 5.4 `c7g.large`（2C / 4 GiB）长程容量建议
 
 | 目标 | 建议并发 |
 |---|---:|
@@ -358,19 +369,60 @@ MAX_PARALLEL_AGENTS=40
 当前已确认的最大可用长程并发为 16，但 16 并发内存余量仅 573 MB，不适合作为
 长期稳定运行目标。生产或持续压测建议控制在 8～12。
 
+### 5.5 `m7g.large`（2C / 8 GiB）纵向扩容复测
+
+新建独立 Capacity Provider
+`capacity_provider_arm_m7g_large-1HB6aXJTVr`，仅将实例规格从
+`c7g.large`（2C / 4 GiB）改为 `m7g.large`（2C / 8 GiB），其余 IAM、
+VPC、EBS、镜像、模型和 workload 保持一致。
+
+独立 Runtime `shared_runtime_multiuser_m7g-EZpQed4lPW` 配置：
+
+```text
+MAX_PARALLEL_AGENTS=40
+MAX_TURNS=64
+```
+
+因此 16、24、32、40 四档均为真实执行并发，不存在应用层 16 槽排队。
+
+| 并发 | Agent 成功 | 产物验证 | p50 | p90 | 最大耗时 | CPU 平均/峰值 | 最低可用内存 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 16 | 16/16 | 16/16 | 398.7 s | 691.8 s | 788.0 s | 18.6% / 100% | 4507 MB |
+| 24 | 24/24 | 24/24 | 442.5 s | 613.3 s | 675.7 s | 31.3% / 100% | 3123 MB |
+| 32 | 32/32 | 32/32 | 429.4 s | 606.4 s | 755.7 s | 34.2% / 100% | 1738 MB |
+| 40 | 40/40 | 40/40 | 451.4 s | 662.3 s | 830.8 s | 37.9% / 100% | 425 MB |
+
+40 并发在两台独立 `m7g.large` 上重复成功：
+
+| 实例 | Agent 成功 | 产物验证 | p50 | p90 | 最大耗时 |
+|---|---:|---:|---:|---:|---:|
+| `i-03a23f8802bd4be44` | 40/40 | 40/40 | 457.9 s | 700.9 s | 765.9 s |
+| `i-0f7dd10c1eaeb25e1` | 40/40 | 40/40 | 451.4 s | 662.3 s | 830.8 s |
+
+该规格的容量结论：
+
+| 目标 | 建议并发 |
+|---|---:|
+| 保守持续运行 | 24 |
+| 本轮建议容量上限 | 32 |
+| 已验证峰值边界 | 40 |
+| 41+ | 未测试 |
+
+40 并发虽然功能和产物均 100% 成功，但最低可用内存只有 425 MB，不具备足够的
+生产余量。详细分析见 `results/LONGRUN_M7G_REPORT.md`。
+
 ## 6. 短程与长程任务对比
 
-| 维度 | 短程任务 | 长程任务 |
-|---|---|---|
-| 单次时长 | 约 4～26 秒 | 约 5～11 分钟 |
-| 文件工具调用 | 无 | 每用户约 24～38 次 |
-| 会话阶段 | 单阶段 | 两阶段 resume |
-| 进程驻留 | 短 | 长 |
-| 最高成功请求数 | 40/40 | 16/16 |
-| 最高成功真实运行槽位 | 24（资源余量极低） | 16 |
-| 主要瓶颈 | CPU 峰值和队列延迟 | 内存余量、进程驻留和模型长尾 |
-| 失败边界 | 40 请求内未出现 | 24 个同时运行 Agent 时 0% 成功 |
-| 建议并发 | 12～16 执行槽，允许额外请求排队 | 8～12，硬上限 16 |
+| 维度 | `c7g.large`（2C / 4 GiB）短程 | `c7g.large`（2C / 4 GiB）长程 | `m7g.large`（2C / 8 GiB）长程 |
+|---|---|---|---|
+| 单次时长 | 约 4～26 秒 | 约 5～11 分钟 | 约 7～14 分钟 |
+| 文件工具调用 | 无 | 每用户约 24～38 次 | 每用户约 34～39 次 |
+| 会话阶段 | 单阶段 | 两阶段 resume | 两阶段 resume |
+| 进程驻留 | 短 | 长 | 长 |
+| 最高成功真实运行槽位 | 24，资源余量极低 | 16 | 40，资源余量极低 |
+| 主要瓶颈 | CPU 峰值和队列延迟 | 内存余量和进程驻留 | 高并发内存余量和模型长尾 |
+| 失败边界 | 32 真并行时 0/32 | 24 真并行时两次 0/24 | 40 以内未失败，41+ 未测试 |
+| 建议并发 | 12～16 | 8～12 | 不超过 32 |
 
 关键差异：
 
@@ -378,11 +430,13 @@ MAX_PARALLEL_AGENTS=40
 2. 长程任务让 Claude 子进程持续驻留数分钟，内存不能快速回收；
 3. 短程 40 并发测试实际最多 16 个槽位同时运行；
 4. 长程 24 并发测试放开了 24 个槽位，因此直接触发实例资源边界；
-5. 轻量任务的并发数字不能用于推算长程 Agent 容量。
+5. 轻量任务的并发数字不能用于推算长程 Agent 容量；
+6. vCPU 数不变、内存翻倍后，长程可运行并发从 16 提升到至少 40，进一步证明
+   该 workload 的首要实例瓶颈是内存。
 
 ## 7. 统一容量与部署建议
 
-### 7.1 当前 `c7g.large`
+### 7.1 `c7g.large`（2C / 4 GiB）
 
 | 场景 | 建议 |
 |---|---|
@@ -391,7 +445,7 @@ MAX_PARALLEL_AGENTS=40
 | 可接受短程排队 | 接收超过槽位的请求，但必须设置队列和超时 SLO |
 | 不建议 | 在 4 GiB 实例上配置 24 个长程 Agent 槽位 |
 
-当前 Runtime 和部署脚本已恢复：
+`c7g.large` Runtime 和部署脚本默认值保持：
 
 ```text
 MAX_PARALLEL_AGENTS=16
@@ -400,9 +454,29 @@ MAX_TURNS=64
 
 如果业务以长程任务为主，建议进一步将默认上限调整到 8～12。
 
-### 7.2 扩容路径
+### 7.2 `m7g.large`（2C / 8 GiB）
 
-1. **纵向扩容**：升级到至少 8 GiB 内存实例，再重新测试 16～24 长程并发；
+| 场景 | 建议 |
+|---|---|
+| 长程任务保守持续运行 | `MAX_PARALLEL_AGENTS=24` |
+| 本轮建议容量上限 | `MAX_PARALLEL_AGENTS=32` |
+| 峰值或隔离压测 | 40，必须监控内存低水位 |
+| 不建议 | 将 40 作为无准入控制的长期稳定配置 |
+
+独立测试 Runtime 当前配置：
+
+```text
+MAX_PARALLEL_AGENTS=40
+MAX_TURNS=64
+```
+
+该配置用于保留 40 真并行复测能力，不代表生产推荐值。40 并发最低可用内存仅
+425 MB，生产配置建议不超过 32。
+
+### 7.3 扩容路径
+
+1. **纵向扩容**：`m7g.large` 已验证 40 可运行；若需要稳定承载 40，应继续增加
+   内存并重新验证；
 2. **session 分片**：网关按 `hash(user_id) % N` 分配多个 shared session；
 3. **工作负载拆分**：短任务和长任务使用不同 Runtime / semaphore；
 4. **动态准入**：结合可用内存、活跃进程数和队列长度决定是否接收新长任务；
@@ -429,15 +503,22 @@ MAX_TURNS=64
 `load_test.py` 同步增加了唯一 run id、`reset=true`、逐档 checkpoint、监控降级和
 服务端并发配置记录。32 真并行导致 SSM 失联后，16/24/32 的结果仍成功落盘。
 
+`m7g.large` 第一轮 40 并发功能测试为 40/40，但原 shell 采样器在 40 档开始时
+提前终止。长程脚本已将采样器改为单个 Python 进程直接读取 `/proc`，不再反复
+启动 `vmstat`、`free` 和 `ps`；第二台实例的 40 并发复测取得 415 个有效窗口
+样本，并确认最低可用内存为 425 MB。
+
 ## 9. 已知边界
 
-- 17～23 个同时运行的长任务未逐档测试，精确临界点仍未知；
+- `c7g.large` 的 17～23 个长任务未逐档测试，精确临界点仍未知；
+- `m7g.large` 的 41+ 长任务未测试，40 不是已确认硬失败点；
 - 生成式模型执行时间存在方差，长程延迟需要更多重复轮次；
 - 24 并发时 SSM 失联，最后时刻的内存和内核 OOM 日志不可获取；
 - 两台失联实例因 IAM 显式 deny，当前测试身份不能执行 `RebootInstances`；
 - 短程低档位资源采样点较少，CPU 平均值只用于趋势判断；
 - 隔离属于应用层实现，容器内所有用户仍共享同一 OS 用户；
-- 结论仅适用于当前模型、Agent 实现、镜像和 `c7g.large`。
+- 结论仅适用于当前模型、Agent 实现、镜像以及本报告中的 `c7g.large` /
+  `m7g.large` 配置。
 
 ## 10. 原始数据与复测命令
 
@@ -455,7 +536,10 @@ MAX_TURNS=64
 | `results/load_test_longrun_20260812T134627Z.json` | 长程 2 并发基线 |
 | `results/load_test_longrun_20260812T151832Z.json` | 长程 8 / 16 并发 |
 | `results/load_test_longrun_20260812T150257Z.json` | 长程 24 并发失败复测 |
-| `results/LONGRUN_CAPACITY_REPORT.md` | 长程任务容量专项分析 |
+| `results/load_test_longrun_m7g_20260813T025207Z.json` | `m7g.large` 16 / 24 / 32 / 40 并发 |
+| `results/load_test_longrun_m7g40_20260813T034606Z.json` | `m7g.large` 40 并发资源复测 |
+| `results/LONGRUN_CAPACITY_REPORT.md` | `c7g.large` 长程任务容量专项分析 |
+| `results/LONGRUN_M7G_REPORT.md` | `m7g.large` 长程任务容量专项分析 |
 | `results/SHORT_NOQUEUE_REPORT.md` | 短程任务无排队容量专项分析 |
 
 ### 10.2 复测命令
@@ -483,4 +567,23 @@ LEVELS='[24]' \
   TASK_READ_TIMEOUT_S=2400 \
   python3 scripts/load_test_longrun.py
 MAX_PARALLEL_AGENTS=16 bash scripts/deploy.sh
+
+# 创建 m7g.large Provider 和独立 40 槽 Runtime
+CAPACITY_PROVIDER_ARN="$(scripts/create_capacity_provider.sh)"
+CAPACITY_PROVIDER_ARN="${CAPACITY_PROVIDER_ARN}" \
+  RUNTIME_NAME=shared_runtime_multiuser_m7g \
+  RUNTIME_CONFIG=runtime.m7g.json \
+  MAX_PARALLEL_AGENTS=40 \
+  MAX_TURNS=64 \
+  SKIP_IMAGE_BUILD=1 \
+  bash scripts/deploy.sh
+
+# m7g.large 长程容量爬坡
+RUNTIME_CONFIG=runtime.m7g.json \
+  RESULT_TAG=m7g \
+  LEVELS='[16,24,32,40]' \
+  SUCCESS_FLOOR=0.75 \
+  MONITOR_DURATION_S=14400 \
+  TASK_READ_TIMEOUT_S=3600 \
+  python3 scripts/load_test_longrun.py
 ```

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Build the arm64 image, push to ECR, create (or update) the AgentCore
-# runtime bound to the existing ARM64 capacity provider, wait for READY,
-# and write runtime.json for the test client.
+# runtime bound to an ARM64 capacity provider, wait for READY, and write
+# the selected runtime config for the test client.
 set -euo pipefail
 
 REGION="${REGION:-us-west-2}"
@@ -11,23 +11,34 @@ TAG="${TAG:-shared-runtime-v1}"
 IMAGE_URI="${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPO}:${TAG}"
 
 RUNTIME_NAME="${RUNTIME_NAME:-shared_runtime_multiuser}"
-ROLE_ARN="arn:aws:iam::${ACCOUNT_ID}:role/AmazonBedrockAgentCoreSDKRuntime-us-west-2-6b8cf5ef59"
-CAPACITY_PROVIDER_ARN="arn:aws:bedrock-agentcore:${REGION}:${ACCOUNT_ID}:capacity-provider/capacity_provider_arm_kb-FQtDNVGq1t"
+ROLE_ARN="${ROLE_ARN:-arn:aws:iam::${ACCOUNT_ID}:role/AmazonBedrockAgentCoreSDKRuntime-us-west-2-6b8cf5ef59}"
+CAPACITY_PROVIDER_ARN="${CAPACITY_PROVIDER_ARN:-arn:aws:bedrock-agentcore:${REGION}:${ACCOUNT_ID}:capacity-provider/capacity_provider_arm_kb-FQtDNVGq1t}"
 MODEL_ID="${MODEL_ID:-us.anthropic.claude-sonnet-4-6}"
 MAX_PARALLEL_AGENTS="${MAX_PARALLEL_AGENTS:-16}"
 MAX_TURNS="${MAX_TURNS:-64}"
+SKIP_IMAGE_BUILD="${SKIP_IMAGE_BUILD:-0}"
+RUNTIME_CONFIG="${RUNTIME_CONFIG:-runtime.json}"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT}"
 
-echo "== [1/4] docker build (linux/arm64) =="
-docker build --platform linux/arm64 -f docker/Dockerfile -t "${IMAGE_URI}" .
+if [[ "${SKIP_IMAGE_BUILD}" == "1" ]]; then
+  echo "== [1/4] reuse existing image ${IMAGE_URI} =="
+  aws ecr describe-images \
+    --repository-name "${REPO}" \
+    --image-ids imageTag="${TAG}" \
+    --region "${REGION}" >/dev/null
+  echo "== [2/4] image push skipped =="
+else
+  echo "== [1/4] docker build (linux/arm64) =="
+  docker build --platform linux/arm64 -f docker/Dockerfile -t "${IMAGE_URI}" .
 
-echo "== [2/4] push to ECR =="
-aws ecr get-login-password --region "${REGION}" \
-  | docker login --username AWS --password-stdin \
-      "${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com"
-docker push "${IMAGE_URI}"
+  echo "== [2/4] push to ECR =="
+  aws ecr get-login-password --region "${REGION}" \
+    | docker login --username AWS --password-stdin \
+        "${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com"
+  docker push "${IMAGE_URI}"
+fi
 
 echo "== [3/4] create or update agent runtime =="
 EXISTING_ID="$(aws bedrock-agentcore-control list-agent-runtimes \
@@ -75,7 +86,7 @@ RUNTIME_ARN="$(aws bedrock-agentcore-control get-agent-runtime \
   --agent-runtime-id "${RUNTIME_ID}" --region "${REGION}" \
   --query agentRuntimeArn --output text)"
 
-cat > runtime.json <<EOF
+cat > "${RUNTIME_CONFIG}" <<EOF
 {
   "region": "${REGION}",
   "runtimeName": "${RUNTIME_NAME}",
@@ -86,4 +97,4 @@ cat > runtime.json <<EOF
   "capacityProviderArn": "${CAPACITY_PROVIDER_ARN}"
 }
 EOF
-echo "wrote runtime.json (${RUNTIME_ARN})"
+echo "wrote ${RUNTIME_CONFIG} (${RUNTIME_ARN})"

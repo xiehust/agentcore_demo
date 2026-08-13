@@ -6,7 +6,7 @@
 - 测试版本：4
 - 模型：`us.anthropic.claude-sonnet-4-6`
 - 镜像：`launchpad-agents:shared-runtime-v1`（Agent 实现基于 Claude Agent SDK）
-- 实例类型：`c7g.large`（2 vCPU / 4 GiB，无 swap）
+- 实例类型：`c7g.large`（2C / 4 GiB，无 swap）
 - 测试配置：`MAX_PARALLEL_AGENTS=40`
 - 测试后恢复配置：`MAX_PARALLEL_AGENTS=16`（Runtime version 5）
 - 原始数据：`results/load_test_20260813T020930Z.json`

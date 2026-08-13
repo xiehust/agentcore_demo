@@ -30,7 +30,10 @@ import boto3
 from botocore.config import Config
 
 ROOT = Path(__file__).resolve().parent.parent
-RUNTIME = json.loads((ROOT / "runtime.json").read_text())
+RUNTIME_CONFIG = Path(os.environ.get("RUNTIME_CONFIG", "runtime.json"))
+if not RUNTIME_CONFIG.is_absolute():
+    RUNTIME_CONFIG = ROOT / RUNTIME_CONFIG
+RUNTIME = json.loads(RUNTIME_CONFIG.read_text())
 REGION = RUNTIME["region"]
 CAPACITY_PROVIDER_ID = RUNTIME["capacityProviderArn"].split("/")[-1]
 
@@ -55,6 +58,9 @@ HOST_USERS_ROOT = os.environ.get(
     "HOST_USERS_ROOT", "/var/lib/agentcore/volumes/scratch/users"
 )
 RUN_ID = os.environ.get("RUN_ID", uuid.uuid4().hex[:8])
+RESULT_TAG = os.environ.get("RESULT_TAG", "").strip()
+if RESULT_TAG and not all(char.isalnum() or char in "-_" for char in RESULT_TAG):
+    raise ValueError("RESULT_TAG may contain only letters, digits, '-' and '_'")
 SHARED_SESSION_ID = os.environ.get(
     "SHARED_SESSION_ID", f"shared-longrun-{RUN_ID}-{uuid.uuid4().hex}"
 )
@@ -86,20 +92,69 @@ ssm = boto3.client("ssm", region_name=REGION)
 ec2 = boto3.client("ec2", region_name=REGION)
 _print_lock = threading.Lock()
 
-MONITOR_SCRIPT = r"""#!/bin/bash
-rm -f /tmp/loadmon.csv
-echo "epoch,cpu_pct,mem_used_mb,mem_avail_mb,load1,agent_procs" > /tmp/loadmon.csv
-END=$(( $(date +%s) + __DURATION__ ))
-while [ "$(date +%s)" -lt "$END" ]; do
-  IDLE=$(vmstat 1 2 | tail -1 | awk '{print $15}')
-  CPU=$((100 - IDLE))
-  MEM_USED=$(free -m | awk '/^Mem:/{print $3}')
-  MEM_AVAIL=$(free -m | awk '/^Mem:/{print $7}')
-  LOAD1=$(cut -d' ' -f1 /proc/loadavg)
-  PROCS=$(ps -e -o comm= | grep -c -E '^(node|claude)' || true)
-  echo "$(date +%s),$CPU,$MEM_USED,$MEM_AVAIL,$LOAD1,$PROCS" >> /tmp/loadmon.csv
-  sleep 2
-done
+MONITOR_SCRIPT = r"""#!/usr/bin/env python3
+import os
+import time
+from pathlib import Path
+
+DURATION = __DURATION__
+OUTPUT = Path("/tmp/loadmon.csv")
+
+
+def cpu_totals():
+    fields = Path("/proc/stat").read_text().splitlines()[0].split()[1:]
+    values = [int(value) for value in fields]
+    idle = values[3] + (values[4] if len(values) > 4 else 0)
+    return sum(values), idle
+
+
+def memory_mb():
+    values = {}
+    for line in Path("/proc/meminfo").read_text().splitlines():
+        key, raw = line.split(":", 1)
+        values[key] = int(raw.strip().split()[0])
+    total = values["MemTotal"]
+    available = values["MemAvailable"]
+    return (total - available) // 1024, available // 1024
+
+
+def agent_processes():
+    count = 0
+    for comm_path in Path("/proc").glob("[0-9]*/comm"):
+        try:
+            if comm_path.read_text().strip() in {"node", "claude"}:
+                count += 1
+        except OSError:
+            pass
+    return count
+
+
+try:
+    Path("/proc/self/oom_score_adj").write_text("-1000")
+except OSError:
+    pass
+
+OUTPUT.write_text(
+    "epoch,cpu_pct,mem_used_mb,mem_avail_mb,load1,agent_procs\n"
+)
+end = time.time() + DURATION
+previous_total, previous_idle = cpu_totals()
+time.sleep(2)
+
+with OUTPUT.open("a", buffering=1) as output:
+    while time.time() < end:
+        total, idle = cpu_totals()
+        total_delta = max(total - previous_total, 1)
+        idle_delta = idle - previous_idle
+        cpu_pct = round(100.0 * (total_delta - idle_delta) / total_delta, 1)
+        previous_total, previous_idle = total, idle
+        mem_used_mb, mem_avail_mb = memory_mb()
+        load1 = Path("/proc/loadavg").read_text().split()[0]
+        output.write(
+            f"{int(time.time())},{cpu_pct},{mem_used_mb},{mem_avail_mb},"
+            f"{load1},{agent_processes()}\n"
+        )
+        time.sleep(2)
 """
 
 HOST_VERIFY_SCRIPT = r"""
@@ -667,6 +722,8 @@ def write_results(
             "phase_count": PHASE_COUNT,
             "expected_duration_minutes": [5, 10],
             "expected_files": list(EXPECTED_FILES),
+            "runtime_config": str(RUNTIME_CONFIG),
+            "result_tag": RESULT_TAG or None,
         },
         "shared_session_id": SHARED_SESSION_ID,
         "instance_id": instance_id,
@@ -728,7 +785,8 @@ def main() -> int:
     output_dir = ROOT / "results"
     output_dir.mkdir(exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    path = output_dir / f"load_test_longrun_{stamp}.json"
+    tag = f"_{RESULT_TAG}" if RESULT_TAG else ""
+    path = output_dir / f"load_test_longrun{tag}_{stamp}.json"
 
     print("\n== phase 2: long-task concurrency ramp ==", flush=True)
     levels: list[dict] = []

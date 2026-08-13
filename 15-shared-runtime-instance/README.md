@@ -3,16 +3,18 @@
 ## TL;DR
 
 本 demo 使用 `launchpad-agents:shared-runtime-v1`（基于 Claude Agent SDK），让多个
-真实用户通过同一个 `runtimeSessionId` 复用一台 `c7g.large`（2 vCPU / 4 GiB）上的
-Agent 容器，并用 `runtimeUserId`、独立工作区、独立 Claude session 和路径守卫做
-应用层隔离。
+真实用户通过同一个 `runtimeSessionId` 复用同一台 AgentCore EC2 Capacity Provider
+实例，并用 `runtimeUserId`、独立工作区、独立 Claude session 和路径守卫做应用层
+隔离。容量测试覆盖 `c7g.large`（2C / 4 GiB）和 `m7g.large`
+（2C / 8 GiB）。
 
 ### 容量结论
 
-| 场景 | 主要瓶颈 | 推荐活跃 Agent 并发 | 已验证边界 | 不可用边界 |
+| 实例与场景 | 主要瓶颈 | 建议活跃 Agent 并发 | 已验证边界 | 不可用边界 |
 |---|---|---:|---:|---:|
-| 短程任务（数秒、无文件操作） | CPU 峰值、进程启动和排队延迟 | **12～16** | 24 可完成，但 CPU 平均 94.6%、最低可用内存 447 MB | 32 真并行：0/32 |
-| 长程任务（5～10 分钟、持续文件操作） | 内存余量、进程长时间驻留、模型长尾 | **8～12** | 16 可完成，但最低可用内存仅 573 MB | 24 真并行：两次 0/24 |
+| `c7g.large`（2C / 4 GiB）短程任务 | CPU 峰值、进程启动和排队延迟 | **12～16** | 24 可完成，但 CPU 平均 94.6%、最低可用内存 447 MB | 32 真并行：0/32 |
+| `c7g.large`（2C / 4 GiB）长程任务 | 内存余量、进程长时间驻留、模型长尾 | **8～12** | 16 可完成，但最低可用内存仅 573 MB | 24 真并行：两次 0/24 |
+| `m7g.large`（2C / 8 GiB）长程任务 | 高并发内存余量、CPU 瞬时峰值、模型长尾 | **最多 32** | 40 在两台实例上均 40/40，但复测最低可用内存仅 425 MB | 40 以内未出现失败；41+ 未测试 |
 
 ### 读数方式
 
@@ -21,18 +23,25 @@ Agent 容器，并用 `runtimeUserId`、独立工作区、独立 Claude session 
    p90 约 24.4 秒。
 2. **去掉排队保护后，短程 24 真并行已接近极限。** 24/24 虽成功，但 CPU 平均
    94.6%，最低可用内存仅 447 MB；32 真并行则 0/32，并导致 SSM 失联。
-3. **长程任务首先受内存约束。** 16 并发可以完成，但最低可用内存只剩 573 MB；
-   24 并发在两台不同实例上均无法完成第一阶段。
-4. **同一个 shared session 不能依赖 ASG 横向扩容。** 相同 `runtimeSessionId`
+3. **长程任务首先受内存约束。** `c7g.large`（2C / 4 GiB）的 16 并发只剩
+   573 MB，24 并发两次 0/24；换成 `m7g.large`（2C / 8 GiB）后，24 和 32
+   并发均 100% 完成。
+4. **`m7g.large`（2C / 8 GiB）的测试上限 40 可以运行，但不宜作为常态配置。**
+   40 并发在
+   两台实例上均 40/40，复测 CPU 平均 37.9%，最低可用内存仅 425 MB。建议把
+   32 作为本轮容量规划上限，40 仅作为峰值边界。
+5. **同一个 shared session 不能依赖 ASG 横向扩容。** 相同 `runtimeSessionId`
    始终固定在单一实例；需要更高总容量时，应按用户分片到多个 shared session。
-5. **当前安全配置保持 `MAX_PARALLEL_AGENTS=16`。** 如果业务以长程任务为主，
-   建议进一步降到 8～12。
+6. **两个 Runtime 的配置独立。** 原 `c7g.large` Runtime 保持
+   `MAX_PARALLEL_AGENTS=16`；新 `m7g.large` 测试 Runtime 使用 40 槽，但建议生产
+   配置不超过 32。
 
 完整数据与分析见：
 
 - `results/REPORT.md`：短程与长程任务统一测试报告；
 - `results/SHORT_NOQUEUE_REPORT.md`：短程任务无排队容量测试；
-- `results/LONGRUN_CAPACITY_REPORT.md`：长程任务容量和失败边界。
+- `results/LONGRUN_CAPACITY_REPORT.md`：`c7g.large` 长程任务容量和失败边界；
+- `results/LONGRUN_M7G_REPORT.md`：`m7g.large` 长程任务纵向扩容复测。
 
 ## 1. 背景与目标
 
@@ -44,7 +53,7 @@ AgentCore Runtime 按 `runtimeSessionId` 路由：相同 session ID 的请求会
 
 ```text
 user alice ─┐                                      ┌───────────────────────────────┐
-user bob  ──┼── InvokeAgentRuntime ──────────────► │  EC2 (c7g.large, 托管实例)     │
+user bob  ──┼── InvokeAgentRuntime ──────────────► │  EC2 (c7g.large, 2C / 4 GiB)   │
 user carol ─┘   runtimeSessionId = 固定共享值       │  ┌─────────────────────────┐  │
                 runtimeUserId    = 真实用户 ID      │  │ Agent 容器 (共享 session) │  │
                 payload.user_id  = 真实用户 ID      │  │  FastAPI (async, 并发)    │  │
@@ -77,7 +86,7 @@ user_id 必须匹配 `^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$`，否则直接 400 拒�
 | 工具面 | `allowed_tools` 仅 `Read / Write / Edit / Glob / Grep / LS / TodoWrite`；显式禁用 `Bash / WebFetch / WebSearch / Task`——没有 shell 就没有绕过路径检查的通用出口 |
 | 路径守卫 | `PreToolUse` hook 对每次工具调用做参数审查：所有路径参数 `realpath` 归一化后必须落在该用户工作区内，否则返回 `permissionDecision=deny`（`..` 穿越、绝对路径、symlink 逃逸都会被拒） |
 | 会话记忆 | 每用户独立 Claude session（`resume=<该用户上次 session_id>`），存储在各自工作区 `.session_meta.json`；A 的对话历史对 B 不可见 |
-| 并发 | 每用户 `asyncio.Lock`（同一用户串行，避免 resume 冲突），跨用户并行；全局信号量限制并发 Claude 进程数，保护 2 vCPU 实例 |
+| 并发 | 每用户 `asyncio.Lock`（同一用户串行，避免 resume 冲突），跨用户并行；全局信号量限制并发 Claude 进程数，保护 2C 实例 |
 | Claude 配置 | 每个 Claude 子进程 `HOME` 指向该用户工作区，CLI 的 transcript/配置也天然按用户隔离 |
 
 ### 已知边界（生产化需要补齐）
@@ -106,6 +115,7 @@ user_id 必须匹配 `^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$`，否则直接 400 拒�
 ├── tests/test_isolation.py   # 单元测试（仅标准库）
 ├── scripts/
 │   ├── deploy.sh             # 构建镜像 → 推 ECR → create-agent-runtime → 等 READY
+│   ├── create_capacity_provider.sh # 从现有 Provider 派生其他 ARM64 实例规格
 │   ├── invoke_multiuser.py   # 多用户并发测试客户端（共享 session）
 │   ├── load_test.py          # 短任务并发爬坡 + EC2 资源采样
 │   ├── load_test_longrun.py  # 5～10 分钟 Web 项目长任务并发爬坡
@@ -145,6 +155,26 @@ python3 scripts/invoke_multiuser.py          # 多用户并发验证
 LEVELS='[2,4,8]' python3 scripts/load_test.py
 LEVELS='[2,4,8]' python3 scripts/load_test_longrun.py
 bash scripts/cleanup.sh                      # 清理
+```
+
+创建独立 `m7g.large` Provider 和 40 槽测试 Runtime：
+
+```bash
+CAPACITY_PROVIDER_ARN="$(scripts/create_capacity_provider.sh)"
+
+CAPACITY_PROVIDER_ARN="${CAPACITY_PROVIDER_ARN}" \
+  RUNTIME_NAME=shared_runtime_multiuser_m7g \
+  RUNTIME_CONFIG=runtime.m7g.json \
+  MAX_PARALLEL_AGENTS=40 \
+  MAX_TURNS=64 \
+  SKIP_IMAGE_BUILD=1 \
+  bash scripts/deploy.sh
+
+RUNTIME_CONFIG=runtime.m7g.json \
+  RESULT_TAG=m7g \
+  LEVELS='[16,24,32,40]' \
+  TASK_READ_TIMEOUT_S=3600 \
+  python3 scripts/load_test_longrun.py
 ```
 
 测试客户端验证四件事：

@@ -5,7 +5,7 @@
 - 项目：`15-shared-runtime-instance/`
 - Runtime：`shared_runtime_multiuser-X10bCH6p6u`
 - 模型：`us.anthropic.claude-sonnet-4-6`
-- 实例类型：`c7g.large`（2 vCPU / 4 GiB，无 swap）
+- 实例类型：`c7g.large`（2C / 4 GiB，无 swap）
 - 容量测试配置：`MAX_PARALLEL_AGENTS=24`
 - 测试后恢复配置：`MAX_PARALLEL_AGENTS=16`
 - 原始数据：
@@ -15,7 +15,7 @@
 ## 1. 测试目标
 
 在已经验证 2 用户长程任务并发正确性的基础上，继续测量单个共享
-`runtimeSessionId` 在 `c7g.large` 上承载长程 Web 项目任务的容量边界。
+`runtimeSessionId` 在 `c7g.large`（2C / 4 GiB）上承载长程 Web 项目任务的容量边界。
 
 本轮重点回答：
 
@@ -196,7 +196,9 @@ MAX_PARALLEL_AGENTS=16
 ## 7. 后续建议
 
 1. 如需精确定位边界，可在隔离测试环境继续测 18、20、22；
-2. 若目标是稳定支持 24 个长任务，应升级到至少 8 GiB 内存实例，再重新校准；
+2. `m7g.large`（2C / 8 GiB）复测已完成，24、32、40 并发均 100% 成功；40 并发最低
+   可用内存仅 425 MB，建议持续运行不超过 32，详见
+   `results/LONGRUN_M7G_REPORT.md`；
 3. 为实例配置 swap 只能作为缓冲，不应替代合理的并发上限；
 4. 服务端可增加基于可用内存的动态 admission control，而不是只依赖固定 semaphore；
 5. 对 SSM `ConnectionLost`、可用内存低水位和 runtime 无 complete 事件增加告警；
@@ -208,7 +210,8 @@ MAX_PARALLEL_AGENTS=16
 - 生成式模型执行时间有较大方差，延迟比较需要更多重复样本；
 - 24 并发时 SSM 失联，无法获得最后时刻的内存和内核日志；
 - 两台失联实例因 IAM 显式 deny 无法由当前测试身份执行 `RebootInstances`；
-- 测试结论仅适用于当前模型、Agent 实现、文件 workload 和 `c7g.large`。
+- 测试结论仅适用于当前模型、Agent 实现、文件 workload 和
+  `c7g.large`（2C / 4 GiB）。
 
 ## 9. 附录
 
@@ -219,6 +222,7 @@ MAX_PARALLEL_AGENTS=16
 - `results/load_test_longrun_20260812T151832Z.json`：8 / 16 并发完整结果；
 - `results/load_test_longrun_20260812T150257Z.json`：24 并发完整失败结果；
 - `results/load_test_longrun_20260812T134627Z.json`：2 并发基线；
+- `results/LONGRUN_M7G_REPORT.md`：`m7g.large`（2C / 8 GiB）纵向扩容复测；
 - `results/REPORT.md`：短程与长程任务统一测试报告。
 
 ### 复测命令

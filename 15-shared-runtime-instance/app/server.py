@@ -53,7 +53,7 @@ MODEL = os.environ.get(
     "ANTHROPIC_MODEL", "us.anthropic.claude-sonnet-4-6"
 )
 MAX_TURNS = int(os.environ.get("MAX_TURNS", "12"))
-# c7g.large has 2 vCPU — cap concurrent Claude subprocesses.
+# Tune the subprocess cap for the selected instance size and workload.
 MAX_PARALLEL_AGENTS = int(os.environ.get("MAX_PARALLEL_AGENTS", "4"))
 USER_ID_HEADER = "x-amzn-bedrock-agentcore-runtime-user-id"
 
