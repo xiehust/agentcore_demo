@@ -1,11 +1,41 @@
 # 15 — Shared Runtime Session 多用户隔离 Demo
 
-一个 AgentCore Runtime（EC2 Capacity Provider 模式）+ 一个固定的 `runtimeSessionId`，
-让多个真实用户的请求复用同一台 EC2 实例上的同一个 Agent 容器，
-用户身份通过 `runtimeUserId`（自定义 header）和 payload 传递，
-容器内基于 Claude Agent SDK 做应用层安全隔离。
+## TL;DR
 
-## 1. 背景
+本 demo 使用 `launchpad-agents:shared-runtime-v1`（基于 Claude Agent SDK），让多个
+真实用户通过同一个 `runtimeSessionId` 复用一台 `c7g.large`（2 vCPU / 4 GiB）上的
+Agent 容器，并用 `runtimeUserId`、独立工作区、独立 Claude session 和路径守卫做
+应用层隔离。
+
+### 容量结论
+
+| 场景 | 主要瓶颈 | 推荐活跃 Agent 并发 | 已验证边界 | 不可用边界 |
+|---|---|---:|---:|---:|
+| 短程任务（数秒、无文件操作） | CPU 峰值、进程启动和排队延迟 | **12～16** | 24 可完成，但 CPU 平均 94.6%、最低可用内存 447 MB | 32 真并行：0/32 |
+| 长程任务（5～10 分钟、持续文件操作） | 内存余量、进程长时间驻留、模型长尾 | **8～12** | 16 可完成，但最低可用内存仅 573 MB | 24 真并行：两次 0/24 |
+| 短长任务混合 | 长任务占用内存和槽位，短任务产生 CPU 突发 | **8～12** | 需要队列或拆分 Runtime | 不建议共享 24 个活跃槽位 |
+
+### 读数方式
+
+1. **短程 40 并发成功，不代表 40 个 Agent 能同时运行。** 当
+   `MAX_PARALLEL_AGENTS=16` 时，40 个请求实际是 16 个执行、其余排队；全部成功，
+   p90 约 24.4 秒。
+2. **去掉排队保护后，短程 24 真并行已接近极限。** 24/24 虽成功，但 CPU 平均
+   94.6%，最低可用内存仅 447 MB；32 真并行则 0/32，并导致 SSM 失联。
+3. **长程任务首先受内存约束。** 16 并发可以完成，但最低可用内存只剩 573 MB；
+   24 并发在两台不同实例上均无法完成第一阶段。
+4. **同一个 shared session 不能依赖 ASG 横向扩容。** 相同 `runtimeSessionId`
+   始终固定在单一实例；需要更高总容量时，应按用户分片到多个 shared session。
+5. **当前安全配置保持 `MAX_PARALLEL_AGENTS=16`。** 如果业务以长程或混合任务为主，
+   建议进一步降到 8～12。
+
+完整数据与分析见：
+
+- `results/REPORT.md`：短程与长程任务统一测试报告；
+- `results/SHORT_NOQUEUE_REPORT.md`：短程任务无排队容量测试；
+- `results/LONGRUN_CAPACITY_REPORT.md`：长程任务容量和失败边界。
+
+## 1. 背景与目标
 
 AgentCore Runtime 按 `runtimeSessionId` 路由：相同 session ID 的请求会落到同一个
 运行实例（EC2 Capacity Provider 模式下即同一台 EC2 上的同一个容器进程）。
@@ -81,7 +111,7 @@ user_id 必须匹配 `^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$`，否则直接 400 拒�
 │   ├── load_test.py          # 短任务并发爬坡 + EC2 资源采样
 │   ├── load_test_longrun.py  # 5～10 分钟 Web 项目长任务并发爬坡
 │   └── cleanup.sh            # 删除 runtime
-└── results/                  # 实测结果 JSON
+└── results/                  # 汇总报告（原始 JSON/日志为本地测试产物，不提交）
 ```
 
 ## 5. 请求/响应协议
@@ -156,8 +186,4 @@ TASK_READ_TIMEOUT_S=1800 LEVELS='[4]' python3 scripts/load_test_longrun.py
 session 续接状态、精确文件校验结果，以及测试窗口内的 CPU、内存、load average 和
 Agent 进程数。
 
-完整实测报告：
-
-- `results/REPORT.md`：短程与长程任务统一测试报告；
-- `results/SHORT_NOQUEUE_REPORT.md`：短程任务 16 / 24 / 32 真并行测试；
-- `results/LONGRUN_CAPACITY_REPORT.md`：8 / 16 / 24 并发容量和失败边界。
+详细报告入口见本文开头的 TL;DR。
