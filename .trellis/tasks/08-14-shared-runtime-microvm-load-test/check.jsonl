@@ -1,0 +1,7 @@
+{"file":".trellis/spec/backend/index.md","reason":"Check backend implementation and documentation conventions."}
+{"file":".trellis/spec/backend/error-handling.md","reason":"Verify API/event-stream/cleanup failure paths."}
+{"file":".trellis/spec/backend/logging-guidelines.md","reason":"Verify no secrets or sensitive command output are logged."}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"Run full Python, shell, and unit-test quality gates."}
+{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"Review Runtime config, app SSE, command stream, result JSON, and report contracts end to end."}
+{"file":".trellis/spec/guides/code-reuse-thinking-guide.md","reason":"Detect duplicated monitor/invocation/metrics logic across clients."}
+{"file":".trellis/tasks/08-14-shared-runtime-microvm-load-test/research/invoke-agent-runtime-command.md","reason":"Validate code against the official command and session lifecycle contract."}

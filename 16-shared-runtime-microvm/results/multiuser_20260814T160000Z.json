@@ -1,0 +1,61 @@
+{
+  "generated": "2026-08-14T16:00:04.932168+00:00",
+  "completed": false,
+  "runtime": {
+    "region": "us-west-2",
+    "runtimeName": "shared_runtime_microvm",
+    "runtimeId": "shared_runtime_microvm-KkqELu3xji",
+    "runtimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji",
+    "imageUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents:shared-runtime-microvm-v1",
+    "modelId": "us.anthropic.claude-sonnet-4-6",
+    "computeType": "microvm"
+  },
+  "shared_session_id": "shared-smoke-6c1249d716-4dccf7cf71594f3b9f0f7977d553c56d",
+  "run_id": "6c1249d716",
+  "users": [
+    "alice",
+    "bob",
+    "carol"
+  ],
+  "tokens": {
+    "alice": "tok-6c1249d716-0-64b45908",
+    "bob": "tok-6c1249d716-1-a091f8b4",
+    "carol": "tok-6c1249d716-2-71e718ea"
+  },
+  "phases": {
+    "warmup": {
+      "success": true,
+      "api_status": 200,
+      "latency_ms": 4070.2,
+      "result": "MICROVM-READY",
+      "error": null,
+      "workspace": "/tmp/agentcore-users/smoke-warmup-2aa59b4cfa2e",
+      "claude_session_id": "9dd6b307-882e-4c9f-bed1-57a901ce0d35",
+      "resumed_from": null,
+      "denied_count": 0,
+      "instance": {
+        "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+        "server_run_id": "b7518e1c8c2e4e568a67c375aa624899",
+        "pid": 1,
+        "hostname": "localhost"
+      },
+      "tool_call_count": 0,
+      "user_id": "smoke-warmup"
+    }
+  },
+  "checks": [
+    {
+      "name": "warmup",
+      "ok": true,
+      "detail": "latency_ms=4070.2 error=None"
+    }
+  ],
+  "all_passed": true,
+  "fatal_error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+  "cleanup": {
+    "attempted": true,
+    "success": true,
+    "status_code": 200,
+    "runtime_session_id": "shared-smoke-6c1249d716-4dccf7cf71594f3b9f0f7977d553c56d"
+  }
+}

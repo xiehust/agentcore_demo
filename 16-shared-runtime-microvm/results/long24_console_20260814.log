@@ -1,0 +1,28 @@
+shared session : shared-long-9968d64a09-b530d38589b8420eb37d821eee359b3a
+levels         : [2, 4]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-9968d64a09-l2-u001] foundation: ok=True time=186.8s tools=11
+    [long-9968d64a09-l2-u000] foundation: ok=True time=209.4s tools=11
+    [long-9968d64a09-l2-u001] final-qa: ok=True time=115.3s tools=12
+    [long-9968d64a09-l2-u000] final-qa: ok=True time=175.7s tools=17
+  level   2: agent_ok=2/2 p50=343.7s p90=376.8s max=385.1s
+    artifacts=2/2 end_to_end=2/2
+    [long-9968d64a09-l4-u003] foundation: ok=True time=213.9s tools=15
+    [long-9968d64a09-l4-u001] foundation: ok=True time=215.8s tools=17
+    [long-9968d64a09-l4-u000] foundation: ok=True time=243.4s tools=17
+    [long-9968d64a09-l4-u002] foundation: ok=True time=261.9s tools=20
+    [long-9968d64a09-l4-u003] final-qa: ok=True time=95.4s tools=14
+    [long-9968d64a09-l4-u001] final-qa: ok=True time=120.5s tools=13
+    [long-9968d64a09-l4-u000] final-qa: ok=True time=109.5s tools=14
+    [long-9968d64a09-l4-u002] final-qa: ok=True time=116.3s tools=14
+  level   4: agent_ok=4/4 p50=344.6s p90=370.6s max=378.2s
+    artifacts=4/4 end_to_end=4/4
+session stopped
+
+results: /home/ubuntu/workspace/agentcore_demo/16-shared-runtime-microvm/results/load_test_longrun_20260814T162540Z.json

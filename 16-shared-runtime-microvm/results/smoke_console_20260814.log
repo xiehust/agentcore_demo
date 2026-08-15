@@ -1,0 +1,134 @@
+fatal: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+shared session : shared-smoke-6c1249d716-4dccf7cf71594f3b9f0f7977d553c56d
+users          : alice, bob, carol
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 1: warmup and command-channel fingerprint ==
+  [PASS] warmup: latency_ms=4070.2 error=None
+session stopped
+
+SMOKE TEST FAILED
+results: results/multiuser_20260814T160000Z.json
+shared session : shared-smoke-e44dd3840b-6a364270a0a3409ebee73e4747e349dc
+users          : alice, bob, carol
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 1: warmup and command-channel fingerprint ==
+  [PASS] warmup: latency_ms=4919.1 error=None
+  [PASS] command API boot ID: command=ee6a4907-6b84-4b24-95bc-2ccd9a04274c app=ee6a4907-6b84-4b24-95bc-2ccd9a04274c
+  [PASS] command API hostname: command=localhost app=localhost
+
+== phase 2: concurrent private writes ==
+  [PASS] same server process: complete=4/4 distinct_fingerprints=1
+  [PASS] distinct per-user workspaces: distinct=3/3
+  [PASS] write/read [alice]: workspace=/tmp/agentcore-users/alice-2bd806c97f0e error=None
+  [PASS] fresh Claude session [alice]: session='8c94993b-2d07-43ef-8255-2dd2cac9fbfd' resumed=None
+  [PASS] write/read [bob]: workspace=/tmp/agentcore-users/bob-81b637d8fcd2 error=None
+  [PASS] fresh Claude session [bob]: session='ddc2cee1-0f9b-49ac-8a97-163872409deb' resumed=None
+  [PASS] write/read [carol]: workspace=/tmp/agentcore-users/carol-4c26d9074c27 error=None
+  [PASS] fresh Claude session [carol]: session='fff5aff9-75ad-452b-a668-86e06ca91517' resumed=None
+
+== phase 3: cross-workspace read attempts ==
+  [FAIL] guarded cross-workspace read [relative traversal]: success=True leaked=False denied_count=0 error=None
+  [FAIL] guarded cross-workspace read [absolute path]: success=True leaked=False denied_count=0 error=None
+
+== phase 4: per-user conversation resume ==
+  [PASS] memory recall [alice]: error=None
+  [PASS] memory no-crosstalk [alice]: foreign=[]
+  [PASS] session resume chain [alice]: resumed='8c94993b-2d07-43ef-8255-2dd2cac9fbfd'
+  [PASS] workspace stable [alice]: workspace='/tmp/agentcore-users/alice-2bd806c97f0e'
+  [PASS] memory recall [bob]: error=None
+  [PASS] memory no-crosstalk [bob]: foreign=[]
+  [PASS] session resume chain [bob]: resumed='ddc2cee1-0f9b-49ac-8a97-163872409deb'
+  [PASS] workspace stable [bob]: workspace='/tmp/agentcore-users/bob-81b637d8fcd2'
+  [PASS] memory recall [carol]: error=None
+  [PASS] memory no-crosstalk [carol]: foreign=[]
+  [PASS] session resume chain [carol]: resumed='fff5aff9-75ad-452b-a668-86e06ca91517'
+  [PASS] workspace stable [carol]: workspace='/tmp/agentcore-users/carol-4c26d9074c27'
+  [PASS] same server process throughout smoke: complete=9/9 distinct_fingerprints=1
+session stopped
+
+SMOKE TEST FAILED
+results: results/multiuser_20260814T160116Z.json
+shared session : shared-smoke-dded98afdb-525c5b96a921406a85bc58d3d7d1a420
+users          : alice, bob, carol
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 1: warmup and command-channel fingerprint ==
+  [PASS] warmup: latency_ms=13073.6 error=None
+  [PASS] command API boot ID: command=ee6a4907-6b84-4b24-95bc-2ccd9a04274c app=ee6a4907-6b84-4b24-95bc-2ccd9a04274c
+  [PASS] command API hostname: command=localhost app=localhost
+
+== phase 2: concurrent private writes ==
+  [PASS] same server process: complete=4/4 distinct_fingerprints=1
+  [PASS] distinct per-user workspaces: distinct=3/3
+  [PASS] write/read [alice]: workspace=/tmp/agentcore-users/alice-2bd806c97f0e error=None
+  [PASS] fresh Claude session [alice]: session='441963a7-2adf-49de-ab67-e60848e14e96' resumed=None
+  [PASS] write/read [bob]: workspace=/tmp/agentcore-users/bob-81b637d8fcd2 error=None
+  [PASS] fresh Claude session [bob]: session='b73105d4-5aa1-49b6-b98d-71c587cb0026' resumed=None
+  [PASS] write/read [carol]: workspace=/tmp/agentcore-users/carol-4c26d9074c27 error=None
+  [PASS] fresh Claude session [carol]: session='a61acd31-2ff3-4328-8ac4-b07bc20974c4' resumed=None
+
+== phase 3: cross-workspace read attempts ==
+  [FAIL] guarded cross-workspace read [relative traversal]: success=True leaked=False denied_count=0 error=None
+  [FAIL] guarded cross-workspace read [absolute path]: success=True leaked=False denied_count=0 error=None
+
+== phase 4: per-user conversation resume ==
+  [PASS] memory recall [alice]: error=None
+  [PASS] memory no-crosstalk [alice]: foreign=[]
+  [PASS] session resume chain [alice]: resumed='441963a7-2adf-49de-ab67-e60848e14e96'
+  [PASS] workspace stable [alice]: workspace='/tmp/agentcore-users/alice-2bd806c97f0e'
+  [PASS] memory recall [bob]: error=None
+  [PASS] memory no-crosstalk [bob]: foreign=[]
+  [PASS] session resume chain [bob]: resumed='b73105d4-5aa1-49b6-b98d-71c587cb0026'
+  [PASS] workspace stable [bob]: workspace='/tmp/agentcore-users/bob-81b637d8fcd2'
+  [PASS] memory recall [carol]: error=None
+  [PASS] memory no-crosstalk [carol]: foreign=[]
+  [PASS] session resume chain [carol]: resumed='a61acd31-2ff3-4328-8ac4-b07bc20974c4'
+  [PASS] workspace stable [carol]: workspace='/tmp/agentcore-users/carol-4c26d9074c27'
+  [PASS] same server process throughout smoke: complete=9/9 distinct_fingerprints=1
+session stopped
+
+SMOKE TEST FAILED
+results: results/multiuser_20260814T160338Z.json
+shared session : shared-smoke-47b7799c40-d459a9abe8144a8eafd0c87442e89d4a
+users          : alice, bob, carol
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 1: warmup and command-channel fingerprint ==
+  [PASS] warmup: latency_ms=14216.4 error=None
+  [PASS] command API boot ID: command=ee6a4907-6b84-4b24-95bc-2ccd9a04274c app=ee6a4907-6b84-4b24-95bc-2ccd9a04274c
+  [PASS] command API hostname: command=localhost app=localhost
+
+== phase 2: concurrent private writes ==
+  [PASS] same server process: complete=4/4 distinct_fingerprints=1
+  [PASS] distinct per-user workspaces: distinct=3/3
+  [PASS] write/read [alice]: workspace=/tmp/agentcore-users/alice-2bd806c97f0e error=None
+  [PASS] fresh Claude session [alice]: session='933cab2f-a752-4011-9d6b-3e63a73a5a41' resumed=None
+  [PASS] write/read [bob]: workspace=/tmp/agentcore-users/bob-81b637d8fcd2 error=None
+  [PASS] fresh Claude session [bob]: session='5c28ca95-a2c0-408d-a43e-f8a8396d13fc' resumed=None
+  [PASS] write/read [carol]: workspace=/tmp/agentcore-users/carol-4c26d9074c27 error=None
+  [PASS] fresh Claude session [carol]: session='996e5415-15b1-4b83-af92-11ae7b3d7abc' resumed=None
+
+== phase 3: cross-workspace read attempts ==
+  [PASS] guarded cross-workspace read [relative traversal]: success=True leaked=False denied_count=1 error=None
+  [PASS] guarded cross-workspace read [absolute path]: success=True leaked=False denied_count=1 error=None
+
+== phase 4: per-user conversation resume ==
+  [PASS] memory recall [alice]: error=None
+  [PASS] memory no-crosstalk [alice]: foreign=[]
+  [PASS] session resume chain [alice]: resumed='933cab2f-a752-4011-9d6b-3e63a73a5a41'
+  [PASS] workspace stable [alice]: workspace='/tmp/agentcore-users/alice-2bd806c97f0e'
+  [PASS] memory recall [bob]: error=None
+  [PASS] memory no-crosstalk [bob]: foreign=[]
+  [PASS] session resume chain [bob]: resumed='5c28ca95-a2c0-408d-a43e-f8a8396d13fc'
+  [PASS] workspace stable [bob]: workspace='/tmp/agentcore-users/bob-81b637d8fcd2'
+  [PASS] memory recall [carol]: error=None
+  [PASS] memory no-crosstalk [carol]: foreign=[]
+  [PASS] session resume chain [carol]: resumed='996e5415-15b1-4b83-af92-11ae7b3d7abc'
+  [PASS] workspace stable [carol]: workspace='/tmp/agentcore-users/carol-4c26d9074c27'
+  [PASS] same server process throughout smoke: complete=9/9 distinct_fingerprints=1
+session stopped
+
+ALL CHECKS PASSED
+results: results/multiuser_20260814T160656Z.json

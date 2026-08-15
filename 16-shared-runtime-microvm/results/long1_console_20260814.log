@@ -1,0 +1,49 @@
+shared session : shared-long-8bcc15d76b-5684a907d7374138aafc99df2614546c
+levels         : [1]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-8bcc15d76b-l1-u000] foundation: ok=False time=217.7s tools=14
+  level   1: agent_ok=0/1 p50=Nones p90=Nones max=Nones
+    artifacts=0/1 end_to_end=0/1
+  stopping ramp: 0.0 < 0.75
+session stopped
+
+results: /home/ubuntu/workspace/agentcore_demo/16-shared-runtime-microvm/results/load_test_longrun_20260814T160911Z.json
+shared session : shared-long-6b574e63e1-87ee21df53ae4e4b8a5a3e1ca82bed63
+levels         : [1]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-6b574e63e1-l1-u000] foundation: ok=True time=233.0s tools=11
+    [long-6b574e63e1-l1-u000] final-qa: ok=True time=124.9s tools=14
+  level   1: agent_ok=1/1 p50=357.9s p90=357.9s max=357.9s
+    artifacts=0/1 end_to_end=0/1
+  stopping ramp: 0.0 < 0.75
+session stopped
+
+results: /home/ubuntu/workspace/agentcore_demo/16-shared-runtime-microvm/results/load_test_longrun_20260814T161339Z.json
+shared session : shared-long-c24bf55522-10439dad61f144ef936147f21cbdf00b
+levels         : [1]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-c24bf55522-l1-u000] foundation: ok=True time=183.3s tools=12
+    [long-c24bf55522-l1-u000] final-qa: ok=True time=90.6s tools=13
+  level   1: agent_ok=1/1 p50=273.9s p90=273.9s max=273.9s
+    artifacts=1/1 end_to_end=1/1
+session stopped
+
+results: /home/ubuntu/workspace/agentcore_demo/16-shared-runtime-microvm/results/load_test_longrun_20260814T162033Z.json

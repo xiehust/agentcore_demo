@@ -1,0 +1,6 @@
+{"file":".trellis/spec/backend/index.md","reason":"Backend/Python implementation entry point and documentation language expectations."}
+{"file":".trellis/spec/backend/error-handling.md","reason":"Command stream, AWS API, checkpoint, and cleanup failure handling."}
+{"file":".trellis/spec/backend/logging-guidelines.md","reason":"Runtime and load-test logging must avoid credentials and user data."}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"Local test and review expectations."}
+{"file":".trellis/spec/guides/code-reuse-thinking-guide.md","reason":"Short/long clients must share command, monitor, and result helpers."}
+{"file":".trellis/tasks/08-14-shared-runtime-microvm-load-test/research/invoke-agent-runtime-command.md","reason":"Authoritative command API, event stream, lifecycle, and local SDK findings."}

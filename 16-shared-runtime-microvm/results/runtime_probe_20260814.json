@@ -1,0 +1,60 @@
+{
+  "generated": "2026-08-14T16:49:17.784281+00:00",
+  "runtime": {
+    "region": "us-west-2",
+    "runtimeName": "shared_runtime_microvm",
+    "runtimeId": "shared_runtime_microvm-KkqELu3xji",
+    "runtimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji",
+    "imageUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents:shared-runtime-microvm-v1",
+    "modelId": "us.anthropic.claude-sonnet-4-6",
+    "computeType": "microvm"
+  },
+  "session_id": "runtime-probe-e08a7dbbd240429db0263834dad2b7e2",
+  "warmup": {
+    "success": true,
+    "api_status": 200,
+    "latency_ms": 4001.7,
+    "result": "PROBE-READY",
+    "error": null,
+    "workspace": "/tmp/agentcore-users/runtime-probe-93e35b6f369d",
+    "claude_session_id": "d5121c5d-6624-49a1-9be6-2e14c4b71de4",
+    "resumed_from": null,
+    "denied_count": 0,
+    "instance": {
+      "boot_id": "42fb1592-32d0-4f23-9cbf-8ed913823868",
+      "server_run_id": "e3c62de4f7e245e39a1c42b56bcb6777",
+      "pid": 1,
+      "hostname": "localhost"
+    },
+    "tool_call_count": 0
+  },
+  "command": {
+    "api_status": 200,
+    "runtime_session_id": "runtime-probe-e08a7dbbd240429db0263834dad2b7e2",
+    "expected_session_id": "runtime-probe-e08a7dbbd240429db0263834dad2b7e2",
+    "content_start_count": 1,
+    "content_stop": {
+      "exitCode": 0,
+      "status": "COMPLETED"
+    },
+    "stream_exceptions": [],
+    "unknown_events": [],
+    "protocol_errors": [],
+    "error": null,
+    "success": true
+  },
+  "probe": {
+    "os_cpu_count": 2,
+    "mem_total": "8209720 kB",
+    "mem_available": "7703184 kB",
+    "cpu_max": "max 100000",
+    "memory_max": "max",
+    "pids_max": "max",
+    "boot_id": "42fb1592-32d0-4f23-9cbf-8ed913823868"
+  },
+  "cleanup": {
+    "success": true,
+    "status_code": 200,
+    "runtime_session_id": "runtime-probe-e08a7dbbd240429db0263834dad2b7e2"
+  }
+}

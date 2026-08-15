@@ -1,0 +1,370 @@
+{
+  "generated": "2026-08-14T16:04:22.634625+00:00",
+  "completed": true,
+  "runtime": {
+    "region": "us-west-2",
+    "runtimeName": "shared_runtime_microvm",
+    "runtimeId": "shared_runtime_microvm-KkqELu3xji",
+    "runtimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji",
+    "imageUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents:shared-runtime-microvm-v1",
+    "modelId": "us.anthropic.claude-sonnet-4-6",
+    "computeType": "microvm"
+  },
+  "shared_session_id": "shared-smoke-dded98afdb-525c5b96a921406a85bc58d3d7d1a420",
+  "run_id": "dded98afdb",
+  "users": [
+    "alice",
+    "bob",
+    "carol"
+  ],
+  "tokens": {
+    "alice": "tok-dded98afdb-0-0026c5f0",
+    "bob": "tok-dded98afdb-1-706b3c50",
+    "carol": "tok-dded98afdb-2-9d1a1389"
+  },
+  "phases": {
+    "warmup": {
+      "success": true,
+      "api_status": 200,
+      "latency_ms": 13073.6,
+      "result": "MICROVM-READY",
+      "error": null,
+      "workspace": "/tmp/agentcore-users/smoke-warmup-2aa59b4cfa2e",
+      "claude_session_id": "8ddd3db2-074b-4583-b144-12045f24e5c8",
+      "resumed_from": null,
+      "denied_count": 0,
+      "instance": {
+        "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+        "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+        "pid": 1,
+        "hostname": "localhost"
+      },
+      "tool_call_count": 0,
+      "user_id": "smoke-warmup"
+    },
+    "command_probe": {
+      "command": {
+        "api_status": 200,
+        "runtime_session_id": "shared-smoke-dded98afdb-525c5b96a921406a85bc58d3d7d1a420",
+        "expected_session_id": "shared-smoke-dded98afdb-525c5b96a921406a85bc58d3d7d1a420",
+        "stdout": "{\"boot_id\": \"ee6a4907-6b84-4b24-95bc-2ccd9a04274c\", \"hostname\": \"localhost\", \"command_pid\": 40}\n",
+        "stderr": "",
+        "content_start_count": 1,
+        "content_stop": {
+          "exitCode": 0,
+          "status": "COMPLETED"
+        },
+        "stream_exceptions": [],
+        "unknown_events": [],
+        "protocol_errors": [],
+        "error": null,
+        "success": true
+      },
+      "fingerprint": {
+        "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+        "hostname": "localhost",
+        "command_pid": 40
+      }
+    },
+    "parallel_writes": [
+      {
+        "success": true,
+        "api_status": 200,
+        "latency_ms": 5892.4,
+        "result": "tok-dded98afdb-0-0026c5f0",
+        "error": null,
+        "workspace": "/tmp/agentcore-users/alice-2bd806c97f0e",
+        "claude_session_id": "441963a7-2adf-49de-ab67-e60848e14e96",
+        "resumed_from": null,
+        "denied_count": 0,
+        "instance": {
+          "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+          "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+          "pid": 1,
+          "hostname": "localhost"
+        },
+        "tool_call_count": 1,
+        "user_id": "alice"
+      },
+      {
+        "success": true,
+        "api_status": 200,
+        "latency_ms": 6725.7,
+        "result": "tok-dded98afdb-1-706b3c50",
+        "error": null,
+        "workspace": "/tmp/agentcore-users/bob-81b637d8fcd2",
+        "claude_session_id": "b73105d4-5aa1-49b6-b98d-71c587cb0026",
+        "resumed_from": null,
+        "denied_count": 0,
+        "instance": {
+          "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+          "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+          "pid": 1,
+          "hostname": "localhost"
+        },
+        "tool_call_count": 1,
+        "user_id": "bob"
+      },
+      {
+        "success": true,
+        "api_status": 200,
+        "latency_ms": 7564.4,
+        "result": "tok-dded98afdb-2-9d1a1389",
+        "error": null,
+        "workspace": "/tmp/agentcore-users/carol-4c26d9074c27",
+        "claude_session_id": "a61acd31-2ff3-4328-8ac4-b07bc20974c4",
+        "resumed_from": null,
+        "denied_count": 0,
+        "instance": {
+          "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+          "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+          "pid": 1,
+          "hostname": "localhost"
+        },
+        "tool_call_count": 1,
+        "user_id": "carol"
+      }
+    ],
+    "cross_workspace_attempts": [
+      {
+        "success": true,
+        "api_status": 200,
+        "latency_ms": 6164.9,
+        "result": "GUARD-PROBE-COMPLETE",
+        "error": null,
+        "workspace": "/tmp/agentcore-users/bob-81b637d8fcd2",
+        "claude_session_id": "b73105d4-5aa1-49b6-b98d-71c587cb0026",
+        "resumed_from": "b73105d4-5aa1-49b6-b98d-71c587cb0026",
+        "denied_count": 0,
+        "instance": {
+          "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+          "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+          "pid": 1,
+          "hostname": "localhost"
+        },
+        "tool_call_count": 1,
+        "user_id": "bob",
+        "label": "relative traversal"
+      },
+      {
+        "success": true,
+        "api_status": 200,
+        "latency_ms": 5543.5,
+        "result": "GUARD-PROBE-COMPLETE",
+        "error": null,
+        "workspace": "/tmp/agentcore-users/bob-81b637d8fcd2",
+        "claude_session_id": "b73105d4-5aa1-49b6-b98d-71c587cb0026",
+        "resumed_from": "b73105d4-5aa1-49b6-b98d-71c587cb0026",
+        "denied_count": 0,
+        "instance": {
+          "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+          "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+          "pid": 1,
+          "hostname": "localhost"
+        },
+        "tool_call_count": 1,
+        "user_id": "bob",
+        "label": "absolute path"
+      }
+    ],
+    "memory": [
+      {
+        "success": true,
+        "api_status": 200,
+        "latency_ms": 4683.7,
+        "result": "tok-dded98afdb-0-0026c5f0",
+        "error": null,
+        "workspace": "/tmp/agentcore-users/alice-2bd806c97f0e",
+        "claude_session_id": "441963a7-2adf-49de-ab67-e60848e14e96",
+        "resumed_from": "441963a7-2adf-49de-ab67-e60848e14e96",
+        "denied_count": 0,
+        "instance": {
+          "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+          "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+          "pid": 1,
+          "hostname": "localhost"
+        },
+        "tool_call_count": 0,
+        "user_id": "alice"
+      },
+      {
+        "success": true,
+        "api_status": 200,
+        "latency_ms": 3246.3,
+        "result": "tok-dded98afdb-1-706b3c50",
+        "error": null,
+        "workspace": "/tmp/agentcore-users/bob-81b637d8fcd2",
+        "claude_session_id": "b73105d4-5aa1-49b6-b98d-71c587cb0026",
+        "resumed_from": "b73105d4-5aa1-49b6-b98d-71c587cb0026",
+        "denied_count": 0,
+        "instance": {
+          "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+          "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+          "pid": 1,
+          "hostname": "localhost"
+        },
+        "tool_call_count": 0,
+        "user_id": "bob"
+      },
+      {
+        "success": true,
+        "api_status": 200,
+        "latency_ms": 3454.0,
+        "result": "tok-dded98afdb-2-9d1a1389",
+        "error": null,
+        "workspace": "/tmp/agentcore-users/carol-4c26d9074c27",
+        "claude_session_id": "a61acd31-2ff3-4328-8ac4-b07bc20974c4",
+        "resumed_from": "a61acd31-2ff3-4328-8ac4-b07bc20974c4",
+        "denied_count": 0,
+        "instance": {
+          "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+          "server_run_id": "291c74f3a5514618881d91ba4f34f509",
+          "pid": 1,
+          "hostname": "localhost"
+        },
+        "tool_call_count": 0,
+        "user_id": "carol"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "warmup",
+      "ok": true,
+      "detail": "latency_ms=13073.6 error=None"
+    },
+    {
+      "name": "command API boot ID",
+      "ok": true,
+      "detail": "command=ee6a4907-6b84-4b24-95bc-2ccd9a04274c app=ee6a4907-6b84-4b24-95bc-2ccd9a04274c"
+    },
+    {
+      "name": "command API hostname",
+      "ok": true,
+      "detail": "command=localhost app=localhost"
+    },
+    {
+      "name": "same server process",
+      "ok": true,
+      "detail": "complete=4/4 distinct_fingerprints=1"
+    },
+    {
+      "name": "distinct per-user workspaces",
+      "ok": true,
+      "detail": "distinct=3/3"
+    },
+    {
+      "name": "write/read [alice]",
+      "ok": true,
+      "detail": "workspace=/tmp/agentcore-users/alice-2bd806c97f0e error=None"
+    },
+    {
+      "name": "fresh Claude session [alice]",
+      "ok": true,
+      "detail": "session='441963a7-2adf-49de-ab67-e60848e14e96' resumed=None"
+    },
+    {
+      "name": "write/read [bob]",
+      "ok": true,
+      "detail": "workspace=/tmp/agentcore-users/bob-81b637d8fcd2 error=None"
+    },
+    {
+      "name": "fresh Claude session [bob]",
+      "ok": true,
+      "detail": "session='b73105d4-5aa1-49b6-b98d-71c587cb0026' resumed=None"
+    },
+    {
+      "name": "write/read [carol]",
+      "ok": true,
+      "detail": "workspace=/tmp/agentcore-users/carol-4c26d9074c27 error=None"
+    },
+    {
+      "name": "fresh Claude session [carol]",
+      "ok": true,
+      "detail": "session='a61acd31-2ff3-4328-8ac4-b07bc20974c4' resumed=None"
+    },
+    {
+      "name": "guarded cross-workspace read [relative traversal]",
+      "ok": false,
+      "detail": "success=True leaked=False denied_count=0 error=None"
+    },
+    {
+      "name": "guarded cross-workspace read [absolute path]",
+      "ok": false,
+      "detail": "success=True leaked=False denied_count=0 error=None"
+    },
+    {
+      "name": "memory recall [alice]",
+      "ok": true,
+      "detail": "error=None"
+    },
+    {
+      "name": "memory no-crosstalk [alice]",
+      "ok": true,
+      "detail": "foreign=[]"
+    },
+    {
+      "name": "session resume chain [alice]",
+      "ok": true,
+      "detail": "resumed='441963a7-2adf-49de-ab67-e60848e14e96'"
+    },
+    {
+      "name": "workspace stable [alice]",
+      "ok": true,
+      "detail": "workspace='/tmp/agentcore-users/alice-2bd806c97f0e'"
+    },
+    {
+      "name": "memory recall [bob]",
+      "ok": true,
+      "detail": "error=None"
+    },
+    {
+      "name": "memory no-crosstalk [bob]",
+      "ok": true,
+      "detail": "foreign=[]"
+    },
+    {
+      "name": "session resume chain [bob]",
+      "ok": true,
+      "detail": "resumed='b73105d4-5aa1-49b6-b98d-71c587cb0026'"
+    },
+    {
+      "name": "workspace stable [bob]",
+      "ok": true,
+      "detail": "workspace='/tmp/agentcore-users/bob-81b637d8fcd2'"
+    },
+    {
+      "name": "memory recall [carol]",
+      "ok": true,
+      "detail": "error=None"
+    },
+    {
+      "name": "memory no-crosstalk [carol]",
+      "ok": true,
+      "detail": "foreign=[]"
+    },
+    {
+      "name": "session resume chain [carol]",
+      "ok": true,
+      "detail": "resumed='a61acd31-2ff3-4328-8ac4-b07bc20974c4'"
+    },
+    {
+      "name": "workspace stable [carol]",
+      "ok": true,
+      "detail": "workspace='/tmp/agentcore-users/carol-4c26d9074c27'"
+    },
+    {
+      "name": "same server process throughout smoke",
+      "ok": true,
+      "detail": "complete=9/9 distinct_fingerprints=1"
+    }
+  ],
+  "all_passed": false,
+  "fatal_error": null,
+  "cleanup": {
+    "attempted": true,
+    "success": true,
+    "status_code": 200,
+    "runtime_session_id": "shared-smoke-dded98afdb-525c5b96a921406a85bc58d3d7d1a420"
+  }
+}

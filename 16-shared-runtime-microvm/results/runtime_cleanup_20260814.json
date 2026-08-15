@@ -1,0 +1,23 @@
+{
+  "runtimeId": "shared_runtime_microvm-KkqELu3xji",
+  "runtimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji",
+  "region": "us-west-2",
+  "deleteRequestedAt": "2026-08-14T16:54:32Z",
+  "deleteRequestStatus": "DELETING",
+  "deleteConfirmedAt": "2026-08-14T16:58:06Z",
+  "getAfterDelete": {
+    "error": "ResourceNotFoundException",
+    "deleted": true
+  },
+  "listAfterDelete": [],
+  "localRuntimeConfigRemoved": true,
+  "ecrImage": {
+    "repositoryName": "launchpad-agents",
+    "imageTag": "shared-runtime-microvm-v1",
+    "imageDigest": "sha256:64a5d04da16537ecbb97a8313a8e338edea2c8c151c02272b8b027f871ae96a4",
+    "imageStatus": "ACTIVE",
+    "imageSizeInBytes": 266682540,
+    "retained": true
+  },
+  "otherResourcesModified": false
+}

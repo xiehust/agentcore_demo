@@ -1,0 +1,50 @@
+{
+  "capturedAt": "2026-08-14T16:50:00Z",
+  "runtime": {
+    "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji",
+    "agentRuntimeName": "shared_runtime_microvm",
+    "agentRuntimeId": "shared_runtime_microvm-KkqELu3xji",
+    "agentRuntimeVersion": "3",
+    "createdAt": "2026-08-14T15:59:19.876573+00:00",
+    "lastUpdatedAt": "2026-08-14T16:06:38.528910+00:00",
+    "roleArn": "arn:aws:iam::434444145045:role/AmazonBedrockAgentCoreSDKRuntime-us-west-2-6b8cf5ef59",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "status": "READY",
+    "lifecycleConfiguration": {
+      "idleRuntimeSessionTimeout": 900,
+      "maxLifetime": 28800
+    },
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents:shared-runtime-microvm-v1"
+      }
+    },
+    "environmentVariables": {
+      "ANTHROPIC_MODEL": "us.anthropic.claude-sonnet-4-6",
+      "AWS_DEFAULT_REGION": "us-west-2",
+      "AWS_REGION": "us-west-2",
+      "MAX_PARALLEL_AGENTS": "8",
+      "MAX_TURNS": "64",
+      "USERS_ROOT": "/tmp/agentcore-users"
+    },
+    "metadataConfiguration": {
+      "requireMMDSV2": true
+    }
+  },
+  "defaultEndpoint": {
+    "name": "DEFAULT",
+    "liveVersion": "3",
+    "status": "READY",
+    "agentRuntimeEndpointArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji/runtime-endpoint/DEFAULT"
+  },
+  "image": {
+    "repositoryName": "launchpad-agents",
+    "imageTag": "shared-runtime-microvm-v1",
+    "imageDigest": "sha256:64a5d04da16537ecbb97a8313a8e338edea2c8c151c02272b8b027f871ae96a4",
+    "imageSizeInBytes": 266682540,
+    "imagePushedAt": "2026-08-14T16:06:33.284000+00:00",
+    "imageStatus": "ACTIVE"
+  }
+}

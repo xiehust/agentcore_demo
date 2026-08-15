@@ -1,0 +1,18 @@
+[project]
+name = "shared-runtime-microvm"
+version = "0.1.0"
+description = "Shared AgentCore microVM session multi-user concurrency test"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3==1.42.59",
+    "claude-agent-sdk==0.1.1",
+    "fastapi==0.124.4",
+    "uvicorn==0.33.0",
+]
+
+[tool.pyright]
+include = ["app", "scripts", "tests"]
+extraPaths = ["app", "scripts"]
+venvPath = "."
+venv = ".venv"
+pythonVersion = "3.13"

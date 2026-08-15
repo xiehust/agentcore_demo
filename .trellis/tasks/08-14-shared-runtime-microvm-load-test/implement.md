@@ -1,0 +1,43 @@
+# Implementation Plan
+
+1. Create the standalone directory skeleton, pinned project metadata, ignore rules, ARM64 image, microVM deployment script, cleanup script, and documentation/report skeleton.
+2. Port the application isolation/server behavior from demo 15, changing only microVM-appropriate workspace defaults and metadata.
+3. Implement `scripts/runtime_session.py` for runtime config, SSE and command event parsing, bounded retries, shell transport, `/proc` monitor lifecycle, window statistics, atomic checkpoints, and session cleanup.
+4. Implement `invoke_multiuser.py` with command-channel fingerprint verification and guaranteed stop cleanup.
+5. Implement `load_test.py` for short-task concurrency levels and command-based resource monitoring.
+6. Implement `load_test_longrun.py` for two-phase user tasks, resume checks, command-based deterministic artifact verification, resource monitoring, checkpoints, and cleanup.
+7. Add isolation and runtime-session unit tests; make client helpers importable without live AWS calls.
+8. Complete README and `results/REPORT.md` with architecture, IAM permissions, commands, baseline comparison, interpretation rules, costs, limitations, and an explicit pending-cloud-results section.
+9. Run `python -m compileall`, `bash -n`, `unittest`, and focused help/smoke checks. Fix every failure.
+10. Run a full-scope Trellis check and confirm demo 15 is unchanged.
+
+## Validation commands
+
+```bash
+cd 16-shared-runtime-microvm
+python3 -m compileall -q app scripts tests
+python3 -m unittest discover -s tests -v
+for file in scripts/*.sh; do bash -n "$file"; done
+python3 scripts/load_test.py --help
+python3 scripts/load_test_longrun.py --help
+```
+
+## Rollback points
+
+- All implementation is confined to the new directory and this task's Trellis artifacts.
+- No AWS mutation or billable invocation occurs during local validation.
+- Remove `16-shared-runtime-microvm/` to roll back the code-only deliverable.
+
+## Authorized AWS execution
+
+11. Preflight account, region, execution role, ECR repository, model profile, and absence of a conflicting target Runtime.
+12. Deploy `shared_runtime_microvm`, verify READY and confirm no Capacity Provider/filesystem configuration.
+13. Run the three-user isolation smoke; stop and diagnose immediately if any check or cleanup fails.
+14. Run short levels `2,4,8` in one fresh shared session and preserve the result JSON.
+15. Run long level `1`, then `2,4`; append level `8` only if level 4 is fully verified with healthy memory and cleanup.
+16. Parse all raw JSON and rewrite `results/REPORT.md` in Chinese with traceable tables and evidence limits.
+17. Re-run local gates, verify every result cleanup record, delete the dedicated test Runtime, and verify control-plane deletion.
+
+## Completion record (2026-08-14 UTC)
+
+All 17 steps completed. The final AWS evidence is indexed in `16-shared-runtime-microvm/results/REPORT.md`: isolation 26/26, short 2/4/8 at 14/14, and long 1/2/4/8 at 15/15 deterministic end-to-end success. Local validation passed 45/45 tests plus compileall, Ruff, Pyright, shell syntax, CLI help, server import, and diff checks. All 11 JSON-recorded sessions report successful HTTP 200 cleanup. The dedicated Runtime was deleted and confirmed absent via `ResourceNotFoundException` and an empty filtered Runtime list; the ECR image was retained.

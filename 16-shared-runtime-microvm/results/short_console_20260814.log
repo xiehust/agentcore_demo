@@ -1,0 +1,17 @@
+shared session : shared-short-b82c5264c3-727aa74310194900b347b7e1f1bc471c
+levels         : [2, 4, 8]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 0: warmup ==
+  ok=True latency=4527.6ms
+
+== phase 1: start command-channel monitor ==
+  monitor started
+
+== phase 2: concurrency ramp ==
+  level   2: ok=2/2 p50=4147.4ms p90=4747.2ms max=4897.2ms processes=1
+  level   4: ok=4/4 p50=4596.1ms p90=5855.3ms max=6392.4ms processes=1
+  level   8: ok=8/8 p50=6789.8ms p90=7409.6ms max=7885.4ms processes=1
+session stopped
+
+results: /home/ubuntu/workspace/agentcore_demo/16-shared-runtime-microvm/results/load_test_20260814T160811Z.json

@@ -1,0 +1,30 @@
+shared session : shared-long-2ceb3729c8-e1ed4ab3f8fc4dcd8afc0601f9453cbe
+levels         : [8]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-KkqELu3xji
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-2ceb3729c8-l8-u003] foundation: ok=True time=163.9s tools=11
+    [long-2ceb3729c8-l8-u006] foundation: ok=True time=166.5s tools=11
+    [long-2ceb3729c8-l8-u005] foundation: ok=True time=182.0s tools=11
+    [long-2ceb3729c8-l8-u002] foundation: ok=True time=194.6s tools=15
+    [long-2ceb3729c8-l8-u004] foundation: ok=True time=216.2s tools=16
+    [long-2ceb3729c8-l8-u000] foundation: ok=True time=250.3s tools=17
+    [long-2ceb3729c8-l8-u006] final-qa: ok=True time=121.1s tools=17
+    [long-2ceb3729c8-l8-u002] final-qa: ok=True time=114.4s tools=19
+    [long-2ceb3729c8-l8-u005] final-qa: ok=True time=156.6s tools=18
+    [long-2ceb3729c8-l8-u004] final-qa: ok=True time=130.8s tools=18
+    [long-2ceb3729c8-l8-u000] final-qa: ok=True time=139.9s tools=15
+    [long-2ceb3729c8-l8-u007] foundation: ok=True time=392.1s tools=34
+    [long-2ceb3729c8-l8-u001] foundation: ok=True time=472.0s tools=33
+    [long-2ceb3729c8-l8-u007] final-qa: ok=True time=112.7s tools=15
+    [long-2ceb3729c8-l8-u003] final-qa: ok=True time=380.5s tools=16
+    [long-2ceb3729c8-l8-u001] final-qa: ok=True time=115.7s tools=15
+  level   8: agent_ok=8/8 p50=368.6s p90=557.4s max=587.8s
+    artifacts=8/8 end_to_end=8/8
+session stopped
+
+results: /home/ubuntu/workspace/agentcore_demo/16-shared-runtime-microvm/results/load_test_longrun_20260814T163857Z.json
