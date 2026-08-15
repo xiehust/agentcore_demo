@@ -1,0 +1,38 @@
+shared session : shared-long-88a800ada2-b52128e200114925adca9f01022bf357
+levels         : [12]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-88a800ada2-l12-u006] foundation: ok=True time=189.7s tools=23
+    [long-88a800ada2-l12-u004] foundation: ok=True time=206.1s tools=14
+    [long-88a800ada2-l12-u009] foundation: ok=True time=208.6s tools=12
+    [long-88a800ada2-l12-u003] foundation: ok=True time=211.3s tools=13
+    [long-88a800ada2-l12-u011] foundation: ok=True time=217.8s tools=13
+    [long-88a800ada2-l12-u010] foundation: ok=True time=224.8s tools=15
+    [long-88a800ada2-l12-u001] foundation: ok=True time=233.5s tools=11
+    [long-88a800ada2-l12-u008] foundation: ok=True time=242.4s tools=15
+    [long-88a800ada2-l12-u000] foundation: ok=True time=243.8s tools=16
+    [long-88a800ada2-l12-u002] foundation: ok=True time=263.1s tools=16
+    [long-88a800ada2-l12-u005] foundation: ok=True time=271.4s tools=27
+    [long-88a800ada2-l12-u003] final-qa: ok=True time=85.3s tools=16
+    [long-88a800ada2-l12-u011] final-qa: ok=True time=92.8s tools=12
+    [long-88a800ada2-l12-u006] final-qa: ok=True time=126.5s tools=22
+    [long-88a800ada2-l12-u010] final-qa: ok=True time=102.1s tools=15
+    [long-88a800ada2-l12-u009] final-qa: ok=True time=121.3s tools=19
+    [long-88a800ada2-l12-u007] foundation: ok=True time=331.6s tools=16
+    [long-88a800ada2-l12-u001] final-qa: ok=True time=101.0s tools=13
+    [long-88a800ada2-l12-u004] final-qa: ok=True time=134.2s tools=16
+    [long-88a800ada2-l12-u000] final-qa: ok=True time=112.7s tools=14
+    [long-88a800ada2-l12-u008] final-qa: ok=True time=119.9s tools=16
+    [long-88a800ada2-l12-u002] final-qa: ok=True time=111.5s tools=15
+    [long-88a800ada2-l12-u005] final-qa: ok=True time=115.2s tools=14
+    [long-88a800ada2-l12-u007] final-qa: ok=True time=127.9s tools=15
+  level  12: agent_ok=12/12 p50=337.4s p90=385.4s max=459.5s
+    artifacts=12/12 end_to_end=12/12
+session stopped
+
+results: results/load_test_scale40_long_l12_20260815.json

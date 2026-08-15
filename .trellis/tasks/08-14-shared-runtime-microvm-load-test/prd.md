@@ -53,3 +53,7 @@
 - 监控器是通过 command API 启动的单个后台 Python 进程，直接读取 `/proc` 和可用的 cgroup v2 文件，避免每次采样派生大量 shell 进程。
 - 每次测试只使用一个新 session，warmup 后复用；在产物与监控采集结束后 stop。
 - 本地验证只证明脚本和解析契约正确；真实容量结论必须来自后续 AWS 执行生成的 JSON。
+
+## Scale-40 Extension (2026-08-15)
+
+The user explicitly authorized redeploying the dedicated default Runtime with `MAX_PARALLEL_AGENTS=40` and testing true concurrency levels `12/16/24/32/40`. Each level uses a fresh shared session and must preserve deterministic verification and `StopRuntimeSession` evidence. The expansion completed with short workloads 124/124 through level 40, long workloads 84/84 through level 32, and a measured long level-40 failure boundary at 0/40. Capacity reporting must recommend operating headroom below the 32-user memory edge, distinguish the 40 failure from a directly proven OOM, update the Chinese report, and delete the second dedicated Runtime after final validation.

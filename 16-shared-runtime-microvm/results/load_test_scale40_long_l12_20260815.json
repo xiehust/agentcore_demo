@@ -1,0 +1,3631 @@
+{
+  "generated": "2026-08-15T05:14:29.708455+00:00",
+  "completed": true,
+  "runtime": {
+    "region": "us-west-2",
+    "runtimeName": "shared_runtime_microvm",
+    "runtimeId": "shared_runtime_microvm-oGddGiDWRD",
+    "runtimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD",
+    "imageUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents:shared-runtime-microvm-v1",
+    "modelId": "us.anthropic.claude-sonnet-4-6",
+    "computeType": "microvm"
+  },
+  "config": {
+    "run_id": "88a800ada2",
+    "levels": [
+      12
+    ],
+    "success_floor": 0.75,
+    "request_timeout_s": 1800,
+    "level_pause_s": 0.0,
+    "monitor_duration_s": 3600,
+    "phases_per_user": 2,
+    "expected_files": [
+      "index.html",
+      "about.html",
+      "styles.css",
+      "app.js",
+      "README.md",
+      "loadtest.json"
+    ]
+  },
+  "shared_session_id": "shared-long-88a800ada2-b52128e200114925adca9f01022bf357",
+  "warmup": {
+    "success": true,
+    "api_status": 200,
+    "latency_ms": 3736.1,
+    "error": null,
+    "workspace": "/tmp/agentcore-users/long-88a800ada2-warmup-18b0bf5c3a70",
+    "claude_session_id": "60ad01c5-1cd7-43e2-bb9c-64f8bb6d7921",
+    "resumed_from": null,
+    "denied_count": 0,
+    "instance": {
+      "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+      "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+      "pid": 1,
+      "hostname": "localhost"
+    },
+    "tool_call_count": 0,
+    "name": "warmup",
+    "expected_marker": "LONG-READY-88a800ada2",
+    "marker_ok": true,
+    "result_tail": "LONG-READY-88a800ada2",
+    "start_epoch": 1786770401.3815365,
+    "end_epoch": 1786770405.1177433,
+    "phase_success": true
+  },
+  "levels": [
+    {
+      "level": 12,
+      "window": [
+        1786770407.4593437,
+        1786770866.9508283
+      ],
+      "agent_success": 12,
+      "agent_failed": 0,
+      "agent_success_rate": 1.0,
+      "task_p50_s": 337.4,
+      "task_p90_s": 385.4,
+      "task_max_s": 459.5,
+      "tool_calls_avg": 31.5,
+      "distinct_workspaces": 12,
+      "distinct_server_processes": 1,
+      "errors": [],
+      "requests": [
+        {
+          "user_id": "long-88a800ada2-l12-u000",
+          "run_token": "88a800ada2-l12-u000",
+          "start_epoch": 1786770407.4615903,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 243814.8,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u000-64b89f6553da",
+              "claude_session_id": "4c84c289-2675-4dbf-820c-1810a6fb3be9",
+              "resumed_from": null,
+              "denied_count": 2,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 16,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4616134,
+              "end_epoch": 1786770651.2764192,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 112705.5,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u000-64b89f6553da",
+              "claude_session_id": "4c84c289-2675-4dbf-820c-1810a6fb3be9",
+              "resumed_from": "4c84c289-2675-4dbf-820c-1810a6fb3be9",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 14,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "tch | ✅ |\n| `textContent`-only rendering, zero `innerHTML` in app.js | ✅ (0 matches) |\n| `loadtest.json` — all three keys + values exact | ✅ |\n| webapp/ file count = 6, no extras | ✅ |\n\nPROJECT-DONE 6",
+              "start_epoch": 1786770651.276461,
+              "end_epoch": 1786770763.9820273,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u000-64b89f6553da",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 30,
+          "error": null,
+          "end_epoch": 1786770763.9820778,
+          "latency_ms": 356520.5,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u000-64b89f6553da/webapp",
+            "file_sizes": {
+              "README.md": 2667,
+              "about.html": 6560,
+              "app.js": 9216,
+              "index.html": 5591,
+              "loadtest.json": 169,
+              "styles.css": 15422
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u001",
+          "run_token": "88a800ada2-l12-u001",
+          "start_epoch": 1786770407.4700637,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 233464.0,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u001-b061735c99ae",
+              "claude_session_id": "23337b4f-5b1c-41b2-88b7-5bb2d5a1f5ce",
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 11,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4700878,
+              "end_epoch": 1786770640.9341462,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 100987.9,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u001-b061735c99ae",
+              "claude_session_id": "23337b4f-5b1c-41b2-88b7-5bb2d5a1f5ce",
+              "resumed_from": "23337b4f-5b1c-41b2-88b7-5bb2d5a1f5ce",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 13,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": " JSON · `run_token`, `status`, `expected_files` with exact values ✓\n\n**Directory** — exactly 6 files: `index.html`, `about.html`, `styles.css`, `app.js`, `README.md`, `loadtest.json` ✓\n\nPROJECT-DONE 6",
+              "start_epoch": 1786770640.9341862,
+              "end_epoch": 1786770741.9221833,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u001-b061735c99ae",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 24,
+          "error": null,
+          "end_epoch": 1786770741.922238,
+          "latency_ms": 334452.2,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u001-b061735c99ae/webapp",
+            "file_sizes": {
+              "README.md": 3222,
+              "about.html": 7901,
+              "app.js": 10020,
+              "index.html": 6010,
+              "loadtest.json": 169,
+              "styles.css": 17692
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u002",
+          "run_token": "88a800ada2-l12-u002",
+          "start_epoch": 1786770407.462584,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 263144.5,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u002-63e02de620ea",
+              "claude_session_id": "7004d67b-b8aa-4c29-9da0-f54bc2ec56c0",
+              "resumed_from": null,
+              "denied_count": 3,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 16,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4626062,
+              "end_epoch": 1786770670.6071482,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 111474.4,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u002-63e02de620ea",
+              "claude_session_id": "7004d67b-b8aa-4c29-9da0-f54bc2ec56c0",
+              "resumed_from": "7004d67b-b8aa-4c29-9da0-f54bc2ec56c0",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 15,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "PROJECT-DONE 6",
+              "start_epoch": 1786770670.607192,
+              "end_epoch": 1786770782.081664,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u002-63e02de620ea",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 31,
+          "error": null,
+          "end_epoch": 1786770782.0817237,
+          "latency_ms": 374619.1,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u002-63e02de620ea/webapp",
+            "file_sizes": {
+              "README.md": 3758,
+              "about.html": 6534,
+              "app.js": 12991,
+              "index.html": 5580,
+              "loadtest.json": 169,
+              "styles.css": 14851
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u003",
+          "run_token": "88a800ada2-l12-u003",
+          "start_epoch": 1786770407.4628978,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 211344.0,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u003-66e3ba53455e",
+              "claude_session_id": "f580ac59-8b61-4baa-8749-a7ff7ba3a7f1",
+              "resumed_from": null,
+              "denied_count": 2,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 13,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "ode or comments). ✅\n\n**README.md** — Features list, Usage (6 steps), 4-row file table, token `88a800ada2-l12-u003` present in both the header and the dedicated Project Token section. ✅\n\nPHASE-1-DONE 4",
+              "start_epoch": 1786770407.4629183,
+              "end_epoch": 1786770618.8069296,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 85313.2,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u003-66e3ba53455e",
+              "claude_session_id": "f580ac59-8b61-4baa-8749-a7ff7ba3a7f1",
+              "resumed_from": "f580ac59-8b61-4baa-8749-a7ff7ba3a7f1",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 16,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "E.md` — preserved from Phase 1 | ✅ |\n| `loadtest.json` — valid JSON, `run_token`, `status`, `expected_files` array with all 6 filenames | ✅ |\n| Directory contains exactly 6 files | ✅ |\n\nPROJECT-DONE 6",
+              "start_epoch": 1786770618.8069687,
+              "end_epoch": 1786770704.1202555,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u003-66e3ba53455e",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 29,
+          "error": null,
+          "end_epoch": 1786770704.1203146,
+          "latency_ms": 296657.4,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u003-66e3ba53455e/webapp",
+            "file_sizes": {
+              "README.md": 2048,
+              "about.html": 5143,
+              "app.js": 6607,
+              "index.html": 4683,
+              "loadtest.json": 169,
+              "styles.css": 10754
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u004",
+          "run_token": "88a800ada2-l12-u004",
+          "start_epoch": 1786770407.4673672,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 206054.7,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u004-f16e26224adc",
+              "claude_session_id": "31f1fbce-6f47-4e0b-94d1-5385f2bec00f",
+              "resumed_from": null,
+              "denied_count": 1,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 14,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4673877,
+              "end_epoch": 1786770613.52216,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 134212.1,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u004-f16e26224adc",
+              "claude_session_id": "31f1fbce-6f47-4e0b-94d1-5385f2bec00f",
+              "resumed_from": "31f1fbce-6f47-4e0b-94d1-5385f2bec00f",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 16,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "PROJECT-DONE 6",
+              "start_epoch": 1786770613.522207,
+              "end_epoch": 1786770747.7343693,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u004-f16e26224adc",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 30,
+          "error": null,
+          "end_epoch": 1786770747.734428,
+          "latency_ms": 340267.1,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u004-f16e26224adc/webapp",
+            "file_sizes": {
+              "README.md": 3296,
+              "about.html": 8385,
+              "app.js": 14127,
+              "index.html": 7456,
+              "loadtest.json": 169,
+              "styles.css": 17056
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u005",
+          "run_token": "88a800ada2-l12-u005",
+          "start_epoch": 1786770407.4638224,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 271404.9,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u005-bec999294157",
+              "claude_session_id": "64a93f57-b8f3-4f45-b870-dfc4d79e6284",
+              "resumed_from": null,
+              "denied_count": 11,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 27,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4638448,
+              "end_epoch": 1786770678.8687801,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 115239.5,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u005-bec999294157",
+              "claude_session_id": "64a93f57-b8f3-4f45-b870-dfc4d79e6284",
+              "resumed_from": "64a93f57-b8f3-4f45-b870-dfc4d79e6284",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 14,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "tence | ✅ |\n| `app.js` — `textContent`-only rendering | ✅ |\n| `styles.css` — 768 px breakpoint | ✅ |\n| styles.css — 480 px breakpoint | ✅ |\n| webapp/ — exactly 6 files, no extras | ✅ |\n\nPROJECT-DONE 6",
+              "start_epoch": 1786770678.8688266,
+              "end_epoch": 1786770794.1083658,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u005-bec999294157",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 41,
+          "error": null,
+          "end_epoch": 1786770794.1084197,
+          "latency_ms": 386644.6,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u005-bec999294157/webapp",
+            "file_sizes": {
+              "README.md": 3105,
+              "about.html": 7110,
+              "app.js": 9187,
+              "index.html": 6898,
+              "loadtest.json": 169,
+              "styles.css": 15464
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u006",
+          "run_token": "88a800ada2-l12-u006",
+          "start_epoch": 1786770407.4647596,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 189729.5,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u006-a7825b678f83",
+              "claude_session_id": "87bb3f24-d604-4049-9df9-d88d9019777c",
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 23,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4647927,
+              "end_epoch": 1786770597.1943853,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 126492.9,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u006-a7825b678f83",
+              "claude_session_id": "87bb3f24-d604-4049-9df9-d88d9019777c",
+              "resumed_from": "87bb3f24-d604-4049-9df9-d88d9019777c",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 22,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "us` = `complete` · `expected_files` = exact 6-element array\n\n**webapp/ directory** ✅ — exactly 6 files: `index.html`, `about.html`, `styles.css`, `app.js`, `README.md`, `loadtest.json`\n\nPROJECT-DONE 6",
+              "start_epoch": 1786770597.1944346,
+              "end_epoch": 1786770723.6873837,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u006-a7825b678f83",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 45,
+          "error": null,
+          "end_epoch": 1786770723.6874425,
+          "latency_ms": 316222.7,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u006-a7825b678f83/webapp",
+            "file_sizes": {
+              "README.md": 2753,
+              "about.html": 7231,
+              "app.js": 11386,
+              "index.html": 8392,
+              "loadtest.json": 169,
+              "styles.css": 20068
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u007",
+          "run_token": "88a800ada2-l12-u007",
+          "start_epoch": 1786770407.4716048,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 331625.6,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u007-ebd322dd1ce9",
+              "claude_session_id": "c1b5aba1-16aa-48ac-857f-1db4ab3c0743",
+              "resumed_from": null,
+              "denied_count": 2,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 16,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4716296,
+              "end_epoch": 1786770739.0973165,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 127852.6,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u007-ebd322dd1ce9",
+              "claude_session_id": "c1b5aba1-16aa-48ac-857f-1db4ab3c0743",
+              "resumed_from": "c1b5aba1-16aa-48ac-857f-1db4ab3c0743",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 15,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "PROJECT-DONE 6",
+              "start_epoch": 1786770739.0973601,
+              "end_epoch": 1786770866.9499795,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u007-ebd322dd1ce9",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 31,
+          "error": null,
+          "end_epoch": 1786770866.9500346,
+          "latency_ms": 459478.4,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u007-ebd322dd1ce9/webapp",
+            "file_sizes": {
+              "README.md": 2436,
+              "about.html": 5794,
+              "app.js": 7837,
+              "index.html": 5616,
+              "loadtest.json": 169,
+              "styles.css": 15388
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u008",
+          "run_token": "88a800ada2-l12-u008",
+          "start_epoch": 1786770407.468336,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 242401.8,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u008-e2da1aa41e34",
+              "claude_session_id": "673850a6-3fa7-4e0a-91c1-1960083dd230",
+              "resumed_from": null,
+              "denied_count": 2,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 15,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4683573,
+              "end_epoch": 1786770649.8702188,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 119896.5,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u008-e2da1aa41e34",
+              "claude_session_id": "673850a6-3fa7-4e0a-91c1-1960083dd230",
+              "resumed_from": "673850a6-3fa7-4e0a-91c1-1960083dd230",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 16,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "PROJECT-DONE 6",
+              "start_epoch": 1786770649.8702614,
+              "end_epoch": 1786770769.7668433,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u008-e2da1aa41e34",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 31,
+          "error": null,
+          "end_epoch": 1786770769.7669222,
+          "latency_ms": 362298.6,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u008-e2da1aa41e34/webapp",
+            "file_sizes": {
+              "README.md": 3069,
+              "about.html": 10408,
+              "app.js": 12771,
+              "index.html": 9531,
+              "loadtest.json": 169,
+              "styles.css": 20655
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u009",
+          "run_token": "88a800ada2-l12-u009",
+          "start_epoch": 1786770407.4657207,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 208622.1,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u009-a2c99066c38d",
+              "claude_session_id": "ddcc04f0-9faa-4f86-8abc-6472c8e3acc2",
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 12,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "PHASE-1-DONE 4",
+              "start_epoch": 1786770407.4657416,
+              "end_epoch": 1786770616.0878484,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 121267.6,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u009-a2c99066c38d",
+              "claude_session_id": "ddcc04f0-9faa-4f86-8abc-6472c8e3acc2",
+              "resumed_from": "ddcc04f0-9faa-4f86-8abc-6472c8e3acc2",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 19,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "PROJECT-DONE 6",
+              "start_epoch": 1786770616.0879157,
+              "end_epoch": 1786770737.3555827,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u009-a2c99066c38d",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 31,
+          "error": null,
+          "end_epoch": 1786770737.3556411,
+          "latency_ms": 329889.9,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u009-a2c99066c38d/webapp",
+            "file_sizes": {
+              "README.md": 2388,
+              "about.html": 8753,
+              "app.js": 11756,
+              "index.html": 8131,
+              "loadtest.json": 169,
+              "styles.css": 21130
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u010",
+          "run_token": "88a800ada2-l12-u010",
+          "start_epoch": 1786770407.4692051,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 224826.2,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u010-560c9f7589ec",
+              "claude_session_id": "661182c1-2c7a-4038-93db-cad86c5b007c",
+              "resumed_from": null,
+              "denied_count": 3,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 15,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": " Zero occurrences of `innerHTML` anywhere.\n- **README.md** — features table, 7-step usage, 4-row file table, responsive breakpoints table, technical notes, token `88a800ada2-l12-u010`.\n\nPHASE-1-DONE 4",
+              "start_epoch": 1786770407.469228,
+              "end_epoch": 1786770632.2954633,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 102089.1,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u010-560c9f7589ec",
+              "claude_session_id": "661182c1-2c7a-4038-93db-cad86c5b007c",
+              "resumed_from": "661182c1-2c7a-4038-93db-cad86c5b007c",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 15,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "`.about-card`, `.kbd-table`, `.btn-back` rules all included\n\n**webapp/ directory** ✅ — exactly 6 files: `index.html`, `about.html`, `styles.css`, `app.js`, `README.md`, `loadtest.json`\n\nPROJECT-DONE 6",
+              "start_epoch": 1786770632.2955081,
+              "end_epoch": 1786770734.3846972,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u010-560c9f7589ec",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 30,
+          "error": null,
+          "end_epoch": 1786770734.3847532,
+          "latency_ms": 326915.5,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u010-560c9f7589ec/webapp",
+            "file_sizes": {
+              "README.md": 2690,
+              "about.html": 6773,
+              "app.js": 7328,
+              "index.html": 3905,
+              "loadtest.json": 169,
+              "styles.css": 12291
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        },
+        {
+          "user_id": "long-88a800ada2-l12-u011",
+          "run_token": "88a800ada2-l12-u011",
+          "start_epoch": 1786770407.4611697,
+          "phases": [
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 217790.6,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u011-8eeb32167140",
+              "claude_session_id": "c9c618ea-8627-4f3a-a00f-fe2909537fa4",
+              "resumed_from": null,
+              "denied_count": 1,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 13,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": true,
+              "result_tail": "luding comments.\n- **README.md** — features list, step-by-step usage, 4-row file table, responsive-breakpoints table, technical notes, token `88a800ada2-l12-u011` in header and footer.\n\nPHASE-1-DONE 4",
+              "start_epoch": 1786770407.461201,
+              "end_epoch": 1786770625.2518501,
+              "phase_success": true
+            },
+            {
+              "success": true,
+              "api_status": 200,
+              "latency_ms": 92760.3,
+              "error": null,
+              "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u011-8eeb32167140",
+              "claude_session_id": "c9c618ea-8627-4f3a-a00f-fe2909537fa4",
+              "resumed_from": "c9c618ea-8627-4f3a-a00f-fe2909537fa4",
+              "denied_count": 0,
+              "instance": {
+                "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+                "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+                "pid": 1,
+                "hostname": "localhost"
+              },
+              "tool_call_count": 12,
+              "name": "final-qa",
+              "expected_marker": "PROJECT-DONE 6",
+              "marker_ok": true,
+              "result_tail": "and `code` component styles with their own 768 px / 480 px overrides.\n- **webapp/** — exactly 6 files: `index.html`, `about.html`, `styles.css`, `app.js`, `README.md`, `loadtest.json`.\n\nPROJECT-DONE 6",
+              "start_epoch": 1786770625.251919,
+              "end_epoch": 1786770718.0122375,
+              "phase_success": true
+            }
+          ],
+          "agent_success": true,
+          "session_chain_ok": true,
+          "workspace_consistent": true,
+          "process_consistent": true,
+          "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u011-8eeb32167140",
+          "instance_fingerprint": {
+            "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+            "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+            "pid": 1,
+            "hostname": "localhost"
+          },
+          "server_run_id": "44b7aab73675494c9256b5d9252ff422",
+          "tool_call_count": 25,
+          "error": null,
+          "end_epoch": 1786770718.0122983,
+          "latency_ms": 310551.1,
+          "unique_workspace": true,
+          "artifact_verification": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u011-8eeb32167140/webapp",
+            "file_sizes": {
+              "README.md": 2825,
+              "about.html": 5468,
+              "app.js": 10225,
+              "index.html": 4549,
+              "loadtest.json": 169,
+              "styles.css": 13627
+            },
+            "errors": []
+          },
+          "artifact_success": true,
+          "verified_success": true
+        }
+      ],
+      "verification_available": true,
+      "success": 12,
+      "failed": 0,
+      "success_rate": 1.0,
+      "monitor_available": true,
+      "resources": {
+        "samples": 230,
+        "cpu_avg_pct": 9.2,
+        "cpu_max_pct": 100.0,
+        "mem_used_max_mb": 2840.0,
+        "mem_avail_min_mb": 5177.3,
+        "load1_max": 0.75,
+        "agent_procs_max": 12,
+        "cgroup_memory_current_max_mb": 2464.1,
+        "cgroup_memory_limits_mb": []
+      },
+      "artifact_success": 12,
+      "artifact_failed": 0,
+      "verified_success": 12,
+      "verified_failed": 0,
+      "artifact_errors": [],
+      "artifact_verification": {
+        "users_checked": 12,
+        "per_user": {
+          "long-88a800ada2-l12-u000": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u000-64b89f6553da/webapp",
+            "file_sizes": {
+              "README.md": 2667,
+              "about.html": 6560,
+              "app.js": 9216,
+              "index.html": 5591,
+              "loadtest.json": 169,
+              "styles.css": 15422
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u001": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u001-b061735c99ae/webapp",
+            "file_sizes": {
+              "README.md": 3222,
+              "about.html": 7901,
+              "app.js": 10020,
+              "index.html": 6010,
+              "loadtest.json": 169,
+              "styles.css": 17692
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u002": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u002-63e02de620ea/webapp",
+            "file_sizes": {
+              "README.md": 3758,
+              "about.html": 6534,
+              "app.js": 12991,
+              "index.html": 5580,
+              "loadtest.json": 169,
+              "styles.css": 14851
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u003": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u003-66e3ba53455e/webapp",
+            "file_sizes": {
+              "README.md": 2048,
+              "about.html": 5143,
+              "app.js": 6607,
+              "index.html": 4683,
+              "loadtest.json": 169,
+              "styles.css": 10754
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u004": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u004-f16e26224adc/webapp",
+            "file_sizes": {
+              "README.md": 3296,
+              "about.html": 8385,
+              "app.js": 14127,
+              "index.html": 7456,
+              "loadtest.json": 169,
+              "styles.css": 17056
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u005": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u005-bec999294157/webapp",
+            "file_sizes": {
+              "README.md": 3105,
+              "about.html": 7110,
+              "app.js": 9187,
+              "index.html": 6898,
+              "loadtest.json": 169,
+              "styles.css": 15464
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u006": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u006-a7825b678f83/webapp",
+            "file_sizes": {
+              "README.md": 2753,
+              "about.html": 7231,
+              "app.js": 11386,
+              "index.html": 8392,
+              "loadtest.json": 169,
+              "styles.css": 20068
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u007": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u007-ebd322dd1ce9/webapp",
+            "file_sizes": {
+              "README.md": 2436,
+              "about.html": 5794,
+              "app.js": 7837,
+              "index.html": 5616,
+              "loadtest.json": 169,
+              "styles.css": 15388
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u008": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u008-e2da1aa41e34/webapp",
+            "file_sizes": {
+              "README.md": 3069,
+              "about.html": 10408,
+              "app.js": 12771,
+              "index.html": 9531,
+              "loadtest.json": 169,
+              "styles.css": 20655
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u009": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u009-a2c99066c38d/webapp",
+            "file_sizes": {
+              "README.md": 2388,
+              "about.html": 8753,
+              "app.js": 11756,
+              "index.html": 8131,
+              "loadtest.json": 169,
+              "styles.css": 21130
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u010": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u010-560c9f7589ec/webapp",
+            "file_sizes": {
+              "README.md": 2690,
+              "about.html": 6773,
+              "app.js": 7328,
+              "index.html": 3905,
+              "loadtest.json": 169,
+              "styles.css": 12291
+            },
+            "errors": []
+          },
+          "long-88a800ada2-l12-u011": {
+            "success": true,
+            "workspace": "/tmp/agentcore-users/long-88a800ada2-l12-u011-8eeb32167140/webapp",
+            "file_sizes": {
+              "README.md": 2825,
+              "about.html": 5468,
+              "app.js": 10225,
+              "index.html": 4549,
+              "loadtest.json": 169,
+              "styles.css": 13627
+            },
+            "errors": []
+          }
+        }
+      },
+      "artifact_command": {
+        "api_status": 200,
+        "content_stop": {
+          "exitCode": 0,
+          "status": "COMPLETED"
+        },
+        "stream_exceptions": []
+      }
+    }
+  ],
+  "monitor_samples": [
+    {
+      "epoch": 1786770407.429,
+      "cpu_pct": 1.0,
+      "mem_used_mb": 496.016,
+      "mem_avail_mb": 7521.289,
+      "load1": 0.22,
+      "agent_procs": 0,
+      "cgroup_memory_current_mb": 97.34,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770409.43,
+      "cpu_pct": 85.2,
+      "mem_used_mb": 1329.449,
+      "mem_avail_mb": 6687.855,
+      "load1": 0.2,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 948.812,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770411.431,
+      "cpu_pct": 100.0,
+      "mem_used_mb": 1924.305,
+      "mem_avail_mb": 6093.0,
+      "load1": 0.2,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1545.426,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770413.432,
+      "cpu_pct": 52.8,
+      "mem_used_mb": 2179.758,
+      "mem_avail_mb": 5837.547,
+      "load1": 0.75,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1798.801,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770415.433,
+      "cpu_pct": 18.1,
+      "mem_used_mb": 2186.645,
+      "mem_avail_mb": 5830.66,
+      "load1": 0.75,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1807.5,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770417.434,
+      "cpu_pct": 7.9,
+      "mem_used_mb": 2193.258,
+      "mem_avail_mb": 5824.047,
+      "load1": 0.75,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1813.953,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770419.435,
+      "cpu_pct": 11.8,
+      "mem_used_mb": 2230.551,
+      "mem_avail_mb": 5786.754,
+      "load1": 0.69,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1851.383,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770421.436,
+      "cpu_pct": 9.6,
+      "mem_used_mb": 2268.68,
+      "mem_avail_mb": 5748.625,
+      "load1": 0.69,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1882.887,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770423.436,
+      "cpu_pct": 8.9,
+      "mem_used_mb": 2283.668,
+      "mem_avail_mb": 5733.637,
+      "load1": 0.63,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1894.398,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770425.437,
+      "cpu_pct": 5.0,
+      "mem_used_mb": 2301.277,
+      "mem_avail_mb": 5716.027,
+      "load1": 0.63,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1909.426,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770427.438,
+      "cpu_pct": 7.4,
+      "mem_used_mb": 2290.695,
+      "mem_avail_mb": 5726.609,
+      "load1": 0.63,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1910.059,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770429.439,
+      "cpu_pct": 4.0,
+      "mem_used_mb": 2290.543,
+      "mem_avail_mb": 5726.762,
+      "load1": 0.58,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1908.836,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770431.44,
+      "cpu_pct": 4.0,
+      "mem_used_mb": 2308.066,
+      "mem_avail_mb": 5709.238,
+      "load1": 0.58,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1914.027,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770433.441,
+      "cpu_pct": 3.2,
+      "mem_used_mb": 2300.918,
+      "mem_avail_mb": 5716.387,
+      "load1": 0.54,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1905.406,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770435.442,
+      "cpu_pct": 4.0,
+      "mem_used_mb": 2303.871,
+      "mem_avail_mb": 5713.434,
+      "load1": 0.54,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1907.188,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770437.443,
+      "cpu_pct": 4.7,
+      "mem_used_mb": 2307.504,
+      "mem_avail_mb": 5709.801,
+      "load1": 0.54,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1919.043,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770439.444,
+      "cpu_pct": 14.0,
+      "mem_used_mb": 2343.914,
+      "mem_avail_mb": 5673.391,
+      "load1": 0.57,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1945.391,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770441.444,
+      "cpu_pct": 6.4,
+      "mem_used_mb": 2347.844,
+      "mem_avail_mb": 5669.461,
+      "load1": 0.57,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1948.645,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770443.445,
+      "cpu_pct": 14.1,
+      "mem_used_mb": 2365.02,
+      "mem_avail_mb": 5652.285,
+      "load1": 0.61,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1978.836,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770445.446,
+      "cpu_pct": 5.8,
+      "mem_used_mb": 2366.707,
+      "mem_avail_mb": 5650.598,
+      "load1": 0.61,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 1979.652,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770447.447,
+      "cpu_pct": 12.8,
+      "mem_used_mb": 2388.848,
+      "mem_avail_mb": 5628.457,
+      "load1": 0.61,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2008.383,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770449.448,
+      "cpu_pct": 21.5,
+      "mem_used_mb": 2410.371,
+      "mem_avail_mb": 5606.934,
+      "load1": 0.64,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2029.805,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770451.449,
+      "cpu_pct": 6.5,
+      "mem_used_mb": 2414.422,
+      "mem_avail_mb": 5602.883,
+      "load1": 0.64,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2032.48,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770453.45,
+      "cpu_pct": 10.1,
+      "mem_used_mb": 2461.414,
+      "mem_avail_mb": 5555.891,
+      "load1": 0.59,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2064.555,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770455.451,
+      "cpu_pct": 5.7,
+      "mem_used_mb": 2464.293,
+      "mem_avail_mb": 5553.012,
+      "load1": 0.59,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2082.664,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770457.452,
+      "cpu_pct": 6.0,
+      "mem_used_mb": 2470.895,
+      "mem_avail_mb": 5546.41,
+      "load1": 0.59,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2087.699,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770459.453,
+      "cpu_pct": 3.2,
+      "mem_used_mb": 2471.023,
+      "mem_avail_mb": 5546.281,
+      "load1": 0.54,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2083.801,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770461.453,
+      "cpu_pct": 3.0,
+      "mem_used_mb": 2470.059,
+      "mem_avail_mb": 5547.246,
+      "load1": 0.54,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2083.59,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770463.454,
+      "cpu_pct": 3.8,
+      "mem_used_mb": 2429.438,
+      "mem_avail_mb": 5587.867,
+      "load1": 0.5,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2041.375,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770465.455,
+      "cpu_pct": 6.4,
+      "mem_used_mb": 2430.395,
+      "mem_avail_mb": 5586.91,
+      "load1": 0.5,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2040.82,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770467.456,
+      "cpu_pct": 4.0,
+      "mem_used_mb": 2430.426,
+      "mem_avail_mb": 5586.879,
+      "load1": 0.5,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2032.254,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770469.457,
+      "cpu_pct": 10.4,
+      "mem_used_mb": 2430.312,
+      "mem_avail_mb": 5586.992,
+      "load1": 0.46,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2039.891,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770471.458,
+      "cpu_pct": 5.1,
+      "mem_used_mb": 2434.98,
+      "mem_avail_mb": 5582.324,
+      "load1": 0.46,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2054.09,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770473.459,
+      "cpu_pct": 12.1,
+      "mem_used_mb": 2448.941,
+      "mem_avail_mb": 5568.363,
+      "load1": 0.42,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2081.867,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770475.46,
+      "cpu_pct": 7.8,
+      "mem_used_mb": 2456.859,
+      "mem_avail_mb": 5560.445,
+      "load1": 0.42,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2083.895,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770477.461,
+      "cpu_pct": 8.1,
+      "mem_used_mb": 2472.105,
+      "mem_avail_mb": 5545.199,
+      "load1": 0.42,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2098.578,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770479.461,
+      "cpu_pct": 7.1,
+      "mem_used_mb": 2481.559,
+      "mem_avail_mb": 5535.746,
+      "load1": 0.39,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2106.273,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770481.462,
+      "cpu_pct": 6.0,
+      "mem_used_mb": 2481.523,
+      "mem_avail_mb": 5535.781,
+      "load1": 0.39,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2108.301,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770483.463,
+      "cpu_pct": 7.6,
+      "mem_used_mb": 2481.445,
+      "mem_avail_mb": 5535.859,
+      "load1": 0.36,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2107.379,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770485.464,
+      "cpu_pct": 3.5,
+      "mem_used_mb": 2481.438,
+      "mem_avail_mb": 5535.867,
+      "load1": 0.36,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2108.012,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770487.465,
+      "cpu_pct": 3.3,
+      "mem_used_mb": 2481.379,
+      "mem_avail_mb": 5535.926,
+      "load1": 0.36,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2108.398,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770489.466,
+      "cpu_pct": 2.5,
+      "mem_used_mb": 2481.375,
+      "mem_avail_mb": 5535.93,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2097.844,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770491.467,
+      "cpu_pct": 1.8,
+      "mem_used_mb": 2482.016,
+      "mem_avail_mb": 5535.289,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2091.539,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770493.468,
+      "cpu_pct": 12.1,
+      "mem_used_mb": 2485.176,
+      "mem_avail_mb": 5532.129,
+      "load1": 0.3,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2109.293,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770495.469,
+      "cpu_pct": 8.3,
+      "mem_used_mb": 2492.227,
+      "mem_avail_mb": 5525.078,
+      "load1": 0.3,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2111.844,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770497.47,
+      "cpu_pct": 5.3,
+      "mem_used_mb": 2493.137,
+      "mem_avail_mb": 5524.168,
+      "load1": 0.3,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2117.262,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770499.47,
+      "cpu_pct": 6.5,
+      "mem_used_mb": 2492.996,
+      "mem_avail_mb": 5524.309,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2120.883,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770501.471,
+      "cpu_pct": 4.3,
+      "mem_used_mb": 2498.254,
+      "mem_avail_mb": 5519.051,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2121.727,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770503.472,
+      "cpu_pct": 12.3,
+      "mem_used_mb": 2512.664,
+      "mem_avail_mb": 5504.641,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2144.34,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770505.473,
+      "cpu_pct": 9.6,
+      "mem_used_mb": 2528.582,
+      "mem_avail_mb": 5488.723,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2156.684,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770507.474,
+      "cpu_pct": 7.5,
+      "mem_used_mb": 2530.988,
+      "mem_avail_mb": 5486.316,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2162.309,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770509.475,
+      "cpu_pct": 10.6,
+      "mem_used_mb": 2539.043,
+      "mem_avail_mb": 5478.262,
+      "load1": 0.31,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2171.234,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770511.476,
+      "cpu_pct": 20.8,
+      "mem_used_mb": 2570.246,
+      "mem_avail_mb": 5447.059,
+      "load1": 0.31,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2202.059,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770513.476,
+      "cpu_pct": 9.3,
+      "mem_used_mb": 2576.453,
+      "mem_avail_mb": 5440.852,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2205.547,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770515.477,
+      "cpu_pct": 10.1,
+      "mem_used_mb": 2591.168,
+      "mem_avail_mb": 5426.137,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2220.785,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770517.478,
+      "cpu_pct": 7.3,
+      "mem_used_mb": 2595.156,
+      "mem_avail_mb": 5422.148,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2224.367,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770519.479,
+      "cpu_pct": 9.8,
+      "mem_used_mb": 2597.824,
+      "mem_avail_mb": 5419.48,
+      "load1": 0.26,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2231.223,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770521.48,
+      "cpu_pct": 10.4,
+      "mem_used_mb": 2612.531,
+      "mem_avail_mb": 5404.773,
+      "load1": 0.26,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2243.48,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770523.481,
+      "cpu_pct": 18.4,
+      "mem_used_mb": 2648.863,
+      "mem_avail_mb": 5368.441,
+      "load1": 0.32,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2258.852,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770525.482,
+      "cpu_pct": 7.4,
+      "mem_used_mb": 2660.164,
+      "mem_avail_mb": 5357.141,
+      "load1": 0.32,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2278.766,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770527.483,
+      "cpu_pct": 8.2,
+      "mem_used_mb": 2662.488,
+      "mem_avail_mb": 5354.816,
+      "load1": 0.32,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2281.039,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770529.484,
+      "cpu_pct": 13.8,
+      "mem_used_mb": 2669.418,
+      "mem_avail_mb": 5347.887,
+      "load1": 0.29,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2299.414,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770531.484,
+      "cpu_pct": 6.2,
+      "mem_used_mb": 2669.367,
+      "mem_avail_mb": 5347.938,
+      "load1": 0.29,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2299.785,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770533.485,
+      "cpu_pct": 2.8,
+      "mem_used_mb": 2669.363,
+      "mem_avail_mb": 5347.941,
+      "load1": 0.27,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2298.824,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770535.486,
+      "cpu_pct": 3.0,
+      "mem_used_mb": 2669.238,
+      "mem_avail_mb": 5348.066,
+      "load1": 0.27,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2298.832,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770537.487,
+      "cpu_pct": 3.8,
+      "mem_used_mb": 2669.203,
+      "mem_avail_mb": 5348.102,
+      "load1": 0.27,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2299.613,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770539.488,
+      "cpu_pct": 27.4,
+      "mem_used_mb": 2705.789,
+      "mem_avail_mb": 5311.516,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2332.789,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770541.489,
+      "cpu_pct": 9.6,
+      "mem_used_mb": 2709.871,
+      "mem_avail_mb": 5307.434,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2335.074,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770543.49,
+      "cpu_pct": 2.8,
+      "mem_used_mb": 2709.867,
+      "mem_avail_mb": 5307.438,
+      "load1": 0.3,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2335.18,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770545.491,
+      "cpu_pct": 4.0,
+      "mem_used_mb": 2709.629,
+      "mem_avail_mb": 5307.676,
+      "load1": 0.3,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2335.289,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770547.492,
+      "cpu_pct": 4.4,
+      "mem_used_mb": 2709.551,
+      "mem_avail_mb": 5307.754,
+      "load1": 0.3,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2335.289,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770601.516,
+      "cpu_pct": 7.2,
+      "mem_used_mb": 2761.184,
+      "mem_avail_mb": 5256.121,
+      "load1": 0.25,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2383.723,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770549.492,
+      "cpu_pct": 9.7,
+      "mem_used_mb": 2711.621,
+      "mem_avail_mb": 5305.684,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2338.469,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770551.493,
+      "cpu_pct": 3.3,
+      "mem_used_mb": 2711.609,
+      "mem_avail_mb": 5305.695,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2336.52,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770553.494,
+      "cpu_pct": 3.5,
+      "mem_used_mb": 2711.535,
+      "mem_avail_mb": 5305.77,
+      "load1": 0.25,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2337.484,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770555.495,
+      "cpu_pct": 10.2,
+      "mem_used_mb": 2712.051,
+      "mem_avail_mb": 5305.254,
+      "load1": 0.25,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2344.121,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770557.496,
+      "cpu_pct": 2.5,
+      "mem_used_mb": 2712.047,
+      "mem_avail_mb": 5305.258,
+      "load1": 0.25,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2342.57,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770559.497,
+      "cpu_pct": 4.3,
+      "mem_used_mb": 2712.281,
+      "mem_avail_mb": 5305.023,
+      "load1": 0.23,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2345.633,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770561.498,
+      "cpu_pct": 6.3,
+      "mem_used_mb": 2722.0,
+      "mem_avail_mb": 5295.305,
+      "load1": 0.23,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2352.141,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770563.499,
+      "cpu_pct": 18.8,
+      "mem_used_mb": 2748.051,
+      "mem_avail_mb": 5269.254,
+      "load1": 0.21,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2382.387,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770565.5,
+      "cpu_pct": 7.5,
+      "mem_used_mb": 2761.086,
+      "mem_avail_mb": 5256.219,
+      "load1": 0.21,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2378.039,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770567.501,
+      "cpu_pct": 2.8,
+      "mem_used_mb": 2761.082,
+      "mem_avail_mb": 5256.223,
+      "load1": 0.21,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2378.855,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770569.501,
+      "cpu_pct": 5.5,
+      "mem_used_mb": 2761.082,
+      "mem_avail_mb": 5256.223,
+      "load1": 0.2,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2380.555,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770571.502,
+      "cpu_pct": 2.8,
+      "mem_used_mb": 2761.66,
+      "mem_avail_mb": 5255.645,
+      "load1": 0.2,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2381.188,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770573.503,
+      "cpu_pct": 17.5,
+      "mem_used_mb": 2765.348,
+      "mem_avail_mb": 5251.957,
+      "load1": 0.26,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2387.406,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770575.504,
+      "cpu_pct": 20.3,
+      "mem_used_mb": 2769.125,
+      "mem_avail_mb": 5248.18,
+      "load1": 0.26,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2401.02,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770577.505,
+      "cpu_pct": 6.6,
+      "mem_used_mb": 2785.195,
+      "mem_avail_mb": 5232.109,
+      "load1": 0.26,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2406.367,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770579.506,
+      "cpu_pct": 6.3,
+      "mem_used_mb": 2788.23,
+      "mem_avail_mb": 5229.074,
+      "load1": 0.24,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2411.223,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770581.507,
+      "cpu_pct": 9.4,
+      "mem_used_mb": 2791.039,
+      "mem_avail_mb": 5226.266,
+      "load1": 0.24,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2416.918,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770583.508,
+      "cpu_pct": 20.4,
+      "mem_used_mb": 2820.723,
+      "mem_avail_mb": 5196.582,
+      "load1": 0.22,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2452.867,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770585.509,
+      "cpu_pct": 6.6,
+      "mem_used_mb": 2825.148,
+      "mem_avail_mb": 5192.156,
+      "load1": 0.22,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2452.488,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770587.51,
+      "cpu_pct": 13.3,
+      "mem_used_mb": 2836.633,
+      "mem_avail_mb": 5180.672,
+      "load1": 0.22,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2462.543,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770589.511,
+      "cpu_pct": 3.8,
+      "mem_used_mb": 2836.766,
+      "mem_avail_mb": 5180.539,
+      "load1": 0.2,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2464.141,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770591.512,
+      "cpu_pct": 9.4,
+      "mem_used_mb": 2837.879,
+      "mem_avail_mb": 5179.426,
+      "load1": 0.2,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2454.227,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770593.512,
+      "cpu_pct": 5.7,
+      "mem_used_mb": 2838.031,
+      "mem_avail_mb": 5179.273,
+      "load1": 0.19,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2455.492,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770595.513,
+      "cpu_pct": 3.5,
+      "mem_used_mb": 2839.965,
+      "mem_avail_mb": 5177.34,
+      "load1": 0.19,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2459.066,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770597.514,
+      "cpu_pct": 15.3,
+      "mem_used_mb": 2671.578,
+      "mem_avail_mb": 5345.727,
+      "load1": 0.19,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2295.941,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770599.515,
+      "cpu_pct": 24.9,
+      "mem_used_mb": 2761.008,
+      "mem_avail_mb": 5256.297,
+      "load1": 0.25,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2383.562,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770603.517,
+      "cpu_pct": 10.4,
+      "mem_used_mb": 2766.727,
+      "mem_avail_mb": 5250.578,
+      "load1": 0.23,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2390.551,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770605.518,
+      "cpu_pct": 11.6,
+      "mem_used_mb": 2784.613,
+      "mem_avail_mb": 5232.691,
+      "load1": 0.23,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2412.844,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770607.519,
+      "cpu_pct": 10.5,
+      "mem_used_mb": 2786.395,
+      "mem_avail_mb": 5230.91,
+      "load1": 0.23,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2414.676,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770609.519,
+      "cpu_pct": 5.8,
+      "mem_used_mb": 2790.57,
+      "mem_avail_mb": 5226.734,
+      "load1": 0.21,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2417.359,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770611.52,
+      "cpu_pct": 35.1,
+      "mem_used_mb": 2812.758,
+      "mem_avail_mb": 5204.547,
+      "load1": 0.21,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2449.102,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770613.521,
+      "cpu_pct": 9.9,
+      "mem_used_mb": 2601.984,
+      "mem_avail_mb": 5415.32,
+      "load1": 0.28,
+      "agent_procs": 11,
+      "cgroup_memory_current_mb": 2246.203,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770615.522,
+      "cpu_pct": 26.2,
+      "mem_used_mb": 2748.008,
+      "mem_avail_mb": 5269.297,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2391.539,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770617.523,
+      "cpu_pct": 22.6,
+      "mem_used_mb": 2669.258,
+      "mem_avail_mb": 5348.047,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2314.477,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770619.524,
+      "cpu_pct": 24.6,
+      "mem_used_mb": 2616.605,
+      "mem_avail_mb": 5400.699,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2262.125,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770621.525,
+      "cpu_pct": 12.0,
+      "mem_used_mb": 2643.914,
+      "mem_avail_mb": 5373.391,
+      "load1": 0.33,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2287.754,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770623.526,
+      "cpu_pct": 24.5,
+      "mem_used_mb": 2686.453,
+      "mem_avail_mb": 5330.852,
+      "load1": 0.31,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2324.863,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770625.527,
+      "cpu_pct": 8.9,
+      "mem_used_mb": 2535.906,
+      "mem_avail_mb": 5481.398,
+      "load1": 0.31,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2181.309,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770627.527,
+      "cpu_pct": 32.9,
+      "mem_used_mb": 2676.754,
+      "mem_avail_mb": 5340.551,
+      "load1": 0.31,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2318.973,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770629.528,
+      "cpu_pct": 18.4,
+      "mem_used_mb": 2697.121,
+      "mem_avail_mb": 5320.184,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2334.703,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770631.529,
+      "cpu_pct": 7.5,
+      "mem_used_mb": 2697.746,
+      "mem_avail_mb": 5319.559,
+      "load1": 0.28,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2335.617,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770633.53,
+      "cpu_pct": 27.9,
+      "mem_used_mb": 2651.512,
+      "mem_avail_mb": 5365.793,
+      "load1": 0.34,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2289.316,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770635.531,
+      "cpu_pct": 15.3,
+      "mem_used_mb": 2679.402,
+      "mem_avail_mb": 5337.902,
+      "load1": 0.34,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2316.484,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770637.532,
+      "cpu_pct": 8.7,
+      "mem_used_mb": 2679.395,
+      "mem_avail_mb": 5337.91,
+      "load1": 0.34,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2312.16,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770639.533,
+      "cpu_pct": 8.8,
+      "mem_used_mb": 2686.406,
+      "mem_avail_mb": 5330.898,
+      "load1": 0.31,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2326.078,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770641.534,
+      "cpu_pct": 19.9,
+      "mem_used_mb": 2610.883,
+      "mem_avail_mb": 5406.422,
+      "load1": 0.31,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2247.383,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770643.534,
+      "cpu_pct": 32.3,
+      "mem_used_mb": 2685.59,
+      "mem_avail_mb": 5331.715,
+      "load1": 0.29,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2329.43,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770645.535,
+      "cpu_pct": 13.6,
+      "mem_used_mb": 2706.887,
+      "mem_avail_mb": 5310.418,
+      "load1": 0.29,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2346.922,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770647.536,
+      "cpu_pct": 11.4,
+      "mem_used_mb": 2714.379,
+      "mem_avail_mb": 5302.926,
+      "load1": 0.29,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2355.078,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770649.537,
+      "cpu_pct": 6.9,
+      "mem_used_mb": 2722.406,
+      "mem_avail_mb": 5294.898,
+      "load1": 0.26,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2365.66,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770651.538,
+      "cpu_pct": 25.3,
+      "mem_used_mb": 2472.098,
+      "mem_avail_mb": 5545.207,
+      "load1": 0.26,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2116.32,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770653.539,
+      "cpu_pct": 29.6,
+      "mem_used_mb": 2609.953,
+      "mem_avail_mb": 5407.352,
+      "load1": 0.24,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2256.852,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770655.54,
+      "cpu_pct": 11.6,
+      "mem_used_mb": 2619.672,
+      "mem_avail_mb": 5397.633,
+      "load1": 0.24,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2264.848,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770657.541,
+      "cpu_pct": 10.0,
+      "mem_used_mb": 2636.738,
+      "mem_avail_mb": 5380.566,
+      "load1": 0.24,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2273.613,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770659.542,
+      "cpu_pct": 9.2,
+      "mem_used_mb": 2637.254,
+      "mem_avail_mb": 5380.051,
+      "load1": 0.22,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2274.766,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770661.543,
+      "cpu_pct": 9.3,
+      "mem_used_mb": 2651.059,
+      "mem_avail_mb": 5366.246,
+      "load1": 0.22,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2289.566,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770663.543,
+      "cpu_pct": 9.1,
+      "mem_used_mb": 2672.523,
+      "mem_avail_mb": 5344.781,
+      "load1": 0.61,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2315.629,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770665.544,
+      "cpu_pct": 6.0,
+      "mem_used_mb": 2674.676,
+      "mem_avail_mb": 5342.629,
+      "load1": 0.61,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2309.84,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770667.545,
+      "cpu_pct": 5.1,
+      "mem_used_mb": 2674.512,
+      "mem_avail_mb": 5342.793,
+      "load1": 0.61,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2299.328,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770669.546,
+      "cpu_pct": 10.8,
+      "mem_used_mb": 2682.105,
+      "mem_avail_mb": 5335.199,
+      "load1": 0.56,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2319.27,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770671.547,
+      "cpu_pct": 17.8,
+      "mem_used_mb": 2579.945,
+      "mem_avail_mb": 5437.359,
+      "load1": 0.56,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2225.609,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770673.548,
+      "cpu_pct": 19.2,
+      "mem_used_mb": 2611.543,
+      "mem_avail_mb": 5405.762,
+      "load1": 0.59,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2258.609,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770675.549,
+      "cpu_pct": 17.8,
+      "mem_used_mb": 2649.188,
+      "mem_avail_mb": 5368.117,
+      "load1": 0.59,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2270.172,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770677.55,
+      "cpu_pct": 15.6,
+      "mem_used_mb": 2660.719,
+      "mem_avail_mb": 5356.586,
+      "load1": 0.59,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2290.789,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770679.551,
+      "cpu_pct": 25.5,
+      "mem_used_mb": 2538.328,
+      "mem_avail_mb": 5478.977,
+      "load1": 0.63,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2180.352,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770681.552,
+      "cpu_pct": 13.0,
+      "mem_used_mb": 2579.688,
+      "mem_avail_mb": 5437.617,
+      "load1": 0.63,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2213.434,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770683.553,
+      "cpu_pct": 18.5,
+      "mem_used_mb": 2626.117,
+      "mem_avail_mb": 5391.188,
+      "load1": 0.58,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2262.188,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770685.554,
+      "cpu_pct": 8.0,
+      "mem_used_mb": 2627.066,
+      "mem_avail_mb": 5390.238,
+      "load1": 0.58,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2265.066,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770687.555,
+      "cpu_pct": 7.6,
+      "mem_used_mb": 2629.777,
+      "mem_avail_mb": 5387.527,
+      "load1": 0.58,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2268.68,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770689.555,
+      "cpu_pct": 15.5,
+      "mem_used_mb": 2673.5,
+      "mem_avail_mb": 5343.805,
+      "load1": 0.53,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2316.09,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770691.556,
+      "cpu_pct": 6.3,
+      "mem_used_mb": 2682.586,
+      "mem_avail_mb": 5334.719,
+      "load1": 0.53,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2313.855,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770693.557,
+      "cpu_pct": 10.1,
+      "mem_used_mb": 2689.555,
+      "mem_avail_mb": 5327.75,
+      "load1": 0.49,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2326.262,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770695.558,
+      "cpu_pct": 9.3,
+      "mem_used_mb": 2698.395,
+      "mem_avail_mb": 5318.91,
+      "load1": 0.49,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2333.219,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770697.559,
+      "cpu_pct": 9.0,
+      "mem_used_mb": 2698.105,
+      "mem_avail_mb": 5319.199,
+      "load1": 0.49,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2338.992,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770699.56,
+      "cpu_pct": 8.4,
+      "mem_used_mb": 2702.871,
+      "mem_avail_mb": 5314.434,
+      "load1": 0.45,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2340.887,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770701.561,
+      "cpu_pct": 9.1,
+      "mem_used_mb": 2708.133,
+      "mem_avail_mb": 5309.172,
+      "load1": 0.45,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2348.879,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770703.562,
+      "cpu_pct": 5.8,
+      "mem_used_mb": 2708.582,
+      "mem_avail_mb": 5308.723,
+      "load1": 0.41,
+      "agent_procs": 12,
+      "cgroup_memory_current_mb": 2348.574,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770705.562,
+      "cpu_pct": 10.2,
+      "mem_used_mb": 2518.551,
+      "mem_avail_mb": 5498.754,
+      "load1": 0.41,
+      "agent_procs": 11,
+      "cgroup_memory_current_mb": 2150.957,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770707.563,
+      "cpu_pct": 3.3,
+      "mem_used_mb": 2520.148,
+      "mem_avail_mb": 5497.156,
+      "load1": 0.41,
+      "agent_procs": 11,
+      "cgroup_memory_current_mb": 2151.215,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770709.564,
+      "cpu_pct": 5.1,
+      "mem_used_mb": 2520.227,
+      "mem_avail_mb": 5497.078,
+      "load1": 0.38,
+      "agent_procs": 11,
+      "cgroup_memory_current_mb": 2153.848,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770711.565,
+      "cpu_pct": 5.1,
+      "mem_used_mb": 2521.852,
+      "mem_avail_mb": 5495.453,
+      "load1": 0.38,
+      "agent_procs": 11,
+      "cgroup_memory_current_mb": 2157.215,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770713.566,
+      "cpu_pct": 10.7,
+      "mem_used_mb": 2527.051,
+      "mem_avail_mb": 5490.254,
+      "load1": 0.35,
+      "agent_procs": 11,
+      "cgroup_memory_current_mb": 2164.703,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770715.567,
+      "cpu_pct": 8.5,
+      "mem_used_mb": 2528.871,
+      "mem_avail_mb": 5488.434,
+      "load1": 0.35,
+      "agent_procs": 11,
+      "cgroup_memory_current_mb": 2169.594,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770717.568,
+      "cpu_pct": 6.0,
+      "mem_used_mb": 2535.629,
+      "mem_avail_mb": 5481.676,
+      "load1": 0.35,
+      "agent_procs": 11,
+      "cgroup_memory_current_mb": 2174.074,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770719.568,
+      "cpu_pct": 16.5,
+      "mem_used_mb": 2397.809,
+      "mem_avail_mb": 5619.496,
+      "load1": 0.4,
+      "agent_procs": 10,
+      "cgroup_memory_current_mb": 2031.211,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770721.569,
+      "cpu_pct": 25.5,
+      "mem_used_mb": 2437.145,
+      "mem_avail_mb": 5580.16,
+      "load1": 0.4,
+      "agent_procs": 10,
+      "cgroup_memory_current_mb": 2084.973,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770723.57,
+      "cpu_pct": 12.0,
+      "mem_used_mb": 2454.582,
+      "mem_avail_mb": 5562.723,
+      "load1": 0.37,
+      "agent_procs": 10,
+      "cgroup_memory_current_mb": 2081.293,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770725.571,
+      "cpu_pct": 7.8,
+      "mem_used_mb": 2252.32,
+      "mem_avail_mb": 5764.984,
+      "load1": 0.37,
+      "agent_procs": 9,
+      "cgroup_memory_current_mb": 1860.66,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770727.572,
+      "cpu_pct": 10.0,
+      "mem_used_mb": 2253.035,
+      "mem_avail_mb": 5764.27,
+      "load1": 0.37,
+      "agent_procs": 9,
+      "cgroup_memory_current_mb": 1869.453,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770729.572,
+      "cpu_pct": 5.1,
+      "mem_used_mb": 2253.0,
+      "mem_avail_mb": 5764.305,
+      "load1": 0.34,
+      "agent_procs": 9,
+      "cgroup_memory_current_mb": 1871.086,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770731.573,
+      "cpu_pct": 4.8,
+      "mem_used_mb": 2252.895,
+      "mem_avail_mb": 5764.41,
+      "load1": 0.34,
+      "agent_procs": 9,
+      "cgroup_memory_current_mb": 1873.895,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770733.574,
+      "cpu_pct": 5.0,
+      "mem_used_mb": 2252.895,
+      "mem_avail_mb": 5764.41,
+      "load1": 0.31,
+      "agent_procs": 9,
+      "cgroup_memory_current_mb": 1872.699,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770735.575,
+      "cpu_pct": 5.5,
+      "mem_used_mb": 2065.453,
+      "mem_avail_mb": 5951.852,
+      "load1": 0.31,
+      "agent_procs": 8,
+      "cgroup_memory_current_mb": 1674.996,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770737.576,
+      "cpu_pct": 8.7,
+      "mem_used_mb": 1861.789,
+      "mem_avail_mb": 6155.516,
+      "load1": 0.31,
+      "agent_procs": 7,
+      "cgroup_memory_current_mb": 1474.934,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770739.577,
+      "cpu_pct": 13.1,
+      "mem_used_mb": 1696.977,
+      "mem_avail_mb": 6320.328,
+      "load1": 0.29,
+      "agent_procs": 7,
+      "cgroup_memory_current_mb": 1332.621,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770741.577,
+      "cpu_pct": 13.2,
+      "mem_used_mb": 1746.195,
+      "mem_avail_mb": 6271.109,
+      "load1": 0.29,
+      "agent_procs": 7,
+      "cgroup_memory_current_mb": 1380.703,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770743.578,
+      "cpu_pct": 17.2,
+      "mem_used_mb": 1581.766,
+      "mem_avail_mb": 6435.539,
+      "load1": 0.26,
+      "agent_procs": 6,
+      "cgroup_memory_current_mb": 1221.492,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770745.579,
+      "cpu_pct": 5.8,
+      "mem_used_mb": 1585.008,
+      "mem_avail_mb": 6432.297,
+      "load1": 0.26,
+      "agent_procs": 6,
+      "cgroup_memory_current_mb": 1226.801,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770747.58,
+      "cpu_pct": 6.2,
+      "mem_used_mb": 1590.715,
+      "mem_avail_mb": 6426.59,
+      "load1": 0.26,
+      "agent_procs": 6,
+      "cgroup_memory_current_mb": 1235.121,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770749.58,
+      "cpu_pct": 4.5,
+      "mem_used_mb": 1418.766,
+      "mem_avail_mb": 6598.539,
+      "load1": 0.24,
+      "agent_procs": 5,
+      "cgroup_memory_current_mb": 1039.914,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770751.581,
+      "cpu_pct": 4.3,
+      "mem_used_mb": 1418.602,
+      "mem_avail_mb": 6598.703,
+      "load1": 0.24,
+      "agent_procs": 5,
+      "cgroup_memory_current_mb": 1054.848,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770753.582,
+      "cpu_pct": 2.0,
+      "mem_used_mb": 1418.582,
+      "mem_avail_mb": 6598.723,
+      "load1": 0.22,
+      "agent_procs": 5,
+      "cgroup_memory_current_mb": 1056.418,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770755.583,
+      "cpu_pct": 3.7,
+      "mem_used_mb": 1422.207,
+      "mem_avail_mb": 6595.098,
+      "load1": 0.22,
+      "agent_procs": 5,
+      "cgroup_memory_current_mb": 1059.098,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770757.583,
+      "cpu_pct": 2.0,
+      "mem_used_mb": 1422.477,
+      "mem_avail_mb": 6594.828,
+      "load1": 0.22,
+      "agent_procs": 5,
+      "cgroup_memory_current_mb": 1061.367,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770759.584,
+      "cpu_pct": 4.6,
+      "mem_used_mb": 1424.82,
+      "mem_avail_mb": 6592.484,
+      "load1": 0.2,
+      "agent_procs": 5,
+      "cgroup_memory_current_mb": 1064.016,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770761.585,
+      "cpu_pct": 10.5,
+      "mem_used_mb": 1440.156,
+      "mem_avail_mb": 6577.148,
+      "load1": 0.2,
+      "agent_procs": 5,
+      "cgroup_memory_current_mb": 1079.93,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770763.586,
+      "cpu_pct": 4.5,
+      "mem_used_mb": 1440.395,
+      "mem_avail_mb": 6576.91,
+      "load1": 0.19,
+      "agent_procs": 5,
+      "cgroup_memory_current_mb": 1079.66,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770765.586,
+      "cpu_pct": 5.2,
+      "mem_used_mb": 1240.934,
+      "mem_avail_mb": 6776.371,
+      "load1": 0.19,
+      "agent_procs": 4,
+      "cgroup_memory_current_mb": 881.906,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770767.587,
+      "cpu_pct": 3.0,
+      "mem_used_mb": 1244.336,
+      "mem_avail_mb": 6772.969,
+      "load1": 0.19,
+      "agent_procs": 4,
+      "cgroup_memory_current_mb": 883.609,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770769.588,
+      "cpu_pct": 2.7,
+      "mem_used_mb": 1245.516,
+      "mem_avail_mb": 6771.789,
+      "load1": 0.17,
+      "agent_procs": 4,
+      "cgroup_memory_current_mb": 885.195,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770771.588,
+      "cpu_pct": 1.5,
+      "mem_used_mb": 1052.473,
+      "mem_avail_mb": 6964.832,
+      "load1": 0.17,
+      "agent_procs": 3,
+      "cgroup_memory_current_mb": 669.129,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770773.589,
+      "cpu_pct": 2.0,
+      "mem_used_mb": 1052.945,
+      "mem_avail_mb": 6964.359,
+      "load1": 0.16,
+      "agent_procs": 3,
+      "cgroup_memory_current_mb": 669.242,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770775.59,
+      "cpu_pct": 3.8,
+      "mem_used_mb": 1053.258,
+      "mem_avail_mb": 6964.047,
+      "load1": 0.16,
+      "agent_procs": 3,
+      "cgroup_memory_current_mb": 672.266,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770777.591,
+      "cpu_pct": 2.3,
+      "mem_used_mb": 1053.246,
+      "mem_avail_mb": 6964.059,
+      "load1": 0.16,
+      "agent_procs": 3,
+      "cgroup_memory_current_mb": 671.594,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770779.591,
+      "cpu_pct": 1.3,
+      "mem_used_mb": 1057.34,
+      "mem_avail_mb": 6959.965,
+      "load1": 0.14,
+      "agent_procs": 3,
+      "cgroup_memory_current_mb": 676.23,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770781.592,
+      "cpu_pct": 3.2,
+      "mem_used_mb": 1057.398,
+      "mem_avail_mb": 6959.906,
+      "load1": 0.14,
+      "agent_procs": 3,
+      "cgroup_memory_current_mb": 678.754,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770783.593,
+      "cpu_pct": 3.7,
+      "mem_used_mb": 852.422,
+      "mem_avail_mb": 7164.883,
+      "load1": 0.13,
+      "agent_procs": 2,
+      "cgroup_memory_current_mb": 483.695,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770785.593,
+      "cpu_pct": 2.2,
+      "mem_used_mb": 852.641,
+      "mem_avail_mb": 7164.664,
+      "load1": 0.13,
+      "agent_procs": 2,
+      "cgroup_memory_current_mb": 485.699,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770787.594,
+      "cpu_pct": 2.0,
+      "mem_used_mb": 853.09,
+      "mem_avail_mb": 7164.215,
+      "load1": 0.13,
+      "agent_procs": 2,
+      "cgroup_memory_current_mb": 487.812,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770789.595,
+      "cpu_pct": 2.5,
+      "mem_used_mb": 855.047,
+      "mem_avail_mb": 7162.258,
+      "load1": 0.12,
+      "agent_procs": 2,
+      "cgroup_memory_current_mb": 489.578,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770791.595,
+      "cpu_pct": 1.5,
+      "mem_used_mb": 855.531,
+      "mem_avail_mb": 7161.773,
+      "load1": 0.12,
+      "agent_procs": 2,
+      "cgroup_memory_current_mb": 489.832,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770793.596,
+      "cpu_pct": 3.5,
+      "mem_used_mb": 859.008,
+      "mem_avail_mb": 7158.297,
+      "load1": 0.11,
+      "agent_procs": 2,
+      "cgroup_memory_current_mb": 492.859,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770795.597,
+      "cpu_pct": 2.0,
+      "mem_used_mb": 679.223,
+      "mem_avail_mb": 7338.082,
+      "load1": 0.11,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 290.426,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770797.597,
+      "cpu_pct": 0.0,
+      "mem_used_mb": 679.223,
+      "mem_avail_mb": 7338.082,
+      "load1": 0.11,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 290.5,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770799.598,
+      "cpu_pct": 0.5,
+      "mem_used_mb": 679.223,
+      "mem_avail_mb": 7338.082,
+      "load1": 0.1,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 290.5,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770801.599,
+      "cpu_pct": 0.3,
+      "mem_used_mb": 679.031,
+      "mem_avail_mb": 7338.273,
+      "load1": 0.1,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 290.5,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770803.599,
+      "cpu_pct": 0.8,
+      "mem_used_mb": 679.012,
+      "mem_avail_mb": 7338.293,
+      "load1": 0.09,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 290.5,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770805.6,
+      "cpu_pct": 1.0,
+      "mem_used_mb": 679.008,
+      "mem_avail_mb": 7338.297,
+      "load1": 0.09,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 290.516,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770807.601,
+      "cpu_pct": 1.0,
+      "mem_used_mb": 673.578,
+      "mem_avail_mb": 7343.727,
+      "load1": 0.09,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 282.215,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770809.602,
+      "cpu_pct": 0.0,
+      "mem_used_mb": 673.559,
+      "mem_avail_mb": 7343.746,
+      "load1": 0.09,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 282.215,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770811.602,
+      "cpu_pct": 0.0,
+      "mem_used_mb": 673.539,
+      "mem_avail_mb": 7343.766,
+      "load1": 0.09,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 282.215,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770813.603,
+      "cpu_pct": 0.0,
+      "mem_used_mb": 673.539,
+      "mem_avail_mb": 7343.766,
+      "load1": 0.08,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 282.215,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770815.604,
+      "cpu_pct": 0.5,
+      "mem_used_mb": 673.527,
+      "mem_avail_mb": 7343.777,
+      "load1": 0.08,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 282.215,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770817.604,
+      "cpu_pct": 7.0,
+      "mem_used_mb": 674.031,
+      "mem_avail_mb": 7343.273,
+      "load1": 0.08,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 300.293,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770819.605,
+      "cpu_pct": 1.0,
+      "mem_used_mb": 674.023,
+      "mem_avail_mb": 7343.281,
+      "load1": 0.07,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 297.461,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770821.606,
+      "cpu_pct": 1.7,
+      "mem_used_mb": 674.016,
+      "mem_avail_mb": 7343.289,
+      "load1": 0.07,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 298.719,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770823.606,
+      "cpu_pct": 1.0,
+      "mem_used_mb": 673.949,
+      "mem_avail_mb": 7343.355,
+      "load1": 0.07,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 298.77,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770825.607,
+      "cpu_pct": 0.3,
+      "mem_used_mb": 673.945,
+      "mem_avail_mb": 7343.359,
+      "load1": 0.07,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 298.777,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770827.608,
+      "cpu_pct": 0.0,
+      "mem_used_mb": 673.945,
+      "mem_avail_mb": 7343.359,
+      "load1": 0.07,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 298.773,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770829.608,
+      "cpu_pct": 0.3,
+      "mem_used_mb": 673.926,
+      "mem_avail_mb": 7343.379,
+      "load1": 0.06,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 298.773,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770831.609,
+      "cpu_pct": 0.3,
+      "mem_used_mb": 673.875,
+      "mem_avail_mb": 7343.43,
+      "load1": 0.06,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 297.832,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770833.61,
+      "cpu_pct": 3.5,
+      "mem_used_mb": 673.785,
+      "mem_avail_mb": 7343.52,
+      "load1": 0.06,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 301.23,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770835.61,
+      "cpu_pct": 2.2,
+      "mem_used_mb": 673.918,
+      "mem_avail_mb": 7343.387,
+      "load1": 0.06,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 303.055,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770837.611,
+      "cpu_pct": 1.0,
+      "mem_used_mb": 673.902,
+      "mem_avail_mb": 7343.402,
+      "load1": 0.06,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 302.98,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770839.612,
+      "cpu_pct": 2.0,
+      "mem_used_mb": 673.887,
+      "mem_avail_mb": 7343.418,
+      "load1": 0.05,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 304.328,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770841.612,
+      "cpu_pct": 2.0,
+      "mem_used_mb": 674.031,
+      "mem_avail_mb": 7343.273,
+      "load1": 0.05,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 305.828,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770843.613,
+      "cpu_pct": 1.3,
+      "mem_used_mb": 674.238,
+      "mem_avail_mb": 7343.066,
+      "load1": 0.05,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 306.992,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770845.614,
+      "cpu_pct": 0.3,
+      "mem_used_mb": 674.238,
+      "mem_avail_mb": 7343.066,
+      "load1": 0.05,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 306.988,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770847.615,
+      "cpu_pct": 3.0,
+      "mem_used_mb": 674.863,
+      "mem_avail_mb": 7342.441,
+      "load1": 0.05,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 310.621,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770849.615,
+      "cpu_pct": 1.3,
+      "mem_used_mb": 675.504,
+      "mem_avail_mb": 7341.801,
+      "load1": 0.04,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 310.469,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770851.616,
+      "cpu_pct": 0.0,
+      "mem_used_mb": 675.496,
+      "mem_avail_mb": 7341.809,
+      "load1": 0.04,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 310.477,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770853.617,
+      "cpu_pct": 1.2,
+      "mem_used_mb": 675.43,
+      "mem_avail_mb": 7341.875,
+      "load1": 0.04,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 310.625,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770855.617,
+      "cpu_pct": 2.7,
+      "mem_used_mb": 675.422,
+      "mem_avail_mb": 7341.883,
+      "load1": 0.04,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 310.703,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770857.618,
+      "cpu_pct": 0.8,
+      "mem_used_mb": 675.285,
+      "mem_avail_mb": 7342.02,
+      "load1": 0.04,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 310.961,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770859.619,
+      "cpu_pct": 3.0,
+      "mem_used_mb": 675.242,
+      "mem_avail_mb": 7342.062,
+      "load1": 0.04,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 310.816,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770861.619,
+      "cpu_pct": 1.7,
+      "mem_used_mb": 675.242,
+      "mem_avail_mb": 7342.062,
+      "load1": 0.04,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 311.035,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770863.62,
+      "cpu_pct": 1.7,
+      "mem_used_mb": 675.238,
+      "mem_avail_mb": 7342.066,
+      "load1": 0.03,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 310.801,
+      "cgroup_memory_max_mb": null
+    },
+    {
+      "epoch": 1786770865.621,
+      "cpu_pct": 1.7,
+      "mem_used_mb": 675.145,
+      "mem_avail_mb": 7342.16,
+      "load1": 0.03,
+      "agent_procs": 1,
+      "cgroup_memory_current_mb": 312.129,
+      "cgroup_memory_max_mb": null
+    }
+  ],
+  "monitor_errors": [],
+  "monitor_error": null,
+  "fatal_error": null,
+  "cleanup": {
+    "monitor": {
+      "attempted": true,
+      "success": true,
+      "samples": 230
+    },
+    "session": {
+      "attempted": true,
+      "success": true,
+      "status_code": 200,
+      "runtime_session_id": "shared-long-88a800ada2-b52128e200114925adca9f01022bf357"
+    }
+  },
+  "total_wall_s": 468.5
+}

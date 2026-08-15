@@ -1,0 +1,110 @@
+== [1/4] build and push linux/arm64 image ==
+
+WARNING! Your credentials are stored unencrypted in '/home/ubuntu/.docker/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.01kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22.19.0-bookworm-slim
+#2 ...
+
+#3 [internal] load metadata for ghcr.io/astral-sh/uv:0.8.13-python3.13-bookworm-slim
+#3 DONE 0.3s
+
+#2 [internal] load metadata for docker.io/library/node:22.19.0-bookworm-slim
+#2 DONE 0.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 101B done
+#4 DONE 0.0s
+
+#5 [stage-1 1/9] FROM ghcr.io/astral-sh/uv:0.8.13-python3.13-bookworm-slim@sha256:020e9eefae64e99ea2da39bcd1af1294be0a0b01e98ebad4dbedfd8b729500f7
+#5 DONE 0.0s
+
+#6 [node 1/2] FROM docker.io/library/node:22.19.0-bookworm-slim@sha256:4a4884e8a44826194dff92ba316264f392056cbe243dcc9fd3551e71cea02b90
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 429B done
+#7 DONE 0.0s
+
+#8 [stage-1 7/9] RUN uv sync --frozen --no-dev
+#8 CACHED
+
+#9 [stage-1 2/9] WORKDIR /app
+#9 CACHED
+
+#10 [node 2/2] RUN npm install -g @anthropic-ai/claude-code@2.1.232     && npm cache clean --force
+#10 CACHED
+
+#11 [stage-1 8/9] COPY app/ ./app/
+#11 CACHED
+
+#12 [stage-1 5/9] RUN ln -s ../lib/node_modules/@anthropic-ai/claude-code/bin/claude.exe /usr/local/bin/claude     && apt-get update     && apt-get install -y --no-install-recommends ca-certificates git     && rm -rf /var/lib/apt/lists/*
+#12 CACHED
+
+#13 [stage-1 6/9] COPY pyproject.toml uv.lock ./
+#13 CACHED
+
+#14 [stage-1 4/9] COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+#14 CACHED
+
+#15 [stage-1 3/9] COPY --from=node /usr/local/bin/node /usr/local/bin/node
+#15 CACHED
+
+#16 [stage-1 9/9] RUN mkdir -p /tmp/agentcore-users && chmod 700 /tmp/agentcore-users
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 writing image sha256:131decb8e87b694331618acda995e78331df837662b974d0ef67a18c70f77009 done
+#17 naming to 434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents:shared-runtime-microvm-v1 0.0s done
+#17 DONE 0.0s
+The push refers to repository [434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents]
+38454e6bb4bd: Preparing
+4c8ee4fdc68a: Preparing
+66fda04beea4: Preparing
+18670303f8cb: Preparing
+34850e040011: Preparing
+42139e968466: Preparing
+780ed69f2c53: Preparing
+cee8d912a728: Preparing
+6ed4803599c0: Preparing
+3791d50f969a: Preparing
+cff779c8c465: Preparing
+9ead39bfdc0f: Preparing
+f0f023a63482: Preparing
+3791d50f969a: Waiting
+cff779c8c465: Waiting
+42139e968466: Waiting
+9ead39bfdc0f: Waiting
+f0f023a63482: Waiting
+780ed69f2c53: Waiting
+cee8d912a728: Waiting
+6ed4803599c0: Waiting
+66fda04beea4: Layer already exists
+38454e6bb4bd: Layer already exists
+18670303f8cb: Layer already exists
+34850e040011: Layer already exists
+4c8ee4fdc68a: Layer already exists
+42139e968466: Layer already exists
+780ed69f2c53: Layer already exists
+3791d50f969a: Layer already exists
+6ed4803599c0: Layer already exists
+cee8d912a728: Layer already exists
+cff779c8c465: Layer already exists
+9ead39bfdc0f: Layer already exists
+f0f023a63482: Layer already exists
+shared-runtime-microvm-v1: digest: sha256:ca626ff6df75493fbac6d1c7f47eaeca546051d55776fcfef22cc21251cb76c9 size: 3051
+== [2/4] create or update default microVM Runtime ==
+created Runtime shared_runtime_microvm-oGddGiDWRD
+== [3/4] wait for READY ==
+  status=CREATING
+  status=READY
+== [4/4] wrote runtime.json (arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD) ==

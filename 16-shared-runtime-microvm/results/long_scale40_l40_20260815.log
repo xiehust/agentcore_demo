@@ -1,0 +1,57 @@
+shared session : shared-long-6747adf21b-416344a218ad4f86ac69e86e1434e9b3
+levels         : [40]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-6747adf21b-l40-u030] foundation: ok=False time=195.7s tools=6
+    [long-6747adf21b-l40-u022] foundation: ok=False time=196.1s tools=3
+    [long-6747adf21b-l40-u039] foundation: ok=False time=198.6s tools=2
+    [long-6747adf21b-l40-u032] foundation: ok=False time=200.3s tools=4
+    [long-6747adf21b-l40-u002] foundation: ok=False time=201.9s tools=5
+    [long-6747adf21b-l40-u015] foundation: ok=False time=206.4s tools=5
+    [long-6747adf21b-l40-u038] foundation: ok=False time=206.4s tools=5
+    [long-6747adf21b-l40-u010] foundation: ok=False time=208.5s tools=13
+    [long-6747adf21b-l40-u027] foundation: ok=False time=210.2s tools=4
+    [long-6747adf21b-l40-u025] foundation: ok=False time=210.2s tools=4
+    [long-6747adf21b-l40-u028] foundation: ok=False time=210.2s tools=8
+    [long-6747adf21b-l40-u019] foundation: ok=False time=210.3s tools=4
+    [long-6747adf21b-l40-u013] foundation: ok=False time=210.3s tools=19
+    [long-6747adf21b-l40-u033] foundation: ok=False time=210.3s tools=5
+    [long-6747adf21b-l40-u006] foundation: ok=False time=210.3s tools=10
+    [long-6747adf21b-l40-u000] foundation: ok=False time=210.3s tools=5
+    [long-6747adf21b-l40-u008] foundation: ok=False time=210.9s tools=11
+    [long-6747adf21b-l40-u036] foundation: ok=False time=210.9s tools=4
+    [long-6747adf21b-l40-u011] foundation: ok=False time=210.9s tools=15
+    [long-6747adf21b-l40-u017] foundation: ok=False time=214.9s tools=9
+    [long-6747adf21b-l40-u018] foundation: ok=False time=214.9s tools=10
+    [long-6747adf21b-l40-u023] foundation: ok=False time=214.9s tools=3
+    [long-6747adf21b-l40-u004] foundation: ok=False time=214.9s tools=11
+    [long-6747adf21b-l40-u024] foundation: ok=False time=233.0s tools=8
+    [long-6747adf21b-l40-u012] foundation: ok=False time=233.0s tools=10
+    [long-6747adf21b-l40-u031] foundation: ok=False time=233.0s tools=9
+    [long-6747adf21b-l40-u035] foundation: ok=False time=235.5s tools=5
+    [long-6747adf21b-l40-u009] foundation: ok=False time=235.5s tools=4
+    [long-6747adf21b-l40-u003] foundation: ok=False time=235.5s tools=3
+    [long-6747adf21b-l40-u016] foundation: ok=False time=235.5s tools=5
+    [long-6747adf21b-l40-u029] foundation: ok=False time=235.6s tools=13
+    [long-6747adf21b-l40-u001] foundation: ok=False time=236.6s tools=8
+    [long-6747adf21b-l40-u014] foundation: ok=False time=236.7s tools=5
+    [long-6747adf21b-l40-u021] foundation: ok=False time=236.7s tools=5
+    [long-6747adf21b-l40-u005] foundation: ok=False time=236.7s tools=6
+    [long-6747adf21b-l40-u034] foundation: ok=False time=246.9s tools=4
+    [long-6747adf21b-l40-u007] foundation: ok=False time=246.9s tools=9
+    [long-6747adf21b-l40-u037] foundation: ok=False time=252.1s tools=5
+    [long-6747adf21b-l40-u026] foundation: ok=False time=252.1s tools=9
+    [long-6747adf21b-l40-u020] foundation: ok=False time=252.1s tools=6
+  level  40: agent_ok=0/40 p50=Nones p90=Nones max=Nones
+    artifacts=0/40 end_to_end=0/40
+    monitor unavailable: CommandExecutionError: command exit code is 1, expected 0
+  stopping ramp: 0.0 < 0.75
+final monitor collection failed: CommandExecutionError: command exit code is 1, expected 0
+session stopped
+
+results: results/load_test_scale40_long_l40_20260815.json

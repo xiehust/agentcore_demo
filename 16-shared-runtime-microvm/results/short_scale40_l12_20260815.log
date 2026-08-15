@@ -1,0 +1,15 @@
+shared session : shared-short-442b689206-e6d1247ce83c4007a23375613d93fe17
+levels         : [12]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD
+
+== phase 0: warmup ==
+  ok=True latency=3634.4ms
+
+== phase 1: start command-channel monitor ==
+  monitor started
+
+== phase 2: concurrency ramp ==
+  level  12: ok=12/12 p50=7117.8ms p90=7605.4ms max=8033.4ms processes=1
+session stopped
+
+results: results/load_test_scale40_short_l12_20260815.json

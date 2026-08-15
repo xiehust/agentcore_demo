@@ -1,0 +1,2073 @@
+{
+  "generated": "2026-08-15T05:53:44.523522+00:00",
+  "completed": true,
+  "runtime": {
+    "region": "us-west-2",
+    "runtimeName": "shared_runtime_microvm",
+    "runtimeId": "shared_runtime_microvm-oGddGiDWRD",
+    "runtimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD",
+    "imageUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents:shared-runtime-microvm-v1",
+    "modelId": "us.anthropic.claude-sonnet-4-6",
+    "computeType": "microvm"
+  },
+  "config": {
+    "run_id": "6747adf21b",
+    "levels": [
+      40
+    ],
+    "success_floor": 0.75,
+    "request_timeout_s": 1800,
+    "level_pause_s": 0.0,
+    "monitor_duration_s": 3600,
+    "phases_per_user": 2,
+    "expected_files": [
+      "index.html",
+      "about.html",
+      "styles.css",
+      "app.js",
+      "README.md",
+      "loadtest.json"
+    ]
+  },
+  "shared_session_id": "shared-long-6747adf21b-416344a218ad4f86ac69e86e1434e9b3",
+  "warmup": {
+    "success": true,
+    "api_status": 200,
+    "latency_ms": 3856.0,
+    "error": null,
+    "workspace": "/tmp/agentcore-users/long-6747adf21b-warmup-ca25a0bb0006",
+    "claude_session_id": "b0fc9963-b223-45ec-8e65-5307da025165",
+    "resumed_from": null,
+    "denied_count": 0,
+    "instance": {
+      "boot_id": "ee6a4907-6b84-4b24-95bc-2ccd9a04274c",
+      "server_run_id": "38c12a2597e141de9da00195fbb96c0c",
+      "pid": 1,
+      "hostname": "localhost"
+    },
+    "tool_call_count": 0,
+    "name": "warmup",
+    "expected_marker": "LONG-READY-6747adf21b",
+    "marker_ok": true,
+    "result_tail": "LONG-READY-6747adf21b",
+    "start_epoch": 1786772964.8324847,
+    "end_epoch": 1786772968.6885223,
+    "phase_success": true
+  },
+  "levels": [
+    {
+      "level": 40,
+      "window": [
+        1786772970.9967952,
+        1786773223.1282785
+      ],
+      "agent_success": 0,
+      "agent_failed": 40,
+      "agent_success_rate": 0.0,
+      "task_p50_s": null,
+      "task_p90_s": null,
+      "task_max_s": null,
+      "tool_calls_avg": 7.0,
+      "distinct_workspaces": 0,
+      "distinct_server_processes": 0,
+      "errors": [
+        {
+          "user_id": "long-6747adf21b-l40-u000",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u001",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u002",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u003",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u004",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u005",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u006",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u007",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u008",
+          "error": "complete SSE event missing"
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u009",
+          "error": "complete SSE event missing"
+        }
+      ],
+      "requests": [
+        {
+          "user_id": "long-6747adf21b-l40-u000",
+          "run_token": "6747adf21b-l40-u000",
+          "start_epoch": 1786772971.002059,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210302.1,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0020843,
+              "end_epoch": 1786773181.3041954,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.304314,
+          "latency_ms": 210302.3,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u001",
+          "run_token": "6747adf21b-l40-u001",
+          "start_epoch": 1786772971.00236,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 236636.0,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 8,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.002381,
+              "end_epoch": 1786773207.6383853,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 8,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773207.638434,
+          "latency_ms": 236636.1,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u002",
+          "run_token": "6747adf21b-l40-u002",
+          "start_epoch": 1786772971.002644,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 201860.7,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0026655,
+              "end_epoch": 1786773172.8634248,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773172.863474,
+          "latency_ms": 201860.8,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u003",
+          "run_token": "6747adf21b-l40-u003",
+          "start_epoch": 1786772971.017831,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 235548.5,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 3,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0178573,
+              "end_epoch": 1786773206.566449,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 3,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773206.5670328,
+          "latency_ms": 235549.2,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u004",
+          "run_token": "6747adf21b-l40-u004",
+          "start_epoch": 1786772971.010651,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 214926.0,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 11,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0106819,
+              "end_epoch": 1786773185.9367142,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 11,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773185.9368045,
+          "latency_ms": 214926.2,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u005",
+          "run_token": "6747adf21b-l40-u005",
+          "start_epoch": 1786772971.0132241,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 236713.3,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 6,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0132525,
+              "end_epoch": 1786773207.726611,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 6,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773207.7266436,
+          "latency_ms": 236713.4,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u006",
+          "run_token": "6747adf21b-l40-u006",
+          "start_epoch": 1786772971.0296428,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210274.0,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 10,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0296683,
+              "end_epoch": 1786773181.303675,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 10,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.3042762,
+          "latency_ms": 210274.6,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u007",
+          "run_token": "6747adf21b-l40-u007",
+          "start_epoch": 1786772971.030576,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 246935.4,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 9,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0306015,
+              "end_epoch": 1786773217.9660716,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 9,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773217.9661071,
+          "latency_ms": 246935.5,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u008",
+          "run_token": "6747adf21b-l40-u008",
+          "start_epoch": 1786772971.020579,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210904.3,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 11,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0206013,
+              "end_epoch": 1786773181.924935,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 11,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.9249873,
+          "latency_ms": 210904.4,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u009",
+          "run_token": "6747adf21b-l40-u009",
+          "start_epoch": 1786772971.0225523,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 235543.6,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 4,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0225759,
+              "end_epoch": 1786773206.56621,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 4,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773206.5665083,
+          "latency_ms": 235544.0,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u010",
+          "run_token": "6747adf21b-l40-u010",
+          "start_epoch": 1786772971.0214462,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 208451.2,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 13,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0214686,
+              "end_epoch": 1786773179.4726708,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 13,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773179.4727192,
+          "latency_ms": 208451.3,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u011",
+          "run_token": "6747adf21b-l40-u011",
+          "start_epoch": 1786772971.0324924,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210893.4,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 15,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0325203,
+              "end_epoch": 1786773181.9259162,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 15,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.9259474,
+          "latency_ms": 210893.5,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u012",
+          "run_token": "6747adf21b-l40-u012",
+          "start_epoch": 1786772971.0187466,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 233025.3,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 10,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0187685,
+              "end_epoch": 1786773204.0441048,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 10,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773204.0444937,
+          "latency_ms": 233025.7,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u013",
+          "run_token": "6747adf21b-l40-u013",
+          "start_epoch": 1786772971.0287826,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210273.8,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 19,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.028804,
+              "end_epoch": 1786773181.3026705,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 19,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.3037267,
+          "latency_ms": 210274.9,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u014",
+          "run_token": "6747adf21b-l40-u014",
+          "start_epoch": 1786772971.041358,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 236684.1,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.041385,
+              "end_epoch": 1786773207.7255585,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773207.7256112,
+          "latency_ms": 236684.3,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u015",
+          "run_token": "6747adf21b-l40-u015",
+          "start_epoch": 1786772971.0372112,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 206423.7,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0372386,
+              "end_epoch": 1786773177.460986,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773177.4610355,
+          "latency_ms": 206423.8,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u016",
+          "run_token": "6747adf21b-l40-u016",
+          "start_epoch": 1786772971.0447748,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 235522.2,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0447981,
+              "end_epoch": 1786773206.5669959,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773206.5670707,
+          "latency_ms": 235522.3,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u017",
+          "run_token": "6747adf21b-l40-u017",
+          "start_epoch": 1786772971.0234466,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 214912.0,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 9,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.023472,
+              "end_epoch": 1786773185.9355175,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 9,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773185.9355721,
+          "latency_ms": 214912.1,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u018",
+          "run_token": "6747adf21b-l40-u018",
+          "start_epoch": 1786772971.034293,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 214901.5,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 10,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.034317,
+              "end_epoch": 1786773185.9358456,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 10,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773185.9359066,
+          "latency_ms": 214901.6,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u019",
+          "run_token": "6747adf21b-l40-u019",
+          "start_epoch": 1786772971.0141954,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210288.1,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 4,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0142236,
+              "end_epoch": 1786773181.3023765,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 4,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.3027236,
+          "latency_ms": 210288.5,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u020",
+          "run_token": "6747adf21b-l40-u020",
+          "start_epoch": 1786772971.0381432,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 252087.6,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 6,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0381694,
+              "end_epoch": 1786773223.1257777,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 6,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773223.1258113,
+          "latency_ms": 252087.7,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u021",
+          "run_token": "6747adf21b-l40-u021",
+          "start_epoch": 1786772971.0424042,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 236683.6,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0424273,
+              "end_epoch": 1786773207.7260728,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773207.7261076,
+          "latency_ms": 236683.7,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u022",
+          "run_token": "6747adf21b-l40-u022",
+          "start_epoch": 1786772971.0262187,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 196076.1,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 3,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0262427,
+              "end_epoch": 1786773167.1023407,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 3,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773167.1023932,
+          "latency_ms": 196076.2,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u023",
+          "run_token": "6747adf21b-l40-u023",
+          "start_epoch": 1786772971.0162299,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 214920.0,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 3,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.016257,
+              "end_epoch": 1786773185.936326,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 3,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773185.9367619,
+          "latency_ms": 214920.5,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u024",
+          "run_token": "6747adf21b-l40-u024",
+          "start_epoch": 1786772971.0253263,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 233018.3,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 8,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0253518,
+              "end_epoch": 1786773204.0436738,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 8,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773204.04375,
+          "latency_ms": 233018.4,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u025",
+          "run_token": "6747adf21b-l40-u025",
+          "start_epoch": 1786772971.0144825,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210241.5,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 4,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0145042,
+              "end_epoch": 1786773181.2560363,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 4,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.2566693,
+          "latency_ms": 210242.2,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u026",
+          "run_token": "6747adf21b-l40-u026",
+          "start_epoch": 1786772971.01536,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 252109.9,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 9,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0153806,
+              "end_epoch": 1786773223.1253357,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 9,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773223.1253748,
+          "latency_ms": 252110.0,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u027",
+          "run_token": "6747adf21b-l40-u027",
+          "start_epoch": 1786772971.0401525,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210215.2,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 4,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0401762,
+              "end_epoch": 1786773181.2554429,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 4,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.25551,
+          "latency_ms": 210215.4,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u028",
+          "run_token": "6747adf21b-l40-u028",
+          "start_epoch": 1786772971.0434015,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210213.2,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 8,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0434248,
+              "end_epoch": 1786773181.2566268,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 8,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.2567103,
+          "latency_ms": 210213.3,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u029",
+          "run_token": "6747adf21b-l40-u029",
+          "start_epoch": 1786772971.0196426,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 235623.8,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 13,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0196698,
+              "end_epoch": 1786773206.6435091,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 13,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773206.6435585,
+          "latency_ms": 235623.9,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u030",
+          "run_token": "6747adf21b-l40-u030",
+          "start_epoch": 1786772971.0351977,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 195687.8,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 6,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0352204,
+              "end_epoch": 1786773166.7230825,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 6,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773166.7231383,
+          "latency_ms": 195687.9,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u031",
+          "run_token": "6747adf21b-l40-u031",
+          "start_epoch": 1786772971.039082,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 233005.3,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 9,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.03911,
+              "end_epoch": 1786773204.0444539,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 9,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773204.0445373,
+          "latency_ms": 233005.5,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u032",
+          "run_token": "6747adf21b-l40-u032",
+          "start_epoch": 1786772971.0333955,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 200325.2,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 4,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0334237,
+              "end_epoch": 1786773171.358668,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 4,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773171.3587165,
+          "latency_ms": 200325.3,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u033",
+          "run_token": "6747adf21b-l40-u033",
+          "start_epoch": 1786772971.0314324,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210271.7,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0314553,
+              "end_epoch": 1786773181.3031993,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.3042302,
+          "latency_ms": 210272.8,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u034",
+          "run_token": "6747adf21b-l40-u034",
+          "start_epoch": 1786772971.0278134,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 246937.6,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 4,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.02784,
+              "end_epoch": 1786773217.9655135,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 4,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773217.9655623,
+          "latency_ms": 246937.7,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u035",
+          "run_token": "6747adf21b-l40-u035",
+          "start_epoch": 1786772971.0457149,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 235519.9,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0457416,
+              "end_epoch": 1786773206.5656817,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773206.56576,
+          "latency_ms": 235520.0,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u036",
+          "run_token": "6747adf21b-l40-u036",
+          "start_epoch": 1786772971.0362632,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 210889.1,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 4,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0362878,
+              "end_epoch": 1786773181.9254282,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 4,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773181.925468,
+          "latency_ms": 210889.2,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u037",
+          "run_token": "6747adf21b-l40-u037",
+          "start_epoch": 1786772971.0243597,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 252100.3,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0243871,
+              "end_epoch": 1786773223.1247733,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773223.1248205,
+          "latency_ms": 252100.5,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u038",
+          "run_token": "6747adf21b-l40-u038",
+          "start_epoch": 1786772971.0477588,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 206413.7,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 5,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.047785,
+              "end_epoch": 1786773177.4614825,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 5,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773177.4615178,
+          "latency_ms": 206413.8,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u039",
+          "run_token": "6747adf21b-l40-u039",
+          "start_epoch": 1786772971.001602,
+          "phases": [
+            {
+              "success": false,
+              "api_status": 200,
+              "latency_ms": 198596.6,
+              "error": "complete SSE event missing",
+              "workspace": null,
+              "claude_session_id": null,
+              "resumed_from": null,
+              "denied_count": 0,
+              "instance": null,
+              "tool_call_count": 2,
+              "name": "foundation",
+              "expected_marker": "PHASE-1-DONE 4",
+              "marker_ok": false,
+              "result_tail": "",
+              "start_epoch": 1786772971.0016348,
+              "end_epoch": 1786773169.5982754,
+              "phase_success": false
+            }
+          ],
+          "agent_success": false,
+          "session_chain_ok": false,
+          "workspace_consistent": false,
+          "process_consistent": false,
+          "workspace": null,
+          "instance_fingerprint": null,
+          "server_run_id": null,
+          "tool_call_count": 2,
+          "error": "complete SSE event missing",
+          "end_epoch": 1786773169.5983188,
+          "latency_ms": 198596.7,
+          "unique_workspace": false,
+          "artifact_verification": {
+            "success": false,
+            "errors": [
+              "workspace was not returned or checked"
+            ]
+          },
+          "artifact_success": false,
+          "verified_success": false
+        }
+      ],
+      "verification_available": true,
+      "success": 0,
+      "failed": 40,
+      "success_rate": 0.0,
+      "monitor_available": false,
+      "resources": {},
+      "artifact_success": 0,
+      "artifact_failed": 40,
+      "verified_success": 0,
+      "verified_failed": 40,
+      "artifact_errors": [
+        {
+          "user_id": "long-6747adf21b-l40-u000",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u001",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u002",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u003",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u004",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u005",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u006",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u007",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u008",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        },
+        {
+          "user_id": "long-6747adf21b-l40-u009",
+          "errors": [
+            "workspace was not returned or checked"
+          ]
+        }
+      ],
+      "artifact_verification": {
+        "users_checked": 0,
+        "per_user": {}
+      },
+      "artifact_command": {
+        "api_status": 200,
+        "content_stop": {
+          "exitCode": 0,
+          "status": "COMPLETED"
+        },
+        "stream_exceptions": []
+      },
+      "monitor_error": "CommandExecutionError: command exit code is 1, expected 0"
+    }
+  ],
+  "monitor_samples": [],
+  "monitor_errors": [
+    {
+      "phase": "level-40",
+      "at": "2026-08-15T05:53:44.218688+00:00",
+      "error": "CommandExecutionError: command exit code is 1, expected 0"
+    },
+    {
+      "phase": "final-collection",
+      "at": "2026-08-15T05:53:44.347474+00:00",
+      "error": "CommandExecutionError: command exit code is 1, expected 0"
+    }
+  ],
+  "monitor_error": "CommandExecutionError: command exit code is 1, expected 0",
+  "fatal_error": null,
+  "cleanup": {
+    "monitor": {
+      "attempted": true,
+      "success": false,
+      "error": "CommandExecutionError: command exit code is 1, expected 0"
+    },
+    "session": {
+      "attempted": true,
+      "success": true,
+      "status_code": 200,
+      "runtime_session_id": "shared-long-6747adf21b-416344a218ad4f86ac69e86e1434e9b3"
+    }
+  },
+  "total_wall_s": 259.9
+}

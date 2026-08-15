@@ -1,0 +1,46 @@
+shared session : shared-long-e6849de7bf-9b4cffe37b754df88adbcf688df78063
+levels         : [16]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-e6849de7bf-l16-u005] foundation: ok=True time=164.0s tools=12
+    [long-e6849de7bf-l16-u000] foundation: ok=True time=165.3s tools=13
+    [long-e6849de7bf-l16-u013] foundation: ok=True time=168.2s tools=12
+    [long-e6849de7bf-l16-u009] foundation: ok=True time=170.1s tools=10
+    [long-e6849de7bf-l16-u015] foundation: ok=True time=178.7s tools=13
+    [long-e6849de7bf-l16-u004] foundation: ok=True time=207.9s tools=15
+    [long-e6849de7bf-l16-u011] foundation: ok=True time=216.1s tools=16
+    [long-e6849de7bf-l16-u010] foundation: ok=True time=230.3s tools=16
+    [long-e6849de7bf-l16-u008] foundation: ok=True time=230.5s tools=14
+    [long-e6849de7bf-l16-u014] foundation: ok=True time=241.3s tools=16
+    [long-e6849de7bf-l16-u012] foundation: ok=True time=242.6s tools=13
+    [long-e6849de7bf-l16-u003] foundation: ok=True time=261.3s tools=25
+    [long-e6849de7bf-l16-u000] final-qa: ok=True time=99.9s tools=13
+    [long-e6849de7bf-l16-u009] final-qa: ok=True time=101.4s tools=14
+    [long-e6849de7bf-l16-u013] final-qa: ok=True time=112.3s tools=17
+    [long-e6849de7bf-l16-u007] foundation: ok=True time=282.1s tools=13
+    [long-e6849de7bf-l16-u006] foundation: ok=True time=284.3s tools=24
+    [long-e6849de7bf-l16-u015] final-qa: ok=True time=124.4s tools=18
+    [long-e6849de7bf-l16-u011] final-qa: ok=True time=88.8s tools=13
+    [long-e6849de7bf-l16-u005] final-qa: ok=True time=143.0s tools=19
+    [long-e6849de7bf-l16-u004] final-qa: ok=True time=105.3s tools=14
+    [long-e6849de7bf-l16-u002] foundation: ok=True time=329.1s tools=12
+    [long-e6849de7bf-l16-u014] final-qa: ok=True time=98.9s tools=12
+    [long-e6849de7bf-l16-u008] final-qa: ok=True time=111.5s tools=13
+    [long-e6849de7bf-l16-u010] final-qa: ok=True time=112.5s tools=14
+    [long-e6849de7bf-l16-u012] final-qa: ok=True time=112.7s tools=12
+    [long-e6849de7bf-l16-u007] final-qa: ok=True time=107.3s tools=12
+    [long-e6849de7bf-l16-u006] final-qa: ok=True time=138.7s tools=21
+    [long-e6849de7bf-l16-u003] final-qa: ok=True time=174.7s tools=24
+    [long-e6849de7bf-l16-u002] final-qa: ok=True time=114.5s tools=13
+    [long-e6849de7bf-l16-u001] foundation: ok=True time=575.2s tools=49
+    [long-e6849de7bf-l16-u001] final-qa: ok=True time=175.9s tools=34
+  level  16: agent_ok=16/16 p50=341.1s p90=439.8s max=751.1s
+    artifacts=16/16 end_to_end=16/16
+session stopped
+
+results: results/load_test_scale40_long_l16_20260815.json

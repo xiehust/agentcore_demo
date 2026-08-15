@@ -94,3 +94,7 @@ The approved execution uses account `434444145045` in `us-west-2`, the existing 
 Run order is isolation smoke, short levels 2/4/8, long level 1, then long levels 2/4. Long level 8 is conditional on 100% verified success, command-monitor availability, successful session cleanup, and adequate memory headroom at level 4. Every run uses a fresh session and must record a successful stop response.
 
 After raw JSON analysis, rewrite `results/REPORT.md` in Chinese with UTC timestamps, Runtime version/image/model, exact commands, result filenames, success/latency/resource tables, uncertainty, and comparison methodology. Delete the dedicated test Runtime after report completion; retain the ECR image unless the user asks to delete it.
+
+## 10. Scale-40 extension
+
+The second dedicated Runtime raises only the application semaphore to 40; the default microVM still exposes 2 logical CPUs and about 7.83 GiB through `/proc`. Short and long levels run one level per fresh session so a near-capacity failure cannot contaminate the next sample. The final matrix is short 12–40 all successful, long 12–32 all deterministically verified, and long 40 at 0/40 with missing complete SSE events and unavailable monitoring. Because the 32 level retained only 1144 MB and the 40 level lost both Agent completion and the monitor, the report may describe memory pressure as the strongest explanation but must not claim a confirmed OOM without a resource window or platform log.

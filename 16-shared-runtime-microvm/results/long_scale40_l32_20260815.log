@@ -1,0 +1,78 @@
+shared session : shared-long-2a73a90e6d-0e2b24bb20ee4a5e96ce3285989a0ec8
+levels         : [32]
+runtime        : arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD
+
+== phase 0: warmup ==
+
+== phase 1: start command-channel monitor ==
+
+== phase 2: two-phase concurrency ramp ==
+    [long-2a73a90e6d-l32-u021] foundation: ok=True time=170.7s tools=11
+    [long-2a73a90e6d-l32-u002] foundation: ok=True time=176.7s tools=12
+    [long-2a73a90e6d-l32-u018] foundation: ok=True time=177.8s tools=10
+    [long-2a73a90e6d-l32-u001] foundation: ok=True time=187.9s tools=12
+    [long-2a73a90e6d-l32-u023] foundation: ok=True time=190.2s tools=11
+    [long-2a73a90e6d-l32-u013] foundation: ok=True time=194.3s tools=13
+    [long-2a73a90e6d-l32-u003] foundation: ok=True time=194.4s tools=11
+    [long-2a73a90e6d-l32-u030] foundation: ok=True time=194.8s tools=13
+    [long-2a73a90e6d-l32-u025] foundation: ok=True time=195.8s tools=12
+    [long-2a73a90e6d-l32-u029] foundation: ok=True time=200.0s tools=15
+    [long-2a73a90e6d-l32-u017] foundation: ok=True time=204.7s tools=14
+    [long-2a73a90e6d-l32-u000] foundation: ok=True time=207.8s tools=17
+    [long-2a73a90e6d-l32-u006] foundation: ok=True time=208.0s tools=16
+    [long-2a73a90e6d-l32-u019] foundation: ok=True time=208.2s tools=13
+    [long-2a73a90e6d-l32-u027] foundation: ok=True time=214.3s tools=13
+    [long-2a73a90e6d-l32-u010] foundation: ok=True time=214.3s tools=16
+    [long-2a73a90e6d-l32-u005] foundation: ok=True time=217.4s tools=18
+    [long-2a73a90e6d-l32-u011] foundation: ok=True time=218.1s tools=14
+    [long-2a73a90e6d-l32-u007] foundation: ok=True time=218.2s tools=13
+    [long-2a73a90e6d-l32-u028] foundation: ok=True time=224.1s tools=12
+    [long-2a73a90e6d-l32-u004] foundation: ok=True time=227.3s tools=19
+    [long-2a73a90e6d-l32-u014] foundation: ok=True time=230.8s tools=14
+    [long-2a73a90e6d-l32-u012] foundation: ok=True time=233.3s tools=16
+    [long-2a73a90e6d-l32-u016] foundation: ok=True time=233.4s tools=13
+    [long-2a73a90e6d-l32-u009] foundation: ok=True time=243.5s tools=12
+    [long-2a73a90e6d-l32-u026] foundation: ok=True time=245.9s tools=14
+    [long-2a73a90e6d-l32-u020] foundation: ok=True time=256.9s tools=19
+    [long-2a73a90e6d-l32-u018] final-qa: ok=True time=91.0s tools=14
+    [long-2a73a90e6d-l32-u015] foundation: ok=True time=271.6s tools=20
+    [long-2a73a90e6d-l32-u021] final-qa: ok=True time=114.9s tools=16
+    [long-2a73a90e6d-l32-u002] final-qa: ok=True time=114.0s tools=16
+    [long-2a73a90e6d-l32-u025] final-qa: ok=True time=99.3s tools=17
+    [long-2a73a90e6d-l32-u000] final-qa: ok=True time=93.2s tools=13
+    [long-2a73a90e6d-l32-u017] final-qa: ok=True time=98.3s tools=13
+    [long-2a73a90e6d-l32-u029] final-qa: ok=True time=104.9s tools=15
+    [long-2a73a90e6d-l32-u030] final-qa: ok=True time=115.3s tools=14
+    [long-2a73a90e6d-l32-u007] final-qa: ok=True time=92.7s tools=12
+    [long-2a73a90e6d-l32-u006] final-qa: ok=True time=103.3s tools=14
+    [long-2a73a90e6d-l32-u011] final-qa: ok=True time=94.8s tools=14
+    [long-2a73a90e6d-l32-u003] final-qa: ok=True time=120.3s tools=15
+    [long-2a73a90e6d-l32-u019] final-qa: ok=True time=106.6s tools=14
+    [long-2a73a90e6d-l32-u010] final-qa: ok=True time=102.4s tools=14
+    [long-2a73a90e6d-l32-u023] final-qa: ok=True time=127.9s tools=16
+    [long-2a73a90e6d-l32-u001] final-qa: ok=True time=134.8s tools=21
+    [long-2a73a90e6d-l32-u013] final-qa: ok=True time=131.7s tools=17
+    [long-2a73a90e6d-l32-u014] final-qa: ok=True time=96.4s tools=13
+    [long-2a73a90e6d-l32-u027] final-qa: ok=True time=113.3s tools=11
+    [long-2a73a90e6d-l32-u009] final-qa: ok=True time=91.0s tools=10
+    [long-2a73a90e6d-l32-u004] final-qa: ok=True time=107.8s tools=13
+    [long-2a73a90e6d-l32-u012] final-qa: ok=True time=102.7s tools=14
+    [long-2a73a90e6d-l32-u005] final-qa: ok=True time=129.5s tools=15
+    [long-2a73a90e6d-l32-u016] final-qa: ok=True time=114.4s tools=12
+    [long-2a73a90e6d-l32-u026] final-qa: ok=True time=107.2s tools=13
+    [long-2a73a90e6d-l32-u020] final-qa: ok=True time=102.8s tools=12
+    [long-2a73a90e6d-l32-u015] final-qa: ok=True time=124.3s tools=17
+    [long-2a73a90e6d-l32-u028] final-qa: ok=True time=185.1s tools=12
+    [long-2a73a90e6d-l32-u031] foundation: ok=True time=435.7s tools=13
+    [long-2a73a90e6d-l32-u024] foundation: ok=True time=436.3s tools=31
+    [long-2a73a90e6d-l32-u008] foundation: ok=True time=504.4s tools=15
+    [long-2a73a90e6d-l32-u022] foundation: ok=True time=508.3s tools=49
+    [long-2a73a90e6d-l32-u031] final-qa: ok=True time=137.1s tools=11
+    [long-2a73a90e6d-l32-u024] final-qa: ok=True time=139.0s tools=19
+    [long-2a73a90e6d-l32-u008] final-qa: ok=True time=115.4s tools=17
+    [long-2a73a90e6d-l32-u022] final-qa: ok=True time=124.7s tools=13
+  level  32: agent_ok=32/32 p50=324.4s p90=556.5s max=633.0s
+    artifacts=32/32 end_to_end=32/32
+session stopped
+
+results: results/load_test_scale40_long_l32_20260815.json

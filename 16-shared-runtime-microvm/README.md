@@ -5,13 +5,16 @@ AgentCore Runtime session** and measures short and long Claude Agent workloads.
 It uses `InvokeAgentRuntimeCommand`—not SSM, EC2, ASG, or a managed-host
 implementation detail—to sample the active container and verify long-run files.
 
-> Status: a real AWS deployment and billable validation were completed on
-> 2026-08-14. The final isolation smoke passed 26/26 checks, short workloads
-> passed 14/14 requests at 2/4/8 true concurrency, and two-phase long workloads
-> passed 15/15 deterministic end-to-end verifications at 1/2/4/8 concurrency.
-> The dedicated test Runtime is removed after validation; the ECR image is
-> retained. See the Chinese [`results/REPORT.md`](results/REPORT.md) for raw
-> filenames, resource data, evidence limits, and cleanup confirmation.
+> Status: the live AWS test matrix covers short workloads at
+> 2/4/8/12/16/24/32/40 true concurrency (**138/138 succeeded**) and two-phase
+> long workloads at 1/2/4/8/12/16/24/32/40. Long levels 1–32 completed
+> **99/99 deterministic end-to-end verifications**; level 40 recorded 0/40
+> end-to-end successes because every stream missed its final complete event and
+> monitoring became unavailable. The report recommends no more than 24 active
+> long-running agents for operating headroom; 32 is a tested edge, not a routine
+> target. All dedicated test Runtimes and sessions were stopped; the ECR image
+> was retained. See the Chinese [`results/REPORT.md`](results/REPORT.md) for the
+> unified tables, raw filenames, resource data, limits, and cleanup evidence.
 
 ## What this demo proves—and what it does not
 
@@ -345,7 +348,7 @@ uvx --from pyright==1.1.411 pyright
 
 These checks validate code, parsers, mocked event streams, isolation paths,
 monitor CSV statistics, atomic writes, and the six-file verifier. The final
-2026-08-14 gate passed **45/45 unit tests**, Ruff check/format, Pyright with zero
+2026-08-15 final gate passed **45/45 unit tests**, Ruff check/format, Pyright with zero
 errors or warnings, shell syntax, all three CLI help paths, server import, and
 `git diff --check`. Local checks alone do not establish cloud capacity; the live
 AWS evidence and its limits are recorded in `results/REPORT.md`.

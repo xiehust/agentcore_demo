@@ -1,0 +1,33 @@
+{
+  "runtimeId": "shared_runtime_microvm-oGddGiDWRD",
+  "runtimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_microvm-oGddGiDWRD",
+  "region": "us-west-2",
+  "deleteRequestStatus": "DELETING",
+  "deletePollingStartedAt": "2026-08-15T05:58:42Z",
+  "deleteConfirmedAt": "2026-08-15T06:04:14Z",
+  "getAfterDelete": {
+    "error": "ResourceNotFoundException",
+    "deleted": true
+  },
+  "listAfterDelete": [],
+  "localRuntimeConfigRemoved": true,
+  "recordedSessions": {
+    "total": 10,
+    "stopSuccess": 10,
+    "stopHttp200": 10,
+    "monitorCleanupSuccess": 9,
+    "monitorCleanupFailure": [
+      "shared-long-6747adf21b-416344a218ad4f86ac69e86e1434e9b3"
+    ],
+    "monitorFailureReason": "long level 40 capacity failure; command exit code 1"
+  },
+  "ecrImage": {
+    "repositoryName": "launchpad-agents",
+    "imageTag": "shared-runtime-microvm-v1",
+    "imageDigest": "sha256:ca626ff6df75493fbac6d1c7f47eaeca546051d55776fcfef22cc21251cb76c9",
+    "imageStatus": "ACTIVE",
+    "imageSizeInBytes": 266682540,
+    "retained": true
+  },
+  "otherResourcesModified": false
+}
