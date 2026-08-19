@@ -1,0 +1,47 @@
+{
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/my_instances_agent-EAjRkZFB9z",
+  "qualifier": "DEFAULT",
+  "region": "us-west-2",
+  "capacity_provider_id": "capacity_provider_arm_kb-FQtDNVGq1t",
+  "runtime_session_id": "coldstart-13c3982df8fe4854b06dbc9a654e928d",
+  "started_at": "2026-08-12T08:57:56.798061+00:00",
+  "payload": {
+    "prompt": "Reply with exactly: cold-start-ok"
+  },
+  "capacity_before": {
+    "asg_name": "agentcore-managed-instances-capacity_provider_arm_kb-FQtDNVGq1t",
+    "min_size": 0,
+    "desired_capacity": 0,
+    "asg_instances": [],
+    "ec2_instances": [],
+    "is_scaled_to_zero": true
+  },
+  "measurement": {
+    "request_to_headers_ms": 53167.9,
+    "request_to_first_body_byte_ms": 56576.6,
+    "request_to_full_body_ms": 56763.6,
+    "body_stream_ms": 3595.7
+  },
+  "success": true,
+  "status_code": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "response_runtime_session_id": "coldstart-13c3982df8fe4854b06dbc9a654e928d",
+  "response_body": "data: {\"event\": \"delta\", \"text\": \"c\"}\n\ndata: {\"event\": \"delta\", \"text\": \"old\"}\n\ndata: {\"event\": \"delta\", \"text\": \"-start-\"}\n\ndata: {\"event\": \"delta\", \"text\": \"ok\"}\n\ndata: {\"event\": \"complete\", \"result\": \"cold-start-ok\", \"usage\": {\"input_tokens\": 2, \"cache_creation_input_tokens\": 22009, \"cache_read_input_tokens\": 0, \"output_tokens\": 9, \"server_tool_use\": {\"web_search_requests\": 0, \"web_fetch_requests\": 0}, \"service_tier\": \"standard\", \"cache_creation\": {\"ephemeral_1h_input_tokens\": 0, \"ephemeral_5m_input_tokens\": 22009}, \"inference_geo\": \"\", \"iterations\": [], \"speed\": \"standard\", \"duration_ms\": 1919, \"num_turns\": 1, \"total_cost_usd\": 0.08455575}}\n\n",
+  "response_bytes": 654,
+  "capacity_after": {
+    "asg_name": "agentcore-managed-instances-capacity_provider_arm_kb-FQtDNVGq1t",
+    "min_size": 0,
+    "desired_capacity": 1,
+    "asg_instances": [
+      {
+        "instance_id": "i-04a90673f3e8c8a76",
+        "lifecycle_state": "InService",
+        "health_status": "Healthy"
+      }
+    ],
+    "ec2_instances": [],
+    "is_scaled_to_zero": false
+  },
+  "session_stop_requested": true,
+  "finished_at": "2026-08-12T08:58:55.535997+00:00"
+}

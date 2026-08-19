@@ -98,6 +98,22 @@ Runtime lifecycle、provider lifecycle、托管 ASG replacement 和逻辑 sessio
 
 若以后平台或镜像改变，应先通过 `InvokeAgentRuntimeCommand` 重测最小 `unshare`；不要把 SSM/OCI 内部配置修改当作受支持的修复。
 
+#### 路线 B 变体：Claude Code sandbox runtime（`@anthropic-ai/sandbox-runtime`）[当前实测]
+
+**结论：不可用；它就是路线 B 的一个具体实现，受同一 userns 硬阻断。**
+
+[Claude Code 官方文档](https://code.claude.com/docs/en/sandbox-environments#sandbox-runtime) 的 sandbox runtime 模式在 Linux 上依赖 **bubblewrap + socat**（macOS 用 Seatbelt），将整个 agent 进程包进无特权 userns 沙箱。2026-08-17 UTC 在 fresh session `srt-probe-20260817T135846Z-0b7d5e9f`（Runtime v5、`shared-runtime-v1` 镜像）经 `InvokeAgentRuntimeCommand` 复验：
+
+| 依赖 | 实测结果 | 性质 |
+|---|---|---|
+| `bwrap`/`socat`/`rg` 二进制 | 全部缺失（`node`/`npx` 存在） | 软阻断，可改镜像补装 |
+| 无特权 userns：`unshare -Ur true` | `EPERM`（exit 1；`max_user_namespaces=2147483647` 未清零） | **硬阻断**，与 08-13 结果一致 |
+| userns 内 tmpfs mount | `EPERM`（userns 创建即失败） | 硬阻断 |
+
+bwrap 在无 userns 时的替代路径是 setuid-root helper，而本容器命令进程 capabilities/bounding set 全零（见 2.2），同样不可行。因此补装二进制无意义，阻断在平台层。探测脚本存于 [`scripts/probe_sandbox_runtime.py`](scripts/probe_sandbox_runtime.py)，遵循第 5 节的 supported 复验模式（新 session + warmup + command probe + `StopRuntimeSession`，本次 stop HTTP 200、session ID 匹配）。
+
+即使未来平台放行 userns 使其可运行，也需注意其定位：官方文档将其标注为 **beta research preview**，提供的是进程级文件写入/网络域名围栏（defense in depth），不覆盖同 session 共享的 IAM credentials、cgroup 资源、网络栈等维度——在本文威胁模型下仍不能升级为租户隔离边界，结论与路线 B 总评一致。
+
 ### 路线 C：托管宿主上的 sibling container
 
 **结论：仅可作为高风险、非 AgentCore 托管契约的实验，不是“唯一活路”，也不能宣称获得 AgentCore 租户隔离。**
@@ -211,7 +227,7 @@ finally:
 
 ## 6. 限制
 
-- 当前结论只覆盖 Runtime v5、image `launchpad-agents:shared-runtime-v1` 的一次 fresh session；部署、镜像或服务更新后需复验。
+- 当前结论覆盖 Runtime v5、image `launchpad-agents:shared-runtime-v1` 的两次 fresh session 探测（2026-08-13 通用隔离探测、2026-08-17 sandbox-runtime 依赖探测）；部署、镜像或服务更新后需复验。
 - command probe 观察的是官方命令执行进程。结合旧 OCI 观察可高置信判断 A/B 当前失败，但没有在应用子进程内增加调试代码。
 - 未探测 seccomp 规则内容、cgroup 配置、设备、网络、credentials、宿主路径或 container runtime；也未执行漏洞利用。
 - `StopRuntimeSession` HTTP 200 且响应 session ID 匹配，是已安装 SDK/API model 当前能提供的清理确认；其 Runtime data-plane model 未暴露 get/list/status 操作，且再次 invoke 可能重新激活逻辑 session 并创建 compute，故没有用 re-invoke 验证。
