@@ -75,14 +75,7 @@ frozen in `uv.lock`. In particular, `boto3==1.42.59` contains
 
 ## Architecture
 
-```text
-alice ─┐  runtimeUserId=alice                    one active Runtime session
-bob   ─┼─ InvokeAgentRuntime ─────────────────► dedicated AgentCore microVM
-carol ─┘  runtimeSessionId=<same random ID>       ├─ FastAPI process
-                                                  ├─ /tmp/agentcore-users/*
-operator ─ InvokeAgentRuntimeCommand ────────────► ├─ /proc + cgroup sampler
-                                                  └─ deterministic verifier
-```
+[![Shared AgentCore Runtime session architecture](assets/architecture.png)](assets/architecture.svg)
 
 The command API operates in the same active session filesystem and environment
 as the app. It does **not** implicitly evaluate shell syntax: code-owned scripts
