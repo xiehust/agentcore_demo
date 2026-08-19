@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-labelledby="title desc">
+  <title id="title">共享 Runtime Session 多用户架构</title>
+  <desc id="desc">alice、bob、carol 通过 InvokeAgentRuntime 使用固定共享 runtimeSessionId，并携带各自真实用户身份，路由到 c7g.large EC2 实例中的共享 Agent 容器；容器运行 FastAPI、用户工作区与锁、Claude Agent SDK，并挂载 50G EBS 到 /mnt/scratch。</desc>
+  <style>
+    text { font-family: 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0; }
+    .title { fill: #111827; font-size: 22px; font-weight: 700; }
+    .subtitle { fill: #6b7280; font-size: 13px; }
+    .section { fill: #374151; font-size: 12px; font-weight: 700; }
+    .node-title { fill: #111827; font-size: 15px; font-weight: 700; }
+    .body { fill: #374151; font-size: 13px; }
+    .mono { fill: #374151; font-family: "Noto Sans Mono CJK SC", "SFMono-Regular", Consolas, monospace; font-size: 12px; }
+    .small { fill: #6b7280; font-size: 12px; }
+    .badge { fill: #ffffff; font-size: 10px; font-weight: 700; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#111827" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="720" fill="#ffffff"/>
+  <text x="40" y="40" class="title">共享 Runtime Session 多用户架构</text>
+  <text x="40" y="65" class="subtitle">一个固定共享会话承载多个真实用户，容器内按用户隔离工作区与并发锁</text>
+
+  <!-- 调用方 -->
+  <rect x="40" y="94" width="270" height="540" rx="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.2" stroke-dasharray="6,4"/>
+  <text x="56" y="120" class="section">调用方</text>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="142" width="222" height="122" rx="8" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <circle cx="92" cy="173" r="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <path d="M78,211 Q78,187 92,187 Q106,187 106,211" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <text x="124" y="171" class="node-title">用户 alice</text>
+    <text x="124" y="193" class="small">调用 InvokeAgentRuntime</text>
+    <text x="78" y="229" class="mono">runtimeUserId = alice</text>
+    <text x="78" y="249" class="mono">payload.user_id = alice</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="303" width="222" height="122" rx="8" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <circle cx="92" cy="334" r="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <path d="M78,372 Q78,348 92,348 Q106,348 106,372" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <text x="124" y="332" class="node-title">用户 bob</text>
+    <text x="124" y="354" class="small">调用 InvokeAgentRuntime</text>
+    <text x="78" y="390" class="mono">runtimeUserId = bob</text>
+    <text x="78" y="410" class="mono">payload.user_id = bob</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="464" width="222" height="122" rx="8" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <circle cx="92" cy="495" r="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <path d="M78,533 Q78,509 92,509 Q106,509 106,533" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <text x="124" y="493" class="node-title">用户 carol</text>
+    <text x="124" y="515" class="small">调用 InvokeAgentRuntime</text>
+    <text x="78" y="551" class="mono">runtimeUserId = carol</text>
+    <text x="78" y="571" class="mono">payload.user_id = carol</text>
+  </g>
+
+  <!-- 用户请求汇入共享会话 -->
+  <path d="M286,203 H330 V266 H366" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <path d="M286,364 H366" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <path d="M286,525 H330 V462 H366" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+  <!-- AgentCore 路由与固定会话 -->
+  <g filter="url(#shadow)">
+    <rect x="366" y="150" width="278" height="428" rx="8" fill="#ffffff" stroke="#fdba74" stroke-width="1.8"/>
+    <rect x="388" y="176" width="44" height="44" rx="8" fill="#ff9900"/>
+    <text x="410" y="203" text-anchor="middle" class="badge">AWS</text>
+    <text x="448" y="193" class="node-title">AgentCore Runtime 路由</text>
+    <text x="448" y="214" class="small">API 请求入口</text>
+    <rect x="390" y="244" width="230" height="58" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.2"/>
+    <text x="505" y="268" text-anchor="middle" class="small">每位用户调用</text>
+    <text x="505" y="289" text-anchor="middle" class="mono" style="font-weight:700; fill:#9a3412">InvokeAgentRuntime</text>
+    <rect x="390" y="326" width="230" height="104" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <text x="505" y="353" text-anchor="middle" class="section" style="fill:#1d4ed8">固定共享会话</text>
+    <text x="505" y="380" text-anchor="middle" class="mono">runtimeSessionId</text>
+    <text x="505" y="406" text-anchor="middle" class="body" style="font-weight:700">固定共享值</text>
+    <rect x="390" y="454" width="230" height="98" rx="8" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1.2"/>
+    <text x="505" y="480" text-anchor="middle" class="section" style="fill:#0f766e">真实用户身份</text>
+    <text x="505" y="505" text-anchor="middle" class="mono">runtimeUserId</text>
+    <text x="505" y="527" text-anchor="middle" class="mono">payload.user_id</text>
+    <text x="505" y="546" text-anchor="middle" class="small">均使用各自真实用户 ID</text>
+  </g>
+
+  <!-- 路由到共享 Agent 容器 -->
+  <path d="M644,364 H718" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+
+  <!-- EC2 Capacity Provider 实例 -->
+  <rect x="684" y="94" width="476" height="540" rx="8" fill="#fffbeb" fill-opacity="0.55" stroke="#f59e0b" stroke-width="1.4" stroke-dasharray="7,4"/>
+  <g transform="translate(710,111)">
+    <rect x="0" y="0" width="42" height="40" rx="6" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.4"/>
+    <rect x="8" y="8" width="26" height="7" rx="2" fill="#f59e0b"/>
+    <rect x="8" y="18" width="26" height="7" rx="2" fill="#f59e0b"/>
+    <rect x="8" y="28" width="26" height="4" rx="2" fill="#f59e0b"/>
+  </g>
+  <text x="766" y="127" class="node-title">EC2 Capacity Provider 实例</text>
+  <text x="766" y="149" class="small">c7g.large · 2C / 4 GiB</text>
+
+  <!-- 共享 Agent 容器 -->
+  <g filter="url(#shadow)">
+    <rect x="718" y="174" width="408" height="330" rx="8" fill="#ffffff" stroke="#60a5fa" stroke-width="1.8"/>
+    <rect x="742" y="196" width="46" height="38" rx="7" fill="#2496ed"/>
+    <text x="765" y="219" text-anchor="middle" class="badge">CTR</text>
+    <text x="804" y="211" class="node-title">Agent 容器</text>
+    <text x="804" y="232" class="small">共享 session</text>
+
+    <rect x="746" y="258" width="352" height="62" rx="8" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1.2"/>
+    <circle cx="778" cy="289" r="18" fill="#009688"/>
+    <text x="778" y="293" text-anchor="middle" class="badge">API</text>
+    <text x="810" y="286" class="node-title">FastAPI</text>
+    <text x="810" y="306" class="small">async · concurrent</text>
+
+    <rect x="746" y="338" width="352" height="62" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.2"/>
+    <path d="M762,357 H778 L784,363 H798 V386 H762 Z" fill="#fdba74" stroke="#ea580c" stroke-width="1.2"/>
+    <rect x="789" y="370" width="13" height="12" rx="2" fill="#ffffff" stroke="#9a3412" stroke-width="1.1"/>
+    <path d="M792,370 V366 A4,4 0 0 1 800,366 V370" fill="none" stroke="#9a3412" stroke-width="1.1"/>
+    <text x="818" y="366" class="node-title">每用户工作区 + 锁</text>
+    <text x="818" y="386" class="small">独立目录 · 同用户串行</text>
+
+    <rect x="746" y="418" width="352" height="62" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width="1.2"/>
+    <circle cx="778" cy="449" r="18" fill="#d97757"/>
+    <text x="778" y="453" text-anchor="middle" class="badge" style="font-size:8px">Claude</text>
+    <text x="810" y="446" class="node-title">Claude Agent SDK</text>
+    <text x="810" y="466" class="small">按用户维护 Agent 会话</text>
+  </g>
+
+  <!-- EBS 挂载 -->
+  <path d="M922,504 V538" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <rect x="940" y="511" width="146" height="24" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="1013" y="528" text-anchor="middle" class="small" style="fill:#047857">挂载 /mnt/scratch</text>
+  <g filter="url(#shadow)">
+    <rect x="770" y="546" width="304" height="62" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.4"/>
+    <ellipse cx="804" cy="562" rx="20" ry="7" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.2"/>
+    <rect x="784" y="562" width="40" height="24" fill="#bbf7d0"/>
+    <line x1="784" y1="562" x2="784" y2="586" stroke="#16a34a" stroke-width="1.2"/>
+    <line x1="824" y1="562" x2="824" y2="586" stroke="#16a34a" stroke-width="1.2"/>
+    <ellipse cx="804" cy="586" rx="20" ry="7" fill="#86efac" stroke="#16a34a" stroke-width="1.2"/>
+    <text x="842" y="570" class="node-title">50G EBS</text>
+    <text x="842" y="592" class="mono">/mnt/scratch</text>
+  </g>
+
+  <!-- 图例 -->
+  <g transform="translate(40,674)">
+    <line x1="0" y1="0" x2="34" y2="0" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <text x="44" y="5" class="small">Runtime 请求</text>
+    <line x1="160" y1="0" x2="194" y2="0" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+    <text x="204" y="5" class="small">文件系统挂载</text>
+  </g>
+</svg>

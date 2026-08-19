@@ -51,18 +51,7 @@ AgentCore Runtime 按 `runtimeSessionId` 路由：相同 session ID 的请求会
 
 本 demo 把 session 当作"共享算力池"：
 
-```text
-user alice ─┐                                      ┌───────────────────────────────┐
-user bob  ──┼── InvokeAgentRuntime ──────────────► │  EC2 (c7g.large, 2C / 4 GiB)   │
-user carol ─┘   runtimeSessionId = 固定共享值       │  ┌─────────────────────────┐  │
-                runtimeUserId    = 真实用户 ID      │  │ Agent 容器 (共享 session) │  │
-                payload.user_id  = 真实用户 ID      │  │  FastAPI (async, 并发)    │  │
-                                                   │  │  per-user 工作区 + 锁     │  │
-                                                   │  │  Claude Agent SDK        │  │
-                                                   │  └─────────────────────────┘  │
-                                                   │  /mnt/scratch (50G EBS)       │
-                                                   └───────────────────────────────┘
-```
+[![共享 Runtime Session 多用户架构](assets/shared-runtime-architecture.png)](assets/shared-runtime-architecture.svg)
 
 ## 2. 用户身份传递
 
