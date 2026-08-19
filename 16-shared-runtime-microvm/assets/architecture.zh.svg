@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="title desc">
+  <title id="title">共享 AgentCore Runtime session 架构</title>
+  <desc id="desc">alice、bob 和 carol 使用不同的 runtimeUserId 与相同的 runtimeSessionId 调用一个 Runtime session。操作人员通过 Runtime 命令 API 访问同一台专用 microVM，以及共享的文件系统和环境。</desc>
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', SimHei, sans-serif; letter-spacing: 0; }
+    .layer { fill: #6b7280; font-size: 12px; font-weight: 700; }
+    .title { fill: #111827; font-size: 24px; font-weight: 700; }
+    .subtitle { fill: #6b7280; font-size: 13px; }
+    .node-title { fill: #111827; font-size: 14px; font-weight: 700; }
+    .node-subtitle { fill: #6b7280; font-size: 12px; }
+    .small-label { fill: #374151; font-size: 12px; font-weight: 600; }
+    .code-label { fill: #374151; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/>
+    </marker>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#111827" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text x="40" y="42" class="title">一个共享 Runtime session，一台专用 microVM</text>
+  <text x="40" y="66" class="subtitle">应用调用与操作命令汇入同一个活动 Runtime session 的文件系统和环境。</text>
+  <text x="40" y="112" class="layer">调用方</text>
+  <text x="440" y="112" class="layer">Runtime session 路由</text>
+  <text x="755" y="112" class="layer">专用执行环境</text>
+  <!-- Cooperative application users -->
+  <g>
+    <rect x="40" y="145" width="240" height="56" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <circle cx="70" cy="165" r="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <path d="M 59 190 Q 59 174 70 174 Q 81 174 81 190" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <text x="96" y="166" class="node-title">alice</text>
+    <text x="96" y="186" class="code-label"><tspan>runtimeUserId</tspan><tspan>=alice</tspan></text>
+  </g>
+  <g>
+    <rect x="40" y="225" width="240" height="56" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <circle cx="70" cy="245" r="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <path d="M 59 270 Q 59 254 70 254 Q 81 254 81 270" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <text x="96" y="246" class="node-title">bob</text>
+    <text x="96" y="266" class="code-label"><tspan>runtimeUserId</tspan><tspan>=bob</tspan></text>
+  </g>
+  <g>
+    <rect x="40" y="305" width="240" height="56" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <circle cx="70" cy="325" r="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <path d="M 59 350 Q 59 334 70 334 Q 81 334 81 350" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <text x="96" y="326" class="node-title">carol</text>
+    <text x="96" y="346" class="code-label"><tspan>runtimeUserId</tspan><tspan>=carol</tspan></text>
+  </g>
+  <!-- User calls merge into one session -->
+  <path d="M 280 173 L 320 173 M 280 253 L 320 253 M 280 333 L 320 333 M 320 173 L 320 333 M 320 253 L 440 253" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="295" y="214" width="141" height="29" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="365.5" y="225" text-anchor="middle" class="small-label">InvokeAgentRuntime</text>
+  <text x="365.5" y="240" text-anchor="middle" class="node-subtitle">同一 runtimeSessionId</text>
+  <!-- Operator -->
+  <g>
+    <rect x="40" y="485" width="240" height="74" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+    <rect x="57" y="503" width="34" height="25" rx="3" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+    <path d="M 64 513 L 70 518 L 64 523 M 74 523 H 84" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="67" y1="533" x2="81" y2="533" stroke="#ea580c" stroke-width="1.5"/>
+    <text x="106" y="513" class="node-title">操作人员</text>
+    <text x="106" y="534" class="node-subtitle">诊断与验证</text>
+  </g>
+  <path d="M 280 522 L 360 522 L 360 351 L 440 351" fill="none" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <rect x="255" y="420" width="179" height="22" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="344.5" y="435" text-anchor="middle" class="small-label">InvokeAgentRuntimeCommand</text>
+  <!-- Active Runtime session -->
+  <g filter="url(#soft-shadow)">
+    <rect x="440" y="145" width="245" height="320" rx="8" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+  </g>
+  <rect x="462" y="168" width="42" height="42" rx="8" fill="#ff9900"/>
+  <text x="483" y="194" text-anchor="middle" fill="#111827" font-size="12" font-weight="700">AWS</text>
+  <text x="520" y="179" class="node-title">一个活动的</text>
+  <text x="520" y="198" class="node-title">Runtime session</text>
+  <line x1="462" y1="225" x2="663" y2="225" stroke="#e5e7eb"/>
+  <text x="462" y="247" class="node-subtitle">本轮所有调用共享</text>
+  <rect x="462" y="263" width="201" height="47" rx="6" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="562.5" y="282" text-anchor="middle" class="small-label">应用 API</text>
+  <text x="562.5" y="299" text-anchor="middle" class="code-label"><tspan>runtimeSessionId</tspan><tspan>=&lt;random&gt;</tspan></text>
+  <rect x="462" y="328" width="201" height="47" rx="6" fill="#fff7ed" stroke="#fed7aa"/>
+  <text x="562.5" y="347" text-anchor="middle" class="small-label">命令 API</text>
+  <text x="562.5" y="364" text-anchor="middle" class="node-subtitle">指向这个活动 Runtime session</text>
+  <rect x="478" y="402" width="174" height="36" rx="18" fill="#f0fdf4" stroke="#bbf7d0"/>
+  <circle cx="500" cy="420" r="8" fill="#16a34a"/>
+  <path d="M 496 420 L 499 423 L 505 416" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="578" y="425" text-anchor="middle" class="small-label">一个活动 Runtime session</text>
+  <!-- Dedicated microVM boundary -->
+  <rect x="735" y="90" width="425" height="540" rx="8" fill="#eff6ff" fill-opacity="0.45" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="7,5"/>
+  <rect x="757" y="117" width="30" height="30" rx="6" fill="#2563eb"/>
+  <rect x="765" y="125" width="14" height="14" rx="2" fill="#ffffff"/>
+  <path d="M 761 121 V 116 M 768 121 V 116 M 775 121 V 116 M 782 121 V 116 M 761 148 V 143 M 768 148 V 143 M 775 148 V 143 M 782 148 V 143" stroke="#2563eb" stroke-width="2"/>
+  <text x="800" y="130" class="node-title">专用 AgentCore microVM</text>
+  <text x="800" y="147" class="node-subtitle">1 个活动 Runtime session 对应 1 台 microVM</text>
+  <rect x="770" y="165" width="355" height="425" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="792" y="190" class="layer">共享 Runtime session 文件系统与环境</text>
+  <!-- App path into FastAPI -->
+  <path d="M 685 286 L 716 286 L 716 232 L 810 232" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="691" y="255" width="94" height="22" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="738" y="270" text-anchor="middle" class="small-label">应用请求</text>
+  <g filter="url(#soft-shadow)">
+    <rect x="810" y="205" width="275" height="70" rx="8" fill="#f0fdfa" stroke="#5eead4" stroke-width="1.5"/>
+  </g>
+  <circle cx="842" cy="240" r="19" fill="#009688"/>
+  <text x="842" y="244" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">API</text>
+  <text x="875" y="235" class="node-title">FastAPI 进程</text>
+  <text x="875" y="254" class="node-subtitle">复用相互协作的用户</text>
+  <!-- Workspace I/O -->
+  <path d="M 947.5 275 L 947.5 310" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="895" y="281" width="105" height="22" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="947.5" y="296" text-anchor="middle" class="small-label">工作区 I/O</text>
+  <rect x="810" y="310" width="275" height="58" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <path d="M 833 324 H 849 L 857 332 H 875 V 354 H 833 Z" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4" stroke-linejoin="round"/>
+  <text x="890" y="336" class="node-title">每用户工作区</text>
+  <text x="890" y="354" class="code-label">/tmp/agentcore-users/*</text>
+  <!-- Command path into same environment -->
+  <path d="M 685 351 H 718 V 420 H 790 M 790 420 H 810 M 790 420 V 506 H 810" fill="none" stroke="#ea580c" stroke-width="2"/>
+  <path d="M 790 420 L 810 420" fill="none" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <path d="M 790 506 L 810 506" fill="none" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <circle cx="790" cy="420" r="4" fill="#ea580c"/>
+  <rect x="697" y="374" width="96" height="36" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="745" y="388" text-anchor="middle" class="small-label">命令</text>
+  <text x="745" y="403" text-anchor="middle" class="small-label">执行</text>
+  <rect x="810" y="391" width="275" height="58" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+  <rect x="832" y="407" width="43" height="27" rx="4" fill="#111827"/>
+  <polyline points="838,421 844,426 838,431" fill="none" stroke="#fb923c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="849" y1="431" x2="867" y2="431" stroke="#fb923c" stroke-width="1.5"/>
+  <text x="890" y="416" class="node-title">/proc + cgroup 采样器</text>
+  <text x="890" y="436" class="node-subtitle">Runtime session 内资源指标</text>
+  <rect x="810" y="477" width="275" height="58" rx="8" fill="#faf5ff" stroke="#d8b4fe" stroke-width="1.5"/>
+  <circle cx="853" cy="506" r="19" fill="#9333ea"/>
+  <path d="M 843 506 L 850 513 L 864 497" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="890" y="502" class="node-title">确定性验证器</text>
+  <text x="890" y="522" class="node-subtitle">读取并验证测试产物</text>
+  <!-- Verifier reads the same workspace files -->
+  <path d="M 1085 506 L 1105 506 L 1105 339 L 1085 339" fill="none" stroke="#ea580c" stroke-width="1.8" marker-end="url(#arrow-orange)"/>
+  <rect x="1058" y="371" width="94" height="22" rx="4" fill="#ffffff" opacity="0.96"/>
+  <text x="1105" y="386" text-anchor="middle" class="small-label">验证文件</text>
+  <rect x="783" y="553" width="329" height="25" rx="12.5" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="947.5" y="570" text-anchor="middle" class="node-subtitle">共享进程信任域、凭证和 OS 用户</text>
+  <!-- Legend -->
+  <g transform="translate(40,650)">
+    <line x1="0" y1="8" x2="34" y2="8" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <text x="44" y="12" class="node-subtitle">应用流与工作区 I/O</text>
+    <line x1="300" y1="8" x2="334" y2="8" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-orange)"/>
+    <text x="344" y="12" class="node-subtitle">操作命令流</text>
+    <rect x="575" y="0" width="18" height="16" rx="3" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <text x="603" y="12" class="node-subtitle">共享 Runtime session 边界</text>
+  </g>
+</svg>

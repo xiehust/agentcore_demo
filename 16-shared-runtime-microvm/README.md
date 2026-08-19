@@ -1,5 +1,7 @@
 # Shared AgentCore microVM Runtime: multi-user concurrency tests
 
+[中文版 / Chinese version](README.zh.md)
+
 This standalone demo places several cooperative application users inside **one
 AgentCore Runtime session** and measures short and long Claude Agent workloads.
 It uses `InvokeAgentRuntimeCommand`—not SSM, EC2, ASG, or a managed-host
