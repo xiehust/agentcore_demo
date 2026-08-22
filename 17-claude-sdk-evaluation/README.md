@@ -9,20 +9,36 @@ session spans directly to the Amazon Bedrock AgentCore `Evaluate` API.
 spans from CloudWatch because that is its default telemetry store; the
 on-demand `Evaluate` API itself accepts caller-provided `sessionSpans`.
 
-## Architecture
+## 架构图
 
-![Claude Agent SDK to Langfuse to AgentCore architecture](assets/architecture.light.svg)
+![Claude Agent SDK、Langfuse 与 AgentCore Evaluator 架构图](assets/architecture.light.svg)
 
-[Open the 1920px PNG](assets/architecture.light.png)
+[查看 1920px PNG 原图](assets/architecture.light.png)
 
-## Evaluation flow
+这张图从左到右分为三个区域，展示了 Agent 执行、可观测数据存储和按需评估之间的边界：
 
-![End-to-end evaluation flow](assets/evaluation-flow.light.svg)
+1. **本地执行区（Local Execution）**：CLI 启动 Claude Agent SDK，并固定使用 `claude-sonnet-5`。Agent 在推理过程中调用本地 MCP 工具 `lookup_product_price`，工具结果再返回 Agent，用于生成最终回答。
+2. **Telemetry 采集与 Langfuse**：OpenInference 自动把 Agent 和工具调用转换为 OpenTelemetry spans，通过 OTLP 发送到 Langfuse。Langfuse 按 session、trace 和 observation 保存完整调用链，并通过 Sessions API 与 Trace API 对外提供查询。
+3. **Langfuse Bridge**：本地桥接代码先从 Langfuse 读回指定 session 和完整 trace，再把 `AGENT`、`TOOL` observations 转换为 AgentCore 支持的 unified session spans。转换后的数据包含 `session.id`、`traceId`、`spanId`、`input.value` 和 `output.value` 等字段。
+4. **AgentCore 评估区**：桥接代码把 `sessionSpans` 直接提交给 AgentCore `Evaluate` API。AgentCore 调用内置 Bedrock evaluator 完成评分，并返回分数、标签和解释；图中的 `0.83` 是本示例真实运行 `Builtin.Helpfulness` 得到的结果。
 
-[Open the 1920px PNG](assets/evaluation-flow.light.png)
+图中的蓝色箭头表示 Agent 请求，紫色箭头表示 telemetry 上报与 trace 回读，绿色箭头表示工具调用和评估数据流。右下角被划掉的 CloudWatch 表示本方案**不会查询 CloudWatch Logs，也不依赖 Transaction Search**；Langfuse 是唯一的 trace 数据来源。
 
-The editable SVG files and their reproducible generator are under `assets/`.
-Regenerate them with:
+## 流程图
+
+![Claude Agent SDK 到 AgentCore Evaluator 的端到端流程图](assets/evaluation-flow.light.svg)
+
+[查看 1920px PNG 原图](assets/evaluation-flow.light.png)
+
+流程图把一次完整评估拆成三个阶段：
+
+1. **Agent 执行（步骤 1–4）**：程序先检查 Claude、Langfuse 和 AWS 配置，然后初始化 Langfuse 与 OpenInference instrumentation，运行 Claude Agent，并执行需要的 MCP 工具调用。
+2. **Trace 写入与回读（步骤 5–8）**：Agent 完成后调用 `langfuse.flush()`，确保 spans 被发送到 Langfuse。随后程序通过 Sessions API 和 Trace API 读取数据，并检查 trace 中是否已经出现 `AGENT` span。由于 Langfuse 写入存在短暂的最终一致性，如果数据尚未就绪，程序会等待 2 秒后继续轮询，而不是转而查询 CloudWatch。
+3. **转换与评估（步骤 9–10）**：程序筛选 `AGENT` 和 `TOOL` observations，按 AgentCore Claude Agent SDK 的 unified telemetry 约定生成 `sessionSpans`，然后调用 `bedrock-agentcore.evaluate()`。评估结果最终写入 `results/evaluation.json`，转换后的原始 spans 写入 `results/session_spans.json`。
+
+整个流程中，Claude 调用、工具调用和 trace 上报发生在前半段；AgentCore 只接收从 Langfuse 读回并转换后的 spans。这样可以保留 AgentCore evaluator 的能力，同时让 Langfuse 承担统一的可观测数据存储与查询职责。
+
+可编辑的 SVG、PNG 和可重复执行的生成脚本均位于 `assets/`。重新生成图片：
 
 ```bash
 python3 assets/generate_diagrams.py
