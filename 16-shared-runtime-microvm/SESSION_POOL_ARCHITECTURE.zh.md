@@ -14,7 +14,11 @@
 
 本文是生产架构建议，不代表已经创建对应 AWS 资源。截至本文编写时，项目测试 Runtime 均已删除，ECR 测试镜像仍保留。
 
-## 2. 核心结论
+## 2. 核心技术原理
+
+该方案的核心技术原理是：用少量 AgentCore Runtime ARN 承载多个 `runtimeSessionId`，将每个 session 作为可弹性伸缩的共享 microVM 执行单元，由无状态 Session Router 基于 DynamoDB 中的用户亲和映射、条件写入和请求租约，把 `userId` 稳定路由到合适的 session，并将单 session 并发硬限制为 10、常态控制在 6–7；长期记忆和会话摘要外部化到 AgentCore Memory、DynamoDB 或 S3，使 microVM 终止、换代或用户迁移后仍能恢复上下文，再根据实际请求到达率、执行时长和队列等待动态扩缩 session，从而在保证并发安全、故障恢复和租户隔离的同时，避免按注册用户数预创建资源，实现更高的资源利用率和经济性。
+
+## 3. 核心结论
 
 不要按照以下方式估算 Runtime 数量：
 
@@ -34,7 +38,7 @@
 
 典型的 5000 用户应用可能只需要约 8 个活跃 session 和 1–2 个 warm session，而不是数百个 Runtime。
 
-## 3. 术语和资源边界
+## 4. 术语和资源边界
 
 ```text
 AgentCore Runtime ARN / Endpoint        控制面部署资源
@@ -45,7 +49,7 @@ AgentCore Runtime ARN / Endpoint        控制面部署资源
         └── runtimeUserId C
 ```
 
-### 3.1 AgentCore Runtime ARN
+### 4.1 AgentCore Runtime ARN
 
 Runtime ARN 是应用部署和版本的控制面资源，不应为每个用户单独创建。通常按照以下维度拆分即可：
 
@@ -54,7 +58,7 @@ Runtime ARN 是应用部署和版本的控制面资源，不应为每个用户�
 - 模型或资源等级；
 - 必须隔离的租户等级。
 
-### 3.2 `runtimeSessionId`
+### 4.2 `runtimeSessionId`
 
 `runtimeSessionId` 是映射池的调度单位。首次调用新 ID 时，AgentCore 会为它准备执行环境。同一个 ID 的当前执行环境可能因为 idle timeout、max lifetime 或健康检查失败而被终止和替换。
 
@@ -64,13 +68,13 @@ Runtime ARN 是应用部署和版本的控制面资源，不应为每个用户�
 - 当前 microVM generation；
 - microVM 内的临时文件和进程状态。
 
-### 3.3 `runtimeUserId`
+### 4.3 `runtimeUserId`
 
 `runtimeUserId` 是应用用户身份，也是本项目中用户 workspace、HOME、Claude metadata 和锁的隔离键。它不是 AgentCore 控制面资源。
 
 `userId → runtimeSessionId` 应被视为有有效期的亲和路由关系，而不是永久资源所有权。
 
-## 4. 已验证的容量和隔离边界
+## 5. 已验证的容量和隔离边界
 
 完整实测数据见 [`results/REPORT.md`](results/REPORT.md)。
 
@@ -102,7 +106,7 @@ Runtime ARN 是应用部署和版本的控制面资源，不应为每个用户�
 
 因此该方案仅适合同一信任域内的用户。互不信任的 tenant 不应共享 session，涉及任意代码或 shell 执行时尤其如此。路径守卫和身份一致性检查是应用层保护，不是强租户隔离边界。
 
-## 5. 推荐生产架构
+## 6. 推荐生产架构
 
 ```text
 Client
@@ -138,11 +142,11 @@ CloudWatch / OpenTelemetry
 
 长时间 SSE 或流式请求建议使用 ALB + ECS/Fargate Router。只有请求时长和响应模式适合时才使用 Lambda，避免入口层超时成为实际瓶颈。
 
-## 6. DynamoDB 数据模型
+## 7. DynamoDB 数据模型
 
 可以使用单表设计，也可以按职责拆表。以下按逻辑实体描述。
 
-### 6.1 UserAffinity
+### 7.1 UserAffinity
 
 ```text
 PK: USER#<tenantId>#<userId>
@@ -173,7 +177,7 @@ appVersion
 
 映射租约应根据用户回访间隔设置。可以从 30–60 分钟开始调优，但必须受 session drain 和应用版本生命周期约束。DynamoDB TTL 只用于异步清理，业务判断必须直接检查 `leaseUntil`。
 
-### 6.2 SessionPool
+### 7.2 SessionPool
 
 ```text
 PK: SESSION#<runtimeSessionId>
@@ -217,7 +221,7 @@ maxAssignedUsers       # 具有亲和映射的用户数，可以大于 10
 - `DRAINING`：不接收新请求，等待现有请求完成；
 - `QUARANTINED`：发生连续缺失 complete event 或其他异常，等待诊断或重建。
 
-### 6.3 RequestLease
+### 7.3 RequestLease
 
 ```text
 PK: SESSION#<runtimeSessionId>
@@ -235,7 +239,7 @@ createdAt
 
 不能依赖 DynamoDB TTL 准时删除租约。槽位判断和回收必须直接使用 `leaseUntil < now`。
 
-### 6.4 Idempotency
+### 7.4 Idempotency
 
 ```text
 PK: REQUEST#<tenantId>#<requestId>
@@ -251,7 +255,7 @@ expiresAt
 
 用于阻止客户端重试、Router 重启或网络重放造成重复 Agent 执行。
 
-### 6.5 池索引和分片
+### 7.5 池索引和分片
 
 ```text
 GSI PK:
@@ -263,9 +267,9 @@ GSI SK:
 
 不要维护单个全局池键。建议使用多个 scheduler shard，从随机 2–3 个 shard 中各取少量候选，再选择负载更低的 session，即 power-of-two choices，避免池索引热键和全表扫描。
 
-## 7. 原子请求分配流程
+## 8. 原子请求分配流程
 
-### 7.1 已有亲和映射
+### 8.1 已有亲和映射
 
 1. 以 `requestId` 抢占 idempotency 记录；
 2. 获取用户级分布式 lease，保证同一用户请求串行；
@@ -326,7 +330,7 @@ async def route(request):
         release_user_lease(user_lease)
 ```
 
-### 7.2 Acquire 事务
+### 8.2 Acquire 事务
 
 概念上的 DynamoDB transaction：
 
@@ -352,7 +356,7 @@ async def route(request):
 
 如果事务竞争失败，选择下一个候选重试，不能先写 affinity 再非原子增加 inflight。
 
-### 7.3 Release 事务
+### 8.3 Release 事务
 
 ```text
 1. Delete RequestLease
@@ -365,7 +369,7 @@ async def route(request):
 
 释放必须验证 `leaseToken`，避免过期请求在槽位已被重新分配后，错误释放其他请求的 lease。重复 release 应保持幂等。
 
-### 7.4 没有可用 session
+### 8.4 没有可用 session
 
 1. 从多个随机 shard 查询候选；
 2. 优先选择版本匹配、未 drain、目标负载以下且不接近换代时间的 session；
@@ -377,7 +381,7 @@ async def route(request):
 
 创建新 session 不等同于创建新的 Runtime ARN。绝大多数扩容只需要在现有 Runtime Endpoint 下使用新的 `runtimeSessionId`。
 
-## 8. 同用户串行和超过 10 槽后的处理
+## 9. 同用户串行和超过 10 槽后的处理
 
 本项目已有每用户 `asyncio.Lock`，但它只能保护单个 FastAPI 进程。生产路由层仍需提供用户级分布式串行语义。
 
@@ -399,7 +403,7 @@ async def route(request):
 
 不应在 session 内无限创建 Claude 子进程，也不应因为瞬时 10/10 就无条件新建大量 warm session。
 
-## 9. 会话状态和迁移
+## 10. 会话状态和迁移
 
 当前实现将 Claude resume/session metadata 保存在 microVM 临时 workspace。microVM 终止或换代后，不能假定这些文件仍然存在，也不能假定 exact Claude SDK resume 可以迁移到其他 session。
 
@@ -428,7 +432,7 @@ App 启动时应生成新的 `bootId`。Router 或响应处理器发现同一 `r
 3. 使用外部持久状态重建用户上下文；
 4. 使用 `affinityVersion` 和 `sessionGeneration` 阻止旧请求写回。
 
-## 10. 生命周期管理
+## 11. 生命周期管理
 
 截至 2026-08-20，官方 microVM 生命周期配置为：
 
@@ -450,7 +454,7 @@ App 启动时应生成新的 `bootId`。Router 或响应处理器发现同一 `r
 
 对于映射到 COLD session 的用户，下一次请求可以触发新 microVM，但必须从外部状态恢复上下文。
 
-## 11. 容量规划
+## 12. 容量规划
 
 设：
 
@@ -473,7 +477,7 @@ A             # 峰值同时执行请求数
 A ≈ 请求到达率 λ × 平均执行时间 W
 ```
 
-### 11.1 5000 用户、60 秒任务示例
+### 12.1 5000 用户、60 秒任务示例
 
 假设：
 
@@ -498,7 +502,7 @@ active sessions = ceil(50 / 7) = 8
 若干仅存在于 DynamoDB 的 COLD 逻辑 session
 ```
 
-### 11.2 5000 用户、360 秒任务示例
+### 12.2 5000 用户、360 秒任务示例
 
 相同请求到达率下：
 
@@ -518,9 +522,9 @@ active sessions = ceil(300 / 7) = 43
 
 注册用户总数只影响 affinity 数据量，不直接决定活跃 microVM 数量。
 
-## 12. 弹性策略
+## 13. 弹性策略
 
-### 12.1 扩容
+### 13.1 扩容
 
 满足任一条件并持续多个观测窗口时扩容：
 
@@ -537,7 +541,7 @@ predictedConcurrent = 当前 inflight + 排队请求 + 短期预测增量
 requiredSessions = ceil(predictedConcurrent / 7)
 ```
 
-### 12.2 缩容
+### 13.2 缩容
 
 session 同时满足以下条件时可缩容：
 
@@ -549,7 +553,7 @@ session 同时满足以下条件时可缩容：
 
 长期状态外部化后，即使仍有 UserAffinity，也可以停止当前 microVM，并将逻辑 session 标记为 COLD。
 
-### 12.3 Warm pool
+### 13.3 Warm pool
 
 初始建议：
 
@@ -559,7 +563,7 @@ warmSessions = max(1–2, predictedActiveSessions × 5%–10%)
 
 最终应根据实际冷启动 p95、idle GB-seconds 成本和交互 SLA 调整。
 
-## 13. 成本模型和经济性
+## 14. 成本模型和经济性
 
 AgentCore microVM 按 active resource consumption 计费，而不是按固定实例规格计费。官方定价说明：
 
@@ -603,23 +607,23 @@ cost per agent task minute
 6. 主动停止无负载 microVM，但只保留满足 SLA 所需的小 warm pool；
 7. 按 tenant、model、session 和任务类型统计成本，而不是只看账户总账单。
 
-## 14. 故障恢复
+## 15. 故障恢复
 
-### 14.1 Lease 漂移
+### 15.1 Lease 漂移
 
 - acquire 后 Router 崩溃：lease 到期后由 reconciler 回收；
 - 长任务：定期 heartbeat 延长 lease；
 - release 重试：使用 `leaseToken` 保证幂等；
 - `inflight` 与有效 lease 数不一致：reconciler 修正计数或隔离 session。
 
-### 14.2 AgentCore session 错误
+### 15.2 AgentCore session 错误
 
 - 409 provisioning/teardown conflict：有限指数退避并加入 jitter；
 - session/environment 终止：切换到 WARMING/COLD 并重新准备；
 - Runtime 或 endpoint 不存在：标记 session 无效，清除旧 affinity 并重新分配；
 - 连续健康检查失败：转入 `QUARANTINED`。
 
-### 14.3 HTTP 200 但没有 complete event
+### 15.3 HTTP 200 但没有 complete event
 
 本项目长程 40 并发已经验证：foundation HTTP 200 不等于 Agent 请求成功。
 
@@ -632,7 +636,7 @@ cost per agent task minute
 - 达到阈值后 drain 或 quarantine；
 - 避免立即在同一高压 session 无限重试。
 
-### 14.4 Generation 和旧请求写回
+### 15.4 Generation 和旧请求写回
 
 所有请求携带：
 
@@ -643,7 +647,7 @@ cost per agent task minute
 
 完成写回时执行条件更新。若用户已迁移或 generation 已变化，旧请求只能写入自己的审计结果，不能覆盖当前对话状态。
 
-## 15. 安全分池策略
+## 16. 安全分池策略
 
 建议 pool key 至少包含：
 
@@ -660,7 +664,7 @@ region + tenantClass + modelId + appVersion
 
 `runtimeUserId` 与 payload `user_id` 的一致性检查、每用户 HOME/workspace、路径守卫和每用户锁必须继续保留。
 
-## 16. 观测指标
+## 17. 观测指标
 
 至少记录：
 
@@ -681,7 +685,7 @@ region + tenantClass + modelId + appVersion
 
 扩缩容应主要使用 queue wait、目标槽位和预测并发，不能只依赖 CPU 百分比。
 
-## 17. 当前 Demo 的生产化改造清单
+## 18. 当前 Demo 的生产化改造清单
 
 1. 增加 Stateless Session Router；
 2. 增加 DynamoDB UserAffinity、SessionPool、RequestLease 和 Idempotency 数据；
@@ -695,7 +699,7 @@ region + tenantClass + modelId + appVersion
 10. 保持当前双向 `ClaudeSDKClient` 实现，不能退回一次性 `query()`，否则 Python function hooks 不执行；
 11. 保持 `InvokeAgentRuntimeCommand` shell 操作显式使用 `/bin/bash -c` 的已验证契约。
 
-## 18. 官方配额和文档基线
+## 19. 官方配额和文档基线
 
 截至 2026-08-20，官方资料显示：
 
@@ -709,7 +713,7 @@ region + tenantClass + modelId + appVersion
 
 对本文示例中的 8–43 个 active session，active session 配额通常不是第一瓶颈。模型 RPM/TPM、Runtime 请求速率、session 创建速率和入口层连接能力需要一起容量规划。
 
-## 19. 参考资料
+## 20. 参考资料
 
 - [Configure Amazon Bedrock AgentCore lifecycle settings](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-lifecycle-settings.html)
 - [Quotas for Amazon Bedrock AgentCore](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits.html)
