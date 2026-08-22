@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="1200" height="850" role="img" aria-labelledby="title desc">
+<title id="title">End-to-end Evaluation Flow</title>
+<desc id="desc">Run the agent, read back from Langfuse, then call AgentCore Evaluate directly</desc>
+<style>text{font-family:'Helvetica Neue',Helvetica,Arial,'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif}</style>
+<defs>
+<marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0,10 3.5,0 7" fill="#2563eb"/>
+</marker>
+<marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0,10 3.5,0 7" fill="#16a34a"/>
+</marker>
+<marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0,10 3.5,0 7" fill="#9333ea"/>
+</marker>
+<marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0,10 3.5,0 7" fill="#ea580c"/>
+</marker>
+<marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0,10 3.5,0 7" fill="#6b7280"/>
+</marker>
+</defs>
+<rect width="1200" height="850" fill="#ffffff"/>
+<text x="40" y="42" fill="#111827" font-size="24" font-weight="700">End-to-end Evaluation Flow</text>
+<text x="40" y="68" fill="#6b7280" font-size="13">Run the agent, read back from Langfuse, then call AgentCore Evaluate directly</text>
+<line x1="40" y1="84" x2="1160" y2="84" stroke="#e5e7eb"/>
+<rect data-graph-role="decoration" x="35" y="108" width="1130" height="128" rx="12" fill="#eff6ff" stroke="#bfdbfe"/>
+<text x="52" y="130" fill="#2563eb" font-size="10" font-weight="700">AGENT EXECUTION</text>
+<rect data-graph-role="decoration" x="35" y="278" width="1130" height="128" rx="12" fill="#faf5ff" stroke="#ddd6fe"/>
+<text x="52" y="300" fill="#7c3aed" font-size="10" font-weight="700">TRACE DELIVERY &amp; READBACK</text>
+<rect data-graph-role="decoration" x="35" y="448" width="1130" height="270" rx="12" fill="#f0fdf4" stroke="#bbf7d0"/>
+<text x="52" y="470" fill="#16a34a" font-size="10" font-weight="700">CONVERSION &amp; EVALUATION</text>
+<g data-graph-role="node">
+<rect x="70" y="142" width="220" height="82" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="96" cy="168" r="15" fill="#2563eb"/>
+<text x="96" y="173" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">1</text>
+<text x="120" y="173" fill="#111827" font-size="14" font-weight="650">Validate config</text>
+<text x="90" y="200" fill="#6b7280" font-size="11.5">keys / endpoint / AWS region</text>
+<text x="272" y="159" text-anchor="end" fill="#2563eb" font-size="9.5" font-weight="700">LOCAL</text>
+</g>
+<g data-graph-role="node">
+<rect x="330" y="142" width="220" height="82" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="356" cy="168" r="15" fill="#2563eb"/>
+<text x="356" y="173" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">2</text>
+<text x="380" y="173" fill="#111827" font-size="14" font-weight="650">Start tracing</text>
+<text x="350" y="200" fill="#6b7280" font-size="11.5">Langfuse + OpenInference</text>
+<text x="532" y="159" text-anchor="end" fill="#2563eb" font-size="9.5" font-weight="700">LOCAL</text>
+</g>
+<g data-graph-role="node">
+<rect x="590" y="142" width="220" height="82" rx="10" fill="#fff7ed" stroke="#D97757" stroke-width="1.5"/>
+<circle cx="616" cy="168" r="15" fill="#D97757"/>
+<text x="616" y="173" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">3</text>
+<text x="640" y="173" fill="#111827" font-size="14" font-weight="650">Run agent</text>
+<text x="610" y="200" fill="#6b7280" font-size="11.5">Claude Agent SDK / Sonnet 5</text>
+<text x="792" y="159" text-anchor="end" fill="#D97757" font-size="9.5" font-weight="700">CLAUDE</text>
+</g>
+<g data-graph-role="node">
+<rect x="850" y="142" width="220" height="82" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<circle cx="876" cy="168" r="15" fill="#16a34a"/>
+<text x="876" y="173" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">4</text>
+<text x="900" y="173" fill="#111827" font-size="14" font-weight="650">Execute MCP tool</text>
+<text x="870" y="200" fill="#6b7280" font-size="11.5">lookup_product_price</text>
+<text x="1052" y="159" text-anchor="end" fill="#16a34a" font-size="9.5" font-weight="700">LOCAL</text>
+</g>
+<g data-graph-role="node">
+<rect x="850" y="312" width="220" height="82" rx="10" fill="#ffffff" stroke="#9333ea" stroke-width="1.5"/>
+<circle cx="876" cy="338" r="15" fill="#9333ea"/>
+<text x="876" y="343" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">5</text>
+<text x="900" y="343" fill="#111827" font-size="14" font-weight="650">Flush spans</text>
+<text x="870" y="370" fill="#6b7280" font-size="11.5">OpenTelemetry export</text>
+<text x="1052" y="329" text-anchor="end" fill="#9333ea" font-size="9.5" font-weight="700">OTEL</text>
+</g>
+<g data-graph-role="node">
+<rect x="590" y="312" width="220" height="82" rx="10" fill="#ffffff" stroke="#6366f1" stroke-width="1.5"/>
+<circle cx="616" cy="338" r="15" fill="#6366f1"/>
+<text x="616" y="343" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">6</text>
+<text x="640" y="343" fill="#111827" font-size="14" font-weight="650">Store trace</text>
+<text x="610" y="370" fill="#6b7280" font-size="11.5">session / trace / observations</text>
+<text x="792" y="329" text-anchor="end" fill="#6366f1" font-size="9.5" font-weight="700">LANGFUSE</text>
+</g>
+<g data-graph-role="node">
+<rect x="330" y="312" width="220" height="82" rx="10" fill="#ffffff" stroke="#6366f1" stroke-width="1.5"/>
+<circle cx="356" cy="338" r="15" fill="#6366f1"/>
+<text x="356" y="343" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">7</text>
+<text x="380" y="343" fill="#111827" font-size="14" font-weight="650">Read session / trace</text>
+<text x="350" y="370" fill="#6b7280" font-size="11.5">Sessions API + Trace API</text>
+<text x="532" y="329" text-anchor="end" fill="#6366f1" font-size="9.5" font-weight="700">LANGFUSE</text>
+</g>
+<g data-graph-role="node">
+<polygon points="180,302 275,353 180,404 85,353" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+<circle cx="180" cy="332" r="14" fill="#ea580c"/>
+<text x="180" y="336" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">8</text>
+<text x="180" y="361" text-anchor="middle" fill="#111827" font-size="13" font-weight="650">Trace ready?</text>
+<text x="180" y="380" text-anchor="middle" fill="#9a3412" font-size="10.5">contains AGENT span</text>
+</g>
+<g data-graph-role="node">
+<rect x="300" y="510" width="220" height="82" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+<circle cx="326" cy="536" r="15" fill="#16a34a"/>
+<text x="326" y="541" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">9</text>
+<text x="350" y="541" fill="#111827" font-size="14" font-weight="650">Convert spans</text>
+<text x="320" y="568" fill="#6b7280" font-size="11.5">AGENT / TOOL unified spans</text>
+<text x="502" y="527" text-anchor="end" fill="#16a34a" font-size="9.5" font-weight="700">LOCAL</text>
+</g>
+<g data-graph-role="node">
+<rect x="650" y="510" width="220" height="82" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+<circle cx="676" cy="536" r="15" fill="#ea580c"/>
+<text x="676" y="541" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">10</text>
+<text x="700" y="541" fill="#111827" font-size="14" font-weight="650">Call Evaluate</text>
+<text x="670" y="568" fill="#6b7280" font-size="11.5">evaluationInput.sessionSpans</text>
+<text x="852" y="527" text-anchor="end" fill="#ea580c" font-size="9.5" font-weight="700">AWS</text>
+</g>
+<g data-graph-role="node">
+<rect x="920" y="510" width="220" height="82" rx="10" fill="#ffffff" stroke="#86efac" stroke-width="1.5"/>
+<circle cx="950" cy="551" r="18" fill="#16a34a"/>
+<text x="950" y="555" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">JSON</text>
+<text x="978" y="546" fill="#111827" font-size="14" font-weight="650">Save result</text>
+<text x="978" y="568" fill="#6b7280" font-size="11.5">score + explanation</text>
+</g>
+<rect x="70" y="625" width="220" height="62" rx="9" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="180" y="650" text-anchor="middle" fill="#9a3412" font-size="13" font-weight="650">Wait 2 seconds</text>
+<text x="180" y="670" text-anchor="middle" fill="#6b7280" font-size="11">Poll Langfuse API again</text>
+<path d="M290 183 H330" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-blue)" data-graph-role="edge"/>
+<path d="M550 183 H590" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-blue)" data-graph-role="edge"/>
+<path d="M810 183 H850" fill="none" stroke="#16a34a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-green)" data-graph-role="edge"/>
+<rect x="792" y="157" width="77" height="20" rx="5" fill="#ffffff" opacity="0.96"/>
+<text x="830" y="171" text-anchor="middle" fill="#16a34a" font-size="11" font-weight="600">tool call</text>
+<path d="M960 224 V270 H960 V312" fill="none" stroke="#9333ea" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-purple)" data-graph-role="edge"/>
+<rect x="973" y="260" width="54" height="20" rx="5" fill="#ffffff" opacity="0.96"/>
+<text x="1000" y="274" text-anchor="middle" fill="#9333ea" font-size="11" font-weight="600">trace</text>
+<path d="M850 353 H810" fill="none" stroke="#9333ea" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-purple)" data-graph-role="edge"/>
+<path d="M590 353 H550" fill="none" stroke="#9333ea" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-purple)" data-graph-role="edge"/>
+<path d="M330 353 H275" fill="none" stroke="#9333ea" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-purple)" data-graph-role="edge"/>
+<path d="M180 404 V445 H410 V510" fill="none" stroke="#16a34a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-green)" data-graph-role="edge"/>
+<rect x="183" y="424" width="54" height="20" rx="5" fill="#ffffff" opacity="0.96"/>
+<text x="210" y="438" text-anchor="middle" fill="#16a34a" font-size="11" font-weight="600">Yes</text>
+<path d="M520 551 H650" fill="none" stroke="#16a34a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-green)" data-graph-role="edge"/>
+<rect x="536" y="524" width="98" height="20" rx="5" fill="#ffffff" opacity="0.96"/>
+<text x="585" y="538" text-anchor="middle" fill="#16a34a" font-size="11" font-weight="600">sessionSpans</text>
+<path d="M870 551 H920" fill="none" stroke="#16a34a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-green)" data-graph-role="edge"/>
+<rect x="867" y="524" width="56" height="20" rx="5" fill="#ffffff" opacity="0.96"/>
+<text x="895" y="538" text-anchor="middle" fill="#16a34a" font-size="11" font-weight="600">result</text>
+<path d="M85 353 H55 V656 H70" fill="none" stroke="#ea580c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-orange)" stroke-dasharray="6,4" data-graph-role="edge"/>
+<rect x="28" y="486" width="54" height="20" rx="5" fill="#ffffff" opacity="0.96"/>
+<text x="55" y="500" text-anchor="middle" fill="#ea580c" font-size="11" font-weight="600">No</text>
+<path d="M290 656 H1165 V430 H440 V394" fill="none" stroke="#ea580c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow-orange)" stroke-dasharray="6,4" data-graph-role="edge"/>
+<rect x="793" y="408" width="54" height="20" rx="5" fill="#ffffff" opacity="0.96"/>
+<text x="820" y="422" text-anchor="middle" fill="#ea580c" font-size="11" font-weight="600">retry</text>
+<g transform="translate(55,758)">
+<rect x="0" y="0" width="1090" height="54" rx="10" fill="#f9fafb" stroke="#e5e7eb"/>
+<circle cx="28" cy="27" r="12" fill="#ffffff" stroke="#9ca3af" stroke-dasharray="3,2"/>
+<line x1="20" y1="19" x2="36" y2="35" stroke="#dc2626" stroke-width="2"/>
+<text x="52" y="24" fill="#111827" font-size="12.5" font-weight="650">CloudWatch is not used</text>
+<text x="52" y="41" fill="#6b7280" font-size="11">No Logs query or Transaction Search; Langfuse is the only trace source</text>
+<text x="1068" y="32" text-anchor="end" fill="#9ca3af" font-size="11">Light / Flat Icon</text>
+</g>
+</svg>
