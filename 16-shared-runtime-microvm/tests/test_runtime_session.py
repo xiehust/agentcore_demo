@@ -19,6 +19,7 @@ from runtime_session import (  # noqa: E402
     RuntimeSession,
     SSEParseError,
     SessionStopError,
+    all_levels_meet_success_floor,
     atomic_write_json,
     cleanup_session,
     finalize_before_session_stop,
@@ -373,6 +374,22 @@ class TestRetryAndStop(unittest.TestCase):
         with self.assertRaises(KeyboardInterrupt):
             finalize_before_session_stop(interrupted_monitor, stop_session)
         self.assertEqual(calls, ["monitor", "stop"])
+
+    def test_success_floor_requires_every_executed_level_to_pass(self):
+        self.assertTrue(
+            all_levels_meet_success_floor(
+                [{"success_rate": 1.0}, {"success_rate": 0.8}], 0.8
+            )
+        )
+        for levels in (
+            [],
+            [{"success_rate": 0.79}],
+            [{"success_rate": None}],
+            [{"success_rate": True}],
+            [{}],
+        ):
+            with self.subTest(levels=levels):
+                self.assertFalse(all_levels_meet_success_floor(levels, 0.8))
 
 
 class TestMonitoringAndCheckpoints(unittest.TestCase):

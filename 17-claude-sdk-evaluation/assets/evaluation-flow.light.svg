@@ -148,8 +148,8 @@
 <rect x="0" y="0" width="1090" height="54" rx="10" fill="#f9fafb" stroke="#e5e7eb"/>
 <circle cx="28" cy="27" r="12" fill="#ffffff" stroke="#9ca3af" stroke-dasharray="3,2"/>
 <line x1="20" y1="19" x2="36" y2="35" stroke="#dc2626" stroke-width="2"/>
-<text x="52" y="24" fill="#111827" font-size="12.5" font-weight="650">CloudWatch is not used</text>
-<text x="52" y="41" fill="#6b7280" font-size="11">No Logs query or Transaction Search; Langfuse is the only trace source</text>
+<text x="52" y="24" fill="#111827" font-size="12.5" font-weight="650">Evaluation path: CloudWatch is not used</text>
+<text x="52" y="41" fill="#6b7280" font-size="11">No Logs query or Transaction Search for Evaluate; the recommendation path is not shown</text>
 <text x="1068" y="32" text-anchor="end" fill="#9ca3af" font-size="11">Light / Flat Icon</text>
 </g>
 </svg>

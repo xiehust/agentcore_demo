@@ -15,9 +15,14 @@ from langfuse import get_client, propagate_attributes
 from openinference.instrumentation.claude_agent_sdk import ClaudeAgentSDKInstrumentor
 
 from . import DEFAULT_MODEL
-from .agent import run_agent
+from .agent import SYSTEM_PROMPT, run_agent
 from .evaluator import evaluate_session_spans
 from .langfuse_bridge import read_session_span_logs
+from .recommendation import (
+    RecommendationFailed,
+    RecommendationTimeout,
+    recommend_system_prompt,
+)
 
 DEFAULT_PROMPT = (
     "Use the catalog tool to find the price of 2 NOTEBOOK items and 3 PEN items, "
@@ -46,6 +51,19 @@ def _default_region() -> str:
         or boto3.Session().region_name
         or "us-west-2"
     )
+
+
+def _trace_source(args: argparse.Namespace) -> dict[str, Any]:
+    """Describe which traces the recommendation actually analyzed."""
+    arn = args.recommendation_batch_evaluation_arn
+    if arn:
+        return {"type": "batchEvaluation", "batch_evaluation_arn": arn}
+    return {"type": "sessionSpans"}
+
+
+def _cloudwatch_used(args: argparse.Namespace) -> bool:
+    """A batch evaluation resolves its sessions from CloudWatch Logs; inline spans do not."""
+    return bool(args.recommendation_batch_evaluation_arn)
 
 
 def _write_json(path: Path, value: Any) -> None:
@@ -96,6 +114,53 @@ async def _run(args: argparse.Namespace) -> dict[str, Any]:
             region=args.region,
         )
 
+    recommendation_result: dict[str, Any] | None = None
+    if args.recommend_system_prompt:
+        try:
+            recommendation_result = recommend_system_prompt(
+                None if args.recommendation_batch_evaluation_arn else session_logs.spans,
+                system_prompt=SYSTEM_PROMPT,
+                evaluator_id=args.recommendation_evaluator,
+                region=args.region,
+                batch_evaluation_arn=args.recommendation_batch_evaluation_arn,
+                timeout_seconds=args.recommendation_timeout,
+                poll_seconds=args.recommendation_poll_interval,
+            )
+        except RecommendationFailed as exc:
+            recommendation_result = {
+                "recommendation_id": exc.recommendation_id,
+                "status": "FAILED",
+                "error_code": exc.error_code,
+                "error_message": exc.error_message,
+                "langfuse_session_id": session_id,
+                "langfuse_trace_id": trace_id,
+                "trace_source": _trace_source(args),
+                "cloudwatch_used": _cloudwatch_used(args),
+            }
+            _write_json(args.recommendation_output, recommendation_result)
+            raise
+        except RecommendationTimeout as exc:
+            recommendation_result = {
+                "recommendation_id": exc.recommendation_id,
+                "status": exc.status,
+                "error_code": "TIMEOUT",
+                "error_message": str(exc),
+                "langfuse_session_id": session_id,
+                "langfuse_trace_id": trace_id,
+                "trace_source": _trace_source(args),
+                "cloudwatch_used": _cloudwatch_used(args),
+            }
+            _write_json(args.recommendation_output, recommendation_result)
+            raise
+        recommendation_result.update(
+            {
+                "langfuse_session_id": session_id,
+                "langfuse_trace_id": trace_id,
+                "cloudwatch_used": _cloudwatch_used(args),
+            }
+        )
+        _write_json(args.recommendation_output, recommendation_result)
+
     result = {
         "model": DEFAULT_MODEL,
         "region": args.region,
@@ -109,7 +174,8 @@ async def _run(args: argparse.Namespace) -> dict[str, Any]:
             span["attributes"]["openinference.span.kind"] for span in session_logs.spans
         ],
         "evaluation_results": evaluation_results,
-        "cloudwatch_used": False,
+        "recommendation": recommendation_result,
+        "cloudwatch_used": _cloudwatch_used(args) if args.recommend_system_prompt else False,
     }
     _write_json(args.output, result)
     return result
@@ -132,6 +198,30 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--spans-output", type=Path, default=Path("results/session_spans.json"))
     parser.add_argument("--output", type=Path, default=Path("results/evaluation.json"))
     parser.add_argument("--skip-evaluation", action="store_true")
+    parser.add_argument(
+        "--recommend-system-prompt",
+        action="store_true",
+        help="Generate an AgentCore system prompt recommendation from the Langfuse spans.",
+    )
+    parser.add_argument(
+        "--recommendation-evaluator",
+        default="Builtin.GoalSuccessRate",
+        help="Single numeric evaluator ID or ARN used as the recommendation reward signal.",
+    )
+    parser.add_argument(
+        "--recommendation-batch-evaluation-arn",
+        help=(
+            "Use a completed AgentCore batch evaluation as the recommendation trace source "
+            "instead of the inline Langfuse spans."
+        ),
+    )
+    parser.add_argument("--recommendation-timeout", type=float, default=900.0)
+    parser.add_argument("--recommendation-poll-interval", type=float, default=15.0)
+    parser.add_argument(
+        "--recommendation-output",
+        type=Path,
+        default=Path("results/recommendation.json"),
+    )
     return parser
 
 

@@ -1,0 +1,27 @@
+[project]
+name = "agentcore-runtimes-3rd-fs"
+version = "0.1.0"
+description = "AgentCore Runtime: third-party file systems, secret-less third-party auth, and operation auditing"
+requires-python = ">=3.10"
+dependencies = [
+    "bedrock-agentcore>=1.22.0",
+    "boto3>=1.42",
+    "httpx>=0.28.1",
+    "strands-agents>=1.54.0",
+]
+
+[project.optional-dependencies]
+# Agent / Identity examples that run inside AgentCore Runtime
+agent = [
+    "strands-agents",
+    "strands-agents-tools",
+    "bedrock-agentcore",
+    "opentelemetry-api",
+    "httpx",
+]
+# GitHub App token broker Lambda
+broker = ["PyJWT[crypto]>=2.8"]
+test = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

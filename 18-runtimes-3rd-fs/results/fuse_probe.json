@@ -1,0 +1,245 @@
+{
+  "probed_at": "2026-09-03T07:23:58.771263+00:00",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-2:434444145045:runtime/ws_probe_agent_9ff4a0-f2MecxATeH",
+  "region": "us-east-2",
+  "session_id": "probe-5cb1fa2c60ae42dea4d0e4f25b7e11d6",
+  "warm_up": {
+    "api_status": 200,
+    "body_preview": "{\"result\": \"Pong! Server is alive as of 2026-09-03T07:24:05 UTC.\\n\"}"
+  },
+  "command": {
+    "api_status": 200,
+    "runtime_session_id": "probe-5cb1fa2c60ae42dea4d0e4f25b7e11d6",
+    "expected_session_id": "probe-5cb1fa2c60ae42dea4d0e4f25b7e11d6",
+    "stderr": "",
+    "content_start_count": 1,
+    "content_stop": {
+      "exitCode": 0,
+      "status": "COMPLETED"
+    },
+    "protocol_errors": [],
+    "stream_exceptions": [],
+    "error": null,
+    "success": true
+  },
+  "summary": {
+    "kernel": "Linux localhost 6.1.161-18.298.amzn2023.aarch64 #1 SMP Fri Feb 13 00:35:04 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux",
+    "runs_as_root": true,
+    "dev_fuse_exists": false,
+    "dev_fuse_openable": null,
+    "kernel_fuse_registered": false,
+    "mknod_fuse_open_error": "OSError: [Errno 19] No such device: '/dev/_probe_fuse'",
+    "kernel_nfs_registered": true,
+    "nfs_mount_helper_present": true,
+    "nfs_client_path_reachable": true,
+    "has_cap_sys_admin": true,
+    "has_cap_mknod": true,
+    "seccomp_mode": "0",
+    "tmpfs_mount_allowed": true,
+    "userns_tmpfs_mount_allowed": true,
+    "fusermount_binary": false,
+    "loadable_modules": false,
+    "verdict": "Mount privilege is present but the guest kernel has NO FUSE driver (not in /proc/filesystems, no loadable modules): third-party FUSE clients cannot run inside the microVM session. Use runtime filesystemConfigurations (session storage / EFS / S3 Files); the kernel NFS client is present, so an in-VPC NFS re-export is a technically possible (unsupported) bridge."
+  },
+  "report": {
+    "uname": {
+      "rc": 0,
+      "out": "Linux localhost 6.1.161-18.298.amzn2023.aarch64 #1 SMP Fri Feb 13 00:35:04 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux",
+      "err": ""
+    },
+    "id": {
+      "rc": 0,
+      "out": "uid=0(root) gid=0(root) groups=0(root)",
+      "err": ""
+    },
+    "proc_status": {
+      "Uid": "0\t0\t0\t0",
+      "Gid": "0\t0\t0\t0",
+      "CapInh": "0000000000000000",
+      "CapPrm": "000001ffffffffff",
+      "CapEff": "000001ffffffffff",
+      "CapBnd": "000001ffffffffff",
+      "CapAmb": "0000000000000000",
+      "NoNewPrivs": "0",
+      "Seccomp": "0",
+      "Seccomp_filters": "0"
+    },
+    "cap_eff_decoded": [
+      "chown",
+      "dac_override",
+      "dac_read_search",
+      "fowner",
+      "fsetid",
+      "kill",
+      "setgid",
+      "setuid",
+      "setpcap",
+      "linux_immutable",
+      "net_bind_service",
+      "net_broadcast",
+      "net_admin",
+      "net_raw",
+      "ipc_lock",
+      "ipc_owner",
+      "sys_module",
+      "sys_rawio",
+      "sys_chroot",
+      "sys_ptrace",
+      "sys_pacct",
+      "sys_admin",
+      "sys_boot",
+      "sys_nice",
+      "sys_resource",
+      "sys_time",
+      "sys_tty_config",
+      "mknod",
+      "lease",
+      "audit_write",
+      "audit_control",
+      "setfcap",
+      "mac_override",
+      "mac_admin",
+      "syslog",
+      "wake_alarm",
+      "block_suspend",
+      "audit_read",
+      "perfmon",
+      "bpf",
+      "checkpoint_restore"
+    ],
+    "cap_bnd_decoded": [
+      "chown",
+      "dac_override",
+      "dac_read_search",
+      "fowner",
+      "fsetid",
+      "kill",
+      "setgid",
+      "setuid",
+      "setpcap",
+      "linux_immutable",
+      "net_bind_service",
+      "net_broadcast",
+      "net_admin",
+      "net_raw",
+      "ipc_lock",
+      "ipc_owner",
+      "sys_module",
+      "sys_rawio",
+      "sys_chroot",
+      "sys_ptrace",
+      "sys_pacct",
+      "sys_admin",
+      "sys_boot",
+      "sys_nice",
+      "sys_resource",
+      "sys_time",
+      "sys_tty_config",
+      "mknod",
+      "lease",
+      "audit_write",
+      "audit_control",
+      "setfcap",
+      "mac_override",
+      "mac_admin",
+      "syslog",
+      "wake_alarm",
+      "block_suspend",
+      "audit_read",
+      "perfmon",
+      "bpf",
+      "checkpoint_restore"
+    ],
+    "dev_fuse_exists": false,
+    "dev_fuse_open": null,
+    "dev_listing": {
+      "rc": 0,
+      "out": "total 4\ndrwxr-xr-x 9 root root        2700 Aug 24 21:46 .\ndrwxr-xr-x 1 root root        4096 Aug 24 21:46 ..\ncrw-r--r-- 1 root root     10, 235 Aug 24 21:46 autofs\ndrwxr-xr-x 2 root root         240 Aug 24 21:46 block\ndrwxr-xr-x 2 root root        2180 Aug 24 21:46 char\ncrw------- 1 root root      5,   1 Aug 24 21:46 console\nlrwxrwxrwx 1 root root          11 Aug 24 21:46 core -> /proc/kcore\ncrw------- 1 root root     10, 123 Aug 24 21:46 cpu_dma_latency\ndrwxr-xr-x 6 root root         120 Aug 24 21:46 disk\nlrwxrwxrwx 1 root root          13 Aug 24 21:46 fd -> /proc/self/fd\ncrw-rw-rw- 1 root root      1,   7 Aug 24 21:46 full\ndrwxr-xr-x 2 root root           0 Aug 24 21:46 hugepages\ncrw------- 1 root root     10, 183 Aug 24 21:46 hwrng\nlrwxrwxrwx 1 root root          12 Aug 24 21:46 initctl -> /run/initctl\ncrw-r--r-- 1 root root      1,  11 Aug 24 21:46 kmsg\nlrwxrwxrwx 1 root root          28 Aug 24 21:46 log -> /run/systemd/journal/dev-log\ncrw-rw---- 1 root disk     10, 237 Aug 24 21:46 loop-control\nbrw-rw---- 1 root disk      7,   0 Aug 24 21:46 loop0\nbrw-rw---- 1 root disk      7,   1 Aug 24 21:46 loop1\nbrw-rw---- 1 root disk      7,   2 Aug 24 21:46 loop2\nbrw-rw---- 1 root disk      7,   3 Aug 24 21:46 loop3\nbrw-rw---- 1 root disk      7,   4 Aug 24 21:46 loop4\nbrw-rw---- 1 root disk      7,   5 Aug 24 21:46 loop5\nbrw-rw---- 1 root disk      7,   6 Aug 24 21:46 loop6\nbrw-rw---- 1 root disk      7,   7 Aug 24 21:46 loop7\ndrwxrwxrwt 2 root root          40 Jan  1  1970 mqueue\ncrw-rw-rw- 1 root root      1,   3 Aug 24 21:46 null\ncrw-r----- 1 root kmem      1,   4 Aug 24 21:46 port\ncrw-rw-rw- 1 root tty       5,   2 Aug 24 21:46 ptmx\ncrw------- 1 root root    249,   0 Aug 24 21:46 ptp0\nlrwxrwxrwx 1 root root           4 Aug 24 21:46 ptp_kvm -> ptp0\ndrwxr-xr-x 2 root root           0 Aug 24 21:46 pts\ncrw-rw-rw- 1 root root      1,   8 Aug 24 21:46 random\nlrwxrwxrwx 1 root root           4 Aug 24 21:46 rtc -> rtc0\ncrw------- 1 root root    251,   0 Aug 24 21:46 rtc0\ndr",
+      "err": ""
+    },
+    "proc_filesystems_has_fuse": false,
+    "proc_filesystems_has_nfs": true,
+    "proc_filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tbdev\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tcpuset\nnodev\tdevtmpfs\nnodev\tbinfmt_misc\nnodev\tdebugfs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\trpc_pipefs\nnodev\tdevpts\n\text3\n\text2\n\text4\n\tsquashfs\nnodev\tnfs\nnodev\tnfs4\nnodev\tautofs\nnodev\toverlay\n\txfs\nnodev\tmqueue\nnodev\tselinuxfs\nnodev\tpstore",
+    "binaries": {
+      "mount": "/usr/bin/mount",
+      "umount": "/usr/bin/umount",
+      "fusermount": "",
+      "fusermount3": "",
+      "unshare": "/usr/bin/unshare",
+      "nsenter": "/usr/bin/nsenter",
+      "s3fs": "",
+      "rclone": "",
+      "sshfs": "",
+      "mount.nfs": "/usr/sbin/mount.nfs",
+      "mount.nfs4": "/usr/sbin/mount.nfs4",
+      "git": "/usr/bin/git",
+      "curl": "/usr/bin/curl"
+    },
+    "mount_tmpfs_attempt": {
+      "rc": 0,
+      "out": "rc=0",
+      "err": ""
+    },
+    "mknod_dev_fuse_attempt": {
+      "rc": 0,
+      "out": "mknod_rc=0\nOSError: [Errno 19] No such device: '/dev/_probe_fuse'",
+      "err": ""
+    },
+    "mount_fuse_type_attempt": {
+      "rc": 0,
+      "out": "mount: /tmp/_fuse_mnt: unknown filesystem type 'fuse'.\nrc=32",
+      "err": ""
+    },
+    "kernel_modules_dir": {
+      "rc": 0,
+      "out": "rc=0",
+      "err": ""
+    },
+    "mount_nfs4_loopback_attempt": {
+      "rc": 0,
+      "out": "mount.nfs4: Connection refused\nrc=32",
+      "err": ""
+    },
+    "unshare_userns_attempt": {
+      "rc": 0,
+      "out": "rc=0",
+      "err": ""
+    },
+    "unshare_userns_mount_attempt": {
+      "rc": 0,
+      "out": "NS_TMPFS_OK\nrc=0",
+      "err": ""
+    },
+    "proc_mounts": {
+      "rc": 0,
+      "out": "/dev/root /rom squashfs ro,relatime,errors=continue 0 0\ndevtmpfs /rom/dev devtmpfs rw,relatime,size=4096k,nr_inodes=1025919,mode=755 0 0\n/dev/vdb /rom/overlay ext4 rw,relatime 0 0\noverlayfs:/overlay/root / overlay rw,noatime,lowerdir=/,upperdir=/overlay/root,workdir=/overlay/work 0 0\nproc /proc proc rw,nosuid,nodev,noexec,relatime 0 0\nsysfs /sys sysfs rw,nosuid,nodev,noexec,relatime 0 0\ndevtmpfs /dev devtmpfs rw,nosuid,size=4096k,nr_inodes=1025919,mode=755 0 0\nsecurityfs /sys/kernel/security securityfs rw,nosuid,nodev,noexec,relatime 0 0\nselinuxfs /sys/fs/selinux selinuxfs rw,nosuid,noexec,relatime 0 0\ntmpfs /dev/shm tmpfs rw,nosuid,nodev 0 0\ndevpts /dev/pts devpts rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000 0 0\ntmpfs /run tmpfs rw,nosuid,nodev,size=1641944k,nr_inodes=819200,mode=755 0 0\ncgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot 0 0\npstore /sys/fs/pstore pstore rw,nosuid,nodev,noexec,relatime 0 0\nbpf /sys/fs/bpf bpf rw,nosuid,nodev,noexec,relatime,mode=700 0 0\nsystemd-1 /proc/sys/fs/binfmt_misc autofs rw,relatime,fd=30,pgrp=1,timeout=0,minproto=5,maxproto=5,direct 0 0\nhugetlbfs /dev/hugepages hugetlbfs rw,relatime,pagesize=2M 0 0\nmqueue /dev/mqueue mqueue rw,nosuid,nodev,noexec,relatime 0 0\ndebugfs /sys/kernel/debug debugfs rw,nosuid,nodev,noexec,relatime 0 0\ntmpfs /tmp tmpfs rw,nosuid,nodev,nr_inodes=1048576 0 0\nramfs /run/credentials/systemd-sysctl.service ramfs ro,nosuid,nodev,noexec,relatime,mode=700 0 0\nramfs /run/credentials/systemd-sysusers.service ramfs ro,nosuid,nodev,noexec,relatime,mode=700 0 0\nramfs /run/credentials/systemd-tmpfiles-setup-dev.service ramfs ro,nosuid,nodev,noexec,relatime,mode=700 0 0\nramfs /run/credentials/systemd-tmpfiles-setup.service ramfs ro,nosuid,nodev,noexec,relatime,mode=700 0 0\nsunrpc /var/lib/nfs/rpc_pipefs rpc_pipefs rw,relatime 0 0",
+      "err": ""
+    },
+    "df": {
+      "rc": 0,
+      "out": "Filesystem               Size  Used Avail Use% Mounted on\noverlayfs:/overlay/root  9.7G  131M  9.1G   2% /\ntmpfs                    4.0G   34M  3.9G   1% /tmp\noverlayfs:/overlay/root  9.7G  131M  9.1G   2% /",
+      "err": ""
+    },
+    "mnt_listing": {
+      "rc": 0,
+      "out": "total 4\ndrwxr-xr-x 2 root root    3 Jan 30  2023 .\ndrwxr-xr-x 1 root root 4096 Aug 24 21:46 ..",
+      "err": ""
+    },
+    "kernel_modules": {
+      "rc": 0,
+      "out": "cat: /proc/modules: No such file or directory",
+      "err": ""
+    },
+    "env_hint": {
+      "rc": 0,
+      "out": "PYENV_HOOK_PATH=<redacted>\n_PYENV_INSTALL_PREFIX=<redacted>\nPYENV_ROOT=<redacted>\nPATH=<redacted>",
+      "err": ""
+    }
+  },
+  "session_cleanup": {
+    "attempted": true,
+    "status_code": 200,
+    "runtime_session_id": "probe-5cb1fa2c60ae42dea4d0e4f25b7e11d6",
+    "success": true
+  }
+}

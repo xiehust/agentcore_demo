@@ -310,7 +310,7 @@ def architecture() -> str:
     )
     lines.append('<g opacity="0.9">')
     lines.append('<rect x="970" y="575" width="160" height="28" rx="7" fill="#f9fafb" stroke="#9ca3af" stroke-dasharray="4,3"/>')
-    lines.append('<text x="1050" y="594" text-anchor="middle" fill="#6b7280" font-size="11">CloudWatch - not on path</text>')
+    lines.append('<text x="1050" y="594" text-anchor="middle" fill="#6b7280" font-size="11">CloudWatch - not on Evaluate path</text>')
     lines.append('<line x1="978" y1="579" x2="1122" y2="599" stroke="#dc2626" stroke-width="1.7"/>')
     lines.append('</g>')
 
@@ -412,8 +412,8 @@ def process_flow() -> str:
     lines.append('<rect x="0" y="0" width="1090" height="54" rx="10" fill="#f9fafb" stroke="#e5e7eb"/>')
     lines.append('<circle cx="28" cy="27" r="12" fill="#ffffff" stroke="#9ca3af" stroke-dasharray="3,2"/>')
     lines.append('<line x1="20" y1="19" x2="36" y2="35" stroke="#dc2626" stroke-width="2"/>')
-    lines.append('<text x="52" y="24" fill="#111827" font-size="12.5" font-weight="650">CloudWatch is not used</text>')
-    lines.append('<text x="52" y="41" fill="#6b7280" font-size="11">No Logs query or Transaction Search; Langfuse is the only trace source</text>')
+    lines.append('<text x="52" y="24" fill="#111827" font-size="12.5" font-weight="650">Evaluation path: CloudWatch is not used</text>')
+    lines.append('<text x="52" y="41" fill="#6b7280" font-size="11">No Logs query or Transaction Search for Evaluate; the recommendation path is not shown</text>')
     lines.append('<text x="1068" y="32" text-anchor="end" fill="#9ca3af" font-size="11">Light / Flat Icon</text>')
     lines.append('</g>')
 

@@ -18,6 +18,7 @@ from typing import Any
 
 from runtime_session import (
     RuntimeSession,
+    all_levels_meet_success_floor,
     atomic_write_json,
     cleanup_session,
     enforce_unique_workspaces,
@@ -727,7 +728,7 @@ def main(argv: list[str] | None = None) -> int:
 
     operational_success = (
         fatal_error is None
-        and bool(levels)
+        and all_levels_meet_success_floor(levels, args.success_floor)
         and all(level.get("verification_available") for level in levels)
         and all(level.get("monitor_available") for level in levels)
         and cleanup["monitor"].get("success")

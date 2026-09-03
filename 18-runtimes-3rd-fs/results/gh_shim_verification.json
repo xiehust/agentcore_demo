@@ -1,0 +1,129 @@
+{
+  "verified_at": "2026-09-03T10:46:45.122813+00:00",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-east-2:434444145045:runtime/gh_shim_demo-LhziV476IR",
+  "region": "us-east-2",
+  "session_id": "probe-648e12332e22426ab8b6855032045dfd",
+  "warm_up_status": 200,
+  "agent_verify": {
+    "which_gh": "/opt/shim/gh",
+    "workload_token_handed_over": true,
+    "workload_token_in_context": true,
+    "request_header_names": [
+      "accept",
+      "baggage",
+      "content-length",
+      "content-type",
+      "host",
+      "workloadaccesstoken",
+      "x-amzn-bedrock-agentcore-runtime-session-id",
+      "x-amzn-bedrock-agentcore-runtime-workload-accesstoken",
+      "x-amzn-requestid",
+      "x-amzn-trace-id"
+    ],
+    "agent_env_has_GH_TOKEN": false,
+    "gh_hosts_yml_exists": false,
+    "gh_config_dir_files": [],
+    "shim_injects_token_into_child": {
+      "argv": [
+        "gh",
+        "api",
+        "/rate_limit"
+      ],
+      "rc": 0,
+      "stdout": "GH_TOKEN_PRESENT_IN_CHILD prefix=gho_ len=40\n",
+      "stderr": "ocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n2026-09-03 10:47:02,278 INFO [botocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n2026-09-03 10:47:02,278 INFO [opentelemetry.sdk._shared_internal] [__init__.py:200] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Shutdown called, ignoring Log.\n2026-09-03 10:47:02,346 INFO [botocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n"
+    },
+    "gh_api_user": {
+      "argv": [
+        "gh",
+        "api",
+        "/user",
+        "--jq",
+        ".login"
+      ],
+      "rc": 0,
+      "stdout": "xiehust\n",
+      "stderr": "ocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n2026-09-03 10:47:03,909 INFO [botocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n2026-09-03 10:47:03,909 INFO [opentelemetry.sdk._shared_internal] [__init__.py:200] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Shutdown called, ignoring Log.\n2026-09-03 10:47:03,971 INFO [botocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n"
+    },
+    "gh_repo_list": {
+      "argv": [
+        "gh",
+        "repo",
+        "list",
+        "--limit",
+        "3",
+        "--json",
+        "nameWithOwner",
+        "--jq",
+        ".[].nameWithOwner"
+      ],
+      "rc": 0,
+      "stdout": "xiehust/strands-darwin\nxiehust/harbor\nxiehust/bedrock-api-proxy-model-mappings\n",
+      "stderr": "ocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n2026-09-03 10:47:05,815 INFO [botocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n2026-09-03 10:47:05,816 INFO [opentelemetry.sdk._shared_internal] [__init__.py:200] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Shutdown called, ignoring Log.\n2026-09-03 10:47:05,876 INFO [botocore.credentials] [credentials.py:1171] [trace_id=0 span_id=0 resource.service.name=gh_shim_demo.DEFAULT trace_sampled=False] - Found credentials from IAM Role: execution_role\n"
+    },
+    "gh_auth_login_blocked": {
+      "argv": [
+        "gh",
+        "auth",
+        "login",
+        "--with-token"
+      ],
+      "rc": 126,
+      "stdout": "",
+      "stderr": "gh shim: subcommand 'auth' is not allowed by policy\n"
+    },
+    "gh_disallowed_subcommand_blocked": {
+      "argv": [
+        "gh",
+        "release",
+        "list"
+      ],
+      "rc": 126,
+      "stdout": "",
+      "stderr": "gh shim: subcommand 'release' is not allowed by policy\n"
+    },
+    "agent_env_after": false
+  },
+  "shell_stdout": "agent_pid=1\nworkload_token_file=600 root\nwhich_gh=/opt/shim/gh\npath=/opt/shim:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\nagent_environ_GH_TOKEN_count=0\nagent_environ_GITHUB_TOKEN_count=0\nshell_env_GH_TOKEN_count=0\nhome_gh_hosts_yml=absent\nshm_gh_config=\ngit_credentials_file=absent\ngrep_token_on_disk=\n--- gh api /user via shim\nxiehust\nrc=0\n--- gh auth login via shim\nrc=126\n--- child-env proof\nGH_TOKEN_PRESENT_IN_CHILD prefix=gho_ len=40\nrc=0\n--- after: shell env still clean\nshell_env_GH_TOKEN_count_after=0\n",
+  "shell": {
+    "agent_pid": "1",
+    "workload_token_file": "600 root",
+    "which_gh": "/opt/shim/gh",
+    "path": "/opt/shim:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "agent_environ_GH_TOKEN_count": "0",
+    "agent_environ_GITHUB_TOKEN_count": "0",
+    "shell_env_GH_TOKEN_count": "0",
+    "home_gh_hosts_yml": "absent",
+    "shm_gh_config": "",
+    "git_credentials_file": "absent",
+    "grep_token_on_disk": "",
+    "GH_TOKEN_PRESENT_IN_CHILD prefix": "gho_ len=40",
+    "shell_env_GH_TOKEN_count_after": "0"
+  },
+  "agent_turn": {
+    "result": "xiehust\n",
+    "agent_env_has_GH_TOKEN": false,
+    "tool_calls": 1
+  },
+  "session_cleanup": {
+    "attempted": true,
+    "status_code": 200,
+    "runtime_session_id": "probe-648e12332e22426ab8b6855032045dfd",
+    "success": true
+  },
+  "checks": {
+    "gh resolves to shim (agent)": true,
+    "gh resolves to shim (shell)": true,
+    "agent process env has no GH_TOKEN": true,
+    "workload token handed over as 0600 tmpfs file": true,
+    "no gh hosts.yml / .git-credentials / token on disk": true,
+    "shim injects GH_TOKEN into child only": true,
+    "real GitHub call succeeds through shim": true,
+    "gh auth login blocked": true,
+    "disallowed subcommand blocked": true,
+    "model-driven turn used gh and env stayed clean": true,
+    "session stopped": true
+  },
+  "passed": 11,
+  "total": 11
+}

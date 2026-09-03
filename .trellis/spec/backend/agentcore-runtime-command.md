@@ -108,6 +108,7 @@ A live integration probe must force a guarded tool call and require both `denied
 | Returned session ID differs | Fail; evidence came from the wrong/unconfirmed session. |
 | Stop returns non-200 or a different session ID | Record cleanup failure and return a non-success operational result. |
 | Monitoring/verification command fails after agent work | Preserve the agent checkpoint; mark monitoring/verification unavailable, never verified-success. |
+| Any executed load level has a missing/non-numeric success rate or falls below `success_floor` | Keep the checkpoint, stop the ramp, and return a non-zero process exit status after cleanup. Do not treat “at least one level executed” as operational success. |
 | Guard probe returns no leak but `denied_count == 0` | Fail the hook integration contract; model behavior is not proof that the hook ran. |
 
 ### 6. Good / Base / Bad Cases
@@ -128,9 +129,10 @@ Unit tests must assert:
 6. Monitoring CSV parse errors and absent windows remain explicit failures.
 7. Agent evidence is checkpointed before deterministic verification.
 8. A finalizer interruption cannot skip `StopRuntimeSession`; stop response status and ID are checked.
-9. SDK model checks use a boto3/botocore version that exposes the command operation.
-10. Static hook-contract tests reject replacing `ClaudeSDKClient` with one-shot `query()`.
-11. A live guard probe requires a successful invocation, `denied_count > 0`, and no protected token in output.
+9. Final process success requires every executed level's numeric `success_rate` to meet `success_floor`; empty, missing, Boolean, and below-floor values fail.
+10. SDK model checks use a boto3/botocore version that exposes the command operation.
+11. Static hook-contract tests reject replacing `ClaudeSDKClient` with one-shot `query()`.
+12. A live guard probe requires a successful invocation, `denied_count > 0`, and no protected token in output.
 
 A live smoke test, when explicitly approved, must compare the command-side boot ID/hostname with the application fingerprint from the same session and record cleanup success.
 

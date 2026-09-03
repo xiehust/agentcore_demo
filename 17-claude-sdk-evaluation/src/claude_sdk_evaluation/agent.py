@@ -16,6 +16,9 @@ from claude_agent_sdk import (
 )
 
 from . import DEFAULT_MODEL
+from .shopping import SYSTEM_PROMPT, TOOL_DESCRIPTION, TOOL_NAME, lookup_price
+
+__all__ = ["SYSTEM_PROMPT", "AgentRun", "run_agent", "lookup_product_price"]
 
 
 @dataclass(frozen=True)
@@ -27,32 +30,14 @@ class AgentRun:
     turns: int
 
 
-@tool(
-    "lookup_product_price",
-    "Look up the fixed demo price for one product SKU.",
-    {"sku": str},
-)
+@tool(TOOL_NAME, TOOL_DESCRIPTION, {"sku": str})
 async def lookup_product_price(args: dict[str, Any]) -> dict[str, Any]:
     """Return deterministic catalog data so the trace always contains tool calls."""
-    catalog = {
-        "NOTEBOOK": {"name": "Notebook", "price_usd": 4.5},
-        "PEN": {"name": "Pen", "price_usd": 1.25},
-    }
-    sku = str(args["sku"]).upper()
-    product = catalog.get(sku)
-    if product is None:
-        return {
-            "content": [{"type": "text", "text": f"Unknown SKU: {sku}"}],
-            "is_error": True,
-        }
-    return {
-        "content": [
-            {
-                "type": "text",
-                "text": f"SKU {sku}: {product['name']} costs ${product['price_usd']:.2f}",
-            }
-        ]
-    }
+    text, is_error = lookup_price(args["sku"])
+    result: dict[str, Any] = {"content": [{"type": "text", "text": text}]}
+    if is_error:
+        result["is_error"] = True
+    return result
 
 
 async def run_agent(prompt: str) -> AgentRun:
@@ -65,10 +50,7 @@ async def run_agent(prompt: str) -> AgentRun:
     options = ClaudeAgentOptions(
         model=DEFAULT_MODEL,
         max_turns=6,
-        system_prompt=(
-            "You are a concise shopping assistant. Always use lookup_product_price for each "
-            "requested SKU. Show the arithmetic and end with one total in USD."
-        ),
+        system_prompt=SYSTEM_PROMPT,
         mcp_servers={"catalog": catalog_server},
         allowed_tools=["mcp__catalog__lookup_product_price"],
     )

@@ -159,6 +159,21 @@ def percentile(values: list[float], pct: float) -> float | None:
     return round(ordered[low] + (ordered[high] - ordered[low]) * (position - low), 1)
 
 
+def all_levels_meet_success_floor(
+    levels: list[dict[str, Any]], success_floor: float
+) -> bool:
+    """Return whether every executed level has a numeric rate at or above the floor."""
+    if not levels:
+        return False
+    for level in levels:
+        rate = level.get("success_rate")
+        if isinstance(rate, bool) or not isinstance(rate, (int, float)):
+            return False
+        if rate < success_floor:
+            return False
+    return True
+
+
 def atomic_write_json(path: str | Path, payload: Any) -> None:
     destination = Path(path)
     destination.parent.mkdir(parents=True, exist_ok=True)

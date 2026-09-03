@@ -1,0 +1,14 @@
+# Runtime dependencies for the deployed AgentCore shopping agent (installed in the container).
+strands-agents>=1.40
+bedrock-agentcore>=1.10
+boto3>=1.40
+# ADOT SDK: required for AgentCore observability so the agent emits GenAI trajectory
+# spans (model/tool calls). Without it only the runtime wrapper span exists and both
+# batch evaluation and the recommendation have nothing to read.
+#
+# Version matters. 0.19.0-aws installs its own TracerProvider during auto-instrumentation
+# (see _setup_telemetry in main.py) and delivers the Strands trajectory spans to the runtime
+# log group but not to `aws/spans`. Batch evaluation reads the runtime log group, so that is
+# still workable — but if you need Transaction Search / the GenAI dashboard to show the
+# trajectory, pin `aws-opentelemetry-distro<0.19`.
+aws-opentelemetry-distro>=0.10.0
