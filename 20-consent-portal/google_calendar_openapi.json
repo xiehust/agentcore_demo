@@ -1,0 +1,194 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Google Calendar (read-only subset)",
+    "version": "v3",
+    "description": "Minimal read-only subset of the Google Calendar API v3 exposed through AgentCore Gateway."
+  },
+  "servers": [
+    {
+      "url": "https://www.googleapis.com/calendar/v3"
+    }
+  ],
+  "security": [
+    {
+      "googleOAuth": [
+        "https://www.googleapis.com/auth/calendar.readonly"
+      ]
+    }
+  ],
+  "paths": {
+    "/users/me/calendarList": {
+      "get": {
+        "operationId": "listCalendars",
+        "summary": "List the calendars on the user's calendar list",
+        "description": "Returns the calendars that appear in the signed-in user's Google Calendar list, including the primary calendar.",
+        "parameters": [
+          {
+            "name": "maxResults",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of calendars to return (1-250).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 250
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Calendar list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {"type": "string"},
+                          "summary": {"type": "string"},
+                          "primary": {"type": "boolean"},
+                          "timeZone": {"type": "string"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calendars/{calendarId}/events": {
+      "get": {
+        "operationId": "listEvents",
+        "summary": "List events on a calendar",
+        "description": "Returns events on the specified calendar. Use calendarId 'primary' for the user's main calendar. Provide timeMin and timeMax as RFC3339 timestamps (for example 2026-09-04T00:00:00Z) to select a window.",
+        "parameters": [
+          {
+            "name": "calendarId",
+            "in": "path",
+            "required": true,
+            "description": "Calendar identifier. Use 'primary' for the signed-in user's primary calendar.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timeMin",
+            "in": "query",
+            "required": false,
+            "description": "Lower bound (inclusive) for an event's end time, RFC3339 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timeMax",
+            "in": "query",
+            "required": false,
+            "description": "Upper bound (exclusive) for an event's start time, RFC3339 timestamp.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxResults",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of events to return (1-2500).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2500
+            }
+          },
+          {
+            "name": "singleEvents",
+            "in": "query",
+            "required": false,
+            "description": "Expand recurring events into instances. Required to be true when orderBy is startTime.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": false,
+            "description": "Sort order: startTime (requires singleEvents=true) or updated.",
+            "schema": {
+              "type": "string",
+              "enum": ["startTime", "updated"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {"type": "string"},
+                    "timeZone": {"type": "string"},
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {"type": "string"},
+                          "summary": {"type": "string"},
+                          "status": {"type": "string"},
+                          "htmlLink": {"type": "string"},
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {"type": "string"},
+                              "date": {"type": "string"},
+                              "timeZone": {"type": "string"}
+                            }
+                          },
+                          "end": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {"type": "string"},
+                              "date": {"type": "string"},
+                              "timeZone": {"type": "string"}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "googleOAuth": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+            "tokenUrl": "https://oauth2.googleapis.com/token",
+            "scopes": {
+              "https://www.googleapis.com/auth/calendar.readonly": "Read-only access to Google Calendar"
+            }
+          }
+        }
+      }
+    }
+  }
+}

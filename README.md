@@ -25,3 +25,7 @@ The [ClaudeCode Agent](claudecode_agent/README.md) demonstrates how Claude can r
 ### 19. AgentCore Gateway Token Exchange
 
 The [AgentCore Gateway Token Exchange demo](19-gateway-token-exchange/README.md) demonstrates RFC 8693 on-behalf-of token exchange with a real AgentCore Gateway, OAuth2 Credential Provider, KMS-signed JWTs, and a protected MCP server.
+
+### 20. AgentCore Identity Consent Portal
+
+The [Consent Portal introduction](20-consent-portal/README.md) explains the AWS-managed consent portal for Gateway 3LO flows and compares it with the previous OAuth2 Credential Provider approach that required a self-hosted callback endpoint and `CompleteResourceTokenAuth` session binding.
