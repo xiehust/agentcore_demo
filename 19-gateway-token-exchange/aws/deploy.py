@@ -168,6 +168,35 @@ def http_json(url: str, *, data: bytes | None = None, headers: dict[str, str] | 
         return payload, response.headers
 
 
+def invoke_lambda_action(
+    profile: str,
+    region: str,
+    function_name: str,
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    with tempfile.TemporaryDirectory() as temporary:
+        output_path = Path(temporary) / "lambda-response.json"
+        metadata = aws_json(
+            profile,
+            region,
+            "lambda",
+            "invoke",
+            "--function-name",
+            function_name,
+            "--cli-binary-format",
+            "raw-in-base64-out",
+            "--payload",
+            json.dumps(payload),
+            str(output_path),
+        )
+        if metadata.get("FunctionError"):
+            raise RuntimeError(f"Lambda action failed: {output_path.read_text()}")
+        envelope = json.loads(output_path.read_text())
+    if envelope.get("statusCode") != 200:
+        raise RuntimeError(f"Lambda action returned {envelope.get('statusCode')}: {envelope.get('body')}")
+    return json.loads(envelope["body"])
+
+
 def gateway_call(url: str, token: str, method: str, params: dict[str, Any]) -> dict[str, Any]:
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
     payload, _ = http_json(
@@ -381,36 +410,6 @@ def deploy(profile: str, region: str) -> dict[str, Any]:
     state["created"]["lambdaFunctionArn"] = function["FunctionArn"]
     save_state(state)
 
-    function_url = aws_json(
-        profile,
-        region,
-        "lambda",
-        "create-function-url-config",
-        "--function-name",
-        function_name,
-        "--auth-type",
-        "NONE",
-    )["FunctionUrl"]
-    for statement_id, action, extra in (
-        ("FunctionUrlPublic", "lambda:InvokeFunctionUrl", ["--function-url-auth-type", "NONE"]),
-        ("FunctionUrlInvoke", "lambda:InvokeFunction", ["--invoked-via-function-url"]),
-    ):
-        aws_json(
-            profile,
-            region,
-            "lambda",
-            "add-permission",
-            "--function-name",
-            function_name,
-            "--statement-id",
-            statement_id,
-            "--action",
-            action,
-            "--principal",
-            "*",
-            *extra,
-        )
-    issuer = function_url.rstrip("/")
     run(
         [
             "aws",
@@ -424,6 +423,38 @@ def deploy(profile: str, region: str) -> dict[str, Any]:
             "--profile",
             profile,
         ]
+    )
+    api = aws_json(
+        profile,
+        region,
+        "apigatewayv2",
+        "create-api",
+        "--name",
+        f"{prefix}-http-api",
+        "--protocol-type",
+        "HTTP",
+        "--target",
+        function["FunctionArn"],
+        "--tags",
+        "Project=AgentCoreOBOdemo",
+    )
+    api_id = api["ApiId"]
+    issuer = api["ApiEndpoint"].rstrip("/")
+    aws_json(
+        profile,
+        region,
+        "lambda",
+        "add-permission",
+        "--function-name",
+        function_name,
+        "--statement-id",
+        "ApiGatewayInvoke",
+        "--action",
+        "lambda:InvokeFunction",
+        "--principal",
+        "apigateway.amazonaws.com",
+        "--source-arn",
+        f"arn:aws:execute-api:{region}:{account}:{api_id}/*/*",
     )
     environment = {
         "Variables": {
@@ -444,8 +475,22 @@ def deploy(profile: str, region: str) -> dict[str, Any]:
         "--environment",
         json.dumps(environment),
     )
-    run(["aws", "lambda", "wait", "function-updated-v2", "--function-name", function_name, "--region", region, "--profile", profile])
-    state["created"]["functionUrl"] = function_url
+    run(
+        [
+            "aws",
+            "lambda",
+            "wait",
+            "function-updated-v2",
+            "--function-name",
+            function_name,
+            "--region",
+            region,
+            "--profile",
+            profile,
+        ]
+    )
+    state["created"]["apiGatewayId"] = api_id
+    state["created"]["apiEndpoint"] = issuer
     state["created"]["issuer"] = issuer
     save_state(state)
 
@@ -458,7 +503,7 @@ def deploy(profile: str, region: str) -> dict[str, Any]:
             pass
         time.sleep(2)
     else:
-        raise RuntimeError("Lambda Function URL did not become healthy")
+        raise RuntimeError("API Gateway endpoint did not become healthy")
 
     provider_name = f"{prefix}-provider"
     provider = sigv4_post(
@@ -577,7 +622,12 @@ def deploy(profile: str, region: str) -> dict[str, Any]:
         description="Gateway target",
     )
 
-    token_response, _ = http_json(f"{issuer}/demo/user-token?sub=alice")
+    token_response = invoke_lambda_action(
+        profile,
+        region,
+        function_name,
+        {"action": "issue_user_token", "subject": "alice"},
+    )
     user_token = token_response["access_token"]
     initialize = gateway_call(
         gateway["gatewayUrl"],
@@ -620,7 +670,7 @@ def main() -> None:
         "account": state["account"],
         "region": state["region"],
         "gatewayUrl": state["created"]["gatewayUrl"],
-        "functionUrl": state["created"]["functionUrl"],
+        "apiEndpoint": state["created"]["apiEndpoint"],
         "targetId": state["created"]["targetId"],
         "whoami": state["verification"]["whoami"],
         "stateFile": str(STATE_FILE),

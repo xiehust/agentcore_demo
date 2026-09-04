@@ -1,7 +1,8 @@
 """AWS Lambda implementation of a demo RFC 8693 IdP and protected MCP server.
 
 The function uses an asymmetric AWS KMS key for RS256 signing and verification.
-It intentionally exposes /demo/user-token without authentication for the demo only.
+Public traffic arrives only through API Gateway; test user tokens are minted through
+an IAM-authorized direct Lambda invocation.
 """
 
 from __future__ import annotations
@@ -292,6 +293,21 @@ def mcp_endpoint(event: dict[str, Any], headers: dict[str, str]) -> dict[str, An
 
 
 def handler(event: dict[str, Any], _context: Any) -> dict[str, Any]:
+    if event.get("action") == "issue_user_token":
+        subject = event.get("subject", "alice")
+        return response(
+            200,
+            {
+                "access_token": issue_token(
+                    subject=subject,
+                    audience=GATEWAY_AUDIENCE,
+                    scopes=["gateway:invoke"],
+                ),
+                "token_type": "Bearer",
+                "expires_in": 300,
+            },
+        )
+
     request_context = event.get("requestContext", {}).get("http", {})
     method = request_context.get("method", "GET")
     path = event.get("rawPath", "/")
@@ -316,21 +332,6 @@ def handler(event: dict[str, Any], _context: Any) -> dict[str, Any]:
         return response(200, {"keys": [public_jwk()]})
     if method == "GET" and path == "/health":
         return response(200, {"status": "ok"})
-    if method == "GET" and path == "/demo/user-token":
-        query = event.get("queryStringParameters") or {}
-        subject = query.get("sub", "alice")
-        return response(
-            200,
-            {
-                "access_token": issue_token(
-                    subject=subject,
-                    audience=GATEWAY_AUDIENCE,
-                    scopes=["gateway:invoke"],
-                ),
-                "token_type": "Bearer",
-                "expires_in": 300,
-            },
-        )
     if method == "POST" and path == "/oauth2/token":
         return token_endpoint(event, headers)
     if method == "POST" and path == "/mcp":

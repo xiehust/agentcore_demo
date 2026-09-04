@@ -73,7 +73,7 @@ aws sts get-caller-identity --profile YOUR_PROFILE
 ```
 
 - 目标 Region 已支持 Amazon Bedrock AgentCore；
-- 当前身份具有创建 KMS、IAM Role、Lambda Function URL、AgentCore Gateway、Credential Provider 和 Gateway Target 的权限。
+- 当前身份具有创建 KMS、IAM Role、Lambda、API Gateway HTTP API、AgentCore Gateway、Credential Provider 和 Gateway Target 的权限。
 
 ### 部署
 
@@ -89,18 +89,18 @@ python3 aws/deploy.py \
 1. KMS RSA-2048 `SIGN_VERIFY` Key，用于 RS256 JWT；
 2. Lambda Execution Role；
 3. AgentCore Gateway Service Role；
-4. Lambda Function URL，提供：
+4. API Gateway HTTP API，作为唯一公网入口；
+5. Lambda Function，由 API Gateway 通过受限 `SourceArn` 调用，提供：
    - `/.well-known/openid-configuration`
    - `/.well-known/jwks.json`
    - `/oauth2/token`
-   - `/demo/user-token`
    - `/mcp`
-5. AgentCore OAuth2 Credential Provider：
+6. AgentCore OAuth2 Credential Provider：
    - `grantType=TOKEN_EXCHANGE`
    - `actorTokenContent=NONE`
-6. `CUSTOM_JWT` AgentCore Gateway；
-7. `DYNAMIC` MCP Server Target；
-8. `initialize → tools/list → tools/call(whoami)` 端到端验证。
+7. `CUSTOM_JWT` AgentCore Gateway；
+8. `DYNAMIC` MCP Server Target；
+9. 通过 IAM 直接调用 Lambda 签发测试用户 Token，再执行 `initialize → tools/list → tools/call(whoami)` 验证。
 
 部署结果写入当前目录的 `.deployment.json`。文件只包含资源标识和验证结果，不保存 client secret 或 access token，并已加入 `.gitignore`。
 
@@ -119,7 +119,7 @@ python3 aws/deploy.py \
 
 ## 清理
 
-清理会删除 Gateway Target、Gateway、Credential Provider、Lambda、两个 IAM Role 和 KMS Alias，并将 KMS Key 安排在 7 天后删除：
+清理会删除 Gateway Target、Gateway、Credential Provider、API Gateway、Lambda、两个 IAM Role 和 KMS Alias，并将 KMS Key 安排在 7 天后删除：
 
 ```bash
 python3 aws/cleanup.py
@@ -129,7 +129,10 @@ python3 aws/cleanup.py
 
 ## 安全说明
 
-- `/demo/user-token` 是教学用途的公开 Token 签发端点，只应短期运行；
+- Lambda 不创建公开 Function URL，也不授予 `Principal: "*"` 的调用权限；
+- API Gateway 是唯一公网入口，Lambda 权限通过 API ID `SourceArn` 限制；
+- OIDC Discovery/JWKS 按协议公开，Token Endpoint 要求 OAuth client authentication，MCP Endpoint 要求 Bearer Token；
+- 测试用户 Token 只能通过具备 `lambda:InvokeFunction` 权限的 AWS 身份直接调用 Lambda 获取，不提供公开签发路由；
 - Demo Token 只能用于本 Demo 的 audience 和 scope；
 - client secret 由部署脚本随机生成，只写入 Lambda 环境变量及 AgentCore 托管 Credential Provider；
 - `.deployment.json` 不包含密钥或 Token；

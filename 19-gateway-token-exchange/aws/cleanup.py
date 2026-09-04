@@ -82,6 +82,15 @@ def main() -> None:
             "--name",
             created["testWorkloadName"],
         )
+    if created.get("apiGatewayId"):
+        aws(
+            profile,
+            region,
+            "apigatewayv2",
+            "delete-api",
+            "--api-id",
+            created["apiGatewayId"],
+        )
     if created.get("lambdaFunctionName"):
         aws(profile, region, "lambda", "delete-function", "--function-name", created["lambdaFunctionName"])
     if created.get("lambdaRoleName"):
