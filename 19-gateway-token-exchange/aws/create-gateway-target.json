@@ -1,0 +1,31 @@
+{
+  "gatewayIdentifier": "YOUR_GATEWAY_ID",
+  "name": "token-exchange-mcp-target",
+  "description": "MCP target using RFC 8693 on-behalf-of token exchange",
+  "targetConfiguration": {
+    "mcp": {
+      "mcpServer": {
+        "endpoint": "https://YOUR_MCP_SERVER/mcp",
+        "listingMode": "DYNAMIC"
+      }
+    }
+  },
+  "credentialProviderConfigurations": [
+    {
+      "credentialProviderType": "OAUTH",
+      "credentialProvider": {
+        "oauthCredentialProvider": {
+          "providerArn": "YOUR_OAUTH2_CREDENTIAL_PROVIDER_ARN",
+          "scopes": [
+            "mcp:invoke"
+          ],
+          "grantType": "TOKEN_EXCHANGE",
+          "customParameters": {
+            "audience": "mcp-server",
+            "subject_token_type": "urn:ietf:params:oauth:token-type:access_token"
+          }
+        }
+      }
+    }
+  ]
+}
