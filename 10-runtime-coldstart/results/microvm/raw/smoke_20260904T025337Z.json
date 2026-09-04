@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "mode": "smoke",
+    "platform": "lambda-microvms"
+  },
+  "requests": [
+    {
+      "size": "500mb",
+      "concurrency": 1,
+      "round": 1,
+      "request_idx": 0,
+      "microvm_id": "microvm-65b2f6fc-0554-3e78-a951-ff41bb45802f",
+      "endpoint": "46d0352a-ee52-d3a4-040c-1680fb62ce5c.lambda-microvm.us-west-2.on.aws",
+      "wall_start_iso": "2026-09-04T02:53:27.017434+00:00",
+      "run_api_ms": 159.9,
+      "run_state": "PENDING",
+      "token_ms": 152.7,
+      "cold_ms": 3460.7,
+      "first_ok_http_ms": 20.9,
+      "attempts": 2,
+      "non_ok_statuses": {
+        "502": 1
+      },
+      "warm_ms": 2.9,
+      "resume_ms": 6176.0,
+      "suspend_api_ms": 69.8,
+      "success": true,
+      "error_type": null,
+      "error_msg": null,
+      "proc_start_ts": 1788490332.2408166,
+      "run_hook_ts": 1788490408.63943,
+      "request_ts": 1788490410.4761336,
+      "terminated": true,
+      "resume_hook_ts": 1788490417.5119054
+    }
+  ]
+}

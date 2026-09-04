@@ -95,7 +95,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "bedrock-agentcore", specifier = ">=0.1" },
-    { name = "boto3", specifier = ">=1.40" },
+    { name = "boto3", specifier = ">=1.43.44" },
 ]
 
 [[package]]
