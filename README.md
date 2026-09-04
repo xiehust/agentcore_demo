@@ -21,3 +21,7 @@ Clone the repository and explore the examples to learn more about agent capabili
 ### 1. ClaudeCode Agent
 
 The [ClaudeCode Agent](claudecode_agent/README.md) demonstrates how Claude can run in AgentCore runtime for software development tasks, helping with code generation, bug fixing, and technical guidance.
+
+### 19. AgentCore Gateway Token Exchange
+
+The [AgentCore Gateway Token Exchange demo](19-gateway-token-exchange/README.md) demonstrates RFC 8693 on-behalf-of token exchange with a real AgentCore Gateway, OAuth2 Credential Provider, KMS-signed JWTs, and a protected MCP server.
