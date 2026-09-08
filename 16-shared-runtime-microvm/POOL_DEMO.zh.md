@@ -162,9 +162,12 @@ sequenceDiagram
     R-->>C: SSE complete（附 router 字段）
     alt 成功
         R->>D: reset_strikes, touch_affinity, REQUEST#35;t#35;r → COMPLETED(resultRef)
-    else 无 complete 事件 / 上游异常 / is_error
+    else 无 complete 事件（INCOMPLETE）
         R->>D: mark_probe_required, add_strike（≥3 → QUARANTINED）, REQUEST#35;t#35;r → FAILED
-        R-->>C: SSE router_error {INCOMPLETE | UPSTREAM}
+        R-->>C: SSE router_error {INCOMPLETE, strikes}
+    else 上游异常（UPSTREAM）/ complete.is_error
+        R->>D: mark_probe_required（仅 UPSTREAM）, REQUEST#35;t#35;r → FAILED
+        R-->>C: SSE router_error {UPSTREAM}（is_error 时只有应用层 error 事件）
     end
 
     Note over R,D: ⑩ finally（两步互不影响）
@@ -359,3 +362,76 @@ generation 后才放行并发请求；acquire 事务的条件包含"无探测锁
 未实现（第二轮候选）：对话摘要写入 AgentCore Memory（当前靠 Claude 原生 transcript resume）；
 SQS FIFO 异步队列；HTTPS/ACM；Router 多副本下的 waiters 聚合（当前 waiters 为进程内计数，
 多副本时应改用 SQS 深度或 DynamoDB 计数）；按 tenant 拆分 S3 Files 访问点。
+
+## 7. FAQ
+
+### 7.1 "加 strike" 是什么含义？
+
+strike 是**给 session 记的一次失败计数**（借棒球"三振出局"的说法），存放在 `SESSION#s / META` 的整数字段
+`strikes` 上，用来判断某个 `runtimeSessionId` 背后的执行环境是否已经不健康，而不是凭单次失败就下结论。
+出处是架构文档 §15.3："对连续出现该错误的 session 增加 strike；达到阈值后 drain 或 quarantine；避免立即在
+同一高压 session 无限重试。"
+
+**什么时候 +1**（`store.add_strike`，DynamoDB `SET strikes = if_not_exists(strikes, 0) + 1`）：
+
+| 触发点 | 代码位置 |
+|---|---|
+| 请求的 SSE 流正常结束但没有 `complete` 事件（`INCOMPLETE`） | `scheduler.execute` |
+| warmup（COLD → WARMING → ACTIVE）失败或超时 | `scheduler._warm` |
+| 空闲探测 warmup 失败 | `scheduler._probe` |
+| reconciler 补 warm pool 时 warmup 失败 | `reconciler/handler.py` |
+
+`UPSTREAM`（`InvokeAgentRuntime` 调用本身抛异常）和应用层 `is_error` **不**加 strike：前者可能只是网络 / 409
+之类的瞬时问题，后者是 agent 业务层面的错误，都不能说明 microVM 坏了。
+
+**什么时候清零**（`store.reset_strikes`）：该 session 上任意一次请求成功拿到 `complete` 且非 `is_error`。
+因此 strike 衡量的是**连续**失败，中间成功一次就重新计数。
+
+**达到阈值的后果**（`QUARANTINE_STRIKES`，默认 3）：
+
+- Router 侧：加完 strike 后若 `strikes >= 3`，立刻把 session 置 `QUARANTINED`；warmup / 探测失败但未到
+  阈值则退回 `COLD`。
+- reconciler 侧：每分钟扫描，凡 `strikes >= 3` 且尚未 QUARANTINED 的都置 `QUARANTINED`，并调用
+  `StopRuntimeSession` 真正回收 microVM。
+- `QUARANTINED` 的 session 不再被任何 acquire 选中（事务条件要求 `status=ACTIVE`），也不会被扩容逻辑复用
+  （`pick_cold` 只挑 COLD）；亲和指向它的用户在 `remap_allowed()` 中被放行迁移到其他 ACTIVE session。
+  它会一直留在表里等运维处理（`pool_admin.py reset` 会连表一起清），当前实现没有自动"出院"逻辑。
+
+一句话：strike 是 session 级的健康信用分，连续 3 次疑似环境级失败就把这个 session 隔离，避免持续把用户
+流量送到一个已经坏掉的 microVM 上。
+
+### 7.2 客户端收到 `router_error {INCOMPLETE | UPSTREAM}` 之后会发生什么？
+
+`router_error` 只是"这一次请求失败"的终态通知，**Router 不会替客户端重试**。它把请求记为 `FAILED`、把该
+session 标成"下次准入前必须探测"，然后正常释放两把 lease。用户的亲和关系和 S3 Files 上的数据都不受影响。
+
+**客户端侧**：SSE 流里多一条 `{"event":"router_error","code":"INCOMPLETE"|"UPSTREAM",...}`，随后流正常结束
+（HTTP 状态仍为 200，因为响应头已发出），没有 `complete` 事件。`pool_load_test.py` 只把它记进
+`record["errors"]`，不自动重试。注意：**用同一个 `request_id` 重试会得到 409 `DUPLICATE_REQUEST`**——
+`reserve()` 只回放 `COMPLETED` 记录，其余状态（含 `FAILED`）一律 409，且该记录保留 `IDEMPOTENCY_TTL_S`
+（24 h）。重试必须换新的 `request_id`。
+
+**DynamoDB 侧**（两种 code 的差别）：
+
+| | `INCOMPLETE`（流正常结束但无 `complete`） | `UPSTREAM`（`InvokeAgentRuntime` 流抛异常） |
+|---|---|---|
+| `REQUEST#t#r` | `FAILED`，errorCode=`INCOMPLETE` | `FAILED`，errorCode=异常文本 |
+| `SESSION#s/META.probeRequired` | `true` | `true` |
+| `strikes` | `+1`；达到 3 时 Router 直接置 `QUARANTINED` | 不加 |
+| 用户 `AFFINITY` | 不动（`touch_affinity` 只在成功时调用） | 不动 |
+
+随后 `finally` 无条件执行：按 `leaseToken` 删 `LEASE#r` 并 `inflight-1`，再释放 `ULEASE`，两步各自
+try/except，不会互相拖累，因此不会泄漏容量，该用户可以立刻发下一个请求。
+
+**下一次请求到来时**：
+
+- 亲和仍指向原 session，但 `probe_needed()` 看到 `probeRequired=true`，先用探测锁做**一次** warmup；期间
+  该 session 对所有人不可准入（acquire 事务条件含"无探测锁"，候选列表也排除它）。
+  - 探测成功、指纹未变：microVM 还活着，只是那一次调用坏了；清掉 `probeRequired`，用户留在原 session。
+  - 探测成功、`boot_id:server_run_id` 变了：环境已被换掉，`generation+1`，新环境挂的仍是同一份 S3 Files，
+    用户从 transcript resume（即 §5.2 `--chaos-mode stop` 验证的路径）。
+  - 探测失败：`add_strike`，然后置 `COLD`（<3）或 `QUARANTINED`（≥3）。
+- 若 session 已不是 `ACTIVE`：COLD 会被就地 re-warm；QUARANTINED 时 `remap_allowed()` 返回 True，续聊
+  CAS 迁到最空闲的 ACTIVE session 并照常 resume（与 `drain` 路径相同）。
+- 后台 reconciler 每分钟也会扫描 `strikes >= 3` 的 session，置 `QUARANTINED` 并 `StopRuntimeSession`
+  真正回收 microVM。
