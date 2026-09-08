@@ -11,8 +11,8 @@ dependencies = [
 ]
 
 [tool.pyright]
-include = ["app", "scripts", "tests"]
-extraPaths = ["app", "scripts"]
+include = ["app", "scripts", "tests", "router", "reconciler"]
+extraPaths = ["app", "scripts", "router"]
 venvPath = "."
 venv = ".venv"
 pythonVersion = "3.13"

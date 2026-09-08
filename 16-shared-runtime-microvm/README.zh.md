@@ -2,6 +2,11 @@
 
 [English version / 英文版](README.md)
 
+> **Session Pool Demo（2026-09）**：架构文档 [`SESSION_POOL_ARCHITECTURE.zh.md`](SESSION_POOL_ARCHITECTURE.zh.md)
+> 的可运行实现——DynamoDB 映射池 + ECS/ALB 无状态 Router + EventBridge/Lambda reconciler +
+> Amazon S3 Files 共享用户 workspace（跨 session 迁移），含短程/长程/故障注入客户端。部署与实测见 [`POOL_DEMO.zh.md`](POOL_DEMO.zh.md)。
+> 下文描述的是原始的单 session 多用户压测。
+
 这个独立演示把多个相互协作的应用用户放进**同一个 AgentCore Runtime session**，
 测量 Claude Agent 的短程与长程工作负载。演示通过
 `InvokeAgentRuntimeCommand` 对活动容器采样并验证长程任务文件，不依赖 SSM、EC2、

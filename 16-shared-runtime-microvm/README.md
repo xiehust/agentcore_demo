@@ -2,6 +2,15 @@
 
 [中文版 / Chinese version](README.zh.md)
 
+> **Session Pool Demo (2026-09):** a runnable implementation of
+> [`SESSION_POOL_ARCHITECTURE.zh.md`](SESSION_POOL_ARCHITECTURE.zh.md) — DynamoDB
+> `userId → runtimeSessionId` pool, stateless router on ECS Fargate behind an internal
+> ALB, EventBridge/Lambda reconciler, Amazon S3 Files as the cross-session user
+> workspace (so conversations can migrate between sessions), and a client
+> with short/long/chaos scenarios. See [`POOL_DEMO.zh.md`](POOL_DEMO.zh.md) (Chinese)
+> for deployment (`infra/deploy.sh`), tests (`scripts/pool_load_test.py`) and measured
+> results. The rest of this README describes the original single-session load tests.
+
 This standalone demo places several cooperative application users inside **one
 AgentCore Runtime session** and measures short and long Claude Agent workloads.
 It uses `InvokeAgentRuntimeCommand`—not SSM, EC2, ASG, or a managed-host

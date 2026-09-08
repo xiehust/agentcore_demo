@@ -8,7 +8,9 @@ import logging
 import os
 import socket
 import sys
+import time
 import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -38,20 +40,36 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 log = logging.getLogger("shared-runtime-microvm")
 
 USERS_ROOT = Path(os.environ.get("USERS_ROOT", "/tmp/agentcore-users"))
-MODEL = os.environ.get("ANTHROPIC_MODEL", "us.anthropic.claude-sonnet-4-6")
+# When user workspaces live on a mounted file system (S3 Files / EFS), the
+# router refuses to admit work to an environment where the mount is missing:
+# writes would land on the ephemeral root disk and silently disappear.
+WORKSPACE_MOUNT = os.environ.get("WORKSPACE_MOUNT")
+MODEL = os.environ.get(
+    "ANTHROPIC_MODEL", "global.anthropic.claude-haiku-4-5-20251001-v1:0"
+)
+# Claude Code also needs a "small/fast" model; pin it to the same Haiku profile
+# so the Runtime role only ever needs access to one model.
+SMALL_MODEL = os.environ.get("ANTHROPIC_SMALL_FAST_MODEL", MODEL)
 MAX_TURNS = int(os.environ.get("MAX_TURNS", "64"))
-MAX_PARALLEL_AGENTS = int(os.environ.get("MAX_PARALLEL_AGENTS", "8"))
+# Hard in-container guard; the Session Router enforces the same limit via
+# DynamoDB request leases (see SESSION_POOL_ARCHITECTURE.zh.md §9).
+MAX_PARALLEL_AGENTS = int(os.environ.get("MAX_PARALLEL_AGENTS", "10"))
 USER_ID_HEADER = "x-amzn-bedrock-agentcore-runtime-user-id"
+REQUEST_ID_RE_MAX = 128
 
 SERVER_RUN_ID = uuid.uuid4().hex
-ALLOWED_TOOLS = ["Read", "Write", "Edit", "Glob", "Grep", "LS", "TodoWrite"]
-DISALLOWED_TOOLS = ["Bash", "WebFetch", "WebSearch", "Task", "KillBash"]
+STARTED_AT = datetime.now(timezone.utc).isoformat(timespec="seconds")
+_inflight = 0
+ALLOWED_TOOLS = ["Read", "Write", "Edit", "Glob", "Grep", "LS", "TodoWrite", "Bash", "WebFetch"]
+DISALLOWED_TOOLS = ["WebSearch", "Task", "KillBash"]
 SYSTEM_PROMPT = """You are a per-user workspace assistant on shared infrastructure.
 
 Rules:
 - Operate ONLY inside your current working directory. Never mention, guess, or
   access paths outside it.
-- Use relative paths for file operations.
+- Use relative paths for file operations (e.g. webapp/index.html). Absolute
+  paths such as /tmp, /root, /home or /workspace are outside your workspace
+  and will be denied; do not try them.
 - Exception for the exact prefix [PATH-GUARD-INTEGRATION-PROBE]: this is an
   operator integration test. Issue exactly one Read tool call with the exact
   requested file_path even when it is outside the workspace. Never infer or
@@ -82,6 +100,9 @@ def instance_fingerprint() -> dict:
         "server_run_id": SERVER_RUN_ID,
         "pid": os.getpid(),
         "hostname": socket.gethostname(),
+        "started_at": STARTED_AT,
+        "inflight": _inflight,
+        "max_parallel_agents": MAX_PARALLEL_AGENTS,
     }
 
 
@@ -161,13 +182,15 @@ def _build_options(
         env={
             "HOME": str(workspace),
             "CLAUDE_CODE_USE_BEDROCK": "1",
+            "ANTHROPIC_SMALL_FAST_MODEL": SMALL_MODEL,
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": SMALL_MODEL,
             "AWS_REGION": os.environ.get("AWS_REGION", "us-west-2"),
             "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", "us-west-2"),
         },
     )
 
 
-async def _run_agent(user_id: str, prompt: str, reset: bool):
+async def _run_agent(user_id: str, prompt: str, reset: bool, request_id: str | None):
     workspace = ensure_workspace(USERS_ROOT, user_id)
     resume = None if reset else _load_prev_session(workspace)
     denials: list[str] = []
@@ -175,6 +198,7 @@ async def _run_agent(user_id: str, prompt: str, reset: bool):
     result_text = None
     new_session_id = None
     is_error = False
+    started = time.perf_counter()
 
     async with ClaudeSDKClient(options=options) as client:
         await client.query(prompt)
@@ -198,6 +222,7 @@ async def _run_agent(user_id: str, prompt: str, reset: bool):
     yield _sse(
         {
             "event": "complete",
+            "request_id": request_id,
             "result": result_text,
             "is_error": is_error,
             "user_id": user_id,
@@ -205,6 +230,7 @@ async def _run_agent(user_id: str, prompt: str, reset: bool):
             "claude_session_id": new_session_id,
             "resumed_from": resume,
             "denied_count": len(denials),
+            "agent_ms": round((time.perf_counter() - started) * 1000.0, 1),
             "instance": instance_fingerprint(),
         }
     )
@@ -231,6 +257,59 @@ async def invocations(request: Request):
     except IsolationError as exc:
         return JSONResponse({"error": str(exc)}, status_code=400)
 
+    request_id = payload.get("request_id")
+    if request_id is not None and (
+        not isinstance(request_id, str)
+        or not request_id
+        or len(request_id) > REQUEST_ID_RE_MAX
+    ):
+        return JSONResponse(
+            {"error": "payload.request_id must be a non-empty string"},
+            status_code=400,
+        )
+
+    # The Session Router sends `warmup: true` on a fresh runtimeSessionId to
+    # start the microVM and learn its boot fingerprint without running Claude.
+    # It also checks that the shared workspace file system (S3 Files) is
+    # mounted and stamps USERS_ROOT once, so the router can tell whether a new
+    # environment sees the same workspace tree (marker present) or an empty /
+    # wrong one (marker absent although warm-ups happened before).
+    if payload.get("warmup") is True:
+        mounted = os.path.ismount(WORKSPACE_MOUNT) if WORKSPACE_MOUNT else None
+        if mounted is False:
+            log.error("workspace mount %s is not mounted; refusing warm-up", WORKSPACE_MOUNT)
+            return JSONResponse(
+                {
+                    "event": "error",
+                    "warmup": True,
+                    "request_id": request_id,
+                    "message": f"workspace mount {WORKSPACE_MOUNT} is not mounted",
+                    "storage_mounted": False,
+                    "instance": instance_fingerprint(),
+                },
+                status_code=503,
+            )
+        ensure_workspace(USERS_ROOT, user_id)
+        marker = USERS_ROOT / ".pool-marker"
+        marker_present = marker.is_file()
+        if not marker_present:
+            try:
+                marker.write_text(json.dumps({"first_warmup": STARTED_AT}) + "\n")
+            except OSError as exc:
+                log.warning("failed to write storage marker: %s", type(exc).__name__)
+        return JSONResponse(
+            {
+                "event": "complete",
+                "warmup": True,
+                "request_id": request_id,
+                "user_id": user_id,
+                "users_root": str(USERS_ROOT),
+                "storage_mounted": mounted,
+                "storage_marker_present": marker_present,
+                "instance": instance_fingerprint(),
+            }
+        )
+
     prompt = payload.get("prompt")
     if not isinstance(prompt, str) or not prompt.strip():
         return JSONResponse({"error": "payload.prompt is required"}, status_code=400)
@@ -239,25 +318,36 @@ async def invocations(request: Request):
         return JSONResponse(
             {"error": "payload.reset must be a boolean"}, status_code=400
         )
-    log.info("accepted request prompt_chars=%d reset=%s", len(prompt), reset)
+    log.info(
+        "accepted request request_id=%s prompt_chars=%d reset=%s inflight=%d",
+        request_id,
+        len(prompt),
+        reset,
+        _inflight,
+    )
 
     async def stream():
+        global _inflight
         lock = await _lock_for(user_id)
         async with lock:
             async with _agent_slots:
+                _inflight += 1
                 try:
-                    async for chunk in _run_agent(user_id, prompt, reset):
+                    async for chunk in _run_agent(user_id, prompt, reset, request_id):
                         yield chunk
                 except Exception as exc:
                     log.exception("agent request failed")
                     yield _sse(
                         {
                             "event": "error",
+                            "request_id": request_id,
                             "user_id": user_id,
                             "message": f"{type(exc).__name__}: {exc}",
                             "instance": instance_fingerprint(),
                         }
                     )
+                finally:
+                    _inflight -= 1
 
     return StreamingResponse(stream(), media_type="text/event-stream")
 

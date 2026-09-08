@@ -1,0 +1,12 @@
+# Stateless Session Router image for ECS Fargate (linux/arm64).
+FROM ghcr.io/astral-sh/uv:0.8.13-python3.13-bookworm-slim
+
+WORKDIR /app
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev
+COPY router/ ./router/
+
+ENV PORT=8080 \
+    PYTHONUNBUFFERED=1
+EXPOSE 8080
+CMD [".venv/bin/python3", "router/server.py"]
