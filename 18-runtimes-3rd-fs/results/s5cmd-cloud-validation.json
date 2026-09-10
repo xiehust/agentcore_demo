@@ -1,0 +1,134 @@
+{
+  "checked_at": "2026-09-10T04:05:24.406798+00:00",
+  "reports": {
+    "results/s5cmd-cloud-w8.json": {
+      "sha256": "8fd677a925512fd64ab54b34f4f34042c7faf849f98ef95e7c1ed18c790823e4",
+      "valid": true,
+      "engine": "s5cmd",
+      "rows": 36,
+      "workers": 8,
+      "repetitions": 3,
+      "file_copies": 248436,
+      "application_bytes": 1852174584,
+      "isolation_checks": 24,
+      "sessions_stopped": 2
+    },
+    "results/s5cmd-cloud-w32-complete.json": {
+      "sha256": "215df159d3a968a0568e9bc90cb0bb67d44393515265c8db8dc8104cfa6cf068",
+      "valid": true,
+      "engine": "s5cmd",
+      "rows": 36,
+      "workers": 32,
+      "repetitions": 3,
+      "file_copies": 248436,
+      "application_bytes": 1852174584,
+      "isolation_checks": 24,
+      "sessions_stopped": 2
+    },
+    "results/s5cmd-cloud-w64.json": {
+      "sha256": "053d9457302c63ffb409802d3c5f621d2d677c0dbce7337d9bbf66cfae836b66",
+      "valid": true,
+      "engine": "s5cmd",
+      "rows": 36,
+      "workers": 64,
+      "repetitions": 3,
+      "file_copies": 248436,
+      "application_bytes": 1852174584,
+      "isolation_checks": 24,
+      "sessions_stopped": 2
+    },
+    "results/s5cmd-cloud-w128.json": {
+      "sha256": "3cf610c1fa2bca1184ee3a73f6115241658e8b6a74e5d7c074c880d89d5761f5",
+      "valid": true,
+      "engine": "s5cmd",
+      "rows": 36,
+      "workers": 128,
+      "repetitions": 3,
+      "file_copies": 248436,
+      "application_bytes": 1852174584,
+      "isolation_checks": 24,
+      "sessions_stopped": 2
+    }
+  },
+  "deployment": {
+    "recorded_at": "2026-09-10T04:05:27.257260+00:00",
+    "region": "us-west-2",
+    "stack_id": "arn:aws:cloudformation:us-west-2:434444145045:stack/jfsbench-d6935b4639/edde0860-acb7-11f1-86b9-02ffd9b467a9",
+    "outputs": {
+      "GatewayInstanceId": "i-08523634aef9c3335",
+      "DataBucket": "jfsbench-d6935b4639-databucket-wk0plgecvfxj",
+      "TenantDataRoleA": "arn:aws:iam::434444145045:role/jfsbench-d6935b4639-TenantDataRoleA-PMtESdHr5Wbn",
+      "AdminSecretArn": "arn:aws:secretsmanager:us-west-2:434444145045:secret:AdminSecret-6Jrgn80r9WkT-G7YLgq",
+      "RuntimeRole": "arn:aws:iam::434444145045:role/jfsbench-d6935b4639-RuntimeRole-4Q8AsiBDr4yA",
+      "SubnetId": "subnet-0cba7acd515a3bc22",
+      "RepositoryUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/jfsbench-d6935b4639-repository-fm78uijpoo9t",
+      "TenantASecretArn": "arn:aws:secretsmanager:us-west-2:434444145045:secret:TenantASecret-AW8VBki7CwOZ-9Vwepk",
+      "TenantDataRoleB": "arn:aws:iam::434444145045:role/jfsbench-d6935b4639-TenantDataRoleB-DiQmZ4ApID8r",
+      "VpcId": "vpc-06cdc21ce714aa897",
+      "RuntimeSecurityGroup": "sg-0365f81b375d3e0cc",
+      "TenantBSecretArn": "arn:aws:secretsmanager:us-west-2:434444145045:secret:TenantBSecret-mOQoMFyiyG6Q-m9SpMo",
+      "GatewayPrivateIp": "10.87.1.224"
+    },
+    "runtime": {
+      "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/jfsbench_d6935b4639-5IfNz2BMEZ",
+      "agentRuntimeVersion": "3",
+      "status": "READY",
+      "networkConfiguration": {
+        "networkMode": "VPC",
+        "networkModeConfig": {
+          "securityGroups": [
+            "sg-0365f81b375d3e0cc"
+          ],
+          "subnets": [
+            "subnet-0cba7acd515a3bc22"
+          ],
+          "requireServiceS3Endpoint": false
+        }
+      },
+      "roleArn": "arn:aws:iam::434444145045:role/jfsbench-d6935b4639-RuntimeRole-4Q8AsiBDr4yA"
+    },
+    "gateway": {
+      "InstanceId": "i-08523634aef9c3335",
+      "InstanceType": "m7g.large",
+      "ImageId": "ami-0659940a146188c5b",
+      "Placement": {
+        "AvailabilityZoneId": "usw2-az2",
+        "GroupName": "",
+        "Tenancy": "default",
+        "AvailabilityZone": "us-west-2a"
+      },
+      "PrivateIpAddress": "10.87.1.224",
+      "State": {
+        "Code": 16,
+        "Name": "running"
+      }
+    },
+    "volumes": [
+      {
+        "VolumeId": "vol-04d46b9ff0f70f70f",
+        "Size": 30,
+        "VolumeType": "gp3",
+        "Iops": 3000,
+        "Throughput": 125,
+        "Encrypted": true
+      }
+    ],
+    "image": {
+      "imageDigest": "sha256:63292ec1e61fd4b54bdb8be5ec97e8acbfd367309741111f2b5150a941dcb034",
+      "imageSizeInBytes": 133586969,
+      "imagePushedAt": "2026-09-10 03:13:53.220000+00:00"
+    },
+    "gateway_probe": {
+      "command_id": "1c6a29ac-8889-4d27-b48f-e1bd4a074daa",
+      "status": "Success",
+      "stdout": "juicefs version 1.4.1+2026-07-30.0b90c7d\nmc version RELEASE.2021-04-22T17-40-00Z\nExecStart={ path=/opt/juicefs-demo/juicefs ; argv[]=/opt/juicefs-demo/juicefs gateway --multi-buckets --object-meta --keep-etag --no-banner --cache-dir /opt/juicefs-demo/cache-8699ebeb12384c679f09b08a01f0e66c --cache-size 1024 --refresh-iam-interval 1s sqlite3:///opt/juicefs-demo/metadata.db 0.0.0.0:9000 ; ignore_errors=no ; start_time=[Thu 2026-09-10 04:04:34 UTC] ; stop_time=[n/a] ; pid=34203 ; code=(null) ; status=0/0 }\nActiveState=active\nSubState=running\nFilesystem      Size  Used Avail Use% Mounted on\n/dev/nvme0n1p1   30G  7.1G   23G  24% /\nLinux ip-10-87-1-224.us-west-2.compute.internal 6.18.44-99.149.amzn2023.aarch64 #2 SMP Tue Aug 25 21:16:30 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux\n"
+    },
+    "source_sha256": {
+      "demo/juicefs/agent.py": "2b7d021e4f87165552e5b222856031402a6a4e19a61f9b8098b615a1d0329fe7",
+      "demo/juicefs/workspace.py": "30107b1567ba358a656ad9e48febc2ce332459841f74e578b48a9a5bf355fd83",
+      "demo/juicefs/s5_transfer.py": "0ba4a3310e87ff38a3f0a25cf2b26873eb4520bc2171e35bc32d99abb784a190",
+      "demo/juicefs/session_binding.py": "153f5828d26cb66286ade667739a8143433c8f77d5c5c328ad0838d0e90e0164"
+    },
+    "infrastructure_retained": true
+  }
+}

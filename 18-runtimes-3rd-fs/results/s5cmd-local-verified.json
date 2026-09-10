@@ -1,0 +1,242 @@
+{
+  "engine": "s5cmd",
+  "s5cmd_version": "v2.3.0",
+  "success": false,
+  "scope": "localhost TLS/IAM with file data backend; NOT AWS benchmark",
+  "artifacts": "/home/ubuntu/workspace/agentcore_demo/18-runtimes-3rd-fs/build/juicefs-smoke-ps_kguy4",
+  "isolation": {
+    "tenant-a": {
+      "success": true,
+      "checks": {
+        "foreign_get": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_list": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_put": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_delete": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "copy_foreign_source": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "copy_foreign_destination": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        }
+      },
+      "engine": "s5cmd"
+    },
+    "tenant-b": {
+      "success": true,
+      "checks": {
+        "foreign_get": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_list": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_put": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_delete": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "copy_foreign_source": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "copy_foreign_destination": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        }
+      },
+      "engine": "s5cmd"
+    }
+  },
+  "operations": [
+    {
+      "schema": "s5cmd-workspace-v1",
+      "engine": "s5cmd",
+      "s5cmd_version": "v2.3.0",
+      "success": true,
+      "error": null,
+      "deadline_exceeded": false,
+      "workload": "unzip",
+      "phase": "write",
+      "workers": 32,
+      "part_concurrency": 1,
+      "retry_count": 2,
+      "completed_files": 107,
+      "file_batch_seconds": 0.3183895805850625,
+      "manifest_seconds": 0.03188618365675211,
+      "validation_seconds": 0.010134886018931866,
+      "wall_seconds": 0.36211805138736963,
+      "file_batch_mib_per_second": 1.2882812393942134,
+      "manifest_published": true,
+      "transfer_status": {
+        "success": true,
+        "expected_copies_matched": true,
+        "exit_code": 0,
+        "timed_out": false,
+        "error_records": 0,
+        "completed_copies": 107,
+        "access_denied": false,
+        "seconds": 0.3183895805850625
+      },
+      "restored_to": null,
+      "timing": "fresh s5cmd process per batch; subprocess startup/TLS included; wall includes validation; no fsync",
+      "files": 107,
+      "directories": 1,
+      "symlinks": 1,
+      "total_bytes": 430100,
+      "small_files_le_16k": 107,
+      "git_files": 1,
+      "manifest_sha256": "4d4cf75dc1ee3f181f0701c928095759a850ba6a6033fca1cd0d0c9fe2189a14"
+    },
+    {
+      "schema": "s5cmd-workspace-v1",
+      "engine": "s5cmd",
+      "s5cmd_version": "v2.3.0",
+      "success": true,
+      "error": null,
+      "deadline_exceeded": false,
+      "workload": "unzip",
+      "phase": "restore",
+      "workers": 32,
+      "part_concurrency": 1,
+      "retry_count": 2,
+      "completed_files": 107,
+      "file_batch_seconds": 0.21727106720209122,
+      "manifest_seconds": 0.015879612416028976,
+      "validation_seconds": 0.012685427442193031,
+      "wall_seconds": 0.24795998726040125,
+      "file_batch_mib_per_second": 1.8878506409912834,
+      "manifest_published": false,
+      "transfer_status": {
+        "success": true,
+        "expected_copies_matched": true,
+        "exit_code": 0,
+        "timed_out": false,
+        "error_records": 0,
+        "completed_copies": 107,
+        "access_denied": false,
+        "seconds": 0.21727106720209122
+      },
+      "restored_to": "/home/ubuntu/workspace/agentcore_demo/18-runtimes-3rd-fs/build/juicefs-smoke-ps_kguy4/test-restores/s5-phase-zqsc3zto/tree",
+      "timing": "fresh s5cmd process per batch; subprocess startup/TLS included; wall includes validation; no fsync",
+      "files": 107,
+      "directories": 1,
+      "symlinks": 1,
+      "total_bytes": 430100,
+      "small_files_le_16k": 107,
+      "git_files": 1,
+      "manifest_sha256": "4d4cf75dc1ee3f181f0701c928095759a850ba6a6033fca1cd0d0c9fe2189a14"
+    },
+    {
+      "schema": "s5cmd-workspace-v1",
+      "engine": "s5cmd",
+      "s5cmd_version": "v2.3.0",
+      "success": true,
+      "error": null,
+      "deadline_exceeded": false,
+      "workload": "unzip",
+      "phase": "restore",
+      "workers": 32,
+      "part_concurrency": 1,
+      "retry_count": 2,
+      "completed_files": 107,
+      "file_batch_seconds": 0.21907921880483627,
+      "manifest_seconds": 0.033711591735482216,
+      "validation_seconds": 0.01238071545958519,
+      "wall_seconds": 0.2673581726849079,
+      "file_batch_mib_per_second": 1.872269427123196,
+      "manifest_published": false,
+      "transfer_status": {
+        "success": true,
+        "expected_copies_matched": true,
+        "exit_code": 0,
+        "timed_out": false,
+        "error_records": 0,
+        "completed_copies": 107,
+        "access_denied": false,
+        "seconds": 0.21907921880483627
+      },
+      "restored_to": "/home/ubuntu/workspace/agentcore_demo/18-runtimes-3rd-fs/build/juicefs-smoke-ps_kguy4/test-restores/s5-phase-e1s97ie7/tree",
+      "timing": "fresh s5cmd process per batch; subprocess startup/TLS included; wall includes validation; no fsync",
+      "files": 107,
+      "directories": 1,
+      "symlinks": 1,
+      "total_bytes": 430100,
+      "small_files_le_16k": 107,
+      "git_files": 1,
+      "manifest_sha256": "4d4cf75dc1ee3f181f0701c928095759a850ba6a6033fca1cd0d0c9fe2189a14"
+    }
+  ],
+  "workspaces": [
+    {
+      "schema": "s5cmd-workspace-v1",
+      "engine": "s5cmd",
+      "s5cmd_version": "v2.3.0",
+      "success": false,
+      "error": "s5cmd_failure",
+      "deadline_exceeded": false,
+      "workload": "git-clone",
+      "phase": "write",
+      "workers": 32,
+      "part_concurrency": 1,
+      "retry_count": 2,
+      "completed_files": 0,
+      "file_batch_seconds": 0.0,
+      "manifest_seconds": 0.0,
+      "validation_seconds": 0.0,
+      "wall_seconds": 44.05035243649036,
+      "file_batch_mib_per_second": null,
+      "manifest_published": false,
+      "transfer_status": {
+        "success": false,
+        "expected_copies_matched": false,
+        "exit_code": 0,
+        "timed_out": false,
+        "error_records": 0,
+        "completed_copies": 6906,
+        "access_denied": false,
+        "seconds": 43.943804793059826
+      },
+      "restored_to": null,
+      "timing": "fresh s5cmd process per batch; subprocess startup/TLS included; wall includes validation; no fsync",
+      "files": 6906,
+      "directories": 3257,
+      "symlinks": 4,
+      "total_bytes": 58095225,
+      "small_files_le_16k": 6164,
+      "git_files": 9,
+      "manifest_sha256": "71f7e415217a768841febb87ba593c5491230283eea9849a22614d8d556517bd"
+    }
+  ],
+  "error": "RuntimeError"
+}

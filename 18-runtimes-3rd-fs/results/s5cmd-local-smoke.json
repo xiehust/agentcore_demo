@@ -1,0 +1,51 @@
+{
+  "engine": "s5cmd",
+  "s5cmd_version": "v2.3.0",
+  "success": false,
+  "scope": "localhost TLS/IAM with file data backend; NOT AWS benchmark",
+  "artifacts": "/home/ubuntu/workspace/agentcore_demo/18-runtimes-3rd-fs/build/juicefs-smoke-fj4m3ua8",
+  "isolation": {
+    "tenant-a": {
+      "success": false,
+      "checks": {
+        "foreign_get": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_head": {
+          "passed": false,
+          "exit_code": 1,
+          "access_denied": false
+        },
+        "foreign_list": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_put": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "foreign_delete": {
+          "passed": false,
+          "exit_code": 1,
+          "access_denied": false
+        },
+        "copy_foreign_source": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        },
+        "copy_foreign_destination": {
+          "passed": true,
+          "exit_code": 1,
+          "access_denied": true
+        }
+      },
+      "engine": "s5cmd"
+    }
+  },
+  "error": "AssertionError"
+}

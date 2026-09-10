@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-09-10T03:43:39.601692+00:00",
+  "reports": {
+    "results/s5cmd-cloud-w8.json": {
+      "sha256": "8fd677a925512fd64ab54b34f4f34042c7faf849f98ef95e7c1ed18c790823e4",
+      "valid": true,
+      "engine": "s5cmd",
+      "rows": 36,
+      "workers": 8,
+      "repetitions": 3,
+      "file_copies": 248436,
+      "application_bytes": 1852174584,
+      "isolation_checks": 24,
+      "sessions_stopped": 2
+    },
+    "results/s5cmd-cloud-w32-complete.json": {
+      "sha256": "215df159d3a968a0568e9bc90cb0bb67d44393515265c8db8dc8104cfa6cf068",
+      "valid": true,
+      "engine": "s5cmd",
+      "rows": 36,
+      "workers": 32,
+      "repetitions": 3,
+      "file_copies": 248436,
+      "application_bytes": 1852174584,
+      "isolation_checks": 24,
+      "sessions_stopped": 2
+    }
+  }
+}

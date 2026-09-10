@@ -1,0 +1,93 @@
+{
+  "run_id": "run-184a4bb702714a3199132f0f5f150fcc",
+  "region": "us-west-2",
+  "started_at": "2026-09-10T03:13:10.681716+00:00",
+  "repetitions": 3,
+  "deployment": "jfsbench-d6935b4639",
+  "measurements": [],
+  "isolation": [],
+  "cache_resets": [],
+  "schema": "s5cmd-workspace-v1",
+  "engine": "s5cmd",
+  "workers": 32,
+  "versions": {
+    "juicefs": "1.4.1",
+    "s5cmd": "v2.3.0"
+  },
+  "writeback": false,
+  "gateway_instance_type": "m7g.large",
+  "metadata": "SQLite-on-EBS",
+  "success": false,
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/jfsbench_d6935b4639-5IfNz2BMEZ",
+  "sessions": {
+    "tenant-a": {
+      "tenant": "tenant-a",
+      "session_id": "probe-d339c0b1a65a436ead3774196f0942fb",
+      "process_id": "5d6b830a6d9d4718bd801501c16ff371"
+    },
+    "tenant-b": {
+      "tenant": "tenant-b",
+      "session_id": "probe-9fdf2c5d53cb4d45b96f989625ccd42c",
+      "process_id": "fde851d605b34fe5bb1cdc5b0ebcbfc6"
+    }
+  },
+  "routing_note": "one ARN, distinct context session IDs/process UUIDs; not hardware microVM attestation",
+  "cross_session_token_rejected": true,
+  "failed_response": {
+    "success": false,
+    "checks": {
+      "foreign_get": {
+        "passed": true,
+        "exit_code": 1,
+        "access_denied": true
+      },
+      "foreign_list": {
+        "passed": true,
+        "exit_code": 1,
+        "access_denied": true
+      },
+      "foreign_put": {
+        "passed": true,
+        "exit_code": 1,
+        "access_denied": true
+      },
+      "foreign_delete": {
+        "passed": false,
+        "exit_code": 1,
+        "access_denied": false
+      },
+      "copy_foreign_source": {
+        "passed": true,
+        "exit_code": 1,
+        "access_denied": true
+      },
+      "copy_foreign_destination": {
+        "passed": true,
+        "exit_code": 1,
+        "access_denied": true
+      }
+    },
+    "engine": "s5cmd"
+  },
+  "error": {
+    "type": "RuntimeError",
+    "code": null,
+    "status": null,
+    "request_id": null
+  },
+  "session_cleanup": {
+    "tenant-a": {
+      "attempted": true,
+      "status_code": 200,
+      "runtime_session_id": "probe-d339c0b1a65a436ead3774196f0942fb",
+      "success": true
+    },
+    "tenant-b": {
+      "attempted": true,
+      "status_code": 200,
+      "runtime_session_id": "probe-9fdf2c5d53cb4d45b96f989625ccd42c",
+      "success": true
+    }
+  },
+  "finished_at": "2026-09-10T03:13:18.610606+00:00"
+}

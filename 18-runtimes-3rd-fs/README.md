@@ -11,6 +11,17 @@
 | 3 | 监测模块：tool call / network access 审计 | 四层采集：CloudTrail（API）、AgentCore Observability OTEL span + 确定性审计 hook（tool call）、Gateway + Policy `LOG_ONLY`（授权即审计）、**VPC 模式**下 Flow Logs / DNS 日志 / Network Firewall（网络）；PUBLIC 模式没有出网明细 | [docs/03](docs/03-audit-observability.md) | `demo/audit/` |
 | 4 | 评估模块：自建 LLM judge vs 托管 Evaluations | *本轮不做（按需求方要求移出范围）* | — | — |
 
+## s5cmd / JuiceFS 共享卷 Demo
+
+单 Runtime、多用户 session，使用镜像内 s5cmd 批量复制 Django clone/unzip 工作区，对照原生 S3 与 JuiceFS S3 Gateway。文件传输性能测试不使用 boto3；boto3 仅用于 AWS 控制面。
+
+- [Demo 架构、部署和现有资源更新](docs/05-s5cmd-demo.md)
+- [s5cmd worker 矩阵、计时口径与验收](docs/06-s5cmd-test-plan.md)
+- [共享卷多租户隔离设计](docs/04-juicefs-shared-volume-multitenancy.md)
+
+[s5cmd 云端实测结果](docs/07-s5cmd-cloud-results.md)：8/32/64/128 workers 各三轮完成，256 workers 未完成。原生 S3 在所有完整配置的保存阶段更快；读取优势随 worker 配置变化，不沿用旧客户端的性能结论。
+
+
 ---
 
 ## 关键实测证据（2026-09-03，us-east-2）

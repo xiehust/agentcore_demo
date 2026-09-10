@@ -1,0 +1,39 @@
+{
+  "fixture": {
+    "repository": "https://github.com/django/django.git",
+    "tag": "5.2.6",
+    "revision": "75c4403f07b8ad25893f7832dbe8fc6814b53b2d",
+    "history": "shallow depth=1 bare clone; not full history",
+    "zip_sha256": "04418c9543bf04ea299b0ad2f417d96366bd05bd225beb99af9c6c858df80935",
+    "zip_bytes": 15221013,
+    "source_clone_seconds_including_github": 1.725448351353407,
+    "git_version": "git version 2.43.0"
+  },
+  "local_baselines": [
+    {
+      "kind": "git-clone",
+      "local_prepare_seconds": 0.9456146229058504,
+      "scan_hash_seconds": 1.2358445599675179,
+      "files": 6906,
+      "directories": 3257,
+      "symlinks": 4,
+      "total_bytes": 58095225,
+      "small_files_le_16k": 6164,
+      "git_files": 9,
+      "manifest_sha256": "9b44b73d23ff362a049db58b39bdb05b2e204d8c238e983bdee4b87d132210da"
+    },
+    {
+      "kind": "unzip",
+      "local_prepare_seconds": 0.7437570216134191,
+      "scan_hash_seconds": 1.2259609047323465,
+      "files": 6897,
+      "directories": 3249,
+      "symlinks": 4,
+      "total_bytes": 44841006,
+      "small_files_le_16k": 6159,
+      "git_files": 0,
+      "manifest_sha256": "1674448f084b4e658fc068d8365f228cf73986c9d72463da5342fde962d467ec"
+    }
+  ],
+  "scope": "developer host local clone/unzip only; no S3 or AgentCore performance measurement"
+}
