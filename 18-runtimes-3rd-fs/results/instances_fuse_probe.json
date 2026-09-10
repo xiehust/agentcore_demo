@@ -1,0 +1,302 @@
+{
+  "probed_at": "2026-09-10T05:55:02.338809+00:00",
+  "region": "us-west-2",
+  "provider": {
+    "capacityProviderId": "capacity_provider_arm_m7g_large-1HB6aXJTVr",
+    "capacityProviderArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:capacity-provider/capacity_provider_arm_m7g_large-1HB6aXJTVr",
+    "name": "capacity_provider_arm_m7g_large",
+    "status": "READY",
+    "description": "ARM64 m7g.large capacity provider for shared runtime load tests",
+    "permissionsConfiguration": {
+      "capacityProviderOperatorRoleArn": "arn:aws:iam::434444145045:role/service-role/AmazonBedrockAgentCoreCapacityProviderDefaultRole_we458"
+    },
+    "computeConfiguration": {
+      "ec2Configuration": {
+        "launchTemplateSource": {
+          "launchParameters": {
+            "operatingSystem": "LINUX_ARM64",
+            "instanceRequirements": {
+              "allowedInstanceTypes": [
+                "m7g.large"
+              ]
+            },
+            "capacityReservationSpecification": {
+              "capacityReservationPreference": "open"
+            },
+            "instanceProfileArn": "arn:aws:iam::434444145045:instance-profile/AmazonBedrockAgentCoreCapacityProviderDefaultInstanceRole_w2pfl"
+          }
+        },
+        "vpcConfiguration": {
+          "subnets": [
+            "subnet-0049c68761e287ca0",
+            "subnet-09b36d4db52839142"
+          ],
+          "securityGroups": [
+            "sg-04973c0b4c1a164af"
+          ]
+        },
+        "volumes": [
+          {
+            "ebsConfiguration": {
+              "name": "scratch",
+              "sizeGiB": 50,
+              "volumeType": "gp3",
+              "iops": 3000,
+              "throughput": 125,
+              "encrypted": true
+            }
+          }
+        ],
+        "lifecycleConfiguration": {
+          "idleInstanceTimeout": 7200,
+          "maxLifetime": 86400
+        }
+      }
+    },
+    "createdAt": "2026-08-13 02:50:32+00:00",
+    "lastUpdatedAt": "2026-08-13 02:50:33+00:00"
+  },
+  "runtime": {
+    "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/shared_runtime_multiuser_m7g-EZpQed4lPW",
+    "agentRuntimeVersion": "1",
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/launchpad-agents:shared-runtime-v1"
+      }
+    },
+    "capacityProviderConfiguration": {
+      "capacityProviderArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:capacity-provider/capacity_provider_arm_m7g_large-1HB6aXJTVr"
+    }
+  },
+  "scope": "Existing container runtime, new isolated session; no package installation or configuration changes",
+  "session_id": "probe-0d52a12e2f884bae8a66974713a3ed56",
+  "warm_up_error": "An error occurred (RuntimeClientError) when calling the InvokeAgentRuntime operation: Received error (400) from runtime. Please check your CloudWatch logs for more information.",
+  "command": {
+    "api_status": 200,
+    "runtime_session_id": "probe-0d52a12e2f884bae8a66974713a3ed56",
+    "expected_session_id": "probe-0d52a12e2f884bae8a66974713a3ed56",
+    "stderr": "",
+    "content_start_count": 1,
+    "content_stop": {
+      "exitCode": 0,
+      "status": "COMPLETED"
+    },
+    "protocol_errors": [],
+    "stream_exceptions": [],
+    "error": null,
+    "success": true
+  },
+  "report": {
+    "uname": {
+      "rc": 0,
+      "out": "Linux ip-172-31-12-85.us-west-2.compute.internal 6.18.44-99.149.amzn2023.aarch64 #2 SMP Tue Aug 25 21:16:30 UTC 2026 aarch64 GNU/Linux",
+      "err": ""
+    },
+    "id": {
+      "rc": 0,
+      "out": "uid=0(root) gid=0(root) groups=0(root)",
+      "err": ""
+    },
+    "proc_status": {
+      "Uid": "0\t0\t0\t0",
+      "Gid": "0\t0\t0\t0",
+      "CapInh": "0000000000000000",
+      "CapPrm": "0000000000000000",
+      "CapEff": "0000000000000000",
+      "CapBnd": "0000000000000000",
+      "CapAmb": "0000000000000000",
+      "NoNewPrivs": "0",
+      "Seccomp": "2",
+      "Seccomp_filters": "1"
+    },
+    "cap_eff_decoded": [],
+    "cap_bnd_decoded": [],
+    "dev_fuse_exists": false,
+    "dev_fuse_open": null,
+    "dev_listing": {
+      "rc": 0,
+      "out": "total 0\ndrwxr-xr-x. 4 root   root     320 Sep 10 05:55 .\ndrwxr-xr-x. 1 root   root      61 Sep 10 05:55 ..\nlrwxrwxrwx. 1 root   root      11 Sep 10 05:55 core -> /proc/kcore\nlrwxrwxrwx. 1 root   root      13 Sep 10 05:55 fd -> /proc/self/fd\ncrw-rw-rw-. 1 nobody nogroup 1, 7 Sep 10 05:55 full\ncrw-rw-rw-. 1 nobody nogroup 1, 3 Sep 10 05:55 null\nlrwxrwxrwx. 1 root   root       8 Sep 10 05:55 ptmx -> pts/ptmx\ndrwxr-xr-x. 2 root   root       0 Sep 10 05:55 pts\ncrw-rw-rw-. 1 nobody nogroup 1, 8 Sep 10 05:55 random\ndrwxrwxrwt. 2 root   root      40 Sep 10 05:55 shm\nlrwxrwxrwx. 1 root   root      15 Sep 10 05:55 stderr -> /proc/self/fd/2\nlrwxrwxrwx. 1 root   root      15 Sep 10 05:55 stdin -> /proc/self/fd/0\nlrwxrwxrwx. 1 root   root      15 Sep 10 05:55 stdout -> /proc/self/fd/1\ncrw-rw-rw-. 1 nobody nogroup 5, 0 Sep 10 05:55 tty\ncrw-rw-rw-. 1 nobody nogroup 1, 9 Sep 10 05:55 urandom\ncrw-rw-rw-. 1 nobody nogroup 1, 5 Sep 10 05:55 zero",
+      "err": ""
+    },
+    "proc_filesystems_has_fuse": true,
+    "proc_filesystems_has_nfs": false,
+    "proc_filesystems": "nodev\tsysfs\nnodev\ttmpfs\nnodev\tproc\nnodev\tcgroup\nnodev\tcgroup2\nnodev\tcpuset\nnodev\tdevtmpfs\nnodev\tdebugfs\nnodev\ttracefs\nnodev\tsecurityfs\nnodev\tsockfs\nnodev\tbpf\nnodev\tpipefs\nnodev\tramfs\nnodev\thugetlbfs\nnodev\tdevpts\nnodev\tautofs\n\txfs\n\tzonefs\nnodev\tmqueue\nnodev\tselinuxfs\nnodev\tpstore\nnodev\tefivarfs\nnodev\tconfigfs\n\tfuseblk\nnodev\tfuse\nnodev\tfusectl\nnodev\trpc_pipefs\n\tvfat\nnodev\toverlay\n\text3\n\text2\n\text4",
+    "binaries": {
+      "mount": "/usr/bin/mount",
+      "umount": "/usr/bin/umount",
+      "fusermount": "",
+      "fusermount3": "",
+      "unshare": "/usr/bin/unshare",
+      "nsenter": "/usr/bin/nsenter",
+      "s3fs": "",
+      "rclone": "",
+      "sshfs": "",
+      "mount.nfs": "",
+      "mount.nfs4": "",
+      "git": "/usr/bin/git",
+      "curl": "/usr/bin/curl"
+    },
+    "mount_tmpfs_attempt": {
+      "rc": 32,
+      "out": "mount: /tmp/_probe_mnt: permission denied.\n       dmesg(1) may have more information after failed mount system call.\nrc=32",
+      "err": ""
+    },
+    "mknod_dev_fuse_attempt": {
+      "rc": 0,
+      "out": "mknod: /dev/_probe_fuse: Operation not permitted\nmknod_rc=1\nFileNotFoundError: [Errno 2] No such file or directory: '/dev/_probe_fuse'",
+      "err": ""
+    },
+    "mount_fuse_type_attempt": {
+      "rc": 0,
+      "out": "mount: /tmp/_fuse_mnt: permission denied.\n       dmesg(1) may have more information after failed mount system call.\nrc=32",
+      "err": ""
+    },
+    "kernel_modules_dir": {
+      "rc": 0,
+      "out": "ls: cannot access '/lib/modules': No such file or directory\nrc=0",
+      "err": ""
+    },
+    "mount_nfs4_loopback_attempt": {
+      "rc": 0,
+      "out": "mount: /tmp/_nfs_mnt: permission denied.\n       dmesg(1) may have more information after failed mount system call.\nrc=32",
+      "err": ""
+    },
+    "unshare_userns_attempt": {
+      "rc": 0,
+      "out": "unshare: unshare failed: Operation not permitted\nrc=1",
+      "err": ""
+    },
+    "unshare_userns_mount_attempt": {
+      "rc": 0,
+      "out": "unshare: unshare failed: Operation not permitted\nrc=1",
+      "err": ""
+    },
+    "proc_mounts": {
+      "rc": 0,
+      "out": "overlay / overlay rw,seclabel,relatime,lowerdir=/tmp/ovl-idmapped3564431996/12/fs:/tmp/ovl-idmapped3564431996/11/fs:/tmp/ovl-idmapped3564431996/10/fs:/tmp/ovl-idmapped3564431996/9/fs:/tmp/ovl-idmapped3564431996/8/fs:/tmp/ovl-idmapped3564431996/7/fs:/tmp/ovl-idmapped3564431996/6/fs:/tmp/ovl-idmapped3564431996/5/fs:/tmp/ovl-idmapped3564431996/4/fs:/tmp/ovl-idmapped3564431996/3/fs:/tmp/ovl-idmapped3564431996/2/fs:/tmp/ovl-idmapped3564431996/1/fs,upperdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/14/fs,workdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/14/work,uuid=on 0 0\nproc /proc proc rw,nosuid,nodev,noexec,relatime 0 0\ntmpfs /dev tmpfs rw,seclabel,nosuid,size=65536k,mode=755,uid=100000,gid=100000 0 0\ndevpts /dev/pts devpts rw,seclabel,nosuid,noexec,relatime,gid=100005,mode=620,ptmxmode=666 0 0\nshm /dev/shm tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=65536k,uid=100000,gid=100000 0 0\nsysfs /sys sysfs ro,seclabel,nosuid,nodev,noexec,relatime 0 0\nsecurityfs /sys/kernel/security securityfs rw,nosuid,nodev,noexec,relatime 0 0\ncgroup2 /sys/fs/cgroup cgroup2 rw,seclabel,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot 0 0\nnone /sys/fs/pstore pstore rw,seclabel,nosuid,nodev,noexec,relatime 0 0\nefivarfs /sys/firmware/efi/efivars efivarfs rw,nosuid,nodev,noexec,relatime 0 0\nbpf /sys/fs/bpf bpf rw,nosuid,nodev,noexec,relatime,mode=700 0 0\nselinuxfs /sys/fs/selinux selinuxfs rw,nosuid,noexec,relatime 0 0\ndebugfs /sys/kernel/debug debugfs rw,seclabel,nosuid,nodev,noexec,relatime 0 0\ntracefs /sys/kernel/tracing tracefs rw,seclabel,nosuid,nodev,noexec,relatime 0 0\nconfigfs /sys/kernel/config configfs rw,nosuid,nodev,noexec,relatime 0 0\nfusectl /sys/fs/fuse/connections fusectl rw,nosuid,nodev,noexec,relatime 0 0\ntmpfs /etc/resolv.conf tmpfs ro,seclabel,nosuid,nodev,size=1589712k,nr_inodes=819200,mode=755 0 0\n/dev/nvme0n1p1 /etc/hosts xfs ro,seclabel,noatime,inode64,logbufs=8,logbsize=32k,sunit=1024,swidth=1024,",
+      "err": ""
+    },
+    "df": {
+      "rc": 0,
+      "out": "Filesystem      Size  Used Avail Use% Mounted on\noverlay          16G  9.7G  6.4G  61% /\noverlay          16G  9.7G  6.4G  61% /\noverlay          16G  9.7G  6.4G  61% /",
+      "err": ""
+    },
+    "mnt_listing": {
+      "rc": 0,
+      "out": "total 4\ndrwxr-xr-x. 1 nobody nogroup                  21 Sep 10 05:55 .\ndrwxr-xr-x. 1 root   root                     72 Sep 10 05:55 ..\ndrwxrwsr-x. 4 nobody agentcore-runtime-user 4096 Sep 10 05:55 scratch",
+      "err": ""
+    },
+    "kernel_modules": {
+      "rc": 0,
+      "out": "xt_multiport 16384 1 - Live 0x0000000000000000\nxt_nat 12288 2 - Live 0x0000000000000000\nxt_addrtype 12288 2 - Live 0x0000000000000000\nxt_mark 12288 1 - Live 0x0000000000000000\nnft_chain_nat 12288 4 - Live 0x0000000000000000\nxt_MASQUERADE 16384 2 - Live 0x0000000000000000\nnf_nat 57344 3 xt_nat,nft_chain_nat,xt_MASQUERADE, Live 0x0000000000000000\nnf_conntrack 180224 3 xt_nat,xt_MASQUERADE,nf_nat, Live 0x0000000000000000\nnf_defrag_ipv6 24576 1 nf_conntrack, Live 0x0000000000000000\nnf_defrag_ipv4 12288 1 nf_conntrack, Live 0x0000000000000000\nxt_comment 12288 6 - Live 0x0000000000000000\nnft_compat 16384 14 - Live 0x0000000000000000\nnf_tables 282624 55 nft_chain_nat,nft_compat, Live 0x0000000000000000\nnfnetlink 20480 2 nft_compat,nf_tables, Live 0x0000000000000000\nveth 36864 0 - Live 0x0000000000000000\next4 937984 1 - Live 0x0000000000000000\ncrc16 12288 1 ext4, Live 0x0000000000000000\nmbcache 20480 1 ext4, Live 0x0000000000000000\njbd2 180224 1 ext4, Live 0x0000000000000000\nbridge 311296 0 - Live 0x0000000000000000",
+      "err": ""
+    },
+    "env_hint": {
+      "rc": 0,
+      "out": "AWS_EXECUTION_ENV=<redacted>\nOTEL_EXPORTER_OTLP_LOGS_HEADERS=<redacted>\nAWS_DEFAULT_REGION=<redacted>\nAWS_REGION=<redacted>\nOTEL_RESOURCE_ATTRIBUTES=<redacted>\nAGENTCORE_RUNTIME_URL=<redacted>",
+      "err": ""
+    }
+  },
+  "summary": {
+    "kernel": "Linux ip-172-31-12-85.us-west-2.compute.internal 6.18.44-99.149.amzn2023.aarch64 #2 SMP Tue Aug 25 21:16:30 UTC 2026 aarch64 GNU/Linux",
+    "runs_as_root": true,
+    "dev_fuse_exists": false,
+    "dev_fuse_openable": null,
+    "kernel_fuse_registered": true,
+    "mknod_fuse_open_error": "FileNotFoundError: [Errno 2] No such file or directory: '/dev/_probe_fuse'",
+    "kernel_nfs_registered": false,
+    "nfs_mount_helper_present": false,
+    "nfs_client_path_reachable": false,
+    "has_cap_sys_admin": false,
+    "has_cap_mknod": false,
+    "seccomp_mode": "2",
+    "tmpfs_mount_allowed": false,
+    "userns_tmpfs_mount_allowed": false,
+    "fusermount_binary": false,
+    "loadable_modules": true
+  },
+  "extra_command": {
+    "api_status": 200,
+    "runtime_session_id": "probe-0d52a12e2f884bae8a66974713a3ed56",
+    "expected_session_id": "probe-0d52a12e2f884bae8a66974713a3ed56",
+    "stderr": "",
+    "content_start_count": 1,
+    "content_stop": {
+      "exitCode": 0,
+      "status": "COMPLETED"
+    },
+    "protocol_errors": [],
+    "stream_exceptions": [],
+    "error": null,
+    "success": true
+  },
+  "extra": {
+    "os_release": "PRETTY_NAME=\"Debian GNU/Linux 12 (bookworm)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"12\"\nVERSION=\"12 (bookworm)\"\nVERSION_CODENAME=bookworm\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"\n",
+    "uid_map": "         0     100000      65536\n",
+    "pid1_status": "Name:\tpython3\nUmask:\t0002\nState:\tS (sleeping)\nTgid:\t1\nNgid:\t0\nPid:\t1\nPPid:\t0\nTracerPid:\t0\nUid:\t0\t0\t0\t0\nGid:\t0\t0\t0\t0\nFDSize:\t64\nGroups:\t65536 \nNStgid:\t1\nNSpid:\t1\nNSpgid:\t1\nNSsid:\t1\nKthread:\t0\nVmPeak:\t   74856 kB\nVmSize:\t   74792 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   64280 kB\nVmRSS:\t   64280 kB\nRssAnon:\t   50240 kB\nRssFile:\t   14040 kB\nRssShmem:\t       0 kB\nVmData:\t   50852 kB\nVmStk:\t     132 kB\nVmExe:\t       4 kB\nVmLib:\t   18240 kB\nVmPTE:\t     188 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffff\nThreads:\t1\nSigQ:\t1/30446\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000000004002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tunknown\nCpus_allowed:\t3\nCpus_allowed_list:\t0-1\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t38\nnonvoluntary_ctxt_switches:\t198\n",
+    "self_cgroup": "0::/system.slice/ac-b2887565f474e0125b414394ef9b733af8fb81781d525d361c13ac44d5ea205c-026d113f\n",
+    "devices": "Character devices:\n  1 mem\n  4 /dev/vc/0\n  4 tty\n  4 ttyS\n  5 /dev/tty\n  5 /dev/console\n  5 /dev/ptmx\n  7 vcs\n 10 misc\n 13 input\n 90 mtd\n128 ptm\n136 pts\n243 hidraw\n244 nvme-generic\n245 nvme\n246 bsg\n247 watchdog\n248 ptp\n249 pps\n250 rtc\n251 dma_heap\n252 dax\n253 tpm\n254 gpiochip\n\nBlock devices:\n  7 loop\n  9 md\n253 device-mapper\n254 mdp\n259 blkext\n",
+    "kernel_config": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "fuse_module_info": {
+      "error": "[Errno 2] No such file or directory: 'modinfo'"
+    },
+    "fuse_module_loaded": true,
+    "fuse_libraries": {
+      "rc": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "tools": {
+      "gcc": null,
+      "cc": null,
+      "fusermount": null,
+      "fusermount3": null,
+      "mount-s3": null,
+      "rclone": null,
+      "juicefs": null
+    },
+    "fuse_open": {
+      "ok": false,
+      "errno": 2,
+      "error": "[Errno 2] No such file or directory: '/dev/fuse'"
+    },
+    "real_fuse_mount": {
+      "mounted": false,
+      "skipped": "Cannot open /dev/fuse"
+    }
+  },
+  "session_cleanup": {
+    "attempted": true,
+    "status_code": 200,
+    "runtime_session_id": "probe-0d52a12e2f884bae8a66974713a3ed56",
+    "success": true
+  },
+  "capacity_session_cleanup": {
+    "requested_at": "2026-09-10T05:56:35Z",
+    "api_status": 202,
+    "request_id": "c75acb16-2d44-4fc3-9f16-e1c93e2dc3e6",
+    "capacityProviderArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:capacity-provider/capacity_provider_arm_m7g_large-1HB6aXJTVr",
+    "sessionId": "probe-0d52a12e2f884bae8a66974713a3ed56",
+    "status": "Deprovisioning",
+    "terminal_deletion_verified": true,
+    "verification": {
+      "checked_at": "2026-09-10T05:57:46Z",
+      "api_status": 404,
+      "error_code": "ResourceNotFoundException",
+      "message": "CapacityProviderSession not found: probe-0d52a12e2f884bae8a66974713a3ed56",
+      "request_id": "c302b460-e6a2-4f0c-a439-00ace6bc89c8",
+      "provider_compute_and_permissions_unchanged": true,
+      "runtime_status": "READY",
+      "runtime_version": "1"
+    }
+  },
+  "analysis_notes": [
+    "Corrected derived nfs_client_path_reachable to false: rc=32 was permission denied, not a connection-refused response. Raw command output is unchanged.",
+    "FUSE driver is present but not usable from this container: /dev/fuse is absent, capability sets are empty, and mount/mknod/unshare are denied.",
+    "No userspace FUSE read/write test was possible. No packages installed or host configuration changed."
+  ]
+}
