@@ -1,0 +1,11 @@
+{
+  "sizes": [
+    "500mb"
+  ],
+  "concurrency": 200,
+  "rounds": 1,
+  "source": "21-runtime-v2-beta/retest_coldstart_v2_500mb.py",
+  "sha256": "8abc2a757888afc41884e6c853064c67d66b5f74a46fc7bd0956baf0321e7db2",
+  "comparison_run": "results/coldstart_v2_c200_2026-09-11",
+  "note": "Fresh client process, one smoke, 180s settle, one burst; no retries or quota changes."
+}

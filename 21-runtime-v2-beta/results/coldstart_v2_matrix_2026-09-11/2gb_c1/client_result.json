@@ -1,0 +1,146 @@
+{
+  "plan": {
+    "size": "2gb",
+    "region": "us-west-2",
+    "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/mpmatrix_2gb_c1_6361fbe9-NG8ojF7sve",
+    "concurrency": 1,
+    "process_count": 1,
+    "start_method": "spawn",
+    "started_iso": "2026-09-11T08:25:04.074978+00:00",
+    "before_send_spread_target_ms": 100,
+    "assignments": [
+      {
+        "worker": 0,
+        "indices_sessions": [
+          [
+            0,
+            "3adcc8f1a63a46a3b8af6999f819f370dca7a643"
+          ]
+        ],
+        "pool_size": 2
+      }
+    ]
+  },
+  "release_perf": 5196282.386723708,
+  "reports": [
+    {
+      "pid": 3820251,
+      "indices": [
+        0
+      ],
+      "pool_size": 2,
+      "rows": [
+        {
+          "size": "2gb",
+          "concurrency": 1,
+          "round": 1,
+          "request_idx": 0,
+          "session_id": "3adcc8f1a63a46a3b8af6999f819f370dca7a643",
+          "pid": 3820251,
+          "cold_ms": null,
+          "warm_ms": null,
+          "success": false,
+          "error_type": "throttle",
+          "error_msg": "ThrottlingException: An error occurred (ThrottlingException) when calling the InvokeAgentRuntime operation (reached max retries: 0): New session creation rate exceeded",
+          "status_code": 429,
+          "proc_start_ts": null,
+          "request_ts": null,
+          "stopped": false,
+          "wall_start_iso": "2026-09-11T08:25:04.321656+00:00",
+          "stop_absent": true
+        }
+      ],
+      "events": [
+        {
+          "operation": "invoke",
+          "session_id": "3adcc8f1a63a46a3b8af6999f819f370dca7a643",
+          "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/mpmatrix_2gb_c1_6361fbe9-NG8ojF7sve",
+          "attempt": 1,
+          "pid": 3820251,
+          "started_iso": "2026-09-11T08:25:04.321671+00:00",
+          "before_send_perf": [
+            5196282.388723487
+          ],
+          "response_received_perf": [
+            5196282.469580313
+          ],
+          "started_perf": 5196282.386809612,
+          "completed_perf": 5196282.4699584,
+          "error_type": "throttle",
+          "error": "ThrottlingException: An error occurred (ThrottlingException) when calling the InvokeAgentRuntime operation (reached max retries: 0): New session creation rate exceeded",
+          "metadata": {
+            "RequestId": "69cecd7c-68ff-4adc-9934-85b5fc5b4a6f",
+            "HTTPStatusCode": 429,
+            "HTTPHeaders": {
+              "date": "Fri, 11 Sep 2026 08:25:04 GMT",
+              "content-type": "application/json",
+              "content-length": "48",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "69cecd7c-68ff-4adc-9934-85b5fc5b4a6f",
+              "x-amzn-errortype": "ThrottlingException:http://internal.amazon.com/coral/com.amazon.bedrock.agentcore.common/"
+            },
+            "MaxAttemptsReached": true,
+            "RetryAttempts": 0
+          },
+          "error_code": "ThrottlingException",
+          "status": 429,
+          "elapsed_ms": 83.1487886607647,
+          "finished_iso": "2026-09-11T08:25:04.404850+00:00"
+        },
+        {
+          "operation": "stop",
+          "session_id": "3adcc8f1a63a46a3b8af6999f819f370dca7a643",
+          "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/mpmatrix_2gb_c1_6361fbe9-NG8ojF7sve",
+          "attempt": 1,
+          "pid": 3820251,
+          "started_iso": "2026-09-11T08:25:04.404890+00:00",
+          "before_send_perf": [
+            5196282.471284392
+          ],
+          "response_received_perf": [
+            5196282.533262061
+          ],
+          "started_perf": 5196282.470026411,
+          "completed_perf": 5196282.533420396,
+          "error_type": "other",
+          "error": "ResourceNotFoundException: An error occurred (ResourceNotFoundException) when calling the StopRuntimeSession operation: Session 3adcc8f1a63a46a3b8af6999f819f370dca7a643 not found or has been terminated",
+          "metadata": {
+            "RequestId": "1f3f5722-0b61-4299-b3c8-f37aad3e90da",
+            "HTTPStatusCode": 404,
+            "HTTPHeaders": {
+              "date": "Fri, 11 Sep 2026 08:25:04 GMT",
+              "content-type": "application/json",
+              "content-length": "95",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "1f3f5722-0b61-4299-b3c8-f37aad3e90da",
+              "x-amzn-errortype": "ResourceNotFoundException:http://internal.amazon.com/coral/com.amazon.bedrock.agentcore.common/"
+            },
+            "RetryAttempts": 0
+          },
+          "error_code": "ResourceNotFoundException",
+          "status": 404,
+          "elapsed_ms": 63.39398492127657,
+          "finished_iso": "2026-09-11T08:25:04.468308+00:00"
+        }
+      ],
+      "errors": [],
+      "client_config": {
+        "max_pool_connections": 2,
+        "retries": {
+          "total_max_attempts": 1,
+          "mode": "legacy"
+        }
+      },
+      "client_ready_perf": 5196282.385987312,
+      "cpu_seconds": 0.036863965,
+      "wall_seconds": 0.14762531593441963,
+      "max_rss_bytes": 166440960,
+      "finished_perf": 5196282.533627567
+    }
+  ],
+  "failure": null,
+  "exitcodes": [
+    0
+  ],
+  "finished_iso": "2026-09-11T08:25:04.516065+00:00"
+}

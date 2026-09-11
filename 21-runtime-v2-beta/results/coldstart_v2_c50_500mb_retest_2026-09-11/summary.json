@@ -1,0 +1,20 @@
+{
+  "cells": [
+    {
+      "size": "500mb",
+      "concurrency": 50,
+      "samples": 50,
+      "success": 50,
+      "throttles": 0,
+      "other_errors": 0,
+      "fresh_boots": 0,
+      "cold_p50_ms": 2931.4,
+      "cold_p90_ms": 3424.1,
+      "cold_max_ms": 4100.8,
+      "cold_mean_ms": 3065.3,
+      "warm_p50_ms": 111.2,
+      "warm_success": 50,
+      "stop_success": 50
+    }
+  ]
+}

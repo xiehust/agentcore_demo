@@ -11,18 +11,24 @@ from verify_coldstart import stats
 
 HERE = Path(__file__).resolve().parent
 
-def verify(out):
+def verify(out, sizes=("500mb", "1gb", "2gb"), concurrency=200):
     meta = json.loads((out / "run.json").read_text())
     dep = json.loads((out / "deployments.json").read_text())
     cleanup = json.loads((out / "cleanup.json").read_text())
     requests = json.loads((out / "create_requests.json").read_text())
     assert meta["measurement_complete"] and meta["cleanup_complete"]
     assert meta["exit_code"] in (0, 1) and not meta.get("error")
-    assert meta["concurrency"] == 200 and meta["rounds"] == 1
-    assert meta["max_pool_connections"] == 400 and meta["retries"]["total_max_attempts"] == 1
+    assert concurrency in (50, 100, 200)
+    assert meta["concurrency"] == concurrency and meta["rounds"] == 1
+    assert meta["max_pool_connections"] == 2 * concurrency and meta["retries"]["total_max_attempts"] == 1
     for name, digest in meta["source_sha256"].items():
         assert hashlib.sha256((HERE.parent / name).read_bytes()).hexdigest() == digest, name
-    assert set(dep["runtimes"]) == {"500mb", "1gb", "2gb"}
+    assert tuple(meta["sizes"]) == tuple(sizes)
+    assert set(dep["runtimes"]) == set(sizes)
+    if len(sizes) == 1 and concurrency == 200:
+        retest = json.loads((out / "retest.json").read_text())
+        assert retest["sizes"] == list(sizes) and retest["concurrency"] == 200 and retest["rounds"] == 1
+        assert hashlib.sha256((HERE.parent / retest["source"]).read_bytes()).hexdigest() == retest["sha256"]
     assert {r["id"] for r in cleanup["runtimes"]} == {r["id"] for r in dep["runtimes"].values()}
     assert all(r["deleted"] for r in cleanup["runtimes"])
     events = [json.loads(line) for line in (out / "api_events.jsonl").read_text().splitlines()]
@@ -31,7 +37,7 @@ def verify(out):
         by_session[event["session_id"]].append(event)
     summary = {c["size"]: c for c in json.loads((out / "summary.json").read_text())["cells"]}
     assert set(summary) == set(dep["runtimes"])
-    assert len(list((out / "raw").glob("*.json"))) == 3
+    assert len(list((out / "raw").glob("*.json"))) == len(sizes)
     all_rows, table = [], []
     for size, runtime in dep["runtimes"].items():
         ready = runtime["ready_response"]
@@ -40,13 +46,13 @@ def verify(out):
                       "protocolConfiguration", "lifecycleConfiguration"]:
             assert ready[field] == requests[size][field]
         assert ready["agentRuntimeArtifact"]["containerConfiguration"]["containerUri"].endswith(runtime["image_digest"])
-        cell = json.loads((out / "raw" / (size + "_c200.json")).read_text())
-        assert cell["meta"]["concurrency"] == 200 and cell["meta"]["rounds"] == 1
+        cell = json.loads((out / "raw" / f"{size}_c{concurrency}.json").read_text())
+        assert cell["meta"]["concurrency"] == concurrency and cell["meta"]["rounds"] == 1
         assert cell["meta"]["runtime_arn"] == runtime["arn"]
         assert not cell["worker_errors"]
         rows = cell["requests"]
-        assert len(rows) == 200 and {r["request_idx"] for r in rows} == set(range(200))
-        assert all(r["round"] == 1 and r["concurrency"] == 200 and r["size"] == size for r in rows)
+        assert len(rows) == concurrency and {r["request_idx"] for r in rows} == set(range(concurrency))
+        assert all(r["round"] == 1 and r["concurrency"] == concurrency and r["size"] == size for r in rows)
         for key, value in stats(rows).items():
             assert summary[size][key] == value, (size, key)
         assert summary[size]["warm_success"] == sum(r["warm_ms"] is not None for r in rows)
@@ -98,13 +104,15 @@ def verify(out):
         table.append({**summary[size], "dispatch_spread_ms": (max(starts) - min(starts)) * 1000,
                       "p95_ms": percentile(successful, 95), "p99_ms": percentile(successful, 99),
                       "errors": dict(errors)})
-    assert len(all_rows) == 603 and len({r["session_id"] for r in all_rows}) == 603
+    expected_sessions = (concurrency + 1) * len(sizes)
+    assert len(all_rows) == expected_sessions and len({r["session_id"] for r in all_rows}) == expected_sessions
     assert set(by_session) == {r["session_id"] for r in all_rows}
-    matrix = [r for r in all_rows if r["concurrency"] == 200]
+    matrix = [r for r in all_rows if r["concurrency"] == concurrency]
     assert meta["all_invocations_successful"] == all(r["success"] and r["warm_ms"] is not None for r in matrix)
-    print("PASS: 600 matrix attempts, 3 smoke, 603 unique sessions; full API evidence reconciled")
+    print(f"PASS: {concurrency * len(sizes)} matrix attempts, {len(sizes)} smoke, "
+          f"{expected_sessions} unique sessions; full API evidence reconciled")
     assert meta["exit_code"] == (0 if all(r["stopped"] for r in matrix) else 1)
-    print("PASS: source hashes, identical image digests, V2 and 3 deletions")
+    print(f"PASS: source hashes, identical image digests, V2 and {len(sizes)} deletions")
     print("STOP OUTCOMES:", sum(r["stopped"] for r in all_rows), "HTTP 200;",
           sum(not r["stopped"] for r in all_rows), "ResourceNotFound after cold throttle")
     print(json.dumps(table, indent=2))
@@ -123,5 +131,10 @@ def percentile(values, p):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("out", type=Path)
+    parser.add_argument("--size", choices=["500mb"], help="verify a single-image retest")
+    parser.add_argument("--concurrency", type=int, choices=[50, 100, 200], default=200)
     args = parser.parse_args()
-    verify(args.out)
+    if args.concurrency in (50, 100) and args.size != "500mb":
+        parser.error("c50/c100 verification requires --size 500mb")
+    verify(args.out, sizes=(args.size,) if args.size else ("500mb", "1gb", "2gb"),
+           concurrency=args.concurrency)

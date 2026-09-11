@@ -1,0 +1,87 @@
+{
+  "account": "434444145045",
+  "region": "us-west-2",
+  "iam_role": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+  "platform_version": "V2",
+  "runtimes": {
+    "500mb": {
+      "docker_size_bytes": 524944102,
+      "ecr_size_bytes": 401204053,
+      "name": "coldstart_v2_c50_500mb_b69e8982",
+      "id": "coldstart_v2_c50_500mb_b69e8982-Dcal4w286M",
+      "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/coldstart_v2_c50_500mb_b69e8982-Dcal4w286M",
+      "create_response": {
+        "ResponseMetadata": {
+          "RequestId": "3a9ebc06-2e80-4e95-a073-96f43db3bc7b",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Fri, 11 Sep 2026 07:03:58 GMT",
+            "content-type": "application/json",
+            "content-length": "472",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "3a9ebc06-2e80-4e95-a073-96f43db3bc7b",
+            "x-amz-apigw-id": "DhcqtGwyPHcEJJA=",
+            "x-amzn-trace-id": "Root=1-6aa3a7dd-655ffc555c54bdee51a203c3"
+          },
+          "RetryAttempts": 0
+        },
+        "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/coldstart_v2_c50_500mb_b69e8982-Dcal4w286M",
+        "workloadIdentityDetails": {
+          "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/coldstart_v2_c50_500mb_b69e8982-Dcal4w286M"
+        },
+        "agentRuntimeId": "coldstart_v2_c50_500mb_b69e8982-Dcal4w286M",
+        "agentRuntimeVersion": "1",
+        "createdAt": "2026-09-11 07:03:58.083136+00:00",
+        "status": "CREATING"
+      },
+      "image_digest": "sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87",
+      "ready_response": {
+        "ResponseMetadata": {
+          "RequestId": "2e5b8aa7-66c1-48cd-b88d-1e5929e28762",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Fri, 11 Sep 2026 07:07:06 GMT",
+            "content-type": "application/json",
+            "content-length": "1198",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "2e5b8aa7-66c1-48cd-b88d-1e5929e28762",
+            "x-amz-apigw-id": "DhdIKHeVPHcEu-A=",
+            "x-amzn-trace-id": "Root=1-6aa3a89a-7b05d8f3512281cb7d88b5a4"
+          },
+          "RetryAttempts": 0
+        },
+        "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/coldstart_v2_c50_500mb_b69e8982-Dcal4w286M",
+        "agentRuntimeName": "coldstart_v2_c50_500mb_b69e8982",
+        "agentRuntimeId": "coldstart_v2_c50_500mb_b69e8982-Dcal4w286M",
+        "agentRuntimeVersion": "1",
+        "createdAt": "2026-09-11 07:03:58.083136+00:00",
+        "lastUpdatedAt": "2026-09-11 07:07:01.873773+00:00",
+        "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+        "networkConfiguration": {
+          "networkMode": "PUBLIC"
+        },
+        "status": "READY",
+        "lifecycleConfiguration": {
+          "idleRuntimeSessionTimeout": 60,
+          "maxLifetime": 600
+        },
+        "description": "Temporary isolated 500mb V2 c50 retest",
+        "workloadIdentityDetails": {
+          "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/coldstart_v2_c50_500mb_b69e8982-Dcal4w286M"
+        },
+        "agentRuntimeArtifact": {
+          "containerConfiguration": {
+            "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+          }
+        },
+        "protocolConfiguration": {
+          "serverProtocol": "HTTP"
+        },
+        "metadataConfiguration": {
+          "requireMMDSV2": true
+        },
+        "platformVersion": "V2"
+      }
+    }
+  }
+}

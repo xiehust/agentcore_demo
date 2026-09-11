@@ -1,0 +1,138 @@
+{
+  "request": {
+    "size": "1gb",
+    "concurrency": 1,
+    "round": 1,
+    "request_idx": 0,
+    "session_id": "22372a2498754ba2bde0c3f5b6e8b52dd6441f84",
+    "pid": 3817732,
+    "cold_ms": 2517.6,
+    "warm_ms": 87.9,
+    "success": true,
+    "error_type": null,
+    "error_msg": null,
+    "status_code": 200,
+    "proc_start_ts": 1789114624.5614753,
+    "request_ts": 1789114751.8674161,
+    "stopped": true,
+    "wall_start_iso": "2026-09-11T08:19:09.366804+00:00",
+    "stop_absent": false
+  },
+  "events": [
+    {
+      "operation": "invoke",
+      "session_id": "22372a2498754ba2bde0c3f5b6e8b52dd6441f84",
+      "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/mpmatrix_1gb_c1_601d4814-GgjPUFEGVG",
+      "attempt": 1,
+      "pid": 3817732,
+      "started_iso": "2026-09-11T08:19:09.366817+00:00",
+      "before_send_perf": [
+        5195927.433332853
+      ],
+      "response_received_perf": [
+        5195929.949305085
+      ],
+      "started_perf": 5195927.431953528,
+      "metadata": {
+        "RequestId": "db48d60c-f34c-468d-b0d3-80c3816f1f09",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Fri, 11 Sep 2026 08:19:11 GMT",
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "db48d60c-f34c-468d-b0d3-80c3816f1f09",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "22372a2498754ba2bde0c3f5b6e8b52dd6441f84"
+        },
+        "RetryAttempts": 0
+      },
+      "completed_perf": 5195929.949536126,
+      "body": {
+        "message": "pong",
+        "proc_start_ts": 1789114624.5614753,
+        "request_ts": 1789114751.8674161,
+        "echo": {
+          "ping": "coldstart"
+        }
+      },
+      "status": 200,
+      "valid": true,
+      "elapsed_ms": 2517.582598142326,
+      "finished_iso": "2026-09-11T08:19:11.884440+00:00"
+    },
+    {
+      "operation": "invoke",
+      "session_id": "22372a2498754ba2bde0c3f5b6e8b52dd6441f84",
+      "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/mpmatrix_1gb_c1_601d4814-GgjPUFEGVG",
+      "attempt": 2,
+      "pid": 3817732,
+      "started_iso": "2026-09-11T08:19:11.884471+00:00",
+      "before_send_perf": [
+        5195929.950386228
+      ],
+      "response_received_perf": [
+        5195930.037132745
+      ],
+      "started_perf": 5195929.949606634,
+      "metadata": {
+        "RequestId": "6c4bf87c-a0c0-4fd9-a37e-c867706d9421",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Fri, 11 Sep 2026 08:19:11 GMT",
+          "content-type": "application/json",
+          "transfer-encoding": "chunked",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6c4bf87c-a0c0-4fd9-a37e-c867706d9421",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "22372a2498754ba2bde0c3f5b6e8b52dd6441f84"
+        },
+        "RetryAttempts": 0
+      },
+      "completed_perf": 5195930.03746519,
+      "body": {
+        "message": "pong",
+        "proc_start_ts": 1789114624.5614753,
+        "request_ts": 1789114751.954808,
+        "echo": {
+          "ping": "coldstart"
+        }
+      },
+      "status": 200,
+      "valid": true,
+      "elapsed_ms": 87.85855583846569,
+      "finished_iso": "2026-09-11T08:19:11.972367+00:00"
+    },
+    {
+      "operation": "stop",
+      "session_id": "22372a2498754ba2bde0c3f5b6e8b52dd6441f84",
+      "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/mpmatrix_1gb_c1_601d4814-GgjPUFEGVG",
+      "attempt": 1,
+      "pid": 3817732,
+      "started_iso": "2026-09-11T08:19:11.972398+00:00",
+      "before_send_perf": [
+        5195930.038743361
+      ],
+      "response_received_perf": [
+        5195930.21786228
+      ],
+      "started_perf": 5195930.037534492,
+      "completed_perf": 5195930.217998648,
+      "metadata": {
+        "RequestId": "f405ca81-2510-48b5-af77-a3155414ce98",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Fri, 11 Sep 2026 08:19:12 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "f405ca81-2510-48b5-af77-a3155414ce98",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "22372a2498754ba2bde0c3f5b6e8b52dd6441f84"
+        },
+        "RetryAttempts": 0
+      },
+      "status": 200,
+      "valid": true,
+      "elapsed_ms": 180.46415597200394,
+      "finished_iso": "2026-09-11T08:19:12.152901+00:00"
+    }
+  ]
+}

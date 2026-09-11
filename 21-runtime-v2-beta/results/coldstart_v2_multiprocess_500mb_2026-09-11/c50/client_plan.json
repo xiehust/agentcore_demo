@@ -1,0 +1,259 @@
+{
+  "region": "us-west-2",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/coldstart_v2_mp_c50_2a2159d0-bEsVMN7JQX",
+  "concurrency": 50,
+  "process_count": 8,
+  "start_method": "spawn",
+  "started_iso": "2026-09-11T07:34:42.820159+00:00",
+  "before_send_spread_target_ms": 100,
+  "assignments": [
+    {
+      "worker": 0,
+      "indices_sessions": [
+        [
+          0,
+          "82c38c806aad4121929568da61c3681eb37e3e80"
+        ],
+        [
+          8,
+          "a9ae91fc038247e5ad14916bfed11077e56575c0"
+        ],
+        [
+          16,
+          "262ad522bbb346e98e302a67bab5cefb9b144ec2"
+        ],
+        [
+          24,
+          "59ba43a1ed55451e88ebc745dbc2b1dde00a2fe6"
+        ],
+        [
+          32,
+          "a0aefc2bd2654c3b9b0f92be42cf0c4763dc4139"
+        ],
+        [
+          40,
+          "e8b4f37a87ce44fda87f4f7ef77f604d3d82e0a2"
+        ],
+        [
+          48,
+          "9cbee7b5085244f4905758e4c0ea954ae5a1613a"
+        ]
+      ],
+      "pool_size": 14
+    },
+    {
+      "worker": 1,
+      "indices_sessions": [
+        [
+          1,
+          "d2929fa66e264f698d05d81397220dc6a83940e9"
+        ],
+        [
+          9,
+          "422da4a1b1da4570858605da1d05a52347eda785"
+        ],
+        [
+          17,
+          "edecbec05f584599942cfb95fb26623de283479a"
+        ],
+        [
+          25,
+          "0695bd93bcab409a990b6d203a98afc46949754a"
+        ],
+        [
+          33,
+          "e4d5389cadc84f3db98a33aed1f2c0c313f9c268"
+        ],
+        [
+          41,
+          "f21413b054c744d39df04d4a5bfb88273150e981"
+        ],
+        [
+          49,
+          "ba67a07795384a22abfa1dfd1e3f2ee761847bc5"
+        ]
+      ],
+      "pool_size": 14
+    },
+    {
+      "worker": 2,
+      "indices_sessions": [
+        [
+          2,
+          "056ec3a0eac847439ff8dbbf8379a3eee8aedc9e"
+        ],
+        [
+          10,
+          "2350c39983c043b8aeb265ddffa8084eaff9a9b9"
+        ],
+        [
+          18,
+          "590deb4b5b5f430dbb28b3b8b853ed2aefb36623"
+        ],
+        [
+          26,
+          "188f4c445e73432489befb002f138dd1000fda7c"
+        ],
+        [
+          34,
+          "e8c520f21db845dd985a230666100965b7b10661"
+        ],
+        [
+          42,
+          "c682a3520cf24ea2b19c62cc6a486cc213113f9d"
+        ]
+      ],
+      "pool_size": 12
+    },
+    {
+      "worker": 3,
+      "indices_sessions": [
+        [
+          3,
+          "4463fc85d5cb44f4b0e963906b05ac04023e5e7d"
+        ],
+        [
+          11,
+          "71d5560ac0fd4327856b84ae9c110a711f8503e7"
+        ],
+        [
+          19,
+          "b4c0fea3383144bea4bf8a23e2fb74d2b03b03d6"
+        ],
+        [
+          27,
+          "67dd4919ec6240b8bc85d8ccbf3e34e19c5ef3c8"
+        ],
+        [
+          35,
+          "0345a8e999ae4c1f80785f8e3a1d46837ddb3fbf"
+        ],
+        [
+          43,
+          "0cd6dd20fc044d2f80281e7d3115bd046bd39890"
+        ]
+      ],
+      "pool_size": 12
+    },
+    {
+      "worker": 4,
+      "indices_sessions": [
+        [
+          4,
+          "a1c63e2668e94a2e9d7ab4a6c847a70c0e3ec616"
+        ],
+        [
+          12,
+          "cae4b34cf8604e9da2294accf52a7a8e534e4ece"
+        ],
+        [
+          20,
+          "5ffe84513b5e4c7d884039c84472742e2f1b2252"
+        ],
+        [
+          28,
+          "824935d5b64c4f3888aebc49a8b0a8300c4b819a"
+        ],
+        [
+          36,
+          "84218263f7c240799f856f5921b7634927a6056d"
+        ],
+        [
+          44,
+          "e861741780704e76878730d2e1ff77d35b43832c"
+        ]
+      ],
+      "pool_size": 12
+    },
+    {
+      "worker": 5,
+      "indices_sessions": [
+        [
+          5,
+          "ed59c286e1714d789887015fa21b3727def87901"
+        ],
+        [
+          13,
+          "15120a2c21524f61a3233b4ac56e40a79ba4943a"
+        ],
+        [
+          21,
+          "564a54f3df7e42bbae9219c1d41184d6526e4b3b"
+        ],
+        [
+          29,
+          "0d560eb622cf4f40a8201cc67d82586eb6a4779d"
+        ],
+        [
+          37,
+          "dc219275d83b4d9ba2f1f68ab7670f338250a2cb"
+        ],
+        [
+          45,
+          "4d6d554d379243c7951c0def26eadfb4f11f72cc"
+        ]
+      ],
+      "pool_size": 12
+    },
+    {
+      "worker": 6,
+      "indices_sessions": [
+        [
+          6,
+          "3c483a642b2b42fea7cc7c1f75e4e83f8097a03d"
+        ],
+        [
+          14,
+          "90c11fc640b747979a22f5e3dae5fb610a60985a"
+        ],
+        [
+          22,
+          "f0993cb76eb14d21a54b6096bf5bf0cbd5509166"
+        ],
+        [
+          30,
+          "f0177e5e67634d6f98b075b85daeca4bc99999bd"
+        ],
+        [
+          38,
+          "a9da76d14f4246928fc7483f5850801ddaa753d9"
+        ],
+        [
+          46,
+          "826c59208a264bd2a253f33bafa56274104b23e9"
+        ]
+      ],
+      "pool_size": 12
+    },
+    {
+      "worker": 7,
+      "indices_sessions": [
+        [
+          7,
+          "85fc42a3df604f1ea013737e8b2d46c59f7ba0dd"
+        ],
+        [
+          15,
+          "edddd5f259cb455ebc1070b3095362d480c3b308"
+        ],
+        [
+          23,
+          "3cff4414026c44e59466c4c6bec49727ad4c5356"
+        ],
+        [
+          31,
+          "3eb5071878ac4f5d9a12c2d92c1c27dcf451f31e"
+        ],
+        [
+          39,
+          "9768fdb92e764e11a086e748d6b18c553cf4fb9e"
+        ],
+        [
+          47,
+          "6eb0d4dfe2e143549f3b0e93590377b5510ed224"
+        ]
+      ],
+      "pool_size": 12
+    }
+  ]
+}

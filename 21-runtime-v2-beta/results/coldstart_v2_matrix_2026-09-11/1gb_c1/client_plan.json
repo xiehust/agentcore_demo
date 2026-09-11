@@ -1,0 +1,22 @@
+{
+  "size": "1gb",
+  "region": "us-west-2",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/mpmatrix_1gb_c1_601d4814-GgjPUFEGVG",
+  "concurrency": 1,
+  "process_count": 1,
+  "start_method": "spawn",
+  "started_iso": "2026-09-11T08:23:26.952841+00:00",
+  "before_send_spread_target_ms": 100,
+  "assignments": [
+    {
+      "worker": 0,
+      "indices_sessions": [
+        [
+          0,
+          "84a4308b65044254a2960be46059c607e8b4413b"
+        ]
+      ],
+      "pool_size": 2
+    }
+  ]
+}

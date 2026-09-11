@@ -56,54 +56,36 @@ cd 21-runtime-v2-beta
 ## V2 冷启动测试（2026-09-11，us-west-2）
 
 完整报告：[results/COLDSTART_V2_REPORT.zh.md](results/COLDSTART_V2_REPORT.zh.md)。
-参考 `../10-runtime-coldstart/`，复用三档镜像、相同并发与样本设计；通过
-`coldstart_v2.py` 创建独立 V2 Runtime，直接调用原压测实现。
+本轮为 **500mb / 1gb / 2gb × 并发 1 / 10 / 50 / 100 / 200 的 15 格多进程矩阵**，
+每格一轮、尝试数等于并发。工作进程数为 `min(8, c)`（c1 是一个 spawn 子进程、一个样本），
+各进程独立客户端与线程池，通过全局屏障释放。12 格新测；500mb c50/c100/c200 复用同日多进程证据。
 
-| 镜像 | c=1 p50 | c=5 p50 | c=10 p50 | c=50 p50 |
-|---|---:|---:|---:|---:|
-| 500mb | 2149.3 ms | 2280.8 ms | 2161.9 ms | 2985.3 ms |
-| 1gb | 2482.8 ms | 2150.8 ms | 2212.0 ms | 2197.9 ms |
-| 2gb | 2377.3 ms | 2220.0 ms | 2149.3 ms | 2191.1 ms |
+表内为 **成功首调用 p50／单次值（ms）；成功数/尝试数**。N/A 表示无成功延迟，c1 不估计尾分位数。
 
-**300/300 矩阵样本成功，无限流；warm 整体 p50 为 107.5 ms。** 相比 2026-07-09
-历史基线，高并发 c=10/50 的首次调用 p50 降低 63.4%–84.0%，但低并发 c=1/5 的 p50
-升高，warm 也更慢，并非全面加速。这里测量的是新 session 首次调用 E2E，不能从旧
-`fresh_boots` 启发式证明 V2 底层是否发生了冷启动；跨日期比较的限制见报告。
+| 镜像 | c1（单次） | c10 | c50 | c100 | c200 |
+|---|---:|---:|---:|---:|---:|
+| 500mb | 2615.7；1/1 | 2611.4；10/10 | 2533.2；50/50（复用） | 2429.9；99/100（复用） | 2561.1；182/200（复用） |
+| 1gb | 2869.7；1/1 | 2499.2；10/10 | 2547.6；50/50 | 2413.7；100/100 | 2464.6；176/200 |
+| 2gb | N/A；0/1 | 2572.6；5/10 | 2678.0；26/50 | 2627.4；80/100 | 2517.9；148/200 |
 
-原始数据、完整响应、V2 配置及清理记录在 `results/coldstart_2026-09-11/`。
-303 个 session（含 smoke）均停止成功，3 个临时 Runtime 已确认删除。
+**正式 1083 次尝试：938 成功、145 次 HTTP 429，无其他首调用错误；938 次 warm 全部成功。**
+限流均为 `New session creation rate exceeded`，对应账号共享的新 session 25 TPS 配额。
+2gb/c1 紧接 1gb/c200，唯一请求被限流，未重试；不能归因于镜像本身。
+并发格中仅三个 c10 达到 ≤100 ms 的 `before-send` 跨度目标，全部 c50 以上未达到；该 hook 不是线上发包时间。
+这是新 session 首调用 E2E，不是已确认的 microVM 启动耗时；单轮、固定顺序、共享配额及跨时段复用限制了性能比较。
 
-```bash
-# 独立核验本次结果，不调用 AWS
-.venv/bin/python verify_coldstart.py results/coldstart_2026-09-11
-
-# 重新实测：会创建临时云资源并产生费用，输出目录必须不存在
-.venv/bin/python -u coldstart_v2.py --out results/coldstart_new_run
-```
-
-### 并发 200 补测（2026-09-11 05:41 UTC）
-
-同三档镜像各补一轮 200 线程突发，结果与原 300 样本分开保存。首调用延迟仅统计成功样本：
-
-| 镜像 | 成功 / 尝试 | 限流 | p50 | p90 | max | Warm p50 |
-|---|---:|---:|---:|---:|---:|---:|
-| 500mb | 195/200 | 5 | 5826.5 ms | 6719.9 ms | 7562.8 ms | 103.0 ms |
-| 1gb | 148/200 | 52 | 2694.6 ms | 3180.2 ms | 4308.1 ms | 105.8 ms |
-| 2gb | 116/200 | 84 | 2323.4 ms | 2678.5 ms | 3547.3 ms | 107.3 ms |
-
-**459/600 成功、141 次 HTTP 429，全部消息为 `New session creation rate exceeded`。**
-当前账号新 session 配额为 25 TPS；未重试、未调配额。200 指客户端线程数，不代表
-200 个成功活跃会话；500mb 首调用计时起点跨度约 2.7 秒，另外两组约 0.25 秒。
-所有成功会话的 warm/停止均成功，限流 session 停止返回未找到；三个临时 V2 Runtime 已确认删除。
-运行器退出码 1 原样保留，独立证据完整性核验通过，不写成全请求成功。
-
-完整分析见[冷启动报告](results/COLDSTART_V2_REPORT.zh.md#并发-200-补充测试)。
-证据位于 `results/coldstart_v2_c200_2026-09-11/`；原测试脚本和证据未改动。
+[总清单](results/coldstart_v2_matrix_2026-09-11/matrix.json)记录 12 格新测及 3 格复用来源。
+含 15 个成功 smoke 共 1098 个唯一 session；953 次停止成功，145 次限流后停止返回未找到，15 个临时 Runtime 已确认不存在。
+测量与清理完整，但非全部请求成功，运行器退出码 **1** 原样保留；独立核验通过。
 
 ```bash
-.venv/bin/python -B verify_coldstart_v2_c200.py results/coldstart_v2_c200_2026-09-11
-.venv/bin/python -B -m unittest test_coldstart_v2_c200 -v
+# 离线核验，不调用 AWS
+.venv/bin/python -B verify_coldstart_v2_matrix.py results/coldstart_v2_matrix_2026-09-11
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B -m unittest test_matrix_multiprocess test_multiprocess_coldstart -v
 ```
+
+实测入口为 `coldstart_v2_matrix.py`（新建 12 格、复用 3 格）；再次执行须明确授权云资源与费用，
+输出目录必须位于本项目内且不存在，命令及证据说明见完整报告。
 
 ## V2 内存用量同期对照（2026-09-11，us-west-2）
 

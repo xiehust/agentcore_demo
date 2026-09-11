@@ -1,0 +1,24 @@
+{
+  "500mb": {
+    "agentRuntimeName": "coldstart_v2_c100_500mb_3c39d02b",
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+      }
+    },
+    "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "protocolConfiguration": {
+      "serverProtocol": "HTTP"
+    },
+    "lifecycleConfiguration": {
+      "idleRuntimeSessionTimeout": 60,
+      "maxLifetime": 600
+    },
+    "platformVersion": "V2",
+    "clientToken": "5c45f90d-e539-467d-bbf4-7bfc4f027e70",
+    "description": "Temporary 500mb V2 c100 benchmark"
+  }
+}

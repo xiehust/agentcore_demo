@@ -1,0 +1,68 @@
+{
+  "50": {
+    "agentRuntimeName": "coldstart_v2_mp_c50_2a2159d0",
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+      }
+    },
+    "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "protocolConfiguration": {
+      "serverProtocol": "HTTP"
+    },
+    "lifecycleConfiguration": {
+      "idleRuntimeSessionTimeout": 60,
+      "maxLifetime": 600
+    },
+    "platformVersion": "V2",
+    "clientToken": "e9021bb6-7d52-45a1-99dc-5f5de6354f9d",
+    "description": "Temporary eight-process 500mb benchmark"
+  },
+  "100": {
+    "agentRuntimeName": "coldstart_v2_mp_c100_79254b27",
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+      }
+    },
+    "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "protocolConfiguration": {
+      "serverProtocol": "HTTP"
+    },
+    "lifecycleConfiguration": {
+      "idleRuntimeSessionTimeout": 60,
+      "maxLifetime": 600
+    },
+    "platformVersion": "V2",
+    "clientToken": "160eacc2-83ed-4692-96e8-c40bfcb0fec2",
+    "description": "Temporary eight-process 500mb benchmark"
+  },
+  "200": {
+    "agentRuntimeName": "coldstart_v2_mp_c200_ebb3d2e3",
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+      }
+    },
+    "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "protocolConfiguration": {
+      "serverProtocol": "HTTP"
+    },
+    "lifecycleConfiguration": {
+      "idleRuntimeSessionTimeout": 60,
+      "maxLifetime": 600
+    },
+    "platformVersion": "V2",
+    "clientToken": "38f96072-2546-4fdb-9bec-1e2262ab7b59",
+    "description": "Temporary eight-process 500mb benchmark"
+  }
+}
