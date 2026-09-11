@@ -1,0 +1,18 @@
+Post-run verification, 2026-09-11 UTC
+
+Command: .venv/bin/python verify_coldstart.py results/coldstart_2026-09-11
+PASS: 12 cells, 300 unique matrix sessions, 3 smoke sessions, 606 valid responses
+PASS: independent statistics match V2 and historical summaries; 3 V2 deployments confirmed deleted
+PASS: source hashes, round counts, paired warm responses, successful stops and platformVersion checked
+
+Document checks:
+PASS: all 12 report rows exactly match summary; document links exist; no placeholders
+PASS: all 12 comparison percentages, smoke latencies and deployment observation durations verified
+
+Separate post-run AWS read-only check, 2026-09-11T01:58:40Z to 01:58:41Z:
+PASS deleted 500mb coldstart_v2_500mb_e142e16c-psiFdFDdiF
+PASS ECR digest unchanged 500mb sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87
+PASS deleted 1gb coldstart_v2_1gb_dcb4d4ed-GrBoZkCqvF
+PASS ECR digest unchanged 1gb sha256:a2231b90c973736e140e630f608af52812e6d037caa652793f672c77aad8c233
+PASS deleted 2gb coldstart_v2_2gb_dcbd8ded-WKfPp38UlD
+PASS ECR digest unchanged 2gb sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3

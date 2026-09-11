@@ -1,0 +1,29 @@
+{
+  "started_iso": "2026-09-11T01:45:49.292681+00:00",
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "platform_version": "V2",
+  "region": "us-west-2",
+  "account": "434444145045",
+  "settle_seconds": 180,
+  "pause_seconds": 5,
+  "rounds": {
+    "1": 10,
+    "5": 4,
+    "10": 2,
+    "50": 1
+  },
+  "source_sha256": {
+    "21-runtime-v2-beta/coldstart_v2.py": "3f4bd63a8602e4230b3ee75f11e7356f19d1d8457ff1714e361139dc2d095bbf",
+    "21-runtime-v2-beta/check_v2.py": "15b124224d67fa08304d8df5c93cfa4b127b60c407a628de7de22a84423916ab",
+    "10-runtime-coldstart/coldstart_test.py": "f0658b0fe49574634f8180e22a85f8e6a394ddf8e7f7f6fd9e30600d9c8c8c30",
+    "10-runtime-coldstart/deployments.json": "c4ecb75e9923b4c0fcc5f28a78d0e46ff3a95393bed991cdbcdd6d9b86f03107",
+    "10-runtime-coldstart/results/summary.json": "6242e300a27c6d221a8b90d3788178bdb2e93f258a6b7c7edca14ab4cf227f27"
+  },
+  "settle_started_iso": "2026-09-11T01:49:42.891669+00:00",
+  "matrix_started_iso": "2026-09-11T01:52:42.892009+00:00",
+  "matrix_finished_iso": "2026-09-11T01:58:28.831883+00:00",
+  "finished_iso": "2026-09-11T01:58:34.877589+00:00",
+  "cleanup_complete": true,
+  "exit_code": 0
+}

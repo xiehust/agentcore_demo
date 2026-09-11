@@ -1,0 +1,8 @@
+account=434444145045 region=us-east-1 botocore=1.43.87
+image=434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-coldstart-pingpong:500mb
+role=arn:aws:iam::434444145045:role/AgentCoreColdstartRole
+
+[PASS] model    CreateAgentRuntime accepts platformVersion
+[FAIL] create   CreateAgentRuntime(platformVersion=V2) rejected -> ValidationException: platformVersion is not enabled for this account.
+
+RESULT: account is NOT able to use Runtime V2 in us-east-1

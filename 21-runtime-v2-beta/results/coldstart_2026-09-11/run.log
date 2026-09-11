@@ -1,0 +1,103 @@
+CREATED 500mb coldstart_v2_500mb_e142e16c-psiFdFDdiF
+CREATED 1gb coldstart_v2_1gb_dcb4d4ed-GrBoZkCqvF
+CREATED 2gb coldstart_v2_2gb_dcbd8ded-WKfPp38UlD
+READY 500mb platformVersion=V2
+SMOKE 500mb {"size": "500mb", "concurrency": 1, "round": 1, "request_idx": 0, "session_id": "b84390dec41e46a3b6c2436a4689f584940c14b3", "wall_start_iso": "2026-09-11T01:48:54.255112+00:00", "cold_ms": 2235.4, "warm_ms": 160.2, "success": true, "error_type": null, "error_msg": null, "status_code": 200, "proc_start_ts": 1789091235.9118788, "request_ts": 1789091336.473429, "stopped": true}
+READY 1gb platformVersion=V2
+SMOKE 1gb {"size": "1gb", "concurrency": 1, "round": 1, "request_idx": 0, "session_id": "0f68c6579595442a8476e8b61f1b3f8f8ecc46f3", "wall_start_iso": "2026-09-11T01:49:27.346955+00:00", "cold_ms": 2376.7, "warm_ms": 121.0, "success": true, "error_type": null, "error_msg": null, "status_code": 200, "proc_start_ts": 1789091240.0259428, "request_ts": 1789091369.7033732, "stopped": true}
+READY 2gb platformVersion=V2
+SMOKE 2gb {"size": "2gb", "concurrency": 1, "round": 1, "request_idx": 0, "session_id": "a8b733b64ff64678a0a1eedc2c4cf618af5c226b", "wall_start_iso": "2026-09-11T01:49:40.320928+00:00", "cold_ms": 2261.8, "warm_ms": 126.0, "success": true, "error_type": null, "error_msg": null, "status_code": 200, "proc_start_ts": 1789091251.2384233, "request_ts": 1789091382.5661209, "stopped": true}
+SETTLE 180s before matrix (no invocations)
+== cell size=500mb c=1 rounds=10 (coldstart_v2_500mb_e142e16c) ==
+  round 1/10: ok=1/1 cold_ms=[2754.7]
+  round 2/10: ok=1/1 cold_ms=[2645.0]
+  round 3/10: ok=1/1 cold_ms=[2031.5]
+  round 4/10: ok=1/1 cold_ms=[2743.4]
+  round 5/10: ok=1/1 cold_ms=[2017.1]
+  round 6/10: ok=1/1 cold_ms=[2162.3]
+  round 7/10: ok=1/1 cold_ms=[2136.3]
+  round 8/10: ok=1/1 cold_ms=[2001.4]
+  round 9/10: ok=1/1 cold_ms=[1888.6]
+  round 10/10: ok=1/1 cold_ms=[2184.4]
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015353Z_500mb_c1.json
+== cell size=500mb c=5 rounds=4 (coldstart_v2_500mb_e142e16c) ==
+  round 1/4: ok=5/5 cold_ms=p50=2277 max=3112
+  round 2/4: ok=5/5 cold_ms=p50=2030 max=2989
+  round 3/4: ok=5/5 cold_ms=p50=2328 max=2555
+  round 4/4: ok=5/5 cold_ms=p50=2284 max=3102
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015421Z_500mb_c5.json
+== cell size=500mb c=10 rounds=2 (coldstart_v2_500mb_e142e16c) ==
+  round 1/2: ok=10/10 cold_ms=p50=2233 max=2788
+  round 2/2: ok=10/10 cold_ms=p50=2138 max=2570
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015432Z_500mb_c10.json
+== cell size=500mb c=50 rounds=1 (coldstart_v2_500mb_e142e16c) ==
+  round 1/1: ok=50/50 cold_ms=p50=2985 max=5192
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015438Z_500mb_c50.json
+== cell size=1gb c=1 rounds=10 (coldstart_v2_1gb_dcb4d4ed) ==
+  round 1/10: ok=1/1 cold_ms=[3446.7]
+  round 2/10: ok=1/1 cold_ms=[2351.5]
+  round 3/10: ok=1/1 cold_ms=[2063.5]
+  round 4/10: ok=1/1 cold_ms=[3338.6]
+  round 5/10: ok=1/1 cold_ms=[3791.9]
+  round 6/10: ok=1/1 cold_ms=[2192.7]
+  round 7/10: ok=1/1 cold_ms=[2472.3]
+  round 8/10: ok=1/1 cold_ms=[2493.2]
+  round 9/10: ok=1/1 cold_ms=[2711.2]
+  round 10/10: ok=1/1 cold_ms=[2377.0]
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015553Z_1gb_c1.json
+== cell size=1gb c=5 rounds=4 (coldstart_v2_1gb_dcb4d4ed) ==
+  round 1/4: ok=5/5 cold_ms=p50=2203 max=2723
+  round 2/4: ok=5/5 cold_ms=p50=2081 max=2190
+  round 3/4: ok=5/5 cold_ms=p50=2500 max=3288
+  round 4/4: ok=5/5 cold_ms=p50=2124 max=2306
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015619Z_1gb_c5.json
+== cell size=1gb c=10 rounds=2 (coldstart_v2_1gb_dcb4d4ed) ==
+  round 1/2: ok=10/10 cold_ms=p50=2293 max=2719
+  round 2/2: ok=10/10 cold_ms=p50=2140 max=2812
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015631Z_1gb_c10.json
+== cell size=1gb c=50 rounds=1 (coldstart_v2_1gb_dcb4d4ed) ==
+  round 1/1: ok=50/50 cold_ms=p50=2198 max=3614
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015635Z_1gb_c50.json
+== cell size=2gb c=1 rounds=10 (coldstart_v2_2gb_dcbd8ded) ==
+  round 1/10: ok=1/1 cold_ms=[3165.1]
+  round 2/10: ok=1/1 cold_ms=[2654.8]
+  round 3/10: ok=1/1 cold_ms=[2399.2]
+  round 4/10: ok=1/1 cold_ms=[2583.7]
+  round 5/10: ok=1/1 cold_ms=[2199.2]
+  round 6/10: ok=1/1 cold_ms=[2355.4]
+  round 7/10: ok=1/1 cold_ms=[2217.6]
+  round 8/10: ok=1/1 cold_ms=[2029.0]
+  round 9/10: ok=1/1 cold_ms=[2798.1]
+  round 10/10: ok=1/1 cold_ms=[2315.7]
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015748Z_2gb_c1.json
+== cell size=2gb c=5 rounds=4 (coldstart_v2_2gb_dcbd8ded) ==
+  round 1/4: ok=5/5 cold_ms=p50=2080 max=2158
+  round 2/4: ok=5/5 cold_ms=p50=2168 max=2576
+  round 3/4: ok=5/5 cold_ms=p50=2357 max=2714
+  round 4/4: ok=5/5 cold_ms=p50=2250 max=2581
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015814Z_2gb_c5.json
+== cell size=2gb c=10 rounds=2 (coldstart_v2_2gb_dcbd8ded) ==
+  round 1/2: ok=10/10 cold_ms=p50=2050 max=2668
+  round 2/2: ok=10/10 cold_ms=p50=2253 max=2810
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015825Z_2gb_c10.json
+== cell size=2gb c=50 rounds=1 (coldstart_v2_2gb_dcbd8ded) ==
+  round 1/1: ok=50/50 cold_ms=p50=2191 max=3226
+  wrote /home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/results/coldstart_2026-09-11/raw/20260911T015828Z_2gb_c50.json
+
+size    conc   n  ok thr err boot    p50_ms    p90_ms    max_ms   mean_ms  warm_p50
+-----------------------------------------------------------------------------------
+500mb      1  10  10   0   0    0    2149.3    2744.5    2754.7    2256.5     128.2
+500mb      5  20  20   0   0    0    2280.8    3102.9    3111.8    2415.3     118.2
+500mb     10  20  20   0   0    0    2161.9    2570.8    2788.1    2264.2     108.6
+500mb     50  50  50   0   0    0    2985.3    3345.7    5192.1    2891.0     104.3
+1gb        1  10  10   0   0    0    2482.8    3481.2    3791.9    2723.9     106.3
+1gb        5  20  20   0   0    0    2150.8    2763.5    3288.2    2284.0     105.8
+1gb       10  20  20   0   0    0    2212.0    2714.3    2811.6    2286.6     107.8
+1gb       50  50  50   0   0    0    2197.9    2710.8    3613.7    2293.3     108.3
+2gb        1  10  10   0   0    0    2377.3    2834.8    3165.1    2471.8     116.5
+2gb        5  20  20   0   0    0    2220.0    2576.9    2713.6    2245.8     104.2
+2gb       10  20  20   0   0    0    2149.3    2674.5    2810.5    2208.2     105.4
+2gb       50  50  50   0   0    0    2191.1    2528.9    3226.1    2234.8     105.5
+CLEANUP {"size": "500mb", "id": "coldstart_v2_500mb_e142e16c-psiFdFDdiF", "deleted": true, "delete_requested_iso": "2026-09-11T01:58:29.149504+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-11T01:58:34.744792+00:00"}
+CLEANUP {"size": "1gb", "id": "coldstart_v2_1gb_dcb4d4ed-GrBoZkCqvF", "deleted": true, "delete_requested_iso": "2026-09-11T01:58:29.391959+00:00", "confirmed_iso": "2026-09-11T01:58:34.811218+00:00"}
+CLEANUP {"size": "2gb", "id": "coldstart_v2_2gb_dcbd8ded-WKfPp38UlD", "deleted": true, "delete_requested_iso": "2026-09-11T01:58:29.581798+00:00", "confirmed_iso": "2026-09-11T01:58:34.877230+00:00"}

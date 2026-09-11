@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "mode": "post_deploy_smoke",
+    "platform_version": "V2",
+    "region": "us-west-2",
+    "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/coldstart_v2_2gb_dcbd8ded-WKfPp38UlD"
+  },
+  "requests": [
+    {
+      "size": "2gb",
+      "concurrency": 1,
+      "round": 1,
+      "request_idx": 0,
+      "session_id": "a8b733b64ff64678a0a1eedc2c4cf618af5c226b",
+      "wall_start_iso": "2026-09-11T01:49:40.320928+00:00",
+      "cold_ms": 2261.8,
+      "warm_ms": 126.0,
+      "success": true,
+      "error_type": null,
+      "error_msg": null,
+      "status_code": 200,
+      "proc_start_ts": 1789091251.2384233,
+      "request_ts": 1789091382.5661209,
+      "stopped": true
+    }
+  ]
+}
