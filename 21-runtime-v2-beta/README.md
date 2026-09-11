@@ -81,6 +81,53 @@ cd 21-runtime-v2-beta
 .venv/bin/python -u coldstart_v2.py --out results/coldstart_new_run
 ```
 
+### 并发 200 补测（2026-09-11 05:41 UTC）
+
+同三档镜像各补一轮 200 线程突发，结果与原 300 样本分开保存。首调用延迟仅统计成功样本：
+
+| 镜像 | 成功 / 尝试 | 限流 | p50 | p90 | max | Warm p50 |
+|---|---:|---:|---:|---:|---:|---:|
+| 500mb | 195/200 | 5 | 5826.5 ms | 6719.9 ms | 7562.8 ms | 103.0 ms |
+| 1gb | 148/200 | 52 | 2694.6 ms | 3180.2 ms | 4308.1 ms | 105.8 ms |
+| 2gb | 116/200 | 84 | 2323.4 ms | 2678.5 ms | 3547.3 ms | 107.3 ms |
+
+**459/600 成功、141 次 HTTP 429，全部消息为 `New session creation rate exceeded`。**
+当前账号新 session 配额为 25 TPS；未重试、未调配额。200 指客户端线程数，不代表
+200 个成功活跃会话；500mb 首调用计时起点跨度约 2.7 秒，另外两组约 0.25 秒。
+所有成功会话的 warm/停止均成功，限流 session 停止返回未找到；三个临时 V2 Runtime 已确认删除。
+运行器退出码 1 原样保留，独立证据完整性核验通过，不写成全请求成功。
+
+完整分析见[冷启动报告](results/COLDSTART_V2_REPORT.zh.md#并发-200-补充测试)。
+证据位于 `results/coldstart_v2_c200_2026-09-11/`；原测试脚本和证据未改动。
+
+```bash
+.venv/bin/python -B verify_coldstart_v2_c200.py results/coldstart_v2_c200_2026-09-11
+.venv/bin/python -B -m unittest test_coldstart_v2_c200 -v
+```
+
+## V2 内存用量同期对照（2026-09-11，us-west-2）
+
+完整报告：[results/MEMORY_V2_REPORT.zh.md](results/MEMORY_V2_REPORT.zh.md)。
+复用 `../23-runtime-memory-usage/` 两份相同镜像和角色，对默认平台及明确返回
+`platformVersion=V2` 的新 Runtime 各执行 5 个会话。
+
+**V2 明显改善，但 RSS 与 AWS 内存遥测的巨大差额仍存在。** 小镜像空载约 22 MiB RSS，
+V2 为 1.056 GB-equivalent，同期默认平台为 2.187。V2 未读大镜像的 guest 缓存不再大幅增加；
+临时文件缓存增量由默认平台约 513 MiB 减为约 256 MiB，fadvise 后基本回收。
+但首次读取镜像中 256 MiB 文件的阶段间隔在 V2 达到 64.920 秒，需单独关注。
+这些是单次配对遥测结果，不是最终账单、确定的存储根因或普遍性能保证。
+
+10 次调用和停止均成功；930 个应用样本、30 个阶段、720 条阶段内逐秒用量日志独立核验通过。
+两个临时 V2 Runtime 已确认删除，原 Runtime 未修改；8 个日志组保留 7 天。
+原始证据在私有且 git 忽略的 `.state-memory-v2/2026-09-11/`。
+新增 `memory_v2.py` 为隔离复测入口，`test_memory_v2.py` 为离线测试，
+`verify_memory_v2.py` 独立校验实验完整性，不能仅凭采集器 `complete` 接受结果。
+
+```bash
+.venv/bin/python -B -m unittest test_memory_v2 -v
+.venv/bin/python -B verify_memory_v2.py .state-memory-v2/2026-09-11
+```
+
 ## 历史验证结果（2026-09-08 至 2026-09-09，账号 434444145045）
 
 | 区域 | platformVersion | 结果 |

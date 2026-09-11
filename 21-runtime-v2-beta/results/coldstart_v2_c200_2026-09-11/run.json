@@ -1,0 +1,55 @@
+{
+  "started_iso": "2026-09-11T05:34:06.212189+00:00",
+  "platform_version": "V2",
+  "region": "us-west-2",
+  "account": "434444145045",
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "concurrency": 200,
+  "rounds": 1,
+  "sizes": [
+    "500mb",
+    "1gb",
+    "2gb"
+  ],
+  "settle_seconds": 180,
+  "between_sizes_seconds": 10,
+  "max_pool_connections": 400,
+  "retries": {
+    "total_max_attempts": 1,
+    "mode": "legacy"
+  },
+  "quotas": [
+    {
+      "QuotaName": "Rate of new Runtime session creation",
+      "QuotaCode": "L-8EE2AEA2",
+      "Value": 25.0,
+      "Unit": "None"
+    },
+    {
+      "QuotaName": "Rate of Runtime data plane APIs",
+      "QuotaCode": "L-46ED137C",
+      "Value": 1000.0,
+      "Unit": "None"
+    },
+    {
+      "QuotaName": "Active Session Workloads per Account",
+      "QuotaCode": "L-3E5722B2",
+      "Value": 5000.0,
+      "Unit": "Count"
+    }
+  ],
+  "source_sha256": {
+    "21-runtime-v2-beta/coldstart_v2_c200.py": "f59da2d6feefc179ec92e7182a2975b652f485975d58b0284b2e04fb69900f78",
+    "21-runtime-v2-beta/coldstart_v2.py": "3f4bd63a8602e4230b3ee75f11e7356f19d1d8457ff1714e361139dc2d095bbf",
+    "21-runtime-v2-beta/check_v2.py": "15b124224d67fa08304d8df5c93cfa4b127b60c407a628de7de22a84423916ab",
+    "10-runtime-coldstart/coldstart_test.py": "f0658b0fe49574634f8180e22a85f8e6a394ddf8e7f7f6fd9e30600d9c8c8c30",
+    "10-runtime-coldstart/deployments.json": "c4ecb75e9923b4c0fcc5f28a78d0e46ff3a95393bed991cdbcdd6d9b86f03107",
+    "21-runtime-v2-beta/results/coldstart_2026-09-11/images.json": "fa049969ed79b941ada94bd54ea51a7cc6e6bca27aa80d39d4a315faa21f8897"
+  },
+  "measurement_complete": true,
+  "all_invocations_successful": false,
+  "cleanup_complete": true,
+  "finished_iso": "2026-09-11T05:41:47.242107+00:00",
+  "exit_code": 1
+}

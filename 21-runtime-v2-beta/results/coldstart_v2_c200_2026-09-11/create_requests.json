@@ -1,0 +1,68 @@
+{
+  "500mb": {
+    "agentRuntimeName": "coldstart_v2_c200_500mb_9fce6b49",
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+      }
+    },
+    "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "protocolConfiguration": {
+      "serverProtocol": "HTTP"
+    },
+    "lifecycleConfiguration": {
+      "idleRuntimeSessionTimeout": 60,
+      "maxLifetime": 600
+    },
+    "platformVersion": "V2",
+    "clientToken": "fe5fbaa4-1d27-4f4f-a845-508981dfbbc5",
+    "description": "Temporary supplemental c200 V2 first-invocation benchmark"
+  },
+  "1gb": {
+    "agentRuntimeName": "coldstart_v2_c200_1gb_2ef97910",
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:a2231b90c973736e140e630f608af52812e6d037caa652793f672c77aad8c233"
+      }
+    },
+    "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "protocolConfiguration": {
+      "serverProtocol": "HTTP"
+    },
+    "lifecycleConfiguration": {
+      "idleRuntimeSessionTimeout": 60,
+      "maxLifetime": 600
+    },
+    "platformVersion": "V2",
+    "clientToken": "656646b7-c102-4325-99a0-4c1344e226e1",
+    "description": "Temporary supplemental c200 V2 first-invocation benchmark"
+  },
+  "2gb": {
+    "agentRuntimeName": "coldstart_v2_c200_2gb_bc7d6108",
+    "agentRuntimeArtifact": {
+      "containerConfiguration": {
+        "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3"
+      }
+    },
+    "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "protocolConfiguration": {
+      "serverProtocol": "HTTP"
+    },
+    "lifecycleConfiguration": {
+      "idleRuntimeSessionTimeout": 60,
+      "maxLifetime": 600
+    },
+    "platformVersion": "V2",
+    "clientToken": "014b45b2-48b8-48ab-99b4-6eb5797bca95",
+    "description": "Temporary supplemental c200 V2 first-invocation benchmark"
+  }
+}
