@@ -1,0 +1,134 @@
+[
+  {
+    "arm": "A",
+    "sid": "hystA-168773459d4844bab1b7118e2bff0f9c-b0a161e6005b4f83bd8dfe6d1",
+    "events": [
+      [
+        "connect",
+        1789365258.806096,
+        123.162
+      ]
+    ],
+    "responses": [
+      {
+        "action": "pong",
+        "msg_index": 1,
+        "session_id": "hystA-168773459d4844bab1b7118e2bff0f9c-b0a161e6005b4f83bd8dfe6d1",
+        "image_build_tag": "v13-wsv2-memstat-20260912",
+        "process_start_ts": 1789365135.6119256,
+        "ws_accept_ts": 1789365258.6842794,
+        "server_recv_ts": 1789365258.7736347,
+        "uptime_s": 123.162,
+        "memstat": {
+          "ts": 1789365258.7738094,
+          "uptime_s": 123.162,
+          "vm_mem_total_mb": 8016.8,
+          "vm_mem_available_mb": 7615.76,
+          "vm_mem_used_mb": 401.04,
+          "vm_mem_free_mb": 7625.51,
+          "vm_mem_cached_mb": 188.63,
+          "vm_cpu_count": 2,
+          "vm_cpu_busy_s": 18.21,
+          "cpu_max": "max 100000",
+          "proc_rss_mb": 49.76,
+          "loadavg": "0.10 0.05 0.01 1/140 7",
+          "cgroup_mem_current_bytes": 38440960,
+          "cgroup_mem_max": "max",
+          "cgroup_mem_current_mb": 36.66,
+          "cgroup_vcpu_limit": null
+        }
+      }
+    ]
+  },
+  {
+    "arm": "B",
+    "sid": "hystB-643345bb15bb4293993f73cdcb6649bf-f0a66b3da331401795d533762",
+    "events": [
+      [
+        "connect",
+        1789365259.2787006,
+        126.174
+      ],
+      [
+        "alloc",
+        1789365319.481215,
+        4096
+      ],
+      [
+        "free",
+        1789365378.9927433,
+        0
+      ]
+    ],
+    "responses": [
+      {
+        "action": "pong",
+        "msg_index": 1,
+        "session_id": "hystB-643345bb15bb4293993f73cdcb6649bf-f0a66b3da331401795d533762",
+        "image_build_tag": "v13-wsv2-memstat-20260912",
+        "process_start_ts": 1789365133.0674107,
+        "ws_accept_ts": 1789365259.1450157,
+        "server_recv_ts": 1789365259.2411327,
+        "uptime_s": 126.174,
+        "memstat": {
+          "ts": 1789365259.2412872,
+          "uptime_s": 126.174,
+          "vm_mem_total_mb": 8016.8,
+          "vm_mem_available_mb": 7629.66,
+          "vm_mem_used_mb": 387.14,
+          "vm_mem_free_mb": 7640.12,
+          "vm_mem_cached_mb": 187.82,
+          "vm_cpu_count": 2,
+          "vm_cpu_busy_s": 13.84,
+          "cpu_max": "max 100000",
+          "proc_rss_mb": 49.77,
+          "loadavg": "0.08 0.04 0.01 1/139 6",
+          "cgroup_mem_current_bytes": 38449152,
+          "cgroup_mem_max": "max",
+          "cgroup_mem_current_mb": 36.67,
+          "cgroup_vcpu_limit": null
+        }
+      },
+      {
+        "action": "alloc_result",
+        "held_mb": 4096,
+        "ts": 1789365319.44077,
+        "uptime_s": 186.373,
+        "vm_mem_total_mb": 8016.8,
+        "vm_mem_available_mb": 3520.24,
+        "vm_mem_used_mb": 4496.56,
+        "vm_mem_free_mb": 3530.39,
+        "vm_mem_cached_mb": 188.02,
+        "vm_cpu_count": 2,
+        "vm_cpu_busy_s": 15.11,
+        "cpu_max": "max 100000",
+        "proc_rss_mb": 4161.87,
+        "loadavg": "0.03 0.03 0.00 1/138 7",
+        "cgroup_mem_current_bytes": 4359061504,
+        "cgroup_mem_max": "max",
+        "cgroup_mem_current_mb": 4157.12,
+        "cgroup_vcpu_limit": null
+      },
+      {
+        "action": "free_result",
+        "held_mb": 0,
+        "ts": 1789365378.9499655,
+        "uptime_s": 245.883,
+        "vm_mem_total_mb": 8016.8,
+        "vm_mem_available_mb": 7608.62,
+        "vm_mem_used_mb": 408.17,
+        "vm_mem_free_mb": 7618.64,
+        "vm_mem_cached_mb": 188.07,
+        "vm_cpu_count": 2,
+        "vm_cpu_busy_s": 16.93,
+        "cpu_max": "max 100000",
+        "proc_rss_mb": 50.22,
+        "loadavg": "0.09 0.04 0.01 1/138 7",
+        "cgroup_mem_current_bytes": 40341504,
+        "cgroup_mem_max": "max",
+        "cgroup_mem_current_mb": 38.47,
+        "cgroup_vcpu_limit": null
+      }
+    ]
+  }
+]
