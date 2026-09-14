@@ -50,6 +50,14 @@ DEFAULT endpoint 就绪，`GetAgentRuntime` 明确回显 `platformVersion=V2`。
 
 本次只复测 us-east-1；这是可用性验证，不是性能 SLA。详见[结果摘要](results/V2_US_EAST_1_AVAILABILITY_2026-09-14.md)。
 
+## us-east-1 V2 冷启动抽样（2026-09-14）
+
+500mb ping-pong 镜像，10 次串行新 session 加两轮并发 10，30 次首调用全部成功，无限流。
+串行首调用 p50 **2.467 秒**；并发 10 两轮合并 p50 **2.661 秒**，热调用 p50 约 **0.20 秒**。
+计时为新 session 首调用 E2E，不是已确认的 microVM 启动耗时；不含 186.03 秒的部署等待。
+含 smoke 共 31 个 session 均已停止，临时 Runtime 已确认删除，原始数据独立核验通过。
+详见[本轮报告及证据](results/coldstart_v2_us_east_1_2026-09-14/REPORT.zh.md)。
+
 ## 前次可用性复测（2026-09-11，账号 434444145045）
 
 使用现有 `.venv` 私有 SDK 1.43.87，分别运行 `check_v2.py --region us-west-2` 和

@@ -1,0 +1,22 @@
+{
+  "agentRuntimeName": "coldstart_v2_east1_679e168f",
+  "clientToken": "7d8c3f5b-8005-41cb-8448-6d0e3f32ce50",
+  "platformVersion": "V2",
+  "agentRuntimeArtifact": {
+    "containerConfiguration": {
+      "containerUri": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+    }
+  },
+  "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+  "networkConfiguration": {
+    "networkMode": "PUBLIC"
+  },
+  "protocolConfiguration": {
+    "serverProtocol": "HTTP"
+  },
+  "lifecycleConfiguration": {
+    "idleRuntimeSessionTimeout": 60,
+    "maxLifetime": 600
+  },
+  "description": "Temporary us-east-1 V2 500mb cold-start sample"
+}

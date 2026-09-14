@@ -1,0 +1,55 @@
+{
+  "cells": [
+    {
+      "size": "500mb",
+      "concurrency": 1,
+      "samples": 10,
+      "success": 10,
+      "throttles": 0,
+      "other_errors": 0,
+      "fresh_boots": 0,
+      "cold_p50_ms": 2467.2,
+      "cold_p90_ms": 3219.0,
+      "cold_max_ms": 3930.0,
+      "cold_mean_ms": 2629.4,
+      "warm_p50_ms": 206.3,
+      "group": "serial"
+    },
+    {
+      "size": "500mb",
+      "concurrency": 10,
+      "samples": 10,
+      "success": 10,
+      "throttles": 0,
+      "other_errors": 0,
+      "fresh_boots": 0,
+      "cold_p50_ms": 2727.1,
+      "cold_p90_ms": 3092.9,
+      "cold_max_ms": 3374.5,
+      "cold_mean_ms": 2764.9,
+      "warm_p50_ms": 198.2,
+      "warm_success": 10,
+      "stop_success": 10,
+      "stop_absent": 0,
+      "group": "c10_round1"
+    },
+    {
+      "size": "500mb",
+      "concurrency": 10,
+      "samples": 10,
+      "success": 10,
+      "throttles": 0,
+      "other_errors": 0,
+      "fresh_boots": 0,
+      "cold_p50_ms": 2591.0,
+      "cold_p90_ms": 2936.7,
+      "cold_max_ms": 3524.8,
+      "cold_mean_ms": 2661.3,
+      "warm_p50_ms": 209.5,
+      "warm_success": 10,
+      "stop_success": 10,
+      "stop_absent": 0,
+      "group": "c10_round2"
+    }
+  ]
+}

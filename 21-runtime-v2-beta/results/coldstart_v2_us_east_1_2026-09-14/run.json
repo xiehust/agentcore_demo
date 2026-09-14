@@ -1,0 +1,32 @@
+{
+  "started_iso": "2026-09-14T05:52:33.039916+00:00",
+  "region": "us-east-1",
+  "account": "434444145045",
+  "platform_version": "V2",
+  "size": "500mb",
+  "settle_seconds": 180,
+  "round_pause_seconds": 5,
+  "serial_samples": 10,
+  "burst_rounds": 2,
+  "burst_concurrency": 10,
+  "burst_processes": 8,
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "measurement": "new-session first invocation E2E through full body read",
+  "source_sha256": {
+    "21-runtime-v2-beta/results/coldstart_v2_us_east_1_2026-09-14/run_test.py": "143ffadb697a4cd190752b663cf583ae55e4719b1c7eb8eab7a44b82844c16c6",
+    "21-runtime-v2-beta/coldstart_v2.py": "3f4bd63a8602e4230b3ee75f11e7356f19d1d8457ff1714e361139dc2d095bbf",
+    "21-runtime-v2-beta/multiprocess_coldstart_client.py": "e7b715ad9817e9ae9751e4500a142425eaa3de2b99d6bd7f8087b0012f6ec4ca",
+    "21-runtime-v2-beta/coldstart_v2_c200.py": "f59da2d6feefc179ec92e7182a2975b652f485975d58b0284b2e04fb69900f78",
+    "21-runtime-v2-beta/check_v2.py": "15b124224d67fa08304d8df5c93cfa4b127b60c407a628de7de22a84423916ab",
+    "21-runtime-v2-beta/coldstart_v2_multiprocess.py": "b1dc711cb0a518faeafdb8c9acbe964740fd8ae89ab727ab07ce770667ec66c0",
+    "10-runtime-coldstart/coldstart_test.py": "f0658b0fe49574634f8180e22a85f8e6a394ddf8e7f7f6fd9e30600d9c8c8c30"
+  },
+  "create_inflight": false,
+  "ready_seconds": 186.02616540901363,
+  "settle_started_iso": "2026-09-14T05:55:42.409036+00:00",
+  "measurement_complete": true,
+  "cleanup_complete": true,
+  "finished_iso": "2026-09-14T06:00:22.918125+00:00",
+  "exit_code": 0
+}
