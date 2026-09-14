@@ -1,0 +1,866 @@
+{
+  "started_iso": "2026-09-13T13:49:14.771337+00:00",
+  "region": "us-west-2",
+  "account": "434444145045",
+  "cells": {
+    "500mb_c100_r1": {
+      "size": "500mb",
+      "concurrency": 100,
+      "repeat": 1,
+      "reused": false,
+      "folder": "results/tail_repeats_2026-09-13/500mb_c100_r1",
+      "runtime": {
+        "id": "tail_500mb_c100_r1_9cb3ef89-3vJ0Lg2b4c",
+        "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r1_9cb3ef89-3vJ0Lg2b4c",
+        "create_response": {
+          "ResponseMetadata": {
+            "RequestId": "2d7a51f5-32cf-4a1e-ae73-dcb32e504a6e",
+            "HTTPStatusCode": 202,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:49:15 GMT",
+              "content-type": "application/json",
+              "content-length": "460",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "2d7a51f5-32cf-4a1e-ae73-dcb32e504a6e",
+              "x-amz-apigw-id": "Do96VEddvHcEQSw=",
+              "x-amzn-trace-id": "Root=1-6aa6a9db-15e98a2b198368cd1db53a5d"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r1_9cb3ef89-3vJ0Lg2b4c",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_500mb_c100_r1_9cb3ef89-3vJ0Lg2b4c"
+          },
+          "agentRuntimeId": "tail_500mb_c100_r1_9cb3ef89-3vJ0Lg2b4c",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:15.656783+00:00",
+          "status": "CREATING"
+        },
+        "image_digest": "sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87",
+        "ready_response": {
+          "ResponseMetadata": {
+            "RequestId": "80f8399b-89c1-44fb-b509-104cfeab6611",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:52:21 GMT",
+              "content-type": "application/json",
+              "content-length": "1189",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "80f8399b-89c1-44fb-b509-104cfeab6611",
+              "x-amz-apigw-id": "Do-XdEYevHcEQig=",
+              "x-amzn-trace-id": "Root=1-6aa6aa95-35803a424ef9ca2172cc2a66"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r1_9cb3ef89-3vJ0Lg2b4c",
+          "agentRuntimeName": "tail_500mb_c100_r1_9cb3ef89",
+          "agentRuntimeId": "tail_500mb_c100_r1_9cb3ef89-3vJ0Lg2b4c",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:15.656783+00:00",
+          "lastUpdatedAt": "2026-09-13 13:52:18.756816+00:00",
+          "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+          "networkConfiguration": {
+            "networkMode": "PUBLIC"
+          },
+          "status": "READY",
+          "lifecycleConfiguration": {
+            "idleRuntimeSessionTimeout": 60,
+            "maxLifetime": 600
+          },
+          "description": "Temporary repeated V2 tail-latency experiment",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_500mb_c100_r1_9cb3ef89-3vJ0Lg2b4c"
+          },
+          "agentRuntimeArtifact": {
+            "containerConfiguration": {
+              "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+            }
+          },
+          "protocolConfiguration": {
+            "serverProtocol": "HTTP"
+          },
+          "metadataConfiguration": {
+            "requireMMDSV2": true
+          },
+          "platformVersion": "V2"
+        },
+        "deleted": true
+      },
+      "smoke_finished_perf": 5388722.453284893,
+      "observed_quiet_seconds": 180.00044508837163,
+      "summary": {
+        "size": "500mb",
+        "concurrency": 100,
+        "samples": 100,
+        "success": 100,
+        "throttles": 0,
+        "other_errors": 0,
+        "fresh_boots": 0,
+        "cold_p50_ms": 2482.7,
+        "cold_p90_ms": 3101.2,
+        "cold_max_ms": 4893.6,
+        "cold_mean_ms": 2621.5,
+        "warm_p50_ms": 127.5,
+        "warm_success": 100,
+        "stop_success": 100,
+        "stop_absent": 0
+      },
+      "traffic_ended_perf": 5388962.986894013
+    },
+    "2gb_c200_r1": {
+      "size": "2gb",
+      "concurrency": 200,
+      "repeat": 1,
+      "reused": false,
+      "folder": "results/tail_repeats_2026-09-13/2gb_c200_r1",
+      "runtime": {
+        "id": "tail_2gb_c200_r1_eb63983b-uV1f8hF5Q7",
+        "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r1_eb63983b-uV1f8hF5Q7",
+        "create_response": {
+          "ResponseMetadata": {
+            "RequestId": "3bc7b05f-b429-4eb3-aba7-5deac2fd8c3a",
+            "HTTPStatusCode": 202,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:49:16 GMT",
+              "content-type": "application/json",
+              "content-length": "454",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "3bc7b05f-b429-4eb3-aba7-5deac2fd8c3a",
+              "x-amz-apigw-id": "Do96cGNnvHcEI9g=",
+              "x-amzn-trace-id": "Root=1-6aa6a9db-3fd2ec655ed6d25104f3fd0b"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r1_eb63983b-uV1f8hF5Q7",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_2gb_c200_r1_eb63983b-uV1f8hF5Q7"
+          },
+          "agentRuntimeId": "tail_2gb_c200_r1_eb63983b-uV1f8hF5Q7",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:16.285887+00:00",
+          "status": "CREATING"
+        },
+        "image_digest": "sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3",
+        "ready_response": {
+          "ResponseMetadata": {
+            "RequestId": "6d9a306a-7f90-4d31-a4d7-6c56c31d7b3b",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:53:05 GMT",
+              "content-type": "application/json",
+              "content-length": "1181",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "6d9a306a-7f90-4d31-a4d7-6c56c31d7b3b",
+              "x-amz-apigw-id": "Do-eOFg2PHcEdIg=",
+              "x-amzn-trace-id": "Root=1-6aa6aac0-57fbce024506a0300c1be269"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r1_eb63983b-uV1f8hF5Q7",
+          "agentRuntimeName": "tail_2gb_c200_r1_eb63983b",
+          "agentRuntimeId": "tail_2gb_c200_r1_eb63983b-uV1f8hF5Q7",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:16.285887+00:00",
+          "lastUpdatedAt": "2026-09-13 13:53:04.848387+00:00",
+          "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+          "networkConfiguration": {
+            "networkMode": "PUBLIC"
+          },
+          "status": "READY",
+          "lifecycleConfiguration": {
+            "idleRuntimeSessionTimeout": 60,
+            "maxLifetime": 600
+          },
+          "description": "Temporary repeated V2 tail-latency experiment",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_2gb_c200_r1_eb63983b-uV1f8hF5Q7"
+          },
+          "agentRuntimeArtifact": {
+            "containerConfiguration": {
+              "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3"
+            }
+          },
+          "protocolConfiguration": {
+            "serverProtocol": "HTTP"
+          },
+          "metadataConfiguration": {
+            "requireMMDSV2": true
+          },
+          "platformVersion": "V2"
+        },
+        "deleted": true
+      },
+      "smoke_finished_perf": 5388766.108597151,
+      "observed_quiet_seconds": 180.00013934727758,
+      "summary": {
+        "size": "2gb",
+        "concurrency": 200,
+        "samples": 200,
+        "success": 183,
+        "throttles": 17,
+        "other_errors": 0,
+        "fresh_boots": 0,
+        "cold_p50_ms": 2392.4,
+        "cold_p90_ms": 2766.5,
+        "cold_max_ms": 5333.5,
+        "cold_mean_ms": 2457.1,
+        "warm_p50_ms": 109.6,
+        "warm_success": 183,
+        "stop_success": 183,
+        "stop_absent": 17
+      },
+      "traffic_ended_perf": 5389149.484397134
+    },
+    "500mb_c100_r2": {
+      "size": "500mb",
+      "concurrency": 100,
+      "repeat": 2,
+      "reused": false,
+      "folder": "results/tail_repeats_2026-09-13/500mb_c100_r2",
+      "runtime": {
+        "id": "tail_500mb_c100_r2_81f9b3ab-KDlO9vB9ck",
+        "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r2_81f9b3ab-KDlO9vB9ck",
+        "create_response": {
+          "ResponseMetadata": {
+            "RequestId": "78e6190d-e2b9-4c98-b3c3-743b14cf5849",
+            "HTTPStatusCode": 202,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:49:17 GMT",
+              "content-type": "application/json",
+              "content-length": "460",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "78e6190d-e2b9-4c98-b3c3-743b14cf5849",
+              "x-amz-apigw-id": "Do96iFfGPHcEi1w=",
+              "x-amzn-trace-id": "Root=1-6aa6a9dc-19f382da70e832b6422f7df5"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r2_81f9b3ab-KDlO9vB9ck",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_500mb_c100_r2_81f9b3ab-KDlO9vB9ck"
+          },
+          "agentRuntimeId": "tail_500mb_c100_r2_81f9b3ab-KDlO9vB9ck",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:16.970977+00:00",
+          "status": "CREATING"
+        },
+        "image_digest": "sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87",
+        "ready_response": {
+          "ResponseMetadata": {
+            "RequestId": "bee2f310-bc14-4f6c-a3a0-d813c94b5fdc",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:53:08 GMT",
+              "content-type": "application/json",
+              "content-length": "1189",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "bee2f310-bc14-4f6c-a3a0-d813c94b5fdc",
+              "x-amz-apigw-id": "Do-etFs1vHcEUlA=",
+              "x-amzn-trace-id": "Root=1-6aa6aac4-2fd24c0804cf2112493b155f"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r2_81f9b3ab-KDlO9vB9ck",
+          "agentRuntimeName": "tail_500mb_c100_r2_81f9b3ab",
+          "agentRuntimeId": "tail_500mb_c100_r2_81f9b3ab-KDlO9vB9ck",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:16.970977+00:00",
+          "lastUpdatedAt": "2026-09-13 13:52:20.096561+00:00",
+          "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+          "networkConfiguration": {
+            "networkMode": "PUBLIC"
+          },
+          "status": "READY",
+          "lifecycleConfiguration": {
+            "idleRuntimeSessionTimeout": 60,
+            "maxLifetime": 600
+          },
+          "description": "Temporary repeated V2 tail-latency experiment",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_500mb_c100_r2_81f9b3ab-KDlO9vB9ck"
+          },
+          "agentRuntimeArtifact": {
+            "containerConfiguration": {
+              "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+            }
+          },
+          "protocolConfiguration": {
+            "serverProtocol": "HTTP"
+          },
+          "metadataConfiguration": {
+            "requireMMDSV2": true
+          },
+          "platformVersion": "V2"
+        },
+        "deleted": true
+      },
+      "smoke_finished_perf": 5388768.750191051,
+      "observed_quiet_seconds": 180.00013497006148,
+      "summary": {
+        "size": "500mb",
+        "concurrency": 100,
+        "samples": 100,
+        "success": 82,
+        "throttles": 18,
+        "other_errors": 0,
+        "fresh_boots": 0,
+        "cold_p50_ms": 2713.2,
+        "cold_p90_ms": 2874.9,
+        "cold_max_ms": 3715.4,
+        "cold_mean_ms": 2696.3,
+        "warm_p50_ms": 106.0,
+        "warm_success": 82,
+        "stop_success": 82,
+        "stop_absent": 18
+      },
+      "traffic_ended_perf": 5389334.29771864
+    },
+    "2gb_c200_r2": {
+      "size": "2gb",
+      "concurrency": 200,
+      "repeat": 2,
+      "reused": false,
+      "folder": "results/tail_repeats_2026-09-13/2gb_c200_r2",
+      "runtime": {
+        "id": "tail_2gb_c200_r2_de2daf34-LMWbYXEFdg",
+        "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r2_de2daf34-LMWbYXEFdg",
+        "create_response": {
+          "ResponseMetadata": {
+            "RequestId": "9e250b6d-3c3c-4416-a2d5-65479738f545",
+            "HTTPStatusCode": 202,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:49:17 GMT",
+              "content-type": "application/json",
+              "content-length": "454",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "9e250b6d-3c3c-4416-a2d5-65479738f545",
+              "x-amz-apigw-id": "Do96qG0YPHcEv8A=",
+              "x-amzn-trace-id": "Root=1-6aa6a9dd-54fb47ce3ec273f55ecb7fb6"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r2_de2daf34-LMWbYXEFdg",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_2gb_c200_r2_de2daf34-LMWbYXEFdg"
+          },
+          "agentRuntimeId": "tail_2gb_c200_r2_de2daf34-LMWbYXEFdg",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:17.649145+00:00",
+          "status": "CREATING"
+        },
+        "image_digest": "sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3",
+        "ready_response": {
+          "ResponseMetadata": {
+            "RequestId": "0ce8e1dc-1a03-411a-9253-397d904a5625",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:53:10 GMT",
+              "content-type": "application/json",
+              "content-length": "1181",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "0ce8e1dc-1a03-411a-9253-397d904a5625",
+              "x-amz-apigw-id": "Do-fHGvrvHcEMRQ=",
+              "x-amzn-trace-id": "Root=1-6aa6aac6-098620d848eb942e56e360da"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r2_de2daf34-LMWbYXEFdg",
+          "agentRuntimeName": "tail_2gb_c200_r2_de2daf34",
+          "agentRuntimeId": "tail_2gb_c200_r2_de2daf34-LMWbYXEFdg",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:17.649145+00:00",
+          "lastUpdatedAt": "2026-09-13 13:53:06.183649+00:00",
+          "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+          "networkConfiguration": {
+            "networkMode": "PUBLIC"
+          },
+          "status": "READY",
+          "lifecycleConfiguration": {
+            "idleRuntimeSessionTimeout": 60,
+            "maxLifetime": 600
+          },
+          "description": "Temporary repeated V2 tail-latency experiment",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_2gb_c200_r2_de2daf34-LMWbYXEFdg"
+          },
+          "agentRuntimeArtifact": {
+            "containerConfiguration": {
+              "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3"
+            }
+          },
+          "protocolConfiguration": {
+            "serverProtocol": "HTTP"
+          },
+          "metadataConfiguration": {
+            "requireMMDSV2": true
+          },
+          "platformVersion": "V2"
+        },
+        "deleted": true
+      },
+      "smoke_finished_perf": 5388771.524198125,
+      "observed_quiet_seconds": 180.000138358213,
+      "summary": {
+        "size": "2gb",
+        "concurrency": 200,
+        "samples": 200,
+        "success": 192,
+        "throttles": 8,
+        "other_errors": 0,
+        "fresh_boots": 0,
+        "cold_p50_ms": 2624.8,
+        "cold_p90_ms": 2950.9,
+        "cold_max_ms": 3601.8,
+        "cold_mean_ms": 2637.4,
+        "warm_p50_ms": 109.9,
+        "warm_success": 192,
+        "stop_success": 192,
+        "stop_absent": 8
+      },
+      "traffic_ended_perf": 5389519.2113609
+    },
+    "500mb_c100_r3": {
+      "size": "500mb",
+      "concurrency": 100,
+      "repeat": 3,
+      "reused": false,
+      "folder": "results/tail_repeats_2026-09-13/500mb_c100_r3",
+      "runtime": {
+        "id": "tail_500mb_c100_r3_5a6b1ff4-3H5FGb6xgo",
+        "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r3_5a6b1ff4-3H5FGb6xgo",
+        "create_response": {
+          "ResponseMetadata": {
+            "RequestId": "e415ec48-7582-4538-bac7-f8e16ff97fd2",
+            "HTTPStatusCode": 202,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:49:18 GMT",
+              "content-type": "application/json",
+              "content-length": "460",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "e415ec48-7582-4538-bac7-f8e16ff97fd2",
+              "x-amz-apigw-id": "Do96wG0qvHcEfjw=",
+              "x-amzn-trace-id": "Root=1-6aa6a9dd-03a435d34316edaf5a309a86"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r3_5a6b1ff4-3H5FGb6xgo",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_500mb_c100_r3_5a6b1ff4-3H5FGb6xgo"
+          },
+          "agentRuntimeId": "tail_500mb_c100_r3_5a6b1ff4-3H5FGb6xgo",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:18.235967+00:00",
+          "status": "CREATING"
+        },
+        "image_digest": "sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87",
+        "ready_response": {
+          "ResponseMetadata": {
+            "RequestId": "b9cc7685-a69d-48e0-a5c5-83fbe4bd4303",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:53:13 GMT",
+              "content-type": "application/json",
+              "content-length": "1189",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "b9cc7685-a69d-48e0-a5c5-83fbe4bd4303",
+              "x-amz-apigw-id": "Do-fjHyjvHcEGRA=",
+              "x-amzn-trace-id": "Root=1-6aa6aac9-656642a70fdaf16e22c684ee"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_500mb_c100_r3_5a6b1ff4-3H5FGb6xgo",
+          "agentRuntimeName": "tail_500mb_c100_r3_5a6b1ff4",
+          "agentRuntimeId": "tail_500mb_c100_r3_5a6b1ff4-3H5FGb6xgo",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:18.235967+00:00",
+          "lastUpdatedAt": "2026-09-13 13:52:21.590366+00:00",
+          "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+          "networkConfiguration": {
+            "networkMode": "PUBLIC"
+          },
+          "status": "READY",
+          "lifecycleConfiguration": {
+            "idleRuntimeSessionTimeout": 60,
+            "maxLifetime": 600
+          },
+          "description": "Temporary repeated V2 tail-latency experiment",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_500mb_c100_r3_5a6b1ff4-3H5FGb6xgo"
+          },
+          "agentRuntimeArtifact": {
+            "containerConfiguration": {
+              "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+            }
+          },
+          "protocolConfiguration": {
+            "serverProtocol": "HTTP"
+          },
+          "metadataConfiguration": {
+            "requireMMDSV2": true
+          },
+          "platformVersion": "V2"
+        },
+        "deleted": true
+      },
+      "smoke_finished_perf": 5388774.411574947,
+      "observed_quiet_seconds": 180.00014023017138,
+      "summary": {
+        "size": "500mb",
+        "concurrency": 100,
+        "samples": 100,
+        "success": 81,
+        "throttles": 19,
+        "other_errors": 0,
+        "fresh_boots": 0,
+        "cold_p50_ms": 2515.9,
+        "cold_p90_ms": 2738.5,
+        "cold_max_ms": 3075.9,
+        "cold_mean_ms": 2514.4,
+        "warm_p50_ms": 117.6,
+        "warm_success": 81,
+        "stop_success": 81,
+        "stop_absent": 19
+      },
+      "traffic_ended_perf": 5389703.336924813
+    },
+    "2gb_c200_r3": {
+      "size": "2gb",
+      "concurrency": 200,
+      "repeat": 3,
+      "reused": false,
+      "folder": "results/tail_repeats_2026-09-13/2gb_c200_r3",
+      "runtime": {
+        "id": "tail_2gb_c200_r3_03bf06e7-6KISXy34KU",
+        "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r3_03bf06e7-6KISXy34KU",
+        "create_response": {
+          "ResponseMetadata": {
+            "RequestId": "77b9faa2-ed8a-4fb7-aa98-35d2ef0f4c90",
+            "HTTPStatusCode": 202,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:49:19 GMT",
+              "content-type": "application/json",
+              "content-length": "454",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "77b9faa2-ed8a-4fb7-aa98-35d2ef0f4c90",
+              "x-amz-apigw-id": "Do961HYGPHcEHZA=",
+              "x-amzn-trace-id": "Root=1-6aa6a9de-722a53f66d54716823a6d572"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r3_03bf06e7-6KISXy34KU",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_2gb_c200_r3_03bf06e7-6KISXy34KU"
+          },
+          "agentRuntimeId": "tail_2gb_c200_r3_03bf06e7-6KISXy34KU",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:18.876414+00:00",
+          "status": "CREATING"
+        },
+        "image_digest": "sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3",
+        "ready_response": {
+          "ResponseMetadata": {
+            "RequestId": "73efa5b7-58ba-471e-9f23-89e7a549a494",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Sun, 13 Sep 2026 13:53:16 GMT",
+              "content-type": "application/json",
+              "content-length": "1181",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "73efa5b7-58ba-471e-9f23-89e7a549a494",
+              "x-amz-apigw-id": "Do-gAFzevHcERpw=",
+              "x-amzn-trace-id": "Root=1-6aa6aacc-54a3f48838ed32d205d540f6"
+            },
+            "RetryAttempts": 0
+          },
+          "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/tail_2gb_c200_r3_03bf06e7-6KISXy34KU",
+          "agentRuntimeName": "tail_2gb_c200_r3_03bf06e7",
+          "agentRuntimeId": "tail_2gb_c200_r3_03bf06e7-6KISXy34KU",
+          "agentRuntimeVersion": "1",
+          "createdAt": "2026-09-13 13:49:18.876414+00:00",
+          "lastUpdatedAt": "2026-09-13 13:53:07.860980+00:00",
+          "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+          "networkConfiguration": {
+            "networkMode": "PUBLIC"
+          },
+          "status": "READY",
+          "lifecycleConfiguration": {
+            "idleRuntimeSessionTimeout": 60,
+            "maxLifetime": 600
+          },
+          "description": "Temporary repeated V2 tail-latency experiment",
+          "workloadIdentityDetails": {
+            "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:workload-identity-directory/default/workload-identity/tail_2gb_c200_r3_03bf06e7-6KISXy34KU"
+          },
+          "agentRuntimeArtifact": {
+            "containerConfiguration": {
+              "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3"
+            }
+          },
+          "protocolConfiguration": {
+            "serverProtocol": "HTTP"
+          },
+          "metadataConfiguration": {
+            "requireMMDSV2": true
+          },
+          "platformVersion": "V2"
+        },
+        "deleted": true
+      },
+      "smoke_finished_perf": 5388777.281872292,
+      "observed_quiet_seconds": 180.0001354860142,
+      "summary": {
+        "size": "2gb",
+        "concurrency": 200,
+        "samples": 200,
+        "success": 191,
+        "throttles": 9,
+        "other_errors": 0,
+        "fresh_boots": 0,
+        "cold_p50_ms": 2543.0,
+        "cold_p90_ms": 2987.4,
+        "cold_max_ms": 3832.7,
+        "cold_mean_ms": 2579.8,
+        "warm_p50_ms": 107.9,
+        "warm_success": 191,
+        "stop_success": 191,
+        "stop_absent": 9
+      },
+      "traffic_ended_perf": 5389889.387574552
+    }
+  },
+  "requests": {
+    "500mb_c100_r1": {
+      "agentRuntimeArtifact": {
+        "containerConfiguration": {
+          "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+        }
+      },
+      "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+      "networkConfiguration": {
+        "networkMode": "PUBLIC"
+      },
+      "protocolConfiguration": {
+        "serverProtocol": "HTTP"
+      },
+      "lifecycleConfiguration": {
+        "idleRuntimeSessionTimeout": 60,
+        "maxLifetime": 600
+      },
+      "platformVersion": "V2",
+      "agentRuntimeName": "tail_500mb_c100_r1_9cb3ef89",
+      "clientToken": "0dedefea-488f-40ed-b979-38943b992e03",
+      "description": "Temporary repeated V2 tail-latency experiment"
+    },
+    "2gb_c200_r1": {
+      "agentRuntimeArtifact": {
+        "containerConfiguration": {
+          "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3"
+        }
+      },
+      "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+      "networkConfiguration": {
+        "networkMode": "PUBLIC"
+      },
+      "protocolConfiguration": {
+        "serverProtocol": "HTTP"
+      },
+      "lifecycleConfiguration": {
+        "idleRuntimeSessionTimeout": 60,
+        "maxLifetime": 600
+      },
+      "platformVersion": "V2",
+      "agentRuntimeName": "tail_2gb_c200_r1_eb63983b",
+      "clientToken": "efc60d85-41f6-4783-80c2-ebd44d783722",
+      "description": "Temporary repeated V2 tail-latency experiment"
+    },
+    "500mb_c100_r2": {
+      "agentRuntimeArtifact": {
+        "containerConfiguration": {
+          "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+        }
+      },
+      "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+      "networkConfiguration": {
+        "networkMode": "PUBLIC"
+      },
+      "protocolConfiguration": {
+        "serverProtocol": "HTTP"
+      },
+      "lifecycleConfiguration": {
+        "idleRuntimeSessionTimeout": 60,
+        "maxLifetime": 600
+      },
+      "platformVersion": "V2",
+      "agentRuntimeName": "tail_500mb_c100_r2_81f9b3ab",
+      "clientToken": "05f95ffc-fa27-40e7-8ea6-240ef0459dae",
+      "description": "Temporary repeated V2 tail-latency experiment"
+    },
+    "2gb_c200_r2": {
+      "agentRuntimeArtifact": {
+        "containerConfiguration": {
+          "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3"
+        }
+      },
+      "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+      "networkConfiguration": {
+        "networkMode": "PUBLIC"
+      },
+      "protocolConfiguration": {
+        "serverProtocol": "HTTP"
+      },
+      "lifecycleConfiguration": {
+        "idleRuntimeSessionTimeout": 60,
+        "maxLifetime": 600
+      },
+      "platformVersion": "V2",
+      "agentRuntimeName": "tail_2gb_c200_r2_de2daf34",
+      "clientToken": "26d2af3f-713d-4985-aa70-21526ab14dc7",
+      "description": "Temporary repeated V2 tail-latency experiment"
+    },
+    "500mb_c100_r3": {
+      "agentRuntimeArtifact": {
+        "containerConfiguration": {
+          "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87"
+        }
+      },
+      "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+      "networkConfiguration": {
+        "networkMode": "PUBLIC"
+      },
+      "protocolConfiguration": {
+        "serverProtocol": "HTTP"
+      },
+      "lifecycleConfiguration": {
+        "idleRuntimeSessionTimeout": 60,
+        "maxLifetime": 600
+      },
+      "platformVersion": "V2",
+      "agentRuntimeName": "tail_500mb_c100_r3_5a6b1ff4",
+      "clientToken": "8e007bd9-f005-444d-ad0a-2320b9d7bc1f",
+      "description": "Temporary repeated V2 tail-latency experiment"
+    },
+    "2gb_c200_r3": {
+      "agentRuntimeArtifact": {
+        "containerConfiguration": {
+          "containerUri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/agentcore-coldstart-pingpong@sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3"
+        }
+      },
+      "roleArn": "arn:aws:iam::434444145045:role/AgentCoreColdstartRole",
+      "networkConfiguration": {
+        "networkMode": "PUBLIC"
+      },
+      "protocolConfiguration": {
+        "serverProtocol": "HTTP"
+      },
+      "lifecycleConfiguration": {
+        "idleRuntimeSessionTimeout": 60,
+        "maxLifetime": 600
+      },
+      "platformVersion": "V2",
+      "agentRuntimeName": "tail_2gb_c200_r3_03bf06e7",
+      "clientToken": "30073f89-bc5d-4f68-bd06-095ca40b4517",
+      "description": "Temporary repeated V2 tail-latency experiment"
+    }
+  },
+  "images": {
+    "500mb": {
+      "registryId": "434444145045",
+      "repositoryName": "agentcore-coldstart-pingpong",
+      "imageDigest": "sha256:8fce75a892c741d4712f9c3bdd2d0a8f429e69bebdd0393ea96c82f461029d87",
+      "imageTags": [
+        "500mb"
+      ],
+      "imageSizeInBytes": 401204053,
+      "imagePushedAt": "2026-07-09 06:21:33.707000+00:00",
+      "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "artifactMediaType": "application/vnd.docker.container.image.v1+json",
+      "lastRecordedPullTime": "2026-09-11 06:55:43.327000+00:00",
+      "imageStatus": "ACTIVE"
+    },
+    "2gb": {
+      "registryId": "434444145045",
+      "repositoryName": "agentcore-coldstart-pingpong",
+      "imageDigest": "sha256:4f3ae6ceae8dfae54b04a56288a5046c4bb52be5854c995e5b17b923f99f83a3",
+      "imageTags": [
+        "2gb"
+      ],
+      "imageSizeInBytes": 1922103892,
+      "imagePushedAt": "2026-07-09 06:21:36.927000+00:00",
+      "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "artifactMediaType": "application/vnd.docker.container.image.v1+json",
+      "lastRecordedPullTime": "2026-09-11 08:15:40.219000+00:00",
+      "imageStatus": "ACTIVE"
+    }
+  },
+  "rounds_per_case": 3,
+  "quiet_seconds": 180,
+  "original_matrix": "results/coldstart_v2_matrix_2026-09-11/matrix.json",
+  "baseline_evidence_sha256": {
+    "results/coldstart_v2_multiprocess_500mb_2026-09-11/c100/smoke.json": "74a5a858cef49e86a03b6fcd73dc58ad675c29edf88e4cb218534dbbe9386388",
+    "results/coldstart_v2_multiprocess_500mb_2026-09-11/c100/summary.json": "4d050b97f9589c7930239ca5afc06d06c498129438a5052aafb3d9f68f8656fd",
+    "results/coldstart_v2_multiprocess_500mb_2026-09-11/c100/cleanup.json": "71873d6dd8369e026aaf1de3fab1bfaa881f60ae07f01684e86e4fe70875118f",
+    "results/coldstart_v2_multiprocess_500mb_2026-09-11/c100/client_result.json": "b5b1fa1fe6da8da0af4f2ee1701813ccaa62a7085272c8f5bdae0a2cfd4afa52",
+    "results/coldstart_v2_multiprocess_500mb_2026-09-11/c100/raw.json": "eeb8c2e6109cd5c0a53414367e503e121db2c04568d8b2ac5d5469c8222a8001",
+    "results/coldstart_v2_multiprocess_500mb_2026-09-11/c100/client_plan.json": "334aa71ea4166574f6b22615f6dae56103f2f5fd85efae704ac3415a8633bf97",
+    "results/coldstart_v2_matrix_2026-09-11/2gb_c200/smoke.json": "48c8380fb8e0c00c2fac0701b4ebb5c55e205dca4fd0af1b6d74367e33aee091",
+    "results/coldstart_v2_matrix_2026-09-11/2gb_c200/summary.json": "17483abf6546d5ae5ac6299db9ff0f6e42eda99ba600c304ab92b129227fbf03",
+    "results/coldstart_v2_matrix_2026-09-11/2gb_c200/cleanup.json": "b50182365dc8dd5306326d8f68ff289fbef491e64f2a0f0dec3ef73bbe982ee4",
+    "results/coldstart_v2_matrix_2026-09-11/2gb_c200/client_result.json": "6aa586d720e5acb5e6369f23c56a5444af910381b690f826d58bb8541c7a8ece",
+    "results/coldstart_v2_matrix_2026-09-11/2gb_c200/raw.json": "b066cf9661d28b34aa545fb6f9b89120634f365f064aaaac9648d0d01ad149c1",
+    "results/coldstart_v2_matrix_2026-09-11/2gb_c200/client_plan.json": "d073a747608e39a02dbc03f019334e59a38616e6418ba8a9827ec5020385500e",
+    "results/coldstart_v2_matrix_2026-09-11/matrix.json": "7d62bdd2e01240a714df8215f64168708934dc09580aba92d2f960d64b152955"
+  },
+  "source_sha256": {
+    "21-runtime-v2-beta/repeat_tail_latency.py": "9b503899c3a35956120cd0181a0c4ec6dde7f6e6e37ee46ff9ffc999d9348934",
+    "21-runtime-v2-beta/coldstart_v2_matrix.py": "879b182241f90a54f74e7cab2b6587a12fda8df7d4185b0892b45176daf48f6c",
+    "21-runtime-v2-beta/matrix_multiprocess_client.py": "be574cd6b844b78f8d94e7ae77c77a6133e5e6a131a096bc793f46069a98987d",
+    "21-runtime-v2-beta/multiprocess_coldstart_client.py": "e7b715ad9817e9ae9751e4500a142425eaa3de2b99d6bd7f8087b0012f6ec4ca",
+    "21-runtime-v2-beta/coldstart_v2_multiprocess.py": "b1dc711cb0a518faeafdb8c9acbe964740fd8ae89ab727ab07ce770667ec66c0",
+    "21-runtime-v2-beta/coldstart_v2_c200.py": "f59da2d6feefc179ec92e7182a2975b652f485975d58b0284b2e04fb69900f78",
+    "21-runtime-v2-beta/coldstart_v2.py": "3f4bd63a8602e4230b3ee75f11e7356f19d1d8457ff1714e361139dc2d095bbf",
+    "21-runtime-v2-beta/check_v2.py": "15b124224d67fa08304d8df5c93cfa4b127b60c407a628de7de22a84423916ab",
+    "10-runtime-coldstart/coldstart_test.py": "f0658b0fe49574634f8180e22a85f8e6a394ddf8e7f7f6fd9e30600d9c8c8c30"
+  },
+  "quotas": [
+    {
+      "QuotaName": "Rate of new Runtime session creation",
+      "QuotaCode": "L-8EE2AEA2",
+      "Value": 25.0,
+      "Unit": "None"
+    },
+    {
+      "QuotaName": "Rate of Runtime data plane APIs",
+      "QuotaCode": "L-46ED137C",
+      "Value": 1000.0,
+      "Unit": "None"
+    },
+    {
+      "QuotaName": "Active Session Workloads per Account",
+      "QuotaCode": "L-3E5722B2",
+      "Value": 5000.0,
+      "Unit": "Count"
+    }
+  ],
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "tail_threshold_ms": [
+    4000,
+    5000
+  ],
+  "measurement_complete": true,
+  "all_invocations_successful": false,
+  "cleanup_complete": true,
+  "finished_iso": "2026-09-13T14:11:56.640953+00:00",
+  "exit_code": 1
+}

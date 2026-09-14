@@ -40,7 +40,17 @@ cd 21-runtime-v2-beta
 `agentcore-coldstart-pingpong:500mb` 与执行角色 `AgentCoreColdstartRole`，
 可用 `--image` / `--role` 覆盖。镜像必须与 `--region` 同区域。
 
-## 最新复测（2026-09-11，账号 434444145045）
+## 最新可用性复测（2026-09-14，账号 434444145045）
+
+**us-east-1 已开通 Runtime V2，端到端验证通过。** 复用该区域现有 500mb 镜像（按 digest 固定）
+与执行角色，使用私有 boto3/botocore 1.43.87 创建临时 Runtime；约 185.34 秒后 Runtime 和
+DEFAULT endpoint 就绪，`GetAgentRuntime` 明确回显 `platformVersion=V2`。
+首次调用 HTTP 200 / `pong`，耗时 2.744 秒；同 session 第二次调用 HTTP 200，耗时 0.201 秒。
+会话停止返回 HTTP 200，临时 Runtime 已确认删除；未修改 IAM、镜像或配额。
+
+本次只复测 us-east-1；这是可用性验证，不是性能 SLA。详见[结果摘要](results/V2_US_EAST_1_AVAILABILITY_2026-09-14.md)。
+
+## 前次可用性复测（2026-09-11，账号 434444145045）
 
 使用现有 `.venv` 私有 SDK 1.43.87，分别运行 `check_v2.py --region us-west-2` 和
 `check_v2.py --region us-east-1`；未修改脚本、镜像或角色权限。
@@ -86,6 +96,16 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B -m unittest test_matrix_multiproce
 
 实测入口为 `coldstart_v2_matrix.py`（新建 12 格、复用 3 格）；再次执行须明确授权云资源与费用，
 输出目录必须位于本项目内且不存在，命令及证据说明见完整报告。
+
+**长尾重复测试（2026-09-13）**：500mb/c100 与 2gb/c200 各新增三轮，900 次尝试中
+829 成功、71 次新 session 限流。500mb/c100 三轮 p99 为 4.349/3.503/3.044 秒，
+新增成功样本没有超过 5 秒；2gb/c200 仍出现一次 5.333 秒长尾，其余两轮最大值低于 4 秒。
+六个临时 Runtime 已确认删除。详见[重复测试报告](results/TAIL_REPEATS_REPORT.zh.md)，
+新增轮次与原矩阵分开统计，不据此认定 CPU 或服务端根因。
+
+```bash
+.venv/bin/python -B verify_tail_repeats.py results/tail_repeats_2026-09-13
+```
 
 ## V2 内存用量同期对照（2026-09-11，us-west-2）
 
