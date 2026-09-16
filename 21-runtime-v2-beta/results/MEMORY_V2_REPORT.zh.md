@@ -1,6 +1,8 @@
 # Runtime V2 内存用量同期对照实测
 
 日期：2026-09-11；区域：`us-west-2`。
+## note:各种内存统计之间的关系
+![alt text](image.png)
 
 ## 结论
 
