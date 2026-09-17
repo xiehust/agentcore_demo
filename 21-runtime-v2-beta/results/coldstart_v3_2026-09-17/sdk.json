@@ -1,0 +1,25 @@
+{
+  "checked_iso": "2026-09-17T14:46:42.648551+00:00",
+  "boto3": "1.43.96",
+  "botocore": "1.43.96",
+  "pypi_latest_boto3": "1.43.96",
+  "wheel_url": "https://files.pythonhosted.org/packages/4e/b6/bf87482d3fed24c0594f37cf7439fdc6a2839b676b5b30f96f8a07e4714e/botocore-1.43.96-py3-none-any.whl",
+  "wheel_sha256": "c21153a07b97e8497f4ffa83e340a055f3f479b074e6eedf7d0562a9bc861cac",
+  "models": {
+    "bedrock-agentcore-control": {
+      "wheel_member": "botocore/data/bedrock-agentcore-control/2023-06-05/service-2.json.gz",
+      "json_sha256": "ff91e4bb0646f9928c19f91bd6a4cad6393da27d8c554fd3ac8f791d0c691404",
+      "matches_public_wheel": true
+    },
+    "bedrock-agentcore": {
+      "wheel_member": "botocore/data/bedrock-agentcore/2024-02-28/service-2.json.gz",
+      "json_sha256": "69ae3ce7dbda8673786f806356c1b0e373ede47fb07f25df937740d7dd519c27",
+      "matches_public_wheel": true
+    }
+  },
+  "aws_data_path": null,
+  "model_search_paths": [
+    "/home/ubuntu/.aws/models",
+    "/home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/.venv/lib/python3.12/site-packages/botocore/data"
+  ]
+}

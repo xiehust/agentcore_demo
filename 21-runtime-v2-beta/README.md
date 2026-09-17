@@ -1,21 +1,33 @@
-# 21 · AgentCore Runtime V2（beta）账号可用性验证
+# 21 · AgentCore Runtime V2 可用性与 coldstart 验证
 
-验证当前账号是否已被放入 AgentCore Runtime V2 的 allowlist。V2 通过
-`CreateAgentRuntime` / `UpdateAgentRuntime` 上新增的 `platformVersion="V2"`
-参数启用；该字段只存在于私有的 botocore 模型（`Boto3CliV2Artifacts.zip`）里。
+V2 通过 `CreateAgentRuntime` / `UpdateAgentRuntime` 的 `platformVersion="V2"`
+参数启用，并用 `GetAgentRuntime` 回显确认。2026-09-17 已将本项目 `.venv` 升级至
+公开 PyPI 最新 boto3/botocore **1.43.96**；公开 SDK 已支持该字段，不再需要私有 beta 模型。
+下文保留 beta 阶段的历史测试，旧脚本和证据不改写。
+
+## v3 复测（2026-09-17）
+
+[报告：COLDSTART_V3_REPORT.zh.md](results/COLDSTART_V3_REPORT.zh.md)。
+`coldstart_v3.py` 使用公开 SDK，在 us-west-2 全新执行三种镜像 × 五档并发，
+不复用旧测量；**841/1083 次首调用成功，242 次新 session 限流，无其他错误**。
+并发格成功首调用 p50 为 **2.206–2.543 秒**，最大值 **4.042 秒**；成功延迟较低但接纳率也低于 beta 基线，不能宣称全面提速。
+`verify_coldstart_v3.py` 离线核验通过，15 个临时 Runtime 已独立确认删除。
+12 项离线测试通过；运行器退出码 1 如实反映限流，测量与清理均完整。
+报告 v3 不代表存在 `platformVersion="V3"`。
 
 ## 目录
 
 | 文件 | 说明 |
 | --- | --- |
 | `check_v2.py` | 端到端检查脚本：模型字段 → 创建 V2 runtime → READY 并回显 `platformVersion` → 数据面 invoke → 清理 |
-| `.venv/` | 已安装私有 boto3/botocore 1.43.87 的虚拟环境（不入库） |
+| `.venv/` | 当前为公开 boto3/botocore 1.43.96 的虚拟环境（不入库）；历史测试使用私有 1.43.87 |
 | `Boto3CliV2Artifacts.zip`、`*.whl` | 私有 SDK 产物（不入库） |
 | `v1_control_run.log`、`v2_us-east-2_run.log`、`v2_us-east-1_run.log` | 本次验证的原始输出 |
 
-## 私有模型相对公开模型的差异
+## 历史：私有模型相对公开模型的差异（1.43.87）
 
-用 `.venv` 里的 `service-2.json` 与公开 botocore 1.43.87 做 diff，控制面只多了一个字段，数据面无差异：
+当时用私有 `service-2.json` 与公开 botocore 1.43.87 做 diff，控制面只多了一个字段，数据面无差异。
+这是 beta 阶段的差异，不适用于当前已升级的 `.venv`：
 
 ```
 CreateAgentRuntimeRequest  +platformVersion   (string, 1..128)

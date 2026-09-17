@@ -1,0 +1,100 @@
+{
+  "size": "2gb",
+  "region": "us-west-2",
+  "runtime_arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/ga_v3_2gb_c10_352e3301-oDZrZo9NKP",
+  "concurrency": 10,
+  "process_count": 8,
+  "start_method": "spawn",
+  "started_iso": "2026-09-17T14:57:29.440355+00:00",
+  "before_send_spread_target_ms": 100,
+  "assignments": [
+    {
+      "worker": 0,
+      "indices_sessions": [
+        [
+          0,
+          "458be85ed73a4064a018c5a59d61cbc83ab67ae1"
+        ],
+        [
+          8,
+          "01a10f2688e84e8fa3bdb9ead527bc2741b1e0d5"
+        ]
+      ],
+      "pool_size": 4
+    },
+    {
+      "worker": 1,
+      "indices_sessions": [
+        [
+          1,
+          "3977cb9f6fb04c329aa48b9d45ce153719ea88df"
+        ],
+        [
+          9,
+          "d76de1d4e9b74232832b05e125abdabed7c2260d"
+        ]
+      ],
+      "pool_size": 4
+    },
+    {
+      "worker": 2,
+      "indices_sessions": [
+        [
+          2,
+          "51be4c48fb3f4865b35cc3774d878fc4698a727e"
+        ]
+      ],
+      "pool_size": 2
+    },
+    {
+      "worker": 3,
+      "indices_sessions": [
+        [
+          3,
+          "4cb24620e029491d88d39b18543dacbaf2f884cd"
+        ]
+      ],
+      "pool_size": 2
+    },
+    {
+      "worker": 4,
+      "indices_sessions": [
+        [
+          4,
+          "8a1dca715eef4a7491b54f883ea81d52ffc38933"
+        ]
+      ],
+      "pool_size": 2
+    },
+    {
+      "worker": 5,
+      "indices_sessions": [
+        [
+          5,
+          "099b9e4a7f17405685fbea7f3340c08bf697af52"
+        ]
+      ],
+      "pool_size": 2
+    },
+    {
+      "worker": 6,
+      "indices_sessions": [
+        [
+          6,
+          "bd081f9b087244328ebaba1632493f59c662f285"
+        ]
+      ],
+      "pool_size": 2
+    },
+    {
+      "worker": 7,
+      "indices_sessions": [
+        [
+          7,
+          "f16bbccb550b4653a0e4b6c5ecbcb20ffdee44b2"
+        ]
+      ],
+      "pool_size": 2
+    }
+  ]
+}

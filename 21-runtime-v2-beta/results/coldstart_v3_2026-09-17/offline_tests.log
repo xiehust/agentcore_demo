@@ -1,0 +1,23 @@
+test_all_cells_are_fresh (test_coldstart_v3.PublicSDKTests.test_all_cells_are_fresh) ... ok
+test_public_model_provenance_and_override_rejection (test_coldstart_v3.PublicSDKTests.test_public_model_provenance_and_override_rejection) ... ok
+test_reject_outdated_sdk_before_cloud_calls (test_coldstart_v3.PublicSDKTests.test_reject_outdated_sdk_before_cloud_calls) ... ok
+test_initialization_failure_preserved (test_matrix_multiprocess.MatrixTests.test_initialization_failure_preserved) ... ok
+test_plan_exact_missing_and_reuse (test_matrix_multiprocess.MatrixTests.test_plan_exact_missing_and_reuse) ... ok
+test_reused_cleanup_is_never_called (test_matrix_multiprocess.MatrixTests.test_reused_cleanup_is_never_called) ... ok
+test_spawn_low_concurrency_and_image_labels (test_matrix_multiprocess.MatrixTests.test_spawn_low_concurrency_and_image_labels) ... MATRIX CELL 500mb 1 {'size': '500mb', 'concurrency': 1, 'samples': 1, 'success': 1, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2.1, 'cold_p90_ms': 2.1, 'cold_max_ms': 2.1, 'cold_mean_ms': 2.1, 'warm_p50_ms': 2.1, 'warm_success': 1, 'stop_success': 1, 'stop_absent': 0}
+MATRIX CELL 1gb 10 {'size': '1gb', 'concurrency': 10, 'samples': 10, 'success': 10, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2.1, 'cold_p90_ms': 2.1, 'cold_max_ms': 2.1, 'cold_mean_ms': 2.1, 'warm_p50_ms': 2.1, 'warm_success': 10, 'stop_success': 10, 'stop_absent': 0}
+MATRIX CELL 2gb 50 {'size': '2gb', 'concurrency': 50, 'samples': 50, 'success': 50, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2.1, 'cold_p90_ms': 2.3, 'cold_max_ms': 2.4, 'cold_mean_ms': 2.1, 'warm_p50_ms': 2.1, 'warm_success': 50, 'stop_success': 50, 'stop_absent': 0}
+ok
+test_crashed_worker_is_reaped (test_multiprocess_coldstart.MultiprocessTests.test_crashed_worker_is_reaped) ... ok
+test_hooks_keep_failure_timing_without_credentials (test_multiprocess_coldstart.MultiprocessTests.test_hooks_keep_failure_timing_without_credentials) ... ok
+test_hung_worker_is_reaped (test_multiprocess_coldstart.MultiprocessTests.test_hung_worker_is_reaped) ... ok
+test_initialization_failure_is_bounded_and_preserved (test_multiprocess_coldstart.MultiprocessTests.test_initialization_failure_is_bounded_and_preserved) ... ok
+test_real_spawn_all_levels (test_multiprocess_coldstart.MultiprocessTests.test_real_spawn_all_levels) ... MULTIPROCESS {"size": "500mb", "concurrency": 50, "samples": 50, "success": 50, "throttles": 0, "other_errors": 0, "fresh_boots": 0, "cold_p50_ms": 2.1, "cold_p90_ms": 2.3, "cold_max_ms": 2.4, "cold_mean_ms": 2.2, "warm_p50_ms": 2.2, "warm_success": 50, "stop_success": 50, "stop_absent": 0}
+MULTIPROCESS {"size": "500mb", "concurrency": 100, "samples": 100, "success": 100, "throttles": 0, "other_errors": 0, "fresh_boots": 0, "cold_p50_ms": 2.1, "cold_p90_ms": 2.2, "cold_max_ms": 2.3, "cold_mean_ms": 2.1, "warm_p50_ms": 2.1, "warm_success": 100, "stop_success": 100, "stop_absent": 0}
+MULTIPROCESS {"size": "500mb", "concurrency": 200, "samples": 200, "success": 200, "throttles": 0, "other_errors": 0, "fresh_boots": 0, "cold_p50_ms": 2.1, "cold_p90_ms": 2.4, "cold_max_ms": 3.0, "cold_mean_ms": 2.2, "warm_p50_ms": 2.2, "warm_success": 200, "stop_success": 200, "stop_absent": 0}
+ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 4.618s
+
+OK

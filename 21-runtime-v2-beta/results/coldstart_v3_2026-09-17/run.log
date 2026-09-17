@@ -1,0 +1,62 @@
+PREFLIGHT {"boto3": "1.43.96", "botocore": "1.43.96", "public_models_verified": true, "fresh_cells": 15, "quotas": [{"QuotaName": "Rate of new Runtime session creation", "QuotaCode": "L-8EE2AEA2", "Value": 25.0, "Unit": "None"}, {"QuotaName": "Rate of Runtime data plane APIs", "QuotaCode": "L-46ED137C", "Value": 1000.0, "Unit": "None"}, {"QuotaName": "Active Session Workloads per Account", "QuotaCode": "L-3E5722B2", "Value": 5000.0, "Unit": "Count"}]}
+CREATED 500mb_c1 ga_v3_500mb_c1_4b86cf95-AX1C6W9Ow8
+CREATED 500mb_c10 ga_v3_500mb_c10_fd9ea404-oJSawuFJDV
+CREATED 500mb_c50 ga_v3_500mb_c50_ab79809e-Lzqhet7A8a
+CREATED 500mb_c100 ga_v3_500mb_c100_b6c2a1f7-qWH0pq8TDu
+CREATED 500mb_c200 ga_v3_500mb_c200_8f488a14-Laoit2C0bH
+CREATED 1gb_c1 ga_v3_1gb_c1_4dffcd0e-qhvbyO2dbB
+CREATED 1gb_c10 ga_v3_1gb_c10_83f79b12-n0l4e780me
+CREATED 1gb_c50 ga_v3_1gb_c50_f45a5362-dBA562Dl3Y
+CREATED 1gb_c100 ga_v3_1gb_c100_bae9b4b7-GgJrqhDu57
+CREATED 1gb_c200 ga_v3_1gb_c200_0c44ad32-7T7L68BGBM
+CREATED 2gb_c1 ga_v3_2gb_c1_137168ee-HxVgC76fz0
+CREATED 2gb_c10 ga_v3_2gb_c10_352e3301-oDZrZo9NKP
+CREATED 2gb_c50 ga_v3_2gb_c50_03c9e34c-tzu8sSAhoA
+CREATED 2gb_c100 ga_v3_2gb_c100_fc4ceaf1-qDiEMlEN8b
+CREATED 2gb_c200 ga_v3_2gb_c200_e79bfa8d-rGRcbhDxsa
+SMOKE 500mb_c1 2050.5
+SMOKE 500mb_c10 1908.0
+SMOKE 500mb_c50 2052.9
+SMOKE 500mb_c100 1808.5
+SMOKE 500mb_c200 3080.7
+SMOKE 1gb_c1 2010.1
+SMOKE 1gb_c10 2287.3
+SMOKE 1gb_c50 2154.8
+SMOKE 1gb_c100 1853.4
+SMOKE 1gb_c200 1899.8
+SMOKE 2gb_c1 2780.6
+SMOKE 2gb_c10 1933.0
+SMOKE 2gb_c50 2048.3
+SMOKE 2gb_c100 2199.7
+SMOKE 2gb_c200 2401.6
+SETTLE 180s after last smoke; no target invocations
+MATRIX CELL 500mb 1 {'size': '500mb', 'concurrency': 1, 'samples': 1, 'success': 1, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2542.4, 'cold_p90_ms': 2542.4, 'cold_max_ms': 2542.4, 'cold_mean_ms': 2542.4, 'warm_p50_ms': 127.7, 'warm_success': 1, 'stop_success': 1, 'stop_absent': 0}
+CLEANUP {"size": "500mb_c1", "id": "ga_v3_500mb_c1_4b86cf95-AX1C6W9Ow8", "deleted": true, "delete_requested_iso": "2026-09-17T14:53:59.919783+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:54:05.067350+00:00"}
+MATRIX CELL 500mb 10 {'size': '500mb', 'concurrency': 10, 'samples': 10, 'success': 10, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2542.7, 'cold_p90_ms': 2849.1, 'cold_max_ms': 2850.3, 'cold_mean_ms': 2628.5, 'warm_p50_ms': 133.2, 'warm_success': 10, 'stop_success': 10, 'stop_absent': 0}
+CLEANUP {"size": "500mb_c10", "id": "ga_v3_500mb_c10_fd9ea404-oJSawuFJDV", "deleted": true, "delete_requested_iso": "2026-09-17T14:54:18.815862+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:54:23.972605+00:00"}
+MATRIX CELL 500mb 50 {'size': '500mb', 'concurrency': 50, 'samples': 50, 'success': 50, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2294.1, 'cold_p90_ms': 2537.9, 'cold_max_ms': 3697.0, 'cold_mean_ms': 2348.1, 'warm_p50_ms': 135.4, 'warm_success': 50, 'stop_success': 50, 'stop_absent': 0}
+CLEANUP {"size": "500mb_c50", "id": "ga_v3_500mb_c50_ab79809e-Lzqhet7A8a", "deleted": true, "delete_requested_iso": "2026-09-17T14:54:38.622462+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:54:43.762546+00:00"}
+MATRIX CELL 500mb 100 {'size': '500mb', 'concurrency': 100, 'samples': 100, 'success': 100, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2283.2, 'cold_p90_ms': 2718.0, 'cold_max_ms': 3256.3, 'cold_mean_ms': 2341.0, 'warm_p50_ms': 114.4, 'warm_success': 100, 'stop_success': 100, 'stop_absent': 0}
+CLEANUP {"size": "500mb_c100", "id": "ga_v3_500mb_c100_b6c2a1f7-qWH0pq8TDu", "deleted": true, "delete_requested_iso": "2026-09-17T14:54:58.352458+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:55:03.487607+00:00"}
+MATRIX CELL 500mb 200 {'size': '500mb', 'concurrency': 200, 'samples': 200, 'success': 170, 'throttles': 30, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2324.9, 'cold_p90_ms': 2694.2, 'cold_max_ms': 3575.3, 'cold_mean_ms': 2344.1, 'warm_p50_ms': 112.0, 'warm_success': 170, 'stop_success': 170, 'stop_absent': 30}
+CLEANUP {"size": "500mb_c200", "id": "ga_v3_500mb_c200_8f488a14-Laoit2C0bH", "deleted": true, "delete_requested_iso": "2026-09-17T14:55:18.447048+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:55:23.576351+00:00"}
+MATRIX CELL 1gb 1 {'size': '1gb', 'concurrency': 1, 'samples': 1, 'success': 1, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2469.7, 'cold_p90_ms': 2469.7, 'cold_max_ms': 2469.7, 'cold_mean_ms': 2469.7, 'warm_p50_ms': 119.1, 'warm_success': 1, 'stop_success': 1, 'stop_absent': 0}
+CLEANUP {"size": "1gb_c1", "id": "ga_v3_1gb_c1_4dffcd0e-qhvbyO2dbB", "deleted": true, "delete_requested_iso": "2026-09-17T14:55:36.797188+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:55:42.005139+00:00"}
+MATRIX CELL 1gb 10 {'size': '1gb', 'concurrency': 10, 'samples': 10, 'success': 6, 'throttles': 4, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2206.4, 'cold_p90_ms': 2568.1, 'cold_max_ms': 2921.9, 'cold_mean_ms': 2324.5, 'warm_p50_ms': 106.7, 'warm_success': 6, 'stop_success': 6, 'stop_absent': 4}
+CLEANUP {"size": "1gb_c10", "id": "ga_v3_1gb_c10_83f79b12-n0l4e780me", "deleted": true, "delete_requested_iso": "2026-09-17T14:55:55.816341+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:56:00.959534+00:00"}
+MATRIX CELL 1gb 50 {'size': '1gb', 'concurrency': 50, 'samples': 50, 'success': 32, 'throttles': 18, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2330.8, 'cold_p90_ms': 2970.7, 'cold_max_ms': 3263.7, 'cold_mean_ms': 2480.4, 'warm_p50_ms': 110.6, 'warm_success': 32, 'stop_success': 32, 'stop_absent': 18}
+CLEANUP {"size": "1gb_c50", "id": "ga_v3_1gb_c50_f45a5362-dBA562Dl3Y", "deleted": true, "delete_requested_iso": "2026-09-17T14:56:15.030844+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:56:20.158905+00:00"}
+MATRIX CELL 1gb 100 {'size': '1gb', 'concurrency': 100, 'samples': 100, 'success': 74, 'throttles': 26, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2238.1, 'cold_p90_ms': 2483.5, 'cold_max_ms': 3151.1, 'cold_mean_ms': 2246.5, 'warm_p50_ms': 111.8, 'warm_success': 74, 'stop_success': 74, 'stop_absent': 26}
+CLEANUP {"size": "1gb_c100", "id": "ga_v3_1gb_c100_bae9b4b7-GgJrqhDu57", "deleted": true, "delete_requested_iso": "2026-09-17T14:56:34.592599+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:56:39.720878+00:00"}
+MATRIX CELL 1gb 200 {'size': '1gb', 'concurrency': 200, 'samples': 200, 'success': 146, 'throttles': 54, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2246.5, 'cold_p90_ms': 2620.8, 'cold_max_ms': 4042.4, 'cold_mean_ms': 2259.6, 'warm_p50_ms': 112.0, 'warm_success': 146, 'stop_success': 146, 'stop_absent': 54}
+CLEANUP {"size": "1gb_c200", "id": "ga_v3_1gb_c200_0c44ad32-7T7L68BGBM", "deleted": true, "delete_requested_iso": "2026-09-17T14:56:54.903416+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:57:00.049913+00:00"}
+MATRIX CELL 2gb 1 {'size': '2gb', 'concurrency': 1, 'samples': 1, 'success': 1, 'throttles': 0, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 3468.9, 'cold_p90_ms': 3468.9, 'cold_max_ms': 3468.9, 'cold_mean_ms': 3468.9, 'warm_p50_ms': 146.4, 'warm_success': 1, 'stop_success': 1, 'stop_absent': 0}
+CLEANUP {"size": "2gb_c1", "id": "ga_v3_2gb_c1_137168ee-HxVgC76fz0", "deleted": true, "delete_requested_iso": "2026-09-17T14:57:14.285982+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:57:19.434424+00:00"}
+MATRIX CELL 2gb 10 {'size': '2gb', 'concurrency': 10, 'samples': 10, 'success': 6, 'throttles': 4, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2228.9, 'cold_p90_ms': 2793.1, 'cold_max_ms': 3305.4, 'cold_mean_ms': 2396.5, 'warm_p50_ms': 118.8, 'warm_success': 6, 'stop_success': 6, 'stop_absent': 4}
+CLEANUP {"size": "2gb_c10", "id": "ga_v3_2gb_c10_352e3301-oDZrZo9NKP", "deleted": true, "delete_requested_iso": "2026-09-17T14:57:33.581279+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:57:38.719868+00:00"}
+MATRIX CELL 2gb 50 {'size': '2gb', 'concurrency': 50, 'samples': 50, 'success': 21, 'throttles': 29, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2388.0, 'cold_p90_ms': 2773.8, 'cold_max_ms': 2916.6, 'cold_mean_ms': 2450.3, 'warm_p50_ms': 109.3, 'warm_success': 21, 'stop_success': 21, 'stop_absent': 29}
+CLEANUP {"size": "2gb_c50", "id": "ga_v3_2gb_c50_03c9e34c-tzu8sSAhoA", "deleted": true, "delete_requested_iso": "2026-09-17T14:57:52.418077+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:57:57.532275+00:00"}
+MATRIX CELL 2gb 100 {'size': '2gb', 'concurrency': 100, 'samples': 100, 'success': 70, 'throttles': 30, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2386.7, 'cold_p90_ms': 2821.2, 'cold_max_ms': 3686.8, 'cold_mean_ms': 2429.8, 'warm_p50_ms': 113.1, 'warm_success': 70, 'stop_success': 70, 'stop_absent': 30}
+CLEANUP {"size": "2gb_c100", "id": "ga_v3_2gb_c100_fc4ceaf1-qDiEMlEN8b", "deleted": true, "delete_requested_iso": "2026-09-17T14:58:12.367157+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:58:17.497780+00:00"}
+MATRIX CELL 2gb 200 {'size': '2gb', 'concurrency': 200, 'samples': 200, 'success': 153, 'throttles': 47, 'other_errors': 0, 'fresh_boots': 0, 'cold_p50_ms': 2397.5, 'cold_p90_ms': 2763.0, 'cold_max_ms': 3293.0, 'cold_mean_ms': 2413.7, 'warm_p50_ms': 109.7, 'warm_success': 153, 'stop_success': 153, 'stop_absent': 47}
+CLEANUP {"size": "2gb_c200", "id": "ga_v3_2gb_c200_e79bfa8d-rGRcbhDxsa", "deleted": true, "delete_requested_iso": "2026-09-17T14:58:32.956765+00:00", "last_status": "DELETING", "confirmed_iso": "2026-09-17T14:58:38.102117+00:00"}

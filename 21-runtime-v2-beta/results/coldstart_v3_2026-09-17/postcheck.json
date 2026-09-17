@@ -1,0 +1,117 @@
+{
+  "checked_iso": "2026-09-17T14:59:31.946435+00:00",
+  "region": "us-west-2",
+  "boto3": "1.43.96",
+  "botocore": "1.43.96",
+  "aws_data_path": null,
+  "configured_data_path": null,
+  "actual_boto3_loader_paths": [
+    "/home/ubuntu/.aws/models",
+    "/home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/.venv/lib/python3.12/site-packages/botocore/data",
+    "/home/ubuntu/workspace/agentcore_demo/21-runtime-v2-beta/.venv/lib/python3.12/site-packages/boto3/data"
+  ],
+  "models": {
+    "bedrock-agentcore-control": {
+      "matches_public_wheel": true,
+      "json_sha256": "ff91e4bb0646f9928c19f91bd6a4cad6393da27d8c554fd3ac8f791d0c691404"
+    },
+    "bedrock-agentcore": {
+      "matches_public_wheel": true,
+      "json_sha256": "69ae3ce7dbda8673786f806356c1b0e373ede47fb07f25df937740d7dd519c27"
+    }
+  },
+  "runtimes": [
+    {
+      "id": "ga_v3_500mb_c1_4b86cf95-AX1C6W9Ow8",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "4cf27b6d-7d02-415d-a003-120416456eef"
+    },
+    {
+      "id": "ga_v3_500mb_c10_fd9ea404-oJSawuFJDV",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "30ecb651-e8ea-45a6-89ad-139cd0ce970e"
+    },
+    {
+      "id": "ga_v3_500mb_c50_ab79809e-Lzqhet7A8a",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "38ac71ae-3a90-49a2-84ae-f4233ed21c47"
+    },
+    {
+      "id": "ga_v3_500mb_c100_b6c2a1f7-qWH0pq8TDu",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "9ff6097a-48d8-459e-9400-14258a7ef64a"
+    },
+    {
+      "id": "ga_v3_500mb_c200_8f488a14-Laoit2C0bH",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "be99f81a-9709-4c5f-b13b-4dc0d8f0ee3b"
+    },
+    {
+      "id": "ga_v3_1gb_c1_4dffcd0e-qhvbyO2dbB",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "85ee2526-8f77-4e06-880b-b6f40d32fac3"
+    },
+    {
+      "id": "ga_v3_1gb_c10_83f79b12-n0l4e780me",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "7d13bccd-2e5d-4fc9-9155-dd58fc47f89c"
+    },
+    {
+      "id": "ga_v3_1gb_c50_f45a5362-dBA562Dl3Y",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "95358e5a-53ee-472a-9f1f-f8a940dcc4ae"
+    },
+    {
+      "id": "ga_v3_1gb_c100_bae9b4b7-GgJrqhDu57",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "0cfbe83f-3994-47c7-b561-f105eb96c92d"
+    },
+    {
+      "id": "ga_v3_1gb_c200_0c44ad32-7T7L68BGBM",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "94ff4937-bd80-4115-836b-8142c90b7a6c"
+    },
+    {
+      "id": "ga_v3_2gb_c1_137168ee-HxVgC76fz0",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "05ba04a4-8e1b-4808-8941-450bed5f7755"
+    },
+    {
+      "id": "ga_v3_2gb_c10_352e3301-oDZrZo9NKP",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "c7264892-8985-4205-8ce4-3aeddaa230f5"
+    },
+    {
+      "id": "ga_v3_2gb_c50_03c9e34c-tzu8sSAhoA",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "73dadd49-a225-4388-bebd-e920de99aa87"
+    },
+    {
+      "id": "ga_v3_2gb_c100_fc4ceaf1-qDiEMlEN8b",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "fa669fe9-b72f-4a5c-a51f-6135034b78b1"
+    },
+    {
+      "id": "ga_v3_2gb_c200_e79bfa8d-rGRcbhDxsa",
+      "error_code": "ResourceNotFoundException",
+      "absent": true,
+      "request_id": "0c59d347-f96c-42cb-aac7-4fa144d51ae4"
+    }
+  ],
+  "all_absent": true,
+  "finished_iso": "2026-09-17T14:59:33.169299+00:00"
+}
