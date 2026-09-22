@@ -1,0 +1,59 @@
+{"phase": "loading_verified_base_on_beijing_ec2", "at": "2026-09-22T08:16:35.850137+00:00", "instance_identity": {"accountId": "447150580482", "architecture": "arm64", "availabilityZone": "cn-northwest-1a", "billingProducts": null, "devpayProductCodes": null, "marketplaceProductCodes": null, "imageId": "ami-0f7d342bc678ca8d2", "instanceId": "i-0c62090e8472b2c83", "instanceType": "c6g.2xlarge", "kernelId": null, "pendingTime": "2026-09-22T08:12:37Z", "privateIp": "172.31.1.171", "ramdiskId": null, "region": "cn-northwest-1", "version": "2017-09-30"}}
+Loaded image ID: sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0
+{"phase": "building_on_beijing_ec2", "at": "2026-09-22T08:16:38.165024+00:00", "instance_identity": {"accountId": "447150580482", "architecture": "arm64", "availabilityZone": "cn-northwest-1a", "billingProducts": null, "devpayProductCodes": null, "marketplaceProductCodes": null, "imageId": "ami-0f7d342bc678ca8d2", "instanceId": "i-0c62090e8472b2c83", "instanceType": "c6g.2xlarge", "kernelId": null, "pendingTime": "2026-09-22T08:12:37Z", "privateIp": "172.31.1.171", "ramdiskId": null, "region": "cn-northwest-1", "version": "2017-09-30"}, "inspect_config_differences": {"Image": {"source": null, "loaded": ""}, "Domainname": {"source": null, "loaded": ""}, "StdinOnce": {"source": null, "loaded": false}, "AttachStderr": {"source": null, "loaded": false}, "Tty": {"source": null, "loaded": false}, "Hostname": {"source": null, "loaded": ""}, "OpenStdin": {"source": null, "loaded": false}, "AttachStdin": {"source": null, "loaded": false}, "AttachStdout": {"source": null, "loaded": false}}, "offline_base_verified": "sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0"}
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            BuildKit is currently disabled; enable it by removing the DOCKER_BUILDKIT=0
+            environment-variable.
+
+Sending build context to Docker daemon  8.192kB
+Step 1/7 : FROM cn-verified-python-base:python312
+ ---> b36d5dd2b034
+Step 2/7 : WORKDIR /app
+ ---> Running in 4ef474cd8059
+ ---> Removed intermediate container 4ef474cd8059
+ ---> dd8d41db1ad4
+Step 3/7 : COPY app.py /app/app.py
+ ---> 5f9cd2b39574
+Step 4/7 : ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+ ---> Running in b070c951dba1
+ ---> Removed intermediate container b070c951dba1
+ ---> fcec948087fd
+Step 5/7 : USER 1000:1000
+ ---> Running in 5232e8c6e28c
+ ---> Removed intermediate container 5232e8c6e28c
+ ---> ec0cb6b88aed
+Step 6/7 : EXPOSE 8080
+ ---> Running in 047bf37d941d
+ ---> Removed intermediate container 047bf37d941d
+ ---> eb458afb3113
+Step 7/7 : CMD ["python", "/app/app.py"]
+ ---> Running in 76e3bf8d1e71
+ ---> Removed intermediate container 76e3bf8d1e71
+ ---> af279bed732c
+Successfully built af279bed732c
+Successfully tagged 447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-f6e47a809e:909fcedc1db64f28
+{"phase": "testing_container_on_beijing_ec2", "at": "2026-09-22T08:16:39.471336+00:00", "instance_identity": {"accountId": "447150580482", "architecture": "arm64", "availabilityZone": "cn-northwest-1a", "billingProducts": null, "devpayProductCodes": null, "marketplaceProductCodes": null, "imageId": "ami-0f7d342bc678ca8d2", "instanceId": "i-0c62090e8472b2c83", "instanceType": "c6g.2xlarge", "kernelId": null, "pendingTime": "2026-09-22T08:12:37Z", "privateIp": "172.31.1.171", "ramdiskId": null, "region": "cn-northwest-1", "version": "2017-09-30"}, "inspect_config_differences": {"Image": {"source": null, "loaded": ""}, "Domainname": {"source": null, "loaded": ""}, "StdinOnce": {"source": null, "loaded": false}, "AttachStderr": {"source": null, "loaded": false}, "Tty": {"source": null, "loaded": false}, "Hostname": {"source": null, "loaded": ""}, "OpenStdin": {"source": null, "loaded": false}, "AttachStdin": {"source": null, "loaded": false}, "AttachStdout": {"source": null, "loaded": false}}, "offline_base_verified": "sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0"}
+5295a100c139cda1a9ab72c29e189deb5f0abba5dbbaa6f284373867318bd054
+{"phase": "pushing_from_beijing_ec2", "at": "2026-09-22T08:16:50.885611+00:00", "instance_identity": {"accountId": "447150580482", "architecture": "arm64", "availabilityZone": "cn-northwest-1a", "billingProducts": null, "devpayProductCodes": null, "marketplaceProductCodes": null, "imageId": "ami-0f7d342bc678ca8d2", "instanceId": "i-0c62090e8472b2c83", "instanceType": "c6g.2xlarge", "kernelId": null, "pendingTime": "2026-09-22T08:12:37Z", "privateIp": "172.31.1.171", "ramdiskId": null, "region": "cn-northwest-1", "version": "2017-09-30"}, "inspect_config_differences": {"Image": {"source": null, "loaded": ""}, "Domainname": {"source": null, "loaded": ""}, "StdinOnce": {"source": null, "loaded": false}, "AttachStderr": {"source": null, "loaded": false}, "Tty": {"source": null, "loaded": false}, "Hostname": {"source": null, "loaded": ""}, "OpenStdin": {"source": null, "loaded": false}, "AttachStdin": {"source": null, "loaded": false}, "AttachStdout": {"source": null, "loaded": false}}, "offline_base_verified": "sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0"}
+WARNING! Your password will be stored unencrypted in /opt/china-multiprocess/docker-auth/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+The push refers to repository [447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-f6e47a809e]
+10a8ba65f810: Preparing
+ad4da3210e66: Preparing
+8b2b31e2185a: Preparing
+35e2b66d2a1f: Preparing
+e3a9f07577a4: Preparing
+709e0d49f622: Preparing
+709e0d49f622: Waiting
+10a8ba65f810: Pushed
+ad4da3210e66: Pushed
+8b2b31e2185a: Pushed
+e3a9f07577a4: Pushed
+35e2b66d2a1f: Pushed
+709e0d49f622: Pushed
+909fcedc1db64f28: digest: sha256:796b25de081c959c69c92912a5b3c5d0fc3139c72646a455bfa4dec7c94d31bf size: 1573
+Removing login credentials for 447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn
+{"phase": "completed", "at": "2026-09-22T08:16:56.396098+00:00", "instance_identity": {"accountId": "447150580482", "architecture": "arm64", "availabilityZone": "cn-northwest-1a", "billingProducts": null, "devpayProductCodes": null, "marketplaceProductCodes": null, "imageId": "ami-0f7d342bc678ca8d2", "instanceId": "i-0c62090e8472b2c83", "instanceType": "c6g.2xlarge", "kernelId": null, "pendingTime": "2026-09-22T08:12:37Z", "privateIp": "172.31.1.171", "ramdiskId": null, "region": "cn-northwest-1", "version": "2017-09-30"}, "inspect_config_differences": {"Image": {"source": null, "loaded": ""}, "Domainname": {"source": null, "loaded": ""}, "StdinOnce": {"source": null, "loaded": false}, "AttachStderr": {"source": null, "loaded": false}, "Tty": {"source": null, "loaded": false}, "Hostname": {"source": null, "loaded": ""}, "OpenStdin": {"source": null, "loaded": false}, "AttachStdin": {"source": null, "loaded": false}, "AttachStdout": {"source": null, "loaded": false}}, "offline_base_verified": "sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0"}

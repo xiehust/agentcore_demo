@@ -1,0 +1,60 @@
+{
+  "name": "ci_timeout_fd4d2ba0f5",
+  "region": "cn-north-1",
+  "created_at": "2026-09-22T07:29:04.666057+00:00",
+  "instance_id": "i-0ab621bda76e7f0af",
+  "role_name": "cn-ec2-bench-0eec9b6240",
+  "python": "/opt/beijing-agentcore/venv/bin/python",
+  "bucket_intent": "ci-timeout-fd4d2ba0f5-447150580482",
+  "bucket": "ci-timeout-fd4d2ba0f5-447150580482",
+  "interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "a0178b7a-8a04-46ae-94c0-f8699f664cef",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:29:07 GMT",
+        "content-type": "application/json",
+        "content-length": "251",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "a0178b7a-8a04-46ae-94c0-f8699f664cef",
+        "x-amz-apigw-id": "EFwqqGDqBTIEe1w=",
+        "x-amzn-trace-id": "Root=1-6ab22e43-370b4dad50af60225ae2519c"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter-custom/ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "createdAt": "2026-09-22 07:29:07.875704+00:00",
+    "status": "READY"
+  },
+  "ready_interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "3fda2d94-b6c8-46e8-b6c0-6284efeac5ef",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:29:35 GMT",
+        "content-type": "application/json",
+        "content-length": "379",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "3fda2d94-b6c8-46e8-b6c0-6284efeac5ef",
+        "x-amz-apigw-id": "EFwu_E26BTIEWoA=",
+        "x-amzn-trace-id": "Root=1-6ab22e5f-424c1a351d148d94051b5006"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter-custom/ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "name": "ci_timeout_fd4d2ba0f5",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "status": "READY",
+    "createdAt": "2026-09-22 07:29:07.875704+00:00",
+    "lastUpdatedAt": "2026-09-22 07:29:07.875704+00:00"
+  },
+  "command_id": "0405b6f5-ae94-48b8-8548-1a51736b99f8",
+  "remote_directory": "/opt/ci_timeout_fd4d2ba0f5",
+  "command_retry_id": "e793742c-bf6e-4f08-b899-2af9ab2632d8",
+  "collected_at": "2026-09-22T07:49:47.463554+00:00",
+  "command_retry_collected_at": "2026-09-22T07:49:48.258987+00:00"
+}

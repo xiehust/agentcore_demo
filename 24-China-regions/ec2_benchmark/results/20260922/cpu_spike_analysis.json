@@ -1,0 +1,64 @@
+[
+  {
+    "at": "2026-09-22T00:30:01.863545+00:00",
+    "steal_percent": 34.07079646017699,
+    "busy_percent": 56.19469026548673,
+    "overlap_count": 2,
+    "overlap": [
+      {
+        "phase": "cold",
+        "index": 0,
+        "latency_ms": 1969.5936819999815
+      },
+      {
+        "phase": "cold",
+        "index": 1,
+        "latency_ms": 2086.259960999996
+      }
+    ]
+  },
+  {
+    "at": "2026-09-22T00:30:02.864263+00:00",
+    "steal_percent": 34.403669724770644,
+    "busy_percent": 49.54128440366973,
+    "overlap_count": 1,
+    "overlap": [
+      {
+        "phase": "cold",
+        "index": 1,
+        "latency_ms": 2086.259960999996
+      }
+    ]
+  },
+  {
+    "at": "2026-09-22T00:30:03.872505+00:00",
+    "steal_percent": 33.90557939914163,
+    "busy_percent": 57.510729613733915,
+    "overlap_count": 2,
+    "overlap": [
+      {
+        "phase": "cold",
+        "index": 1,
+        "latency_ms": 2086.259960999996
+      },
+      {
+        "phase": "cold",
+        "index": 2,
+        "latency_ms": 1875.282671999969
+      }
+    ]
+  },
+  {
+    "at": "2026-09-22T00:30:04.873901+00:00",
+    "steal_percent": 20.46511627906977,
+    "busy_percent": 52.55813953488372,
+    "overlap_count": 1,
+    "overlap": [
+      {
+        "phase": "cold",
+        "index": 2,
+        "latency_ms": 1875.282671999969
+      }
+    ]
+  }
+]

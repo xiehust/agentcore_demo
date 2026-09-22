@@ -1,0 +1,232 @@
+{
+  "at": "2026-09-21T16:45:59.384483+00:00",
+  "actions": [
+    {
+      "action": "stop-load-session",
+      "resource": "01M32DCBNZ5QT588QCXXPAE0RJ",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "3374fb04-1267-48d3-8b4a-475855a1a4ea",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:45:45 GMT",
+            "content-type": "application/json",
+            "content-length": "161",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "3374fb04-1267-48d3-8b4a-475855a1a4ea"
+          },
+          "RetryAttempts": 0
+        },
+        "codeInterpreterIdentifier": "cn_runtime24_9e54b7531d_load-MhT5myrINh",
+        "sessionId": "01M32DCBNZ5QT588QCXXPAE0RJ",
+        "lastUpdatedAt": "2026-09-21 16:45:45.498592+00:00"
+      }
+    },
+    {
+      "action": "delete-load-interpreter",
+      "resource": "cn_runtime24_9e54b7531d_load-MhT5myrINh",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "0d187779-2b6f-43ea-b0a6-7c9eb193c097",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:45:46 GMT",
+            "content-type": "application/json",
+            "content-length": "131",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "0d187779-2b6f-43ea-b0a6-7c9eb193c097",
+            "x-amz-apigw-id": "EDvRMEDG5PgEIsw=",
+            "x-amzn-trace-id": "Root=1-6ab15f3a-503b997e09f757973cf3f427"
+          },
+          "RetryAttempts": 0
+        },
+        "codeInterpreterId": "cn_runtime24_9e54b7531d_load-MhT5myrINh",
+        "status": "DELETED",
+        "lastUpdatedAt": "2026-09-21 16:45:46.507538+00:00"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_9e54b7531d_baseline-Of9YWeDVCC",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "a526b437-c43a-4efb-919d-00ec1253da41",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:45:47 GMT",
+            "content-type": "application/json",
+            "content-length": "84",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "a526b437-c43a-4efb-919d-00ec1253da41",
+            "x-amz-apigw-id": "EDvRQGWvZPgEFPQ=",
+            "x-amzn-trace-id": "Root=1-6ab15f3a-75652e5446b1e2f221666fb2"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_9e54b7531d_baseline-Of9YWeDVCC"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_9e54b7531d_scale-dKJ1ObA5TB",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "28a8a225-465b-46ce-8478-040bbf330ad8",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:45:47 GMT",
+            "content-type": "application/json",
+            "content-length": "81",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "28a8a225-465b-46ce-8478-040bbf330ad8",
+            "x-amz-apigw-id": "EDvRXEvi5PgEYwg=",
+            "x-amzn-trace-id": "Root=1-6ab15f3b-51528a6c65db2b823cdb0411"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_9e54b7531d_scale-dKJ1ObA5TB"
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_9e54b7531d_baseline-Of9YWeDVCC-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "e03e2ba7-5c71-47b0-b60f-2b87cffe2f82",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "e03e2ba7-5c71-47b0-b60f-2b87cffe2f82",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Mon, 21 Sep 2026 16:45:55 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_9e54b7531d_scale-dKJ1ObA5TB-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "f92f17ed-9f64-4277-8206-2faea26101c6",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "f92f17ed-9f64-4277-8206-2faea26101c6",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Mon, 21 Sep 2026 16:45:56 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-repository",
+      "resource": "cn-runtime24-9e54b7531d",
+      "status": "OK",
+      "response": {
+        "repository": {
+          "repositoryArn": "arn:aws-cn:ecr:cn-northwest-1:447150580482:repository/cn-runtime24-9e54b7531d",
+          "registryId": "447150580482",
+          "repositoryName": "cn-runtime24-9e54b7531d",
+          "repositoryUri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-9e54b7531d",
+          "createdAt": "2026-09-21 16:34:16.788000+00:00",
+          "imageTagMutability": "IMMUTABLE"
+        },
+        "ResponseMetadata": {
+          "RequestId": "d98b8b72-4ed1-436b-befd-029b178d9bb5",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "d98b8b72-4ed1-436b-befd-029b178d9bb5",
+            "date": "Mon, 21 Sep 2026 16:45:57 GMT",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "340",
+            "connection": "keep-alive"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-inline-policy",
+      "resource": "cn-runtime24-9e54b7531d-runtime",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "f3e72f0b-97a7-4a38-b6e4-24f82bd0bc9b",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:45:58 GMT",
+            "x-amzn-requestid": "f3e72f0b-97a7-4a38-b6e4-24f82bd0bc9b",
+            "content-type": "text/xml",
+            "content-length": "212"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-role",
+      "resource": "cn-runtime24-9e54b7531d-runtime",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "27b370c7-c3f9-417c-b33f-4cc74ea9f015",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:45:58 GMT",
+            "x-amzn-requestid": "27b370c7-c3f9-417c-b33f-4cc74ea9f015",
+            "content-type": "text/xml",
+            "content-length": "200"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-inline-policy",
+      "resource": "cn-runtime24-9e54b7531d-load",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "7363c3b7-14e0-44f2-8b50-2d6efbb82fbb",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:45:58 GMT",
+            "x-amzn-requestid": "7363c3b7-14e0-44f2-8b50-2d6efbb82fbb",
+            "content-type": "text/xml",
+            "content-length": "212"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-role",
+      "resource": "cn-runtime24-9e54b7531d-load",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "c44ac890-a9cc-492d-83fb-5208ef868f73",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:45:59 GMT",
+            "x-amzn-requestid": "c44ac890-a9cc-492d-83fb-5208ef868f73",
+            "content-type": "text/xml",
+            "content-length": "200"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    }
+  ]
+}

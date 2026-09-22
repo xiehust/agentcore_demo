@@ -1,0 +1,847 @@
+{
+  "at": "2026-09-22T08:41:50.073350+00:00",
+  "actions": [
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c1_r1-ORdt6h7fZA",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "47cacd2e-f673-4aaa-b1e0-26f050040d47",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:16 GMT",
+            "content-type": "application/json",
+            "content-length": "81",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "47cacd2e-f673-4aaa-b1e0-26f050040d47",
+            "x-amz-apigw-id": "EF7O_FhUZPgEd7g=",
+            "x-amzn-trace-id": "Root=1-6ab23f2c-298f076653474cd710edc981"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c1_r1-ORdt6h7fZA"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c1_r2-hYJGrtDHUr",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "7bd307d2-8185-456d-b248-b035fdad59ee",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:17 GMT",
+            "content-type": "application/json",
+            "content-length": "81",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "7bd307d2-8185-456d-b248-b035fdad59ee",
+            "x-amz-apigw-id": "EF7PHGHR5PgENIA=",
+            "x-amzn-trace-id": "Root=1-6ab23f2d-00773dab3747cbc31db60fef"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c1_r2-hYJGrtDHUr"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c1_r3-u7FInF2W5d",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "5e8cc6d8-aff8-41bf-9e84-68a577ef4fce",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:17 GMT",
+            "content-type": "application/json",
+            "content-length": "81",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "5e8cc6d8-aff8-41bf-9e84-68a577ef4fce",
+            "x-amz-apigw-id": "EF7PLHGC5PgEBlQ=",
+            "x-amzn-trace-id": "Root=1-6ab23f2d-05cd3d761a938d680ef7a556"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c1_r3-u7FInF2W5d"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c10_r1-r0QCk1DnRn",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "ae35aa88-f323-46af-8be0-2808cc05aaa4",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:17 GMT",
+            "content-type": "application/json",
+            "content-length": "82",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "ae35aa88-f323-46af-8be0-2808cc05aaa4",
+            "x-amz-apigw-id": "EF7POF09ZPgEEzg=",
+            "x-amzn-trace-id": "Root=1-6ab23f2d-068e0d1779556591298170f7"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c10_r1-r0QCk1DnRn"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c10_r2-goS2h1FdUy",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "81cc00de-c413-4b62-9ae6-ed4dcd0b8453",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:18 GMT",
+            "content-type": "application/json",
+            "content-length": "82",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "81cc00de-c413-4b62-9ae6-ed4dcd0b8453",
+            "x-amz-apigw-id": "EF7PSGbx5PgEaJQ=",
+            "x-amzn-trace-id": "Root=1-6ab23f2e-787fb0c177cba29d1f6e9acf"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c10_r2-goS2h1FdUy"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c10_r3-nKSK3JE2me",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "b0b24754-7acb-409c-b191-eb9c9acf82d5",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:18 GMT",
+            "content-type": "application/json",
+            "content-length": "82",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "b0b24754-7acb-409c-b191-eb9c9acf82d5",
+            "x-amz-apigw-id": "EF7PVFFC5PgEmJw=",
+            "x-amzn-trace-id": "Root=1-6ab23f2e-194309396635ef8555c27724"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c10_r3-nKSK3JE2me"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c50_r1-WqRGo1HGTV",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "e4ad8811-b688-47fc-befe-e830d93c2a10",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:19 GMT",
+            "content-type": "application/json",
+            "content-length": "82",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "e4ad8811-b688-47fc-befe-e830d93c2a10",
+            "x-amz-apigw-id": "EF7PZGutZPgEUKw=",
+            "x-amzn-trace-id": "Root=1-6ab23f2e-1ed0fdc3192a875569f91f43"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c50_r1-WqRGo1HGTV"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c50_r2-NbylzW5tEE",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "2020ef8b-ad15-4a33-bd8d-9b61e2fa2033",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:19 GMT",
+            "content-type": "application/json",
+            "content-length": "82",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "2020ef8b-ad15-4a33-bd8d-9b61e2fa2033",
+            "x-amz-apigw-id": "EF7PdH_LZPgEYUQ=",
+            "x-amzn-trace-id": "Root=1-6ab23f2f-29e2e6e55d6b91c47c9b2848"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c50_r2-NbylzW5tEE"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c50_r3-10XsDu4ohw",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "015efe8f-d5e3-4167-bd7c-05e848ae750f",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:19 GMT",
+            "content-type": "application/json",
+            "content-length": "82",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "015efe8f-d5e3-4167-bd7c-05e848ae750f",
+            "x-amz-apigw-id": "EF7PgGKr5PgETyA=",
+            "x-amzn-trace-id": "Root=1-6ab23f2f-4e2f89b023e34db2158bdd2e"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c50_r3-10XsDu4ohw"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c100_r1-b5hah69ww4",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "23a7097c-616b-473e-9b84-c68229fde292",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:20 GMT",
+            "content-type": "application/json",
+            "content-length": "83",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "23a7097c-616b-473e-9b84-c68229fde292",
+            "x-amz-apigw-id": "EF7PkGfb5PgEYgw=",
+            "x-amzn-trace-id": "Root=1-6ab23f2f-267553264efb9a062ac516f6"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c100_r1-b5hah69ww4"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c100_r2-zWwYB09Tms",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "f095e252-3cf6-43b9-a674-bbfb54d4ee79",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:20 GMT",
+            "content-type": "application/json",
+            "content-length": "83",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "f095e252-3cf6-43b9-a674-bbfb54d4ee79",
+            "x-amz-apigw-id": "EF7PpFid5PgEq_w=",
+            "x-amzn-trace-id": "Root=1-6ab23f30-1654b63e413cd20675daad55"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c100_r2-zWwYB09Tms"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c100_r3-3gwvQlHCbz",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "045347bc-5f9c-426c-9ec6-839f4aa1b6db",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:20 GMT",
+            "content-type": "application/json",
+            "content-length": "83",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "045347bc-5f9c-426c-9ec6-839f4aa1b6db",
+            "x-amz-apigw-id": "EF7PsE64ZPgEi1g=",
+            "x-amzn-trace-id": "Root=1-6ab23f30-13aded297db5166c535ede5a"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c100_r3-3gwvQlHCbz"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c200_r1-9F2ZYxCg4R",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "28c6a877-3879-4ef9-8ac7-5a3d5ddefc65",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:21 GMT",
+            "content-type": "application/json",
+            "content-length": "83",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "28c6a877-3879-4ef9-8ac7-5a3d5ddefc65",
+            "x-amz-apigw-id": "EF7PwFh45PgEk-g=",
+            "x-amzn-trace-id": "Root=1-6ab23f31-0faaf8a26a8016882ac549c2"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c200_r1-9F2ZYxCg4R"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c200_r2-t4tcQ6BovP",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "0c29fcfe-364f-4c02-8faf-5ebea4575efd",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:21 GMT",
+            "content-type": "application/json",
+            "content-length": "83",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "0c29fcfe-364f-4c02-8faf-5ebea4575efd",
+            "x-amz-apigw-id": "EF7PzHF15PgEJRg=",
+            "x-amzn-trace-id": "Root=1-6ab23f31-47775a6a1a5a3e24418efef2"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c200_r2-t4tcQ6BovP"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_c200_r3-WkRO8j2CvJ",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "b00738af-bba1-46b0-97ec-0139986c22cd",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:21 GMT",
+            "content-type": "application/json",
+            "content-length": "83",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "b00738af-bba1-46b0-97ec-0139986c22cd",
+            "x-amz-apigw-id": "EF7P2H-e5PgEOfw=",
+            "x-amzn-trace-id": "Root=1-6ab23f31-100273fc3b250a6a6c4f75c6"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_c200_r3-WkRO8j2CvJ"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_scale_c50-IL4HC3BBsA",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "663b64ff-eacf-4c98-9fae-3ec1f7f2eb17",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:22 GMT",
+            "content-type": "application/json",
+            "content-length": "85",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "663b64ff-eacf-4c98-9fae-3ec1f7f2eb17",
+            "x-amz-apigw-id": "EF7P6GD75PgEP7A=",
+            "x-amzn-trace-id": "Root=1-6ab23f32-509d07af70a302b569fa3c59"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_scale_c50-IL4HC3BBsA"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_isolated_scale_c50-2Wh0H2Cnsj",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "221cab5b-31d3-4abd-99c2-1f0f77b3da7a",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:22 GMT",
+            "content-type": "application/json",
+            "content-length": "94",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "221cab5b-31d3-4abd-99c2-1f0f77b3da7a",
+            "x-amz-apigw-id": "EF7P9Fw-ZPgEAlA=",
+            "x-amzn-trace-id": "Root=1-6ab23f32-194e53fa6a2f1e421a8f4d83"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_isolated_scale_c50-2Wh0H2Cnsj"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_isolated_c100-aDbkxN8v7S",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "0a59742f-1eac-4516-bbdb-b5472a94417c",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:22 GMT",
+            "content-type": "application/json",
+            "content-length": "89",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "0a59742f-1eac-4516-bbdb-b5472a94417c",
+            "x-amz-apigw-id": "EF7QAFqpZPgEdIw=",
+            "x-amzn-trace-id": "Root=1-6ab23f32-77ee43d3372dba523b66cea7"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_isolated_c100-aDbkxN8v7S"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_f6e47a809e_isolated_c200-J7ThT93Vsd",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "158ccfd9-4a45-49ba-9266-1adba8c8c504",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:23 GMT",
+            "content-type": "application/json",
+            "content-length": "89",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "158ccfd9-4a45-49ba-9266-1adba8c8c504",
+            "x-amz-apigw-id": "EF7QEEFm5PgEURQ=",
+            "x-amzn-trace-id": "Root=1-6ab23f33-7c6b762848b9c7500755c546"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_f6e47a809e_isolated_c200-J7ThT93Vsd"
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c1_r1-ORdt6h7fZA-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "d1ae341b-61b3-4cca-ad66-aea3f4637c8c",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "d1ae341b-61b3-4cca-ad66-aea3f4637c8c",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:38 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c1_r2-hYJGrtDHUr-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "18c100c5-1ffb-4403-a55e-0440a820dca1",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "18c100c5-1ffb-4403-a55e-0440a820dca1",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:39 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c1_r3-u7FInF2W5d-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "adf805a1-2c32-4502-9077-82a8b1af20ad",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "adf805a1-2c32-4502-9077-82a8b1af20ad",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:39 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c10_r1-r0QCk1DnRn-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "19f4fe5b-2fd0-4935-8b20-2ba39064fdea",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "19f4fe5b-2fd0-4935-8b20-2ba39064fdea",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:40 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c10_r2-goS2h1FdUy-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "bda732be-3a5e-46f3-9066-320adc3d49ab",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "bda732be-3a5e-46f3-9066-320adc3d49ab",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:40 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c10_r3-nKSK3JE2me-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "325c3313-010f-44cf-818c-dc05330c1c7e",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "325c3313-010f-44cf-818c-dc05330c1c7e",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:41 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c50_r1-WqRGo1HGTV-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "b5143019-dbf3-47d3-a488-bb33b2523435",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "b5143019-dbf3-47d3-a488-bb33b2523435",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:41 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c50_r2-NbylzW5tEE-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "0f1c1175-4860-41ad-947d-0008ed6f1a6a",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "0f1c1175-4860-41ad-947d-0008ed6f1a6a",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:42 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c50_r3-10XsDu4ohw-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "20f714e4-8026-4ccc-89a4-32589ba8afa9",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "20f714e4-8026-4ccc-89a4-32589ba8afa9",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:42 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c100_r1-b5hah69ww4-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "dabc0da3-2336-4597-a962-d638403ecd7a",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "dabc0da3-2336-4597-a962-d638403ecd7a",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:43 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c100_r2-zWwYB09Tms-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "fcb3c779-9265-431e-ad89-9bcc4c4384e8",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "fcb3c779-9265-431e-ad89-9bcc4c4384e8",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:43 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c100_r3-3gwvQlHCbz-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "149aacc4-351e-4c9a-bd56-2841c59127df",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "149aacc4-351e-4c9a-bd56-2841c59127df",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:44 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c200_r1-9F2ZYxCg4R-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "76dec85d-39c3-44b7-b0b8-8c3ebd0c7b10",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "76dec85d-39c3-44b7-b0b8-8c3ebd0c7b10",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:44 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c200_r2-t4tcQ6BovP-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "77435bf9-58d3-495c-a669-6e094a482e14",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "77435bf9-58d3-495c-a669-6e094a482e14",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:45 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_c200_r3-WkRO8j2CvJ-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "658a314e-f600-47b0-b042-fb13657c3846",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "658a314e-f600-47b0-b042-fb13657c3846",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:45 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_scale_c50-IL4HC3BBsA-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "19af54c4-d838-42b0-ae16-f22adad7ad06",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "19af54c4-d838-42b0-ae16-f22adad7ad06",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:46 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_isolated_scale_c50-2Wh0H2Cnsj-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "b2ae6d7f-ec99-490b-8c6f-fbea88bf6421",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "b2ae6d7f-ec99-490b-8c6f-fbea88bf6421",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:46 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_isolated_c100-aDbkxN8v7S-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "64707c42-6c4f-4bdf-8557-77c9a42b5d4d",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "64707c42-6c4f-4bdf-8557-77c9a42b5d4d",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:47 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_f6e47a809e_isolated_c200-J7ThT93Vsd-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "b53e7dbf-384a-46b1-9c04-ba5b7de262af",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "b53e7dbf-384a-46b1-9c04-ba5b7de262af",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 08:41:47 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-repository",
+      "resource": "cn-runtime24-f6e47a809e",
+      "status": "OK",
+      "response": {
+        "repository": {
+          "repositoryArn": "arn:aws-cn:ecr:cn-northwest-1:447150580482:repository/cn-runtime24-f6e47a809e",
+          "registryId": "447150580482",
+          "repositoryName": "cn-runtime24-f6e47a809e",
+          "repositoryUri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-f6e47a809e",
+          "createdAt": "2026-09-22 08:12:15.637000+00:00",
+          "imageTagMutability": "IMMUTABLE"
+        },
+        "ResponseMetadata": {
+          "RequestId": "b19cb3b9-37a0-456b-ac44-b474d8b7c889",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "b19cb3b9-37a0-456b-ac44-b474d8b7c889",
+            "date": "Tue, 22 Sep 2026 08:41:48 GMT",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "340",
+            "connection": "keep-alive"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-inline-policy",
+      "resource": "cn-runtime24-f6e47a809e-runtime",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "231074cd-4c56-418b-91d7-8464725f9078",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:49 GMT",
+            "x-amzn-requestid": "231074cd-4c56-418b-91d7-8464725f9078",
+            "content-type": "text/xml",
+            "content-length": "212"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-role",
+      "resource": "cn-runtime24-f6e47a809e-runtime",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "2ba1a6b3-0ba5-4b83-9caf-79c4bf800b85",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 08:41:49 GMT",
+            "x-amzn-requestid": "2ba1a6b3-0ba5-4b83-9caf-79c4bf800b85",
+            "content-type": "text/xml",
+            "content-length": "200"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    }
+  ]
+}

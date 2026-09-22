@@ -1,0 +1,314 @@
+{
+  "created_at": "2026-09-21T16:21:40.979774+00:00",
+  "name": "cn-runtime24-01e89f4038",
+  "profile": "agentcore_cn",
+  "region": "cn-northwest-1",
+  "runtimes": {
+    "baseline": {
+      "ResponseMetadata": {
+        "RequestId": "fac76dd4-6f1d-405a-899b-0020c94537b9",
+        "HTTPStatusCode": 202,
+        "HTTPHeaders": {
+          "date": "Mon, 21 Sep 2026 16:23:17 GMT",
+          "content-type": "application/json",
+          "content-length": "491",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "fac76dd4-6f1d-405a-899b-0020c94537b9",
+          "x-amz-apigw-id": "EDr-KE5aZPgEQ-A=",
+          "x-amzn-trace-id": "Root=1-6ab159f3-1bc1373f6493ba7331f5a037"
+        },
+        "RetryAttempts": 0
+      },
+      "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_baseline-LcigTt2oBB",
+      "workloadIdentityDetails": {
+        "workloadIdentityArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:workload-identity-directory/default/workload-identity/cn_runtime24_01e89f4038_baseline-LcigTt2oBB"
+      },
+      "agentRuntimeId": "cn_runtime24_01e89f4038_baseline-LcigTt2oBB",
+      "agentRuntimeVersion": "1",
+      "createdAt": "2026-09-21 16:23:16.713737+00:00",
+      "status": "CREATING",
+      "configuration": {
+        "ResponseMetadata": {
+          "RequestId": "01dbc050-5266-45f0-8d7e-4d93d4aca800",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:26:24 GMT",
+            "content-type": "application/json",
+            "content-length": "1179",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "01dbc050-5266-45f0-8d7e-4d93d4aca800",
+            "x-amz-apigw-id": "EDsbqH22ZPgEuwQ=",
+            "x-amzn-trace-id": "Root=1-6ab15ab0-1d9878df38b161e07daba23b"
+          },
+          "RetryAttempts": 0
+        },
+        "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_baseline-LcigTt2oBB",
+        "agentRuntimeName": "cn_runtime24_01e89f4038_baseline",
+        "agentRuntimeId": "cn_runtime24_01e89f4038_baseline-LcigTt2oBB",
+        "agentRuntimeVersion": "1",
+        "createdAt": "2026-09-21 16:23:16.713737+00:00",
+        "lastUpdatedAt": "2026-09-21 16:26:21.233055+00:00",
+        "roleArn": "arn:aws-cn:iam::447150580482:role/cn-runtime24-01e89f4038-runtime",
+        "networkConfiguration": {
+          "networkMode": "PUBLIC"
+        },
+        "status": "READY",
+        "lifecycleConfiguration": {
+          "idleRuntimeSessionTimeout": 60,
+          "maxLifetime": 1800
+        },
+        "workloadIdentityDetails": {
+          "workloadIdentityArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:workload-identity-directory/default/workload-identity/cn_runtime24_01e89f4038_baseline-LcigTt2oBB"
+        },
+        "agentRuntimeArtifact": {
+          "containerConfiguration": {
+            "containerUri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-01e89f4038@sha256:b2ce5f96258e027c308ee962334f0af9c8948ad1bf1a24a0cb5773dfd6c6c454"
+          }
+        },
+        "protocolConfiguration": {
+          "serverProtocol": "HTTP"
+        },
+        "metadataConfiguration": {
+          "requireMMDSV2": true
+        }
+      }
+    },
+    "scale": {
+      "ResponseMetadata": {
+        "RequestId": "e4b6d953-0ed8-4adc-9f70-2c469be1b454",
+        "HTTPStatusCode": 202,
+        "HTTPHeaders": {
+          "date": "Mon, 21 Sep 2026 16:23:18 GMT",
+          "content-type": "application/json",
+          "content-length": "482",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "e4b6d953-0ed8-4adc-9f70-2c469be1b454",
+          "x-amz-apigw-id": "EDr-eHuS5PgEQFQ=",
+          "x-amzn-trace-id": "Root=1-6ab159f5-2d2ee3a955b285d4132484a2"
+        },
+        "RetryAttempts": 0
+      },
+      "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_scale-1q07nG7z5e",
+      "workloadIdentityDetails": {
+        "workloadIdentityArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:workload-identity-directory/default/workload-identity/cn_runtime24_01e89f4038_scale-1q07nG7z5e"
+      },
+      "agentRuntimeId": "cn_runtime24_01e89f4038_scale-1q07nG7z5e",
+      "agentRuntimeVersion": "1",
+      "createdAt": "2026-09-21 16:23:18.167625+00:00",
+      "status": "CREATING",
+      "configuration": {
+        "ResponseMetadata": {
+          "RequestId": "197807cc-7e17-435d-b706-80262fed5f77",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Mon, 21 Sep 2026 16:26:24 GMT",
+            "content-type": "application/json",
+            "content-length": "1167",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "197807cc-7e17-435d-b706-80262fed5f77",
+            "x-amz-apigw-id": "EDsbtEm5ZPgEn3Q=",
+            "x-amzn-trace-id": "Root=1-6ab15ab0-78bf6ac17dddcc7b7600b671"
+          },
+          "RetryAttempts": 0
+        },
+        "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_scale-1q07nG7z5e",
+        "agentRuntimeName": "cn_runtime24_01e89f4038_scale",
+        "agentRuntimeId": "cn_runtime24_01e89f4038_scale-1q07nG7z5e",
+        "agentRuntimeVersion": "1",
+        "createdAt": "2026-09-21 16:23:18.167625+00:00",
+        "lastUpdatedAt": "2026-09-21 16:26:23.130854+00:00",
+        "roleArn": "arn:aws-cn:iam::447150580482:role/cn-runtime24-01e89f4038-runtime",
+        "networkConfiguration": {
+          "networkMode": "PUBLIC"
+        },
+        "status": "READY",
+        "lifecycleConfiguration": {
+          "idleRuntimeSessionTimeout": 60,
+          "maxLifetime": 1800
+        },
+        "workloadIdentityDetails": {
+          "workloadIdentityArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:workload-identity-directory/default/workload-identity/cn_runtime24_01e89f4038_scale-1q07nG7z5e"
+        },
+        "agentRuntimeArtifact": {
+          "containerConfiguration": {
+            "containerUri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-01e89f4038@sha256:b2ce5f96258e027c308ee962334f0af9c8948ad1bf1a24a0cb5773dfd6c6c454"
+          }
+        },
+        "protocolConfiguration": {
+          "serverProtocol": "HTTP"
+        },
+        "metadataConfiguration": {
+          "requireMMDSV2": true
+        }
+      }
+    }
+  },
+  "roles": {
+    "runtime": {
+      "Path": "/",
+      "RoleName": "cn-runtime24-01e89f4038-runtime",
+      "RoleId": "AROAWQHCAMMBMLH5TT7MG",
+      "Arn": "arn:aws-cn:iam::447150580482:role/cn-runtime24-01e89f4038-runtime",
+      "CreateDate": "2026-09-21 16:23:04+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "bedrock-agentcore.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "StringEquals": {
+                "aws:SourceAccount": "447150580482"
+              },
+              "ArnLike": {
+                "aws:SourceArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:*"
+              }
+            }
+          }
+        ]
+      },
+      "Tags": [
+        {
+          "Key": "Experiment",
+          "Value": "cn-runtime24-01e89f4038"
+        }
+      ]
+    },
+    "load": {
+      "Path": "/",
+      "RoleName": "cn-runtime24-01e89f4038-load",
+      "RoleId": "AROAWQHCAMMBMPBBP4WN7",
+      "Arn": "arn:aws-cn:iam::447150580482:role/cn-runtime24-01e89f4038-load",
+      "CreateDate": "2026-09-21 16:26:26+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "bedrock-agentcore.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "StringEquals": {
+                "aws:SourceAccount": "447150580482"
+              },
+              "ArnLike": {
+                "aws:SourceArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:*"
+              }
+            }
+          }
+        ]
+      },
+      "Tags": [
+        {
+          "Key": "Experiment",
+          "Value": "cn-runtime24-01e89f4038"
+        }
+      ]
+    }
+  },
+  "identity": {
+    "UserId": "AIDAWQHCAMMBLM24L4TGP",
+    "Account": "447150580482",
+    "Arn": "arn:aws-cn:iam::447150580482:user/agentcore-test-user",
+    "ResponseMetadata": {
+      "RequestId": "dc0a635d-0850-461e-8102-467f60a753bc",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "dc0a635d-0850-461e-8102-467f60a753bc",
+        "x-amz-sts-extended-request-id": "MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTAwMDg1OTQxNjU6UjpkTDQ1cnpxVA==",
+        "content-type": "text/xml",
+        "content-length": "419",
+        "date": "Mon, 21 Sep 2026 16:36:34 GMT"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "repository_intent": "cn-runtime24-01e89f4038",
+  "repository": {
+    "repositoryArn": "arn:aws-cn:ecr:cn-northwest-1:447150580482:repository/cn-runtime24-01e89f4038",
+    "registryId": "447150580482",
+    "repositoryName": "cn-runtime24-01e89f4038",
+    "repositoryUri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-01e89f4038",
+    "createdAt": "2026-09-21 16:21:43.281000+00:00",
+    "imageTagMutability": "IMMUTABLE",
+    "imageScanningConfiguration": {
+      "scanOnPush": false
+    },
+    "encryptionConfiguration": {
+      "encryptionType": "AES256"
+    }
+  },
+  "image": {
+    "uri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-01e89f4038:0fdfbc89972c4125",
+    "immutable_uri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-01e89f4038@sha256:b2ce5f96258e027c308ee962334f0af9c8948ad1bf1a24a0cb5773dfd6c6c454",
+    "ecr": {
+      "registryId": "447150580482",
+      "repositoryName": "cn-runtime24-01e89f4038",
+      "imageDigest": "sha256:b2ce5f96258e027c308ee962334f0af9c8948ad1bf1a24a0cb5773dfd6c6c454",
+      "imageTags": [
+        "0fdfbc89972c4125"
+      ],
+      "imageSizeInBytes": 46202038,
+      "imagePushedAt": "2026-09-21 16:23:01.894000+00:00",
+      "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "artifactMediaType": "application/vnd.docker.container.image.v1+json",
+      "imageStatus": "ACTIVE"
+    },
+    "local_size_bytes": 150100850,
+    "architecture": "arm64"
+  },
+  "role_intents": {
+    "runtime": "cn-runtime24-01e89f4038-runtime",
+    "load": "cn-runtime24-01e89f4038-load"
+  },
+  "code_interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "1109779c-a2fe-429a-abb2-d1a0f61ebd75",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 16:26:36 GMT",
+        "content-type": "application/json",
+        "content-length": "269",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "1109779c-a2fe-429a-abb2-d1a0f61ebd75",
+        "x-amz-apigw-id": "EDsdjGwx5PgEXjQ=",
+        "x-amzn-trace-id": "Root=1-6ab15abc-4df1bef64616d47b2d5d15a2"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "cn_runtime24_01e89f4038_load-Ee16s0fFi2",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:code-interpreter-custom/cn_runtime24_01e89f4038_load-Ee16s0fFi2",
+    "createdAt": "2026-09-21 16:26:36.801867+00:00",
+    "status": "READY"
+  },
+  "load_session_intent": "cn-runtime24-01e89f4038-load",
+  "load_session": {
+    "ResponseMetadata": {
+      "RequestId": "7e40995e-2fa5-469e-9c48-0160efc90150",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 16:28:51 GMT",
+        "content-type": "application/json",
+        "content-length": "157",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "7e40995e-2fa5-469e-9c48-0160efc90150"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterIdentifier": "cn_runtime24_01e89f4038_load-Ee16s0fFi2",
+    "sessionId": "01M32CRZBCTP2B1ANJ3WDY30SJ",
+    "createdAt": "2026-09-21 16:28:50.899577+00:00"
+  },
+  "load_task": {
+    "taskId": "d51e3778-1f45-4bb7-99fa-becdba07a502",
+    "started_at": "2026-09-21T16:28:55.711270+00:00",
+    "last_status": "failed",
+    "checked_at": "2026-09-21T16:35:30.390332+00:00"
+  },
+  "cleanup_completed_at": "2026-09-21T16:36:50.037057+00:00"
+}

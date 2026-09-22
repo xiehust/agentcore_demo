@@ -1,0 +1,36 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:StartCodeInterpreterSession",
+        "bedrock-agentcore:InvokeCodeInterpreter",
+        "bedrock-agentcore:GetCodeInterpreterSession",
+        "bedrock-agentcore:StopCodeInterpreterSession",
+        "bedrock-agentcore:ListCodeInterpreterSessions"
+      ],
+      "Resource": [
+        "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter-custom/ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+        "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter/ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+        "arn:aws-cn:bedrock-agentcore:cn-north-1:aws:code-interpreter/aws.codeinterpreter.v1",
+        "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter/aws.codeinterpreter.v1"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws-cn:s3:::ci-timeout-fd4d2ba0f5-447150580482/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws-cn:s3:::ci-timeout-fd4d2ba0f5-447150580482"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "at": "2026-09-22T07:13:16.678066+00:00",
+  "owner": "River",
+  "table_rows": {
+    "code_interpreter": 9,
+    "runtime": 4
+  },
+  "runtime": {
+    "cn-northwest-1": {
+      "7.1": {
+        "sample_count": 100,
+        "value_ms": 1623.420373999977,
+        "target_ms": 3000
+      },
+      "7.2": {
+        "sample_count": 100,
+        "value_ms": 2008.1684509999604,
+        "target_ms": 5000
+      },
+      "7.3": {
+        "sample_count": 500,
+        "value_ms": 154.92011800000682,
+        "target_ms": 200
+      },
+      "7.4": {
+        "successes": 50,
+        "failures": 0
+      }
+    },
+    "cn-north-1": {
+      "7.1": {
+        "sample_count": 100,
+        "value_ms": 1737.4709199998506,
+        "target_ms": 3000
+      },
+      "7.2": {
+        "sample_count": 100,
+        "value_ms": 2196.43852899992,
+        "target_ms": 5000
+      },
+      "7.3": {
+        "sample_count": 500,
+        "value_ms": 199.44036600008985,
+        "target_ms": 200
+      },
+      "7.4": {
+        "successes": 50,
+        "failures": 0
+      }
+    }
+  },
+  "ci": {
+    "cn-northwest-1": {
+      "concurrency_successes": [
+        1,
+        10,
+        50
+      ],
+      "serial_successes": 100,
+      "p50_ms": 917.0046180000782,
+      "p99_ms": 1443.3058210000809
+    },
+    "cn-north-1": {
+      "concurrency_successes": [
+        1,
+        10,
+        50
+      ],
+      "serial_successes": 100,
+      "p50_ms": 968.5547869999027,
+      "p99_ms": 1493.4527980001349
+    }
+  }
+}

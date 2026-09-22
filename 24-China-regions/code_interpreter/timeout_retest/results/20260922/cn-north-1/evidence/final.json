@@ -1,0 +1,158 @@
+{
+  "at": "2026-09-22T07:37:33.221317+00:00",
+  "region": "cn-north-1",
+  "cases": {
+    "command-deadlines": {
+      "status": "ERROR",
+      "error": "{'parent': {'process': {'pid': 419, 'ppid': 302, 'pgid': 419, 'start_ticks': '1353'}, 'alive': False, 'state': None, 'heartbeat': '39', 'done': True}, 'child': {'process': {'pid': 427, 'ppid': 419, 'pgid': 419, 'start_ticks': '1364'}, 'alive': False, 'state': None, 'heartbeat': '39', 'done': False}}",
+      "traceback": "Traceback (most recent call last):\n  File \"/opt/ci_timeout_fd4d2ba0f5/verify_timeout.py\", line 386, in main\n    completed[name] = future.result()\n                      ^^^^^^^^^^^^^^^\n  File \"/usr/lib64/python3.12/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib64/python3.12/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n  File \"/usr/lib64/python3.12/concurrent/futures/thread.py\", line 59, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/ci_timeout_fd4d2ba0f5/verify_timeout.py\", line 329, in command_deadline\n    assert all(r[\"done\"] for r in control_snapshot.values()), control_snapshot\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'parent': {'process': {'pid': 419, 'ppid': 302, 'pgid': 419, 'start_ticks': '1353'}, 'alive': False, 'state': None, 'heartbeat': '39', 'done': True}, 'child': {'process': {'pid': 427, 'ppid': 419, 'pgid': 419, 'start_ticks': '1364'}, 'alive': False, 'state': None, 'heartbeat': '39', 'done': False}}\n"
+    },
+    "ttl-executeCode": {
+      "status": "PASS",
+      "mode": "executeCode",
+      "session_id": "01M340J9F4N92ZNWK9W4GHZHN3",
+      "ttl_s": 60,
+      "planned_work_s": 180,
+      "first_terminal_s": 62.20356321334839,
+      "last_observation_s": 209.95637464523315,
+      "heartbeat_updates_observed": 13,
+      "post_ttl_heartbeat_sequences": [
+        59
+      ],
+      "completion_marker_seen": false,
+      "presigned_authorization_probe": {
+        "at": "2026-09-22T07:35:20.598674+00:00",
+        "http_status": 200
+      },
+      "last_heartbeat": {
+        "body": {
+          "sequence": 59,
+          "elapsed_s": 61.683686456000004,
+          "pid": 310,
+          "unix_s": 1790062500.6672773
+        },
+        "last_modified": "2026-09-22T07:35:01+00:00",
+        "etag": "\"e36c289a5431ea42d0404f34935de333\""
+      },
+      "invocation": {
+        "at": "2026-09-22T07:33:58.928836+00:00",
+        "operation": "invoke_code_interpreter",
+        "request": {
+          "codeInterpreterIdentifier": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+          "sessionId": "01M340J9F4N92ZNWK9W4GHZHN3",
+          "name": "executeCode",
+          "arguments": {
+            "language": "python",
+            "code_sha256": "a9a23a8fea24870c72a470e2036eddd7079ca73f65b8b10e67b6bc69a3db6fbe"
+          }
+        },
+        "error": {
+          "type": "ConflictException",
+          "message": "An error occurred (ConflictException) when calling the InvokeCodeInterpreter operation: The session 01M340J9F4N92ZNWK9W4GHZHN3 ended before the request could complete, as it exceeded the configured session timeout.",
+          "response": {
+            "Error": {
+              "Message": "The session 01M340J9F4N92ZNWK9W4GHZHN3 ended before the request could complete, as it exceeded the configured session timeout.",
+              "Code": "ConflictException"
+            },
+            "ResponseMetadata": {
+              "RequestId": "907f4383-4e22-44bd-be84-9148f314e25a",
+              "HTTPStatusCode": 409,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 07:35:10 GMT",
+                "content-type": "application/json",
+                "content-length": "140",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "907f4383-4e22-44bd-be84-9148f314e25a",
+                "x-amzn-errortype": "ConflictException:http://internal.amazon.com/coral/com.amazon.bedrock.agentcore.common/"
+              },
+              "RetryAttempts": 0
+            },
+            "message": "The session 01M340J9F4N92ZNWK9W4GHZHN3 ended before the request could complete, as it exceeded the configured session timeout."
+          }
+        },
+        "elapsed_s": 71.88058440000003
+      },
+      "manual_stop_before_observation_end": false,
+      "signed_urls_saved": false
+    },
+    "ttl-async": {
+      "status": "PASS",
+      "mode": "async",
+      "session_id": "01M340J9F158FQJXPE6A0T79EA",
+      "ttl_s": 60,
+      "planned_work_s": 180,
+      "first_terminal_s": 62.63982677459717,
+      "last_observation_s": 210.199147939682,
+      "heartbeat_updates_observed": 13,
+      "post_ttl_heartbeat_sequences": [
+        59
+      ],
+      "completion_marker_seen": false,
+      "presigned_authorization_probe": {
+        "at": "2026-09-22T07:35:20.978318+00:00",
+        "http_status": 200
+      },
+      "last_heartbeat": {
+        "body": {
+          "sequence": 59,
+          "elapsed_s": 61.693021463,
+          "pid": 420,
+          "unix_s": 1790062500.6917994
+        },
+        "last_modified": "2026-09-22T07:35:01+00:00",
+        "etag": "\"26f451a0bc7fa70622b3feba54b7a2b0\""
+      },
+      "invocation": {
+        "at": "2026-09-22T07:33:58.787090+00:00",
+        "operation": "invoke_code_interpreter",
+        "request": {
+          "codeInterpreterIdentifier": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+          "sessionId": "01M340J9F158FQJXPE6A0T79EA",
+          "name": "startCommandExecution",
+          "arguments": {
+            "command_sha256": "71ea07a128046289ec8d6e0b92cbba78caafcd72434bbf7d15da080e861f7080"
+          }
+        },
+        "response": {
+          "ResponseMetadata": {
+            "RequestId": "92a7c25d-e15c-456d-9739-89261620f85e",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Tue, 22 Sep 2026 07:33:58 GMT",
+              "content-type": "application/vnd.amazon.eventstream",
+              "transfer-encoding": "chunked",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "92a7c25d-e15c-456d-9739-89261620f85e",
+              "x-amzn-code-interpreter-session-id": "01M340J9F158FQJXPE6A0T79EA"
+            },
+            "RetryAttempts": 0
+          },
+          "sessionId": "01M340J9F158FQJXPE6A0T79EA"
+        },
+        "events": [
+          {
+            "result": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Successfully started a command execution task"
+                }
+              ],
+              "structuredContent": {
+                "taskId": "879d3688-bb8d-44c0-b29c-c92454c87c62",
+                "taskStatus": "submitted",
+                "stdout": "",
+                "stderr": ""
+              },
+              "isError": false
+            }
+          }
+        ],
+        "elapsed_s": 0.09289478900001313
+      },
+      "manual_stop_before_observation_end": false,
+      "signed_urls_saved": false
+    }
+  },
+  "status": "REVIEW"
+}

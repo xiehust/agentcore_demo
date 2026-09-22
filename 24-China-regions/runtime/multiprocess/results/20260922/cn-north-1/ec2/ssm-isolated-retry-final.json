@@ -1,0 +1,36 @@
+{
+  "CommandId": "1b2ba6af-3206-418e-b79f-cefc004ae5de",
+  "InstanceId": "i-056c2c62a8508d683",
+  "Comment": "China same-region benchmark: isolated-retry",
+  "DocumentName": "AWS-RunShellScript",
+  "DocumentVersion": "$DEFAULT",
+  "PluginName": "aws:runShellScript",
+  "ResponseCode": 2,
+  "ExecutionStartDateTime": "2026-09-22T08:32:21.614Z",
+  "ExecutionElapsedTime": "PT6M29.363S",
+  "ExecutionEndDateTime": "2026-09-22T08:38:50.614Z",
+  "Status": "Failed",
+  "StatusDetails": "Failed",
+  "StandardOutputContent": "Completed 18.0 KiB/18.0 KiB (274.5 KiB/s) with 1 file(s) remaining\rupload: ./isolated-results.tar.gz to s3://cn-ec2-bench-f5060bb011-447150580482/results/isolated-preparation-failure.tar.gz\nCompleted 4.6 KiB/4.6 KiB (78.2 KiB/s) with 1 file(s) remaining\rupload: ./isolated.log to s3://cn-ec2-bench-f5060bb011-447150580482/results/isolated-preparation-failure.log\n",
+  "StandardOutputUrl": "",
+  "StandardErrorContent": "failed to run commands: exit status 2",
+  "StandardErrorUrl": "",
+  "CloudWatchOutputConfig": {
+    "CloudWatchLogGroupName": "",
+    "CloudWatchOutputEnabled": false
+  },
+  "ResponseMetadata": {
+    "RequestId": "877690da-93ad-437a-9e37-9d95891e5099",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "server": "Server",
+      "date": "Tue, 22 Sep 2026 08:43:07 GMT",
+      "content-type": "application/x-amz-json-1.1",
+      "content-length": "1030",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "877690da-93ad-437a-9e37-9d95891e5099",
+      "cache-control": "no-store"
+    },
+    "RetryAttempts": 0
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "at": "2026-09-22T07:37:33.133143+00:00",
+  "operation": "stop_code_interpreter_session",
+  "request": {
+    "codeInterpreterIdentifier": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "sessionId": "01M340J9F158FQJXPE6A0T79EA"
+  },
+  "error": {
+    "type": "ConflictException",
+    "message": "An error occurred (ConflictException) when calling the StopCodeInterpreterSession operation: Session already terminated: 01M340J9F158FQJXPE6A0T79EA",
+    "response": {
+      "Error": {
+        "Message": "Session already terminated: 01M340J9F158FQJXPE6A0T79EA",
+        "Code": "ConflictException"
+      },
+      "ResponseMetadata": {
+        "RequestId": "520983f1-323b-4f75-bbc4-af5dad0b42db",
+        "HTTPStatusCode": 409,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 07:37:33 GMT",
+          "content-type": "application/json",
+          "content-length": "68",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "520983f1-323b-4f75-bbc4-af5dad0b42db",
+          "x-amzn-errortype": "ConflictException:http://internal.amazon.com/coral/com.amazon.bedrock.agentcore.common/"
+        },
+        "RetryAttempts": 0
+      },
+      "message": "Session already terminated: 01M340J9F158FQJXPE6A0T79EA"
+    }
+  },
+  "elapsed_s": 0.05867307699998037
+}

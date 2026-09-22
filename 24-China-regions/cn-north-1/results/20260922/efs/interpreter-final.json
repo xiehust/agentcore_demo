@@ -1,0 +1,25 @@
+{
+  "deleted": true,
+  "response": {
+    "Error": {
+      "Message": "Code interpreter with ID cn_ci_efs_53c6d40f78-eXhLPXpSHB does not exist",
+      "Code": "ResourceNotFoundException"
+    },
+    "ResponseMetadata": {
+      "RequestId": "7f2ee7d4-b6ec-4b34-b802-557f02446cfa",
+      "HTTPStatusCode": 404,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 06:08:40 GMT",
+        "content-type": "application/json",
+        "content-length": "85",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "7f2ee7d4-b6ec-4b34-b802-557f02446cfa",
+        "x-amzn-errortype": "ResourceNotFoundException",
+        "x-amz-apigw-id": "EFk4VGiPhTIER7Q=",
+        "x-amzn-trace-id": "Root=1-6ab21b68-2f0adaa35d7ee6e572d61783"
+      },
+      "RetryAttempts": 0
+    },
+    "message": "Code interpreter with ID cn_ci_efs_53c6d40f78-eXhLPXpSHB does not exist"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "at": "2026-09-22T00:41:49.742614+00:00",
+  "region_verified_by_imdsv2": "cn-northwest-1",
+  "instance_id": "i-0a685957c9b9355d7",
+  "source_hashes_match": true,
+  "runtime_requests_verified": 651,
+  "runtime_sessions_stopped": 151,
+  "code_interpreter_sessions_stopped": 161,
+  "percentiles_recomputed": true,
+  "cpu": {
+    "code_interpreter_concurrency": {
+      "samples": 5,
+      "mean_busy_percent": 18.055825113032313,
+      "p95_busy_percent": 46.07843137254902,
+      "max_busy_percent": 46.07843137254902,
+      "max_steal_percent": 0.5025125628140703
+    },
+    "code_interpreter_serial": {
+      "samples": 103,
+      "mean_busy_percent": 1.139756394705489,
+      "p95_busy_percent": 2.970297029702973,
+      "max_busy_percent": 11.764705882352944,
+      "max_steal_percent": 3.902439024390244
+    },
+    "runtime": {
+      "samples": 244,
+      "mean_busy_percent": 2.323682499134499,
+      "p95_busy_percent": 4.326923076923073,
+      "max_busy_percent": 57.510729613733915,
+      "max_steal_percent": 34.403669724770644
+    }
+  },
+  "image_comparison": {
+    "old_manifest": "sha256:98f8aed17302b93d66d5594402fbb44692d734a553f0dd8ad3834b714ed84460",
+    "new_manifest": "sha256:e2c02e990e8610ed7750b0279a939900c8ceb24ec8716247263a625d7a4aabe3",
+    "rootfs_layers_identical": true,
+    "container_config_identical": true,
+    "old_created": "2026-09-21T16:34:17.176321759Z",
+    "new_created": "2026-09-21T16:34:17.176321759Z",
+    "app_source_identical": true
+  }
+}

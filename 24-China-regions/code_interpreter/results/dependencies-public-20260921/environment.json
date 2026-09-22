@@ -1,0 +1,76 @@
+{
+  "at": "2026-09-21T16:01:55.382544+00:00",
+  "profile": "agentcore_cn",
+  "region": "cn-northwest-1",
+  "identity": {
+    "UserId": "AIDAWQHCAMMBLM24L4TGP",
+    "Account": "447150580482",
+    "Arn": "arn:aws-cn:iam::447150580482:user/agentcore-test-user",
+    "ResponseMetadata": {
+      "RequestId": "d44ce743-1b35-4356-aec9-c9f6d51108cf",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "d44ce743-1b35-4356-aec9-c9f6d51108cf",
+        "x-amz-sts-extended-request-id": "MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTAwMDY1MTUyODA6UjpacXlPdVhENQ==",
+        "content-type": "text/xml",
+        "content-length": "419",
+        "date": "Mon, 21 Sep 2026 16:01:55 GMT"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "endpoint": "https://bedrock-agentcore.cn-northwest-1.amazonaws.com.cn",
+  "identifier": "cn_ci_validation_3cf56e1329e9-sHMEZucz9F",
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "python": "3.12.3",
+  "client_platform": "Linux-7.0.0-1012-aws-aarch64-with-glibc2.39",
+  "sdk_total_max_attempts": 1,
+  "connect_timeout_s": 10,
+  "read_timeout_s": 300,
+  "invoke_argument_fields": [
+    "code",
+    "language",
+    "clearContext",
+    "command",
+    "path",
+    "paths",
+    "content",
+    "directoryPath",
+    "taskId",
+    "runtime"
+  ],
+  "command": [
+    "24-China-regions/code_interpreter/verify_public_dependencies.py",
+    "--network",
+    "PUBLIC",
+    "--output",
+    "24-China-regions/code_interpreter/results/dependencies-public-20260921"
+  ],
+  "resource": {
+    "ResponseMetadata": {
+      "RequestId": "7d393a4a-92c9-46ff-a2b6-90e718f2affe",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 16:01:56 GMT",
+        "content-type": "application/json",
+        "content-length": "478",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "7d393a4a-92c9-46ff-a2b6-90e718f2affe",
+        "x-amz-apigw-id": "EDo2MESmZPgEAlA=",
+        "x-amzn-trace-id": "Root=1-6ab154f3-2c19e2685bb812c830e0188a"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "cn_ci_validation_3cf56e1329e9-sHMEZucz9F",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:code-interpreter-custom/cn_ci_validation_3cf56e1329e9-sHMEZucz9F",
+    "name": "cn_ci_validation_3cf56e1329e9",
+    "description": "Temporary China Code Interpreter dependency validation",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "status": "READY",
+    "createdAt": "2026-09-21T16:01:54.042113+00:00",
+    "lastUpdatedAt": "2026-09-21T16:01:54.042113+00:00"
+  }
+}

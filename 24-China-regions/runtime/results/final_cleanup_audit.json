@@ -1,0 +1,86 @@
+{
+  "at": "2026-09-21T16:46:53.323753+00:00",
+  "checks": [
+    {
+      "kind": "runtime",
+      "id": "cn_runtime24_01e89f4038_baseline-LcigTt2oBB",
+      "absent": true,
+      "request_id": "071e3d6f-2e31-4de9-89f9-e19b11773f5b"
+    },
+    {
+      "kind": "runtime",
+      "id": "cn_runtime24_01e89f4038_scale-1q07nG7z5e",
+      "absent": true,
+      "request_id": "9c74e622-1d4f-4f2a-aea9-eca41ecfcac3"
+    },
+    {
+      "kind": "code_interpreter",
+      "id": "cn_runtime24_01e89f4038_load-Ee16s0fFi2",
+      "absent": true,
+      "request_id": "33d706df-2dd5-4095-8026-ff1843b18f80"
+    },
+    {
+      "kind": "iam_role",
+      "id": "cn-runtime24-01e89f4038-runtime",
+      "absent": true,
+      "request_id": "10598d7b-3df6-4f2b-96ee-2cc16cf85720"
+    },
+    {
+      "kind": "iam_role",
+      "id": "cn-runtime24-01e89f4038-load",
+      "absent": true,
+      "request_id": "b27dab6a-3f70-433a-8a03-449d23375c6a"
+    },
+    {
+      "kind": "ecr_repository",
+      "id": "cn-runtime24-01e89f4038",
+      "absent": true,
+      "request_id": "d667ce61-a4e1-4dfb-8016-7d210be2a3c6"
+    },
+    {
+      "kind": "runtime",
+      "id": "cn_runtime24_9e54b7531d_baseline-Of9YWeDVCC",
+      "absent": true,
+      "request_id": "15a5607e-2c04-4ef5-871a-9537878f0317"
+    },
+    {
+      "kind": "runtime",
+      "id": "cn_runtime24_9e54b7531d_scale-dKJ1ObA5TB",
+      "absent": true,
+      "request_id": "7d0a6057-e9f2-472d-807e-2fb2552bc905"
+    },
+    {
+      "kind": "code_interpreter",
+      "id": "cn_runtime24_9e54b7531d_load-MhT5myrINh",
+      "absent": true,
+      "request_id": "a873a684-7db9-4c93-9ce2-95f6956eca9a"
+    },
+    {
+      "kind": "iam_role",
+      "id": "cn-runtime24-9e54b7531d-runtime",
+      "absent": true,
+      "request_id": "7da748b8-296f-4e79-9446-8dae67658f64"
+    },
+    {
+      "kind": "iam_role",
+      "id": "cn-runtime24-9e54b7531d-load",
+      "absent": true,
+      "request_id": "ec7e35a0-1531-4318-a829-191bdf3b1373"
+    },
+    {
+      "kind": "ecr_repository",
+      "id": "cn-runtime24-9e54b7531d",
+      "absent": true,
+      "request_id": "b4e170b1-9043-4612-a4fd-d18e395d3036"
+    }
+  ],
+  "all_absent": true,
+  "original_runtime": {
+    "id": "agent_session_storage-Ptk5RUAyhX",
+    "status": "READY",
+    "version": "1"
+  },
+  "runtime_sessions_stopped": 302,
+  "code_interpreter_sessions_stopped": 2,
+  "test_runtime_log_groups_absent": true
+}

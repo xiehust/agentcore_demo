@@ -1,0 +1,38 @@
+{
+  "at": "2026-09-22T07:33:59.058436+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "ci_timeout_7e9b807a6e-4txxj1i8C9",
+    "sessionId": "01M340J9M4EGMEQBKA1RCJVPP8",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code_sha256": "a9a23a8fea24870c72a470e2036eddd7079ca73f65b8b10e67b6bc69a3db6fbe"
+    }
+  },
+  "error": {
+    "type": "ConflictException",
+    "message": "An error occurred (ConflictException) when calling the InvokeCodeInterpreter operation: The session 01M340J9M4EGMEQBKA1RCJVPP8 ended before the request could complete, as it exceeded the configured session timeout.",
+    "response": {
+      "Error": {
+        "Message": "The session 01M340J9M4EGMEQBKA1RCJVPP8 ended before the request could complete, as it exceeded the configured session timeout.",
+        "Code": "ConflictException"
+      },
+      "ResponseMetadata": {
+        "RequestId": "a852c111-212d-4b70-b288-72fbf807c93b",
+        "HTTPStatusCode": 409,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 07:35:37 GMT",
+          "content-type": "application/json",
+          "content-length": "140",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a852c111-212d-4b70-b288-72fbf807c93b",
+          "x-amzn-errortype": "ConflictException:http://internal.amazon.com/coral/com.amazon.bedrock.agentcore.common/"
+        },
+        "RetryAttempts": 0
+      },
+      "message": "The session 01M340J9M4EGMEQBKA1RCJVPP8 ended before the request could complete, as it exceeded the configured session timeout."
+    }
+  },
+  "elapsed_s": 98.828301523
+}

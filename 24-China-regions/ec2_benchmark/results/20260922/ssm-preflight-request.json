@@ -1,0 +1,76 @@
+{
+  "commands": [
+    "uname -m",
+    "python3 --version",
+    "command -v aws",
+    "cloud-init status --long",
+    "tail -25 /var/log/cloud-init-output.log"
+  ],
+  "response": {
+    "Command": {
+      "CommandId": "44b9143f-16c1-4671-8c55-805a2e45e34f",
+      "DocumentName": "AWS-RunShellScript",
+      "DocumentVersion": "$DEFAULT",
+      "Comment": "China same-region benchmark: preflight",
+      "ExpiresAfter": "2026-09-22 00:30:45.975000+00:00",
+      "Parameters": {
+        "commands": [
+          "uname -m",
+          "python3 --version",
+          "command -v aws",
+          "cloud-init status --long",
+          "tail -25 /var/log/cloud-init-output.log"
+        ],
+        "executionTimeout": [
+          "120"
+        ]
+      },
+      "InstanceIds": [
+        "i-0a685957c9b9355d7"
+      ],
+      "Targets": [],
+      "RequestedDateTime": "2026-09-22 00:27:45.975000+00:00",
+      "Status": "Pending",
+      "StatusDetails": "Pending",
+      "OutputS3Region": "cn-northwest-1",
+      "OutputS3BucketName": "",
+      "OutputS3KeyPrefix": "",
+      "MaxConcurrency": "50",
+      "MaxErrors": "0",
+      "TargetCount": 1,
+      "CompletedCount": 0,
+      "ErrorCount": 0,
+      "DeliveryTimedOutCount": 0,
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "",
+        "CloudWatchOutputEnabled": false
+      },
+      "TimeoutSeconds": 60,
+      "AlarmConfiguration": {
+        "IgnorePollAlarmFailure": false,
+        "Alarms": []
+      },
+      "TriggeredAlarms": []
+    },
+    "ResponseMetadata": {
+      "RequestId": "f9a34a2e-4e8a-41a8-b659-a9238e192bc2",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Tue, 22 Sep 2026 00:27:45 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "1135",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "f9a34a2e-4e8a-41a8-b659-a9238e192bc2",
+        "cache-control": "no-store"
+      },
+      "RetryAttempts": 0
+    }
+  }
+}

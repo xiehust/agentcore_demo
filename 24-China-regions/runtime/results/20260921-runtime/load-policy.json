@@ -1,0 +1,20 @@
+{
+  "policy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "bedrock-agentcore:InvokeAgentRuntime",
+          "bedrock-agentcore:StopRuntimeSession"
+        ],
+        "Resource": [
+          "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_baseline-LcigTt2oBB",
+          "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_scale-1q07nG7z5e",
+          "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_baseline-LcigTt2oBB/*",
+          "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_scale-1q07nG7z5e/*"
+        ]
+      }
+    ]
+  }
+}

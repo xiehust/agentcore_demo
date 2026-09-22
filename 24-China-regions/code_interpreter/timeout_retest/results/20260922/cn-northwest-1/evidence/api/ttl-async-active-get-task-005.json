@@ -1,0 +1,47 @@
+{
+  "at": "2026-09-22T07:34:19.539264+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "ci_timeout_7e9b807a6e-4txxj1i8C9",
+    "sessionId": "01M340J9MD9M1ERR4AP25V3F8W",
+    "name": "getTask",
+    "arguments": {
+      "taskId": "6c61a3b3-eddd-49b9-8c42-912a8446dc12"
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "7166f7dd-eda2-4598-a05a-863a07fc13b6",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:34:19 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "7166f7dd-eda2-4598-a05a-863a07fc13b6",
+        "x-amzn-code-interpreter-session-id": "01M340J9MD9M1ERR4AP25V3F8W"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M340J9MD9M1ERR4AP25V3F8W"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Task is working"
+          }
+        ],
+        "structuredContent": {
+          "taskStatus": "working",
+          "stdout": "",
+          "stderr": ""
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.09753222000000505
+}

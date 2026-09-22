@@ -1,0 +1,127 @@
+{
+  "at": "2026-09-22T00:34:58.589593+00:00",
+  "credit_specification": {
+    "InstanceCreditSpecifications": [
+      {
+        "InstanceId": "i-0a685957c9b9355d7",
+        "CpuCredits": "unlimited"
+      }
+    ],
+    "ResponseMetadata": {
+      "RequestId": "0242b824-13e1-42e3-bfe4-ff3df1cf7992",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "0242b824-13e1-42e3-bfe4-ff3df1cf7992",
+        "cache-control": "no-cache, no-store",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "accept-encoding",
+        "content-type": "text/xml;charset=UTF-8",
+        "transfer-encoding": "chunked",
+        "date": "Tue, 22 Sep 2026 00:34:59 GMT",
+        "server": "AmazonEC2"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "metrics": {
+    "CPUCreditUsage": {
+      "Label": "CPUCreditUsage",
+      "Datapoints": [
+        {
+          "Timestamp": "2026-09-22 00:30:00+00:00",
+          "Average": 1.2609519666666666,
+          "Minimum": 1.2609519666666666,
+          "Maximum": 1.2609519666666666,
+          "Unit": "Count"
+        }
+      ],
+      "ResponseMetadata": {
+        "RequestId": "1a9a7e6a-520f-4502-b6dd-ce52ba054dd3",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "x-amzn-requestid": "1a9a7e6a-520f-4502-b6dd-ce52ba054dd3",
+          "content-type": "application/x-amz-json-1.0",
+          "content-length": "168",
+          "date": "Tue, 22 Sep 2026 00:35:00 GMT"
+        },
+        "RetryAttempts": 0
+      }
+    },
+    "CPUSurplusCreditBalance": {
+      "Label": "CPUSurplusCreditBalance",
+      "Datapoints": [
+        {
+          "Timestamp": "2026-09-22 00:30:00+00:00",
+          "Average": 0.0,
+          "Minimum": 0.0,
+          "Maximum": 0.0,
+          "Unit": "Count"
+        }
+      ],
+      "ResponseMetadata": {
+        "RequestId": "a37c1411-5333-4eb5-a899-e76fe486a152",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "x-amzn-requestid": "a37c1411-5333-4eb5-a899-e76fe486a152",
+          "content-type": "application/x-amz-json-1.0",
+          "content-length": "132",
+          "date": "Tue, 22 Sep 2026 00:35:00 GMT"
+        },
+        "RetryAttempts": 0
+      }
+    },
+    "CPUCreditBalance": {
+      "Label": "CPUCreditBalance",
+      "Datapoints": [
+        {
+          "Timestamp": "2026-09-22 00:30:00+00:00",
+          "Average": 0.7162480333333333,
+          "Minimum": 0.7162480333333333,
+          "Maximum": 0.7162480333333333,
+          "Unit": "Count"
+        }
+      ],
+      "ResponseMetadata": {
+        "RequestId": "cd2cadb2-be87-4f76-adb8-a2453af4a6e3",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "x-amzn-requestid": "cd2cadb2-be87-4f76-adb8-a2453af4a6e3",
+          "content-type": "application/x-amz-json-1.0",
+          "content-length": "170",
+          "date": "Tue, 22 Sep 2026 00:35:00 GMT"
+        },
+        "RetryAttempts": 0
+      }
+    },
+    "CPUUtilization": {
+      "Label": "CPUUtilization",
+      "Datapoints": [
+        {
+          "Timestamp": "2026-09-22 00:25:00+00:00",
+          "Average": 2.9377983885898855,
+          "Minimum": 0.1365802125676098,
+          "Maximum": 5.583147228425719,
+          "Unit": "Percent"
+        },
+        {
+          "Timestamp": "2026-09-22 00:30:00+00:00",
+          "Average": 6.831281460805331,
+          "Minimum": 0.5250262513125656,
+          "Maximum": 24.932917784703587,
+          "Unit": "Percent"
+        }
+      ],
+      "ResponseMetadata": {
+        "RequestId": "db0cba18-9d4d-447c-af82-71bc1b640fe7",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "x-amzn-requestid": "db0cba18-9d4d-447c-af82-71bc1b640fe7",
+          "content-type": "application/x-amz-json-1.0",
+          "content-length": "298",
+          "date": "Tue, 22 Sep 2026 00:35:00 GMT"
+        },
+        "RetryAttempts": 0
+      }
+    }
+  }
+}

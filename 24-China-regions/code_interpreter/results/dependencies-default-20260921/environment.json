@@ -1,0 +1,71 @@
+{
+  "at": "2026-09-21T16:01:12.130225+00:00",
+  "profile": "agentcore_cn",
+  "region": "cn-northwest-1",
+  "identity": {
+    "UserId": "AIDAWQHCAMMBLM24L4TGP",
+    "Account": "447150580482",
+    "Arn": "arn:aws-cn:iam::447150580482:user/agentcore-test-user",
+    "ResponseMetadata": {
+      "RequestId": "4e1040f0-0ab3-4f16-8185-0dc30159ff3b",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "4e1040f0-0ab3-4f16-8185-0dc30159ff3b",
+        "x-amz-sts-extended-request-id": "MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTAwMDY0NzIwMzE6Ujp6ZHlDVzl6YQ==",
+        "content-type": "text/xml",
+        "content-length": "419",
+        "date": "Mon, 21 Sep 2026 16:01:12 GMT"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "endpoint": "https://bedrock-agentcore.cn-northwest-1.amazonaws.com.cn",
+  "identifier": "aws.codeinterpreter.v1",
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "python": "3.12.3",
+  "client_platform": "Linux-7.0.0-1012-aws-aarch64-with-glibc2.39",
+  "sdk_total_max_attempts": 1,
+  "connect_timeout_s": 10,
+  "read_timeout_s": 300,
+  "invoke_argument_fields": [
+    "code",
+    "language",
+    "clearContext",
+    "command",
+    "path",
+    "paths",
+    "content",
+    "directoryPath",
+    "taskId",
+    "runtime"
+  ],
+  "command": [
+    "24-China-regions/code_interpreter/verify_public_dependencies.py",
+    "--network",
+    "default",
+    "--output",
+    "24-China-regions/code_interpreter/results/dependencies-default-20260921"
+  ],
+  "resource": {
+    "ResponseMetadata": {
+      "RequestId": "13e0c08a-ec7f-4d46-ae49-cb2202ab6b0f",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 16:01:13 GMT",
+        "content-type": "application/json",
+        "content-length": "290",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "13e0c08a-ec7f-4d46-ae49-cb2202ab6b0f",
+        "x-amz-apigw-id": "EDovhExk5PgEvxQ=",
+        "x-amzn-trace-id": "Root=1-6ab154c9-67d48b4402398ab62f88c749"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "aws.codeinterpreter.v1",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:aws:code-interpreter/aws.codeinterpreter.v1",
+    "name": "AgentCore Code Interpreter",
+    "description": "AWS built-in code interpreter sandbox for secure code execution",
+    "status": "READY"
+  }
+}

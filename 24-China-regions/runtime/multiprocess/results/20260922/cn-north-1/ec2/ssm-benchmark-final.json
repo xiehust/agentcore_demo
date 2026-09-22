@@ -1,0 +1,36 @@
+{
+  "CommandId": "11c522d4-fefe-4659-9b39-bf686c360a54",
+  "InstanceId": "i-056c2c62a8508d683",
+  "Comment": "China same-region benchmark: benchmark",
+  "DocumentName": "AWS-RunShellScript",
+  "DocumentVersion": "$DEFAULT",
+  "PluginName": "aws:runShellScript",
+  "ResponseCode": 2,
+  "ExecutionStartDateTime": "2026-09-22T08:19:19.511Z",
+  "ExecutionElapsedTime": "PT1M32.859S",
+  "ExecutionEndDateTime": "2026-09-22T08:20:51.511Z",
+  "Status": "Failed",
+  "StatusDetails": "Failed",
+  "StandardOutputContent": "Completed 12.3 KiB/12.3 KiB (319.7 KiB/s) with 1 file(s) remaining\rdownload: s3://cn-ec2-bench-f5060bb011-447150580482/input/benchmark.tar.gz to ./benchmark.tar.gz\n",
+  "StandardOutputUrl": "",
+  "StandardErrorContent": "failed to run commands: exit status 2",
+  "StandardErrorUrl": "",
+  "CloudWatchOutputConfig": {
+    "CloudWatchLogGroupName": "",
+    "CloudWatchOutputEnabled": false
+  },
+  "ResponseMetadata": {
+    "RequestId": "0e0a76db-e3c5-4e95-9489-abaa0be062b9",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "server": "Server",
+      "date": "Tue, 22 Sep 2026 08:43:06 GMT",
+      "content-type": "application/x-amz-json-1.1",
+      "content-length": "824",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "0e0a76db-e3c5-4e95-9489-abaa0be062b9",
+      "cache-control": "no-store"
+    },
+    "RetryAttempts": 0
+  }
+}

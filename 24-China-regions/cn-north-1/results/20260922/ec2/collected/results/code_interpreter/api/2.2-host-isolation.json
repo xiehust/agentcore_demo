@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-22T05:27:55.848964+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M33SBEZNH9MJKTFZHA6DC6MX",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport pathlib, json, os\ndef check_private_path(path):\n    try:\n        with open(path, \"rb\") as f:\n            return {\"accessible\": True, \"bytes\": len(f.read(128))}\n    except OSError as e:\n        return {\"accessible\": False, \"error\": type(e).__name__, \"errno\": e.errno}\nprint(json.dumps({\"host_marker\": check_private_path('/tmp/ci-host-marker-h1qcqdhy/host-only.txt'),\n                  \"pid1_root_marker\": check_private_path('/proc/1/root/tmp/ci-host-marker-h1qcqdhy/host-only.txt'),\n                  \"cwd\": os.getcwd(), \"uid\": os.getuid()}))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "9e3bb921-6e00-4149-9854-feec0e82e8e2",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:27:55 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "9e3bb921-6e00-4149-9854-feec0e82e8e2",
+        "x-amzn-code-interpreter-session-id": "01M33SBEZNH9MJKTFZHA6DC6MX"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33SBEZNH9MJKTFZHA6DC6MX"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"host_marker\": {\"accessible\": false, \"error\": \"FileNotFoundError\", \"errno\": 2}, \"pid1_root_marker\": {\"accessible\": false, \"error\": \"PermissionError\", \"errno\": 13}, \"cwd\": \"/opt/amazon/genesis1p-tools/var\", \"uid\": 991}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"host_marker\": {\"accessible\": false, \"error\": \"FileNotFoundError\", \"errno\": 2}, \"pid1_root_marker\": {\"accessible\": false, \"error\": \"PermissionError\", \"errno\": 13}, \"cwd\": \"/opt/amazon/genesis1p-tools/var\", \"uid\": 991}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.007612943649291992
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.10544232500001272
+}

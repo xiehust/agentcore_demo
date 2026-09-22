@@ -1,0 +1,29 @@
+{
+  "StoppingInstances": [
+    {
+      "InstanceId": "i-0a685957c9b9355d7",
+      "CurrentState": {
+        "Code": 64,
+        "Name": "stopping"
+      },
+      "PreviousState": {
+        "Code": 16,
+        "Name": "running"
+      }
+    }
+  ],
+  "ResponseMetadata": {
+    "RequestId": "5b7f05d3-2865-4fc0-bbdf-b8fca2250695",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "x-amzn-requestid": "5b7f05d3-2865-4fc0-bbdf-b8fca2250695",
+      "cache-control": "no-cache, no-store",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "content-type": "text/xml;charset=UTF-8",
+      "content-length": "411",
+      "date": "Tue, 22 Sep 2026 00:38:35 GMT",
+      "server": "AmazonEC2"
+    },
+    "RetryAttempts": 0
+  }
+}

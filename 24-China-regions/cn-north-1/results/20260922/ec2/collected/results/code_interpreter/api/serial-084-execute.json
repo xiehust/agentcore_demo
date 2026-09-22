@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-22T05:27:37.403136+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M33SAXXQF1YQ831B8Y2VP104",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "print('CN_SERIAL_84_' + str(6 * 7))",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "be04511d-53cc-46fb-8c06-dafaca35f06e",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:27:37 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "be04511d-53cc-46fb-8c06-dafaca35f06e",
+        "x-amzn-code-interpreter-session-id": "01M33SAXXQF1YQ831B8Y2VP104"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33SAXXQF1YQ831B8Y2VP104"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "CN_SERIAL_84_42"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "CN_SERIAL_84_42",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.05561494827270508
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.1468660779999027
+}

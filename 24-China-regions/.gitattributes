@@ -1,0 +1,5 @@
+# Markdown uses intentional two-space line breaks.
+*.md whitespace=-blank-at-eol
+# Preserve the bytes of CSV evidence and terminal logs across checkouts.
+*.csv -text whitespace=cr-at-eol
+*.log -text whitespace=-blank-at-eol

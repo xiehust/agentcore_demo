@@ -1,0 +1,43 @@
+{
+  "public_interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "283eb1d8-7087-4ef6-986a-23d346a21689",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:16:55 GMT",
+        "content-type": "application/json",
+        "content-length": "269",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "283eb1d8-7087-4ef6-986a-23d346a21689",
+        "x-amz-apigw-id": "EFdTNF9PBTIEbMw=",
+        "x-amzn-trace-id": "Root=1-6ab20f47-0f0559f11ab38c4a6f82164e"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "cn_runtime24_ec55b7f117_public-X94BdJdLva",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter-custom/cn_runtime24_ec55b7f117_public-X94BdJdLva",
+    "createdAt": "2026-09-22 05:16:55.334617+00:00",
+    "status": "READY"
+  },
+  "efs_interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "258c438b-090e-4cab-9c2c-b2aa01859902",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:14:12 GMT",
+        "content-type": "application/json",
+        "content-length": "252",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "258c438b-090e-4cab-9c2c-b2aa01859902",
+        "x-amz-apigw-id": "EFc5tHKSBTIEdVw=",
+        "x-amzn-trace-id": "Root=1-6ab20ea4-543a75fe7d903c9123189d59"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "cn_ci_efs_53c6d40f78-eXhLPXpSHB",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter-custom/cn_ci_efs_53c6d40f78-eXhLPXpSHB",
+    "createdAt": "2026-09-22 05:14:12.481513+00:00",
+    "status": "CREATING"
+  },
+  "efs_subnet_id": "subnet-097a802b1f7c5c3a8"
+}

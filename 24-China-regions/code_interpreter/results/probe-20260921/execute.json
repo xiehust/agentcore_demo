@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "RequestId": "ed093cc2-b39d-46e3-90da-c8e2f304fedf",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Mon, 21 Sep 2026 15:55:31 GMT",
+      "content-type": "application/vnd.amazon.eventstream",
+      "transfer-encoding": "chunked",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "ed093cc2-b39d-46e3-90da-c8e2f304fedf",
+      "x-amzn-code-interpreter-session-id": "01M32AVX30S436352NSGS9CX3H"
+    },
+    "RetryAttempts": 0
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "42"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "42",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.06314444541931152
+        },
+        "isError": false
+      }
+    }
+  ]
+}

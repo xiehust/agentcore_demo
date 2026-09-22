@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-21T16:02:02.368717+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "cn_ci_validation_3cf56e1329e9-sHMEZucz9F",
+    "sessionId": "01M32B7QDB3FGZ71KJM9YQEZTN",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport sys, json, pathlib\nsys.path.insert(0, '/tmp/ci-pip-china_mirror-569dc39b3dc644ac94370cd7a639cbdd')\nfor key in list(sys.modules):\n    if key == \"pytimeparse\" or key.startswith(\"pytimeparse.\"):\n        del sys.modules[key]\nfrom pytimeparse.timeparse import timeparse\nimport pytimeparse\nprint(json.dumps({\"seconds\": timeparse(\"1h 20m\"), \"module_file\": pytimeparse.__file__,\n                  \"target_exists\": pathlib.Path('/tmp/ci-pip-china_mirror-569dc39b3dc644ac94370cd7a639cbdd').exists()}))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "daf80f4e-3f5d-4b87-9c9a-36601ab4922e",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 16:02:02 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "daf80f4e-3f5d-4b87-9c9a-36601ab4922e",
+        "x-amzn-code-interpreter-session-id": "01M32B7QDB3FGZ71KJM9YQEZTN"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M32B7QDB3FGZ71KJM9YQEZTN"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"seconds\": 4800, \"module_file\": \"/tmp/ci-pip-china_mirror-569dc39b3dc644ac94370cd7a639cbdd/pytimeparse/__init__.py\", \"target_exists\": true}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"seconds\": 4800, \"module_file\": \"/tmp/ci-pip-china_mirror-569dc39b3dc644ac94370cd7a639cbdd/pytimeparse/__init__.py\", \"target_exists\": true}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.014291763305664062
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.3649146780371666
+}

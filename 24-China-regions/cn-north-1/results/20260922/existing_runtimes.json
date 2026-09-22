@@ -1,0 +1,51 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "766a4369-c777-48a5-9831-95becba28c25",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Tue, 22 Sep 2026 05:16:51 GMT",
+      "content-type": "application/json",
+      "content-length": "1215",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "766a4369-c777-48a5-9831-95becba28c25",
+      "x-amz-apigw-id": "EFdSpFXJBTIEKSg=",
+      "x-amzn-trace-id": "Root=1-6ab20f43-2329d6a0478f06bf3270624d"
+    },
+    "RetryAttempts": 0
+  },
+  "agentRuntimes": [
+    {
+      "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/uat_smoke-7r6g859pPV",
+      "agentRuntimeId": "uat_smoke-7r6g859pPV",
+      "agentRuntimeVersion": "1",
+      "agentRuntimeName": "uat_smoke",
+      "lastUpdatedAt": "2026-09-20 07:52:40.844348+00:00",
+      "status": "READY"
+    },
+    {
+      "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/uat_obs_runtime-7Jdad74K4S",
+      "agentRuntimeId": "uat_obs_runtime-7Jdad74K4S",
+      "agentRuntimeVersion": "1",
+      "agentRuntimeName": "uat_obs_runtime",
+      "lastUpdatedAt": "2026-09-20 01:48:59.960627+00:00",
+      "status": "READY"
+    },
+    {
+      "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/hosted_agent_wf7di-QuFH9IBBx8",
+      "agentRuntimeId": "hosted_agent_wf7di-QuFH9IBBx8",
+      "agentRuntimeVersion": "1",
+      "agentRuntimeName": "hosted_agent_wf7di",
+      "lastUpdatedAt": "2026-09-20 11:33:25.742114+00:00",
+      "status": "READY"
+    },
+    {
+      "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/efs_write_test-NNI37O554n",
+      "agentRuntimeId": "efs_write_test-NNI37O554n",
+      "agentRuntimeVersion": "1",
+      "agentRuntimeName": "efs_write_test",
+      "description": "EFS write test agent (spike, patched fileops image)",
+      "lastUpdatedAt": "2026-09-21 01:20:26.632049+00:00",
+      "status": "READY"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "Architecture": "arm64",
+  "BlockDeviceMappings": [
+    {
+      "DeviceName": "/dev/xvda",
+      "Ebs": {
+        "AttachTime": "2026-09-22 08:12:41+00:00",
+        "DeleteOnTermination": true,
+        "Status": "attached",
+        "VolumeId": "vol-0eee0528ee98a1aa5",
+        "EbsCardIndex": 0
+      }
+    }
+  ],
+  "ClientToken": "bc8a9cc3-51de-4249-8e13-f8108f44ae70",
+  "EbsOptimized": false,
+  "EnaSupport": true,
+  "Hypervisor": "xen",
+  "IamInstanceProfile": {
+    "Arn": "arn:aws-cn:iam::447150580482:instance-profile/cn-ec2-bench-f5060bb011",
+    "Id": "AIPAWQHCAMMBMXEPU4IG4"
+  },
+  "NetworkInterfaces": [
+    {
+      "Attachment": {
+        "AttachTime": "2026-09-22 08:12:40+00:00",
+        "AttachmentId": "eni-attach-0c6b6764ba1fa5825",
+        "DeleteOnTermination": true,
+        "DeviceIndex": 0,
+        "Status": "attached",
+        "NetworkCardIndex": 0
+      },
+      "Description": "",
+      "Groups": [
+        {
+          "GroupId": "sg-05c93b76680eb7477",
+          "GroupName": "cn-ec2-bench-f5060bb011"
+        }
+      ],
+      "Ipv6Addresses": [],
+      "MacAddress": "02:ff:c8:c5:df:f9",
+      "NetworkInterfaceId": "eni-0bb1e3c7b5dcf97b3",
+      "OwnerId": "447150580482",
+      "PrivateDnsName": "ip-172-31-45-228.cn-north-1.compute.internal",
+      "PrivateIpAddress": "172.31.45.228",
+      "PrivateIpAddresses": [
+        {
+          "Primary": true,
+          "PrivateDnsName": "ip-172-31-45-228.cn-north-1.compute.internal",
+          "PrivateIpAddress": "172.31.45.228"
+        }
+      ],
+      "SourceDestCheck": true,
+      "Status": "in-use",
+      "SubnetId": "subnet-097a802b1f7c5c3a8",
+      "VpcId": "vpc-06e0b7c2406a2073b",
+      "InterfaceType": "interface",
+      "Operator": {
+        "Managed": false
+      }
+    }
+  ],
+  "RootDeviceName": "/dev/xvda",
+  "RootDeviceType": "ebs",
+  "SecurityGroups": [
+    {
+      "GroupId": "sg-05c93b76680eb7477",
+      "GroupName": "cn-ec2-bench-f5060bb011"
+    }
+  ],
+  "SourceDestCheck": true,
+  "StateReason": {
+    "Code": "Client.UserInitiatedShutdown",
+    "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+  },
+  "Tags": [
+    {
+      "Key": "Experiment",
+      "Value": "cn-ec2-bench-f5060bb011"
+    },
+    {
+      "Key": "Name",
+      "Value": "cn-ec2-bench-f5060bb011"
+    }
+  ],
+  "VirtualizationType": "hvm",
+  "CpuOptions": {
+    "CoreCount": 8,
+    "ThreadsPerCore": 1
+  },
+  "CapacityReservationSpecification": {
+    "CapacityReservationPreference": "open"
+  },
+  "HibernationOptions": {
+    "Configured": false
+  },
+  "MetadataOptions": {
+    "State": "applied",
+    "HttpTokens": "required",
+    "HttpPutResponseHopLimit": 1,
+    "HttpEndpoint": "enabled",
+    "HttpProtocolIpv6": "disabled",
+    "InstanceMetadataTags": "disabled"
+  },
+  "EnclaveOptions": {
+    "Enabled": false
+  },
+  "BootMode": "uefi",
+  "PlatformDetails": "Linux/UNIX",
+  "UsageOperation": "RunInstances",
+  "UsageOperationUpdateTime": "2026-09-22 08:12:40+00:00",
+  "PrivateDnsNameOptions": {
+    "HostnameType": "ip-name",
+    "EnableResourceNameDnsARecord": false,
+    "EnableResourceNameDnsAAAARecord": false
+  },
+  "MaintenanceOptions": {
+    "AutoRecovery": "default",
+    "RebootMigration": "default"
+  },
+  "CurrentInstanceBootMode": "uefi",
+  "NetworkPerformanceOptions": {
+    "BandwidthWeighting": "default"
+  },
+  "Operator": {
+    "Managed": false,
+    "HiddenByDefault": false
+  },
+  "InstanceId": "i-056c2c62a8508d683",
+  "ImageId": "ami-0eb115c3723a4077e",
+  "State": {
+    "Code": 80,
+    "Name": "stopped"
+  },
+  "PrivateDnsName": "ip-172-31-45-228.cn-north-1.compute.internal",
+  "PublicDnsName": "",
+  "StateTransitionReason": "User initiated (2026-09-22 08:39:39 GMT)",
+  "AmiLaunchIndex": 0,
+  "ProductCodes": [],
+  "InstanceType": "c6g.2xlarge",
+  "LaunchTime": "2026-09-22 08:12:40+00:00",
+  "Placement": {
+    "AvailabilityZoneId": "cnn1-az1",
+    "GroupName": "",
+    "Tenancy": "default",
+    "AvailabilityZone": "cn-north-1a"
+  },
+  "Monitoring": {
+    "State": "disabled"
+  },
+  "SubnetId": "subnet-097a802b1f7c5c3a8",
+  "VpcId": "vpc-06e0b7c2406a2073b",
+  "PrivateIpAddress": "172.31.45.228"
+}

@@ -1,0 +1,43 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "aef915b2-0d51-4f49-9ea7-d5e9787dd803",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Tue, 22 Sep 2026 02:07:13 GMT",
+      "content-type": "application/json",
+      "content-length": "575",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "aef915b2-0d51-4f49-9ea7-d5e9787dd803"
+    },
+    "RetryAttempts": 0
+  },
+  "AccessPoints": [
+    {
+      "ClientToken": "cn_ci_efs_120715bd7f",
+      "Name": "cn_ci_efs_120715bd7f",
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "cn_ci_efs_120715bd7f"
+        }
+      ],
+      "AccessPointId": "fsap-0abf9e902a5423200",
+      "AccessPointArn": "arn:aws-cn:elasticfilesystem:cn-northwest-1:447150580482:access-point/fsap-0abf9e902a5423200",
+      "FileSystemId": "fs-0951a92f04a3e9c3a",
+      "PosixUser": {
+        "Uid": 1000,
+        "Gid": 1000
+      },
+      "RootDirectory": {
+        "Path": "/ci-verification",
+        "CreationInfo": {
+          "OwnerUid": 1000,
+          "OwnerGid": 1000,
+          "Permissions": "0770"
+        }
+      },
+      "OwnerId": "447150580482",
+      "LifeCycleState": "available"
+    }
+  ]
+}

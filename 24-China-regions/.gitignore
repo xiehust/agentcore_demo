@@ -1,0 +1,6 @@
+# Keep small, referenced test evidence despite the repository-wide ignores.
+!**/downloads/
+!**/downloads/*.png
+!**/downloads/*.bin
+!**/downloads/*.csv
+!**/results/**/*.log

@@ -1,0 +1,36 @@
+{
+  "CommandId": "7d9c2007-d526-4dce-8b50-e7d6045ff9f6",
+  "InstanceId": "i-056c2c62a8508d683",
+  "Comment": "",
+  "DocumentName": "AWS-RunShellScript",
+  "DocumentVersion": "$DEFAULT",
+  "PluginName": "aws:runShellScript",
+  "ResponseCode": 0,
+  "ExecutionStartDateTime": "2026-09-22T08:30:46.709Z",
+  "ExecutionElapsedTime": "PT0.009S",
+  "ExecutionEndDateTime": "2026-09-22T08:30:46.709Z",
+  "Status": "Success",
+  "StatusDetails": "Success",
+  "StandardOutputContent": "{\n  \"started_at\": \"2026-09-22T08:27:10.828753+00:00\",\n  \"region\": \"cn-north-1\",\n  \"completed_cells\": [],\n  \"current_cell\": \"isolated-scale-c50\",\n  \"error\": \"AccessDenied: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-f5060bb011/i-056c2c62a8508d683 is not authorized to perform: s3:PutObject on resource: \\\"arn:aws-cn:s3:::cn-ec2-bench-f5060bb011-447150580482/isolated/progress.json\\\" because no identity-based policy allows the s3:PutObject action\",\n  \"traceback\": \"Traceback (most recent call last):\\n  File \\\"/opt/china-multiprocess/run.py\\\", line 71, in main\\n    publish()\\n  File \\\"/opt/china-multiprocess/run.py\\\", line 42, in publish\\n    s3.put_object(Bucket=cfg[\\\"bucket\\\"], Key=args.key_prefix + \\\"/progress.json\\\", Body=json.dumps(status).encode())\\n  File \\\"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/client.py\\\", line 606, in _api_call\\n    return self._make_api_call(operation_name, kwargs)\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/context.py\\\", line 123, in wrapper\\n    return func(*args, **kwargs)\\n           ^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/client.py\\\", line 1094, in _make_api_call\\n    raise error_class(parsed_response, operation_name)\\nbotocore.errorfactory.AccessDenied: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-f5060bb011/i-056c2c62a8508d683 is not authorized to perform: s3:PutObject on resource: \\\"arn:aws-cn:s3:::cn-ec2-bench-f5060bb011-447150580482/isolated/progress.json\\\" because no identity-based policy allows the s3:PutObject action\\n\",\n  \"finished_at\": \"2026-09-22T08:27:10.910111+00:00\",\n  \"exit_code\": 1\n}\nr/futures.py\", line 287, in result\n    raise self._exception\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/s3transfer/tasks.py\", line 142, in __call__\n    return self._execute_main(kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/s3transfer/tasks.py\", line 165, in _execute_main\n    return_value = self._main(**kwargs)\n                   ^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/s3transfer/upload.py\", line 796, in _main\n    client.put_object(Bucket=bucket, Key=key, Body=body, **extra_args)\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/client.py\", line 606, in _api_call\n    return self._make_api_call(operation_name, kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/context.py\", line 123, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/client.py\", line 1094, in _make_api_call\n    raise error_class(parsed_response, operation_name)\nbotocore.errorfactory.AccessDenied: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-f5060bb011/i-056c2c62a8508d683 is not authorized to perform: s3:PutObject on resource: \"arn:aws-cn:s3:::cn-ec2-bench-f5060bb011-447150580482/isolated/results.tar.gz\" because no identity-based policy allows the s3:PutObject action\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/opt/china-multiprocess/run.py\", line 109, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/opt/china-multiprocess/run.py\", line 103, in main\n    s3.upload_file(str(archive), cfg[\"bucket\"], args.key_prefix + \"/results.tar.gz\")\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/context.py\", line 123, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/boto3/s3/inject.py\", line 175, in upload_file\n    return transfer.upload_file(\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/boto3/s3/transfer.py\", line 458, in upload_file\n    raise S3UploadFailedError(\nboto3.exceptions.S3UploadFailedError: Failed to upload /opt/china-multiprocess/isolated-results.tar.gz to cn-ec2-bench-f5060bb011-447150580482/isolated/results.tar.gz: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-f5060bb011/i-056c2c62a8508d683 is not authorized to perform: s3:PutObject on resource: \"arn:aws-cn:s3:::cn-ec2-bench-f5060bb011-447150580482/isolated/results.tar.gz\" because no identity-based policy allows the s3:PutObject action\n",
+  "StandardOutputUrl": "",
+  "StandardErrorContent": "",
+  "StandardErrorUrl": "",
+  "CloudWatchOutputConfig": {
+    "CloudWatchLogGroupName": "",
+    "CloudWatchOutputEnabled": false
+  },
+  "ResponseMetadata": {
+    "RequestId": "be7a2eda-5b74-4305-8715-b975c40cdd8b",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "server": "Server",
+      "date": "Tue, 22 Sep 2026 08:30:48 GMT",
+      "content-type": "application/x-amz-json-1.1",
+      "content-length": "5646",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "be7a2eda-5b74-4305-8715-b975c40cdd8b",
+      "cache-control": "no-store"
+    },
+    "RetryAttempts": 0
+  }
+}

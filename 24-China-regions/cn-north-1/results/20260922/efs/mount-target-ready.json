@@ -1,0 +1,28 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "54ccd254-4e01-401a-a239-0cebf9167806",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Tue, 22 Sep 2026 05:13:59 GMT",
+      "content-type": "application/json",
+      "content-length": "415",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "54ccd254-4e01-401a-a239-0cebf9167806"
+    },
+    "RetryAttempts": 0
+  },
+  "MountTargets": [
+    {
+      "OwnerId": "447150580482",
+      "MountTargetId": "fsmt-0593f099897908535",
+      "FileSystemId": "fs-0fdffaca3f1fa9fa8",
+      "SubnetId": "subnet-097a802b1f7c5c3a8",
+      "LifeCycleState": "available",
+      "IpAddress": "172.31.39.56",
+      "NetworkInterfaceId": "eni-0da263c3441063734",
+      "AvailabilityZoneId": "cnn1-az1",
+      "AvailabilityZoneName": "cn-north-1a",
+      "VpcId": "vpc-06e0b7c2406a2073b"
+    }
+  ]
+}

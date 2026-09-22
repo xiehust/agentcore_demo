@@ -1,0 +1,687 @@
+{
+  "plan": {
+    "region": "cn-north-1",
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_e998bbe3a7_c1_r2-RGYSwg7PPt",
+    "concurrency": 1,
+    "process_count": 1,
+    "hold_seconds": 0,
+    "start_method": "spawn",
+    "assignments": [
+      [
+        [
+          0,
+          "7c96c0bc-c944-4288-af6c-27e15a8e8903"
+        ]
+      ]
+    ],
+    "before_send_spread_target_ms": 100,
+    "created_at": "2026-09-22T08:20:06.130891+00:00"
+  },
+  "release_perf": 440.019473456,
+  "reports": [
+    {
+      "pid": 29023,
+      "assignments": [
+        [
+          0,
+          "7c96c0bc-c944-4288-af6c-27e15a8e8903"
+        ]
+      ],
+      "rows": [
+        {
+          "index": 0,
+          "session_id": "7c96c0bc-c944-4288-af6c-27e15a8e8903",
+          "pid": 29023,
+          "cold_ok": true,
+          "warm_ok": true,
+          "same_instance": true,
+          "stop_confirmed": true
+        }
+      ],
+      "events": [
+        {
+          "phase": "cold",
+          "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_e998bbe3a7_c1_r2-RGYSwg7PPt",
+          "session_id": "7c96c0bc-c944-4288-af6c-27e15a8e8903",
+          "nonce": "efcf8be18da445c98111d510afa6cb7c",
+          "pid": 29023,
+          "started_iso": "2026-09-22T08:20:06.397541+00:00",
+          "before_send_perf": [
+            440.021608843
+          ],
+          "response_received_perf": [
+            442.092667786
+          ],
+          "valid": true,
+          "started_perf": 440.019565936,
+          "started_unix": 1790065206.3975604,
+          "metadata": {
+            "RequestId": "248d5e5c-c4d3-4a1c-89ab-967cee9d9276",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Tue, 22 Sep 2026 08:20:08 GMT",
+              "content-type": "application/json",
+              "transfer-encoding": "chunked",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "248d5e5c-c4d3-4a1c-89ab-967cee9d9276",
+              "x-amzn-bedrock-agentcore-runtime-session-id": "7c96c0bc-c944-4288-af6c-27e15a8e8903"
+            },
+            "RetryAttempts": 0
+          },
+          "completed_perf": 442.092973983,
+          "body": {
+            "ok": true,
+            "echo": "efcf8be18da445c98111d510afa6cb7c",
+            "process_id": "1e76f1c8-f329-42fc-abac-8afdae4bbaac",
+            "instance_id": "8856cf72-882b-4379-8b62-620adb36c92a",
+            "boot_id": "6011a6b7-d4fa-4bdf-aee6-1d5e60459689",
+            "pid": 1,
+            "request_index": 1,
+            "process_started_unix_s": 1790065036.8787277,
+            "process_age_at_request_ms": 69156.417952,
+            "handler_started_unix_s": 1790065208.448783,
+            "handler_finished_unix_s": 1790065208.448853,
+            "handler_ms": 0.06891499999994721
+          },
+          "status": 200,
+          "elapsed_ms": 2073.4080469999867,
+          "finished_iso": "2026-09-22T08:20:08.471025+00:00"
+        },
+        {
+          "phase": "warm",
+          "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_e998bbe3a7_c1_r2-RGYSwg7PPt",
+          "session_id": "7c96c0bc-c944-4288-af6c-27e15a8e8903",
+          "nonce": "efcf8be18da445c98111d510afa6cb7c",
+          "pid": 29023,
+          "started_iso": "2026-09-22T08:20:08.471094+00:00",
+          "before_send_perf": [
+            442.094082308
+          ],
+          "response_received_perf": [
+            442.27317128
+          ],
+          "valid": true,
+          "started_perf": 442.093107381,
+          "started_unix": 1790065208.4711015,
+          "metadata": {
+            "RequestId": "b7ec771d-19c7-437b-a5e9-704a458ce4c2",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Tue, 22 Sep 2026 08:20:08 GMT",
+              "content-type": "application/json",
+              "transfer-encoding": "chunked",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "b7ec771d-19c7-437b-a5e9-704a458ce4c2",
+              "x-amzn-bedrock-agentcore-runtime-session-id": "7c96c0bc-c944-4288-af6c-27e15a8e8903"
+            },
+            "RetryAttempts": 0
+          },
+          "completed_perf": 442.273389059,
+          "body": {
+            "ok": true,
+            "echo": "efcf8be18da445c98111d510afa6cb7c",
+            "process_id": "1e76f1c8-f329-42fc-abac-8afdae4bbaac",
+            "instance_id": "8856cf72-882b-4379-8b62-620adb36c92a",
+            "boot_id": "6011a6b7-d4fa-4bdf-aee6-1d5e60459689",
+            "pid": 1,
+            "request_index": 2,
+            "process_started_unix_s": 1790065036.8787277,
+            "process_age_at_request_ms": 69343.273009,
+            "handler_started_unix_s": 1790065208.6356382,
+            "handler_finished_unix_s": 1790065208.6356924,
+            "handler_ms": 0.053234999995765975
+          },
+          "status": 200,
+          "elapsed_ms": 180.28167800002848,
+          "finished_iso": "2026-09-22T08:20:08.651427+00:00"
+        },
+        {
+          "phase": "stop",
+          "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_e998bbe3a7_c1_r2-RGYSwg7PPt",
+          "session_id": "7c96c0bc-c944-4288-af6c-27e15a8e8903",
+          "nonce": "efcf8be18da445c98111d510afa6cb7c",
+          "pid": 29023,
+          "started_iso": "2026-09-22T08:20:08.651490+00:00",
+          "before_send_perf": [
+            442.274919846
+          ],
+          "response_received_perf": [
+            442.573001405
+          ],
+          "valid": true,
+          "started_perf": 442.273502732,
+          "started_unix": 1790065208.6514964,
+          "completed_perf": 442.573165038,
+          "metadata": {
+            "RequestId": "534d44c5-8661-41d1-a6f7-986e72ff5e79",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Tue, 22 Sep 2026 08:20:08 GMT",
+              "content-type": "application/json",
+              "content-length": "2",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "534d44c5-8661-41d1-a6f7-986e72ff5e79",
+              "x-amzn-bedrock-agentcore-runtime-session-id": "7c96c0bc-c944-4288-af6c-27e15a8e8903"
+            },
+            "RetryAttempts": 0
+          },
+          "status": 200,
+          "elapsed_ms": 299.6623060000161,
+          "finished_iso": "2026-09-22T08:20:08.951163+00:00"
+        }
+      ],
+      "errors": [],
+      "client": {
+        "pool_size": 2,
+        "retries": {
+          "total_max_attempts": 1,
+          "mode": "legacy"
+        }
+      },
+      "ready_perf": 440.018703566,
+      "cpu_seconds": 0.020972608000000004,
+      "wall_seconds": 2.5546356739999965,
+      "max_rss_bytes": 55549952
+    }
+  ],
+  "failure": null,
+  "exitcodes": [
+    0
+  ],
+  "cpu_samples": [
+    {
+      "perf": 439.7537194,
+      "unix": 1790065206.1317134,
+      "cpu": [
+        8907,
+        181,
+        2446,
+        338856,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 2/252 29023"
+    },
+    {
+      "perf": 439.853895301,
+      "unix": 1790065206.2318892,
+      "cpu": [
+        8916,
+        181,
+        2447,
+        338926,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 2/252 29023"
+    },
+    {
+      "perf": 439.954059485,
+      "unix": 1790065206.332053,
+      "cpu": [
+        8925,
+        181,
+        2448,
+        338996,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 2/252 29023"
+    },
+    {
+      "perf": 440.054221733,
+      "unix": 1790065206.4322152,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339069,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.15437525,
+      "unix": 1790065206.532369,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339149,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.254552932,
+      "unix": 1790065206.6325467,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339229,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.354714966,
+      "unix": 1790065206.7327087,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339309,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.454882974,
+      "unix": 1790065206.8328764,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339389,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.555043129,
+      "unix": 1790065206.9330366,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339469,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.655205353,
+      "unix": 1790065207.0331988,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339549,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.755377873,
+      "unix": 1790065207.1333714,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339629,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.855541097,
+      "unix": 1790065207.2335348,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339709,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 440.955701064,
+      "unix": 1790065207.3336945,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339789,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.055857355,
+      "unix": 1790065207.4338508,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339870,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.156012702,
+      "unix": 1790065207.5340064,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        339950,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.256171258,
+      "unix": 1790065207.6341648,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340030,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.356324611,
+      "unix": 1790065207.734318,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340110,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.456487934,
+      "unix": 1790065207.8344817,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340190,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.55664612,
+      "unix": 1790065207.9346397,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340270,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.656806604,
+      "unix": 1790065208.0348,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340350,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.756960163,
+      "unix": 1790065208.1349537,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340430,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.857104556,
+      "unix": 1790065208.2350981,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340510,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 441.957261815,
+      "unix": 1790065208.3352554,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340591,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 442.057419837,
+      "unix": 1790065208.4354134,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340671,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 442.157580534,
+      "unix": 1790065208.535574,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340750,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 442.257744382,
+      "unix": 1790065208.635738,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340831,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 442.357893206,
+      "unix": 1790065208.7358868,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340910,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 442.45805753,
+      "unix": 1790065208.8360512,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        340991,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    },
+    {
+      "perf": 442.558216611,
+      "unix": 1790065208.9362102,
+      "cpu": [
+        8931,
+        181,
+        2450,
+        341071,
+        1239,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "loadavg": "0.01 0.13 0.08 1/254 29025"
+    }
+  ],
+  "finished_at": "2026-09-22T08:20:09.011532+00:00"
+}

@@ -1,0 +1,18 @@
+{
+  "region": "cn-north-1",
+  "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_e998bbe3a7_c1_r1-J5aSgm7O5W",
+  "concurrency": 1,
+  "process_count": 1,
+  "hold_seconds": 0,
+  "start_method": "spawn",
+  "assignments": [
+    [
+      [
+        0,
+        "b46b74ee-4b14-43c9-8183-5a2b13365459"
+      ]
+    ]
+  ],
+  "before_send_spread_target_ms": 100,
+  "created_at": "2026-09-22T08:20:03.261964+00:00"
+}

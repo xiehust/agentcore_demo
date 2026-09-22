@@ -1,0 +1,67 @@
+{
+  "NetworkInterfaces": [
+    {
+      "Attachment": {
+        "AttachmentId": "ela-attach-0eae8ce3de2f34557",
+        "DeleteOnTermination": false,
+        "DeviceIndex": 1,
+        "InstanceOwnerId": "amazon-aws",
+        "Status": "attached"
+      },
+      "AvailabilityZone": "cn-northwest-1a",
+      "Description": "",
+      "Groups": [
+        {
+          "GroupId": "sg-049391a8216deb6b8",
+          "GroupName": "cn_ci_efs_120715bd7f-client"
+        }
+      ],
+      "InterfaceType": "agentic_ai",
+      "Ipv6Addresses": [],
+      "MacAddress": "02:ff:ce:8a:10:a7",
+      "NetworkInterfaceId": "eni-0951f5e08b0da0589",
+      "OwnerId": "447150580482",
+      "PrivateDnsName": "ip-172-31-57-149.cn-northwest-1.compute.internal",
+      "PublicDnsName": "",
+      "PrivateIpAddress": "172.31.57.149",
+      "PrivateIpAddresses": [
+        {
+          "Primary": true,
+          "PrivateDnsName": "ip-172-31-57-149.cn-northwest-1.compute.internal",
+          "PrivateIpAddress": "172.31.57.149"
+        }
+      ],
+      "RequesterId": "AROAWQHCAMMBDAFIETMPE:431294761918",
+      "RequesterManaged": false,
+      "SourceDestCheck": true,
+      "Status": "in-use",
+      "SubnetId": "subnet-01c597ab731966fe0",
+      "TagSet": [
+        {
+          "Key": "AmazonBedrockAgentCoreManaged",
+          "Value": "true"
+        }
+      ],
+      "VpcId": "vpc-09a5df1bff56a3357",
+      "Operator": {
+        "Managed": false,
+        "HiddenByDefault": false
+      },
+      "AvailabilityZoneId": "cnnw1-az1"
+    }
+  ],
+  "ResponseMetadata": {
+    "RequestId": "01acbbff-fb0c-4d3d-91d8-4511a9c7b851",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "x-amzn-requestid": "01acbbff-fb0c-4d3d-91d8-4511a9c7b851",
+      "cache-control": "no-cache, no-store",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "content-type": "text/xml;charset=UTF-8",
+      "content-length": "1717",
+      "date": "Tue, 22 Sep 2026 02:13:49 GMT",
+      "server": "AmazonEC2"
+    },
+    "RetryAttempts": 0
+  }
+}

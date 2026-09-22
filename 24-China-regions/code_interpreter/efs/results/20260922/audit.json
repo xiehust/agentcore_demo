@@ -1,0 +1,49 @@
+{
+  "at": "2026-09-22T02:17:20.340855+00:00",
+  "content_hash_verified": true,
+  "all_session_stops_acknowledged": true,
+  "cleanup": {
+    "interpreter": {
+      "deleted": true,
+      "error_code": "ResourceNotFoundException",
+      "request_id": "749a93a1-ab95-4d7f-bec0-e0d95cd9488e"
+    },
+    "efs": {
+      "deleted": true,
+      "error_code": "FileSystemNotFound",
+      "request_id": "fec319c0-7ae9-48d8-8e91-1637ae51f808"
+    },
+    "access_point": {
+      "deleted": true,
+      "error_code": "AccessPointNotFound",
+      "request_id": "f06d9db4-a81d-45fd-9019-5739f5b856df"
+    },
+    "mount_target": {
+      "deleted": true,
+      "error_code": "MountTargetNotFound",
+      "request_id": "81b95265-6e6a-47ad-8726-d7fb8e8a0a51"
+    },
+    "role": {
+      "deleted": true,
+      "error_code": "NoSuchEntity",
+      "request_id": "4cd658dc-ace6-41df-a46e-211deecd1fa6"
+    },
+    "sg_client": {
+      "deleted": false,
+      "id": "sg-049391a8216deb6b8"
+    },
+    "sg_efs": {
+      "deleted": true,
+      "id": "sg-031d760d30d5e5365"
+    }
+  },
+  "existing_efs": {
+    "id": "fs-05386ee746308dad7",
+    "state": "available",
+    "mount_targets": 3
+  },
+  "retained_ec2": {
+    "id": "i-0a685957c9b9355d7",
+    "state": "stopped"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "at": "2026-09-22T05:12:40.250228+00:00",
+  "operation": "create_access_point",
+  "request": {
+    "ClientToken": "cn_ci_efs_53c6d40f78",
+    "FileSystemId": "fs-0fdffaca3f1fa9fa8",
+    "PosixUser": {
+      "Uid": 1000,
+      "Gid": 1000
+    },
+    "RootDirectory": {
+      "Path": "/ci-verification",
+      "CreationInfo": {
+        "OwnerUid": 1000,
+        "OwnerGid": 1000,
+        "Permissions": "0770"
+      }
+    },
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "cn_ci_efs_53c6d40f78"
+      }
+    ]
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "3ec4d722-275f-450d-925d-c1a0e97ece52",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:12:40 GMT",
+        "content-type": "application/json",
+        "content-length": "534",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "3ec4d722-275f-450d-925d-c1a0e97ece52"
+      },
+      "RetryAttempts": 0
+    },
+    "ClientToken": "cn_ci_efs_53c6d40f78",
+    "Name": "cn_ci_efs_53c6d40f78",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "cn_ci_efs_53c6d40f78"
+      }
+    ],
+    "AccessPointId": "fsap-0746b08f9ed31a81c",
+    "AccessPointArn": "arn:aws-cn:elasticfilesystem:cn-north-1:447150580482:access-point/fsap-0746b08f9ed31a81c",
+    "FileSystemId": "fs-0fdffaca3f1fa9fa8",
+    "PosixUser": {
+      "Uid": 1000,
+      "Gid": 1000
+    },
+    "RootDirectory": {
+      "Path": "/ci-verification",
+      "CreationInfo": {
+        "OwnerUid": 1000,
+        "OwnerGid": 1000,
+        "Permissions": "0770"
+      }
+    },
+    "OwnerId": "447150580482",
+    "LifeCycleState": "creating"
+  },
+  "elapsed_s": 0.2682042180094868
+}

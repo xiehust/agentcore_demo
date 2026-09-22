@@ -1,0 +1,52 @@
+{
+  "at": "2026-09-22T05:14:11.227504+00:00",
+  "operation": "create_code_interpreter",
+  "request": {
+    "name": "cn_ci_efs_53c6d40f78",
+    "executionRoleArn": "arn:aws-cn:iam::447150580482:role/cn_ci_efs_53c6d40f78",
+    "networkConfiguration": {
+      "networkMode": "VPC",
+      "vpcConfig": {
+        "subnets": [
+          "subnet-097a802b1f7c5c3a8"
+        ],
+        "securityGroups": [
+          "sg-02b4c907a70fbe1be"
+        ]
+      }
+    },
+    "filesystemConfigurations": [
+      {
+        "efsConfiguration": {
+          "accessPointArn": "arn:aws-cn:elasticfilesystem:cn-north-1:447150580482:access-point/fsap-0746b08f9ed31a81c",
+          "fileSystemArn": "arn:aws-cn:elasticfilesystem:cn-north-1:447150580482:file-system/fs-0fdffaca3f1fa9fa8",
+          "mountPath": "/mnt/efs"
+        }
+      }
+    ],
+    "tags": {
+      "Experiment": "cn_ci_efs_53c6d40f78"
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "258c438b-090e-4cab-9c2c-b2aa01859902",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:14:12 GMT",
+        "content-type": "application/json",
+        "content-length": "252",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "258c438b-090e-4cab-9c2c-b2aa01859902",
+        "x-amz-apigw-id": "EFc5tHKSBTIEdVw=",
+        "x-amzn-trace-id": "Root=1-6ab20ea4-543a75fe7d903c9123189d59"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "cn_ci_efs_53c6d40f78-eXhLPXpSHB",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter-custom/cn_ci_efs_53c6d40f78-eXhLPXpSHB",
+    "createdAt": "2026-09-22 05:14:12.481513+00:00",
+    "status": "CREATING"
+  },
+  "elapsed_s": 1.4097513729939237
+}

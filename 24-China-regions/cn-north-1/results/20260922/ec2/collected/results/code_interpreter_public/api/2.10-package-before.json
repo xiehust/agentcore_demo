@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-22T05:31:22.791307+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "cn_runtime24_ec55b7f117_public-X94BdJdLva",
+    "sessionId": "01M33SHREMTR43HDPN5G9P35R7",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport importlib.util, json, sys\nprint(json.dumps({\"package_preinstalled\": importlib.util.find_spec(\"pytimeparse\") is not None,\n                  \"python_executable\": sys.executable}))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "6fd8ab21-3bc1-417d-ab7c-26d0281a5abc",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:31:22 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "6fd8ab21-3bc1-417d-ab7c-26d0281a5abc",
+        "x-amzn-code-interpreter-session-id": "01M33SHREMTR43HDPN5G9P35R7"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33SHREMTR43HDPN5G9P35R7"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"package_preinstalled\": false, \"python_executable\": \"/opt/amazon/genesis1p-tools/venv/bin/python\"}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"package_preinstalled\": false, \"python_executable\": \"/opt/amazon/genesis1p-tools/venv/bin/python\"}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.011351346969604492
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.10416635100000349
+}

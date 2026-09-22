@@ -1,0 +1,46 @@
+{
+  "ping": {
+    "status": "Healthy"
+  },
+  "replies": [
+    {
+      "ok": true,
+      "echo": "0",
+      "process_id": "f0b92873-3a2c-451c-992b-108e294039db",
+      "boot_id": "922a8ac8-9610-43d9-9d05-f54f4bb35c8d",
+      "pid": 1,
+      "request_index": 1,
+      "process_started_unix_s": 1790007704.5441043,
+      "process_age_at_request_ms": 191.69653300195932,
+      "handler_started_unix_s": 1790007704.7368631,
+      "handler_finished_unix_s": 1790007704.7368977,
+      "handler_ms": 0.033637043088674545
+    },
+    {
+      "ok": true,
+      "echo": "1",
+      "process_id": "f0b92873-3a2c-451c-992b-108e294039db",
+      "boot_id": "922a8ac8-9610-43d9-9d05-f54f4bb35c8d",
+      "pid": 1,
+      "request_index": 2,
+      "process_started_unix_s": 1790007704.5441043,
+      "process_age_at_request_ms": 192.60360905900598,
+      "handler_started_unix_s": 1790007704.7377706,
+      "handler_finished_unix_s": 1790007704.737798,
+      "handler_ms": 0.026748981326818466
+    },
+    {
+      "ok": true,
+      "echo": "2",
+      "process_id": "f0b92873-3a2c-451c-992b-108e294039db",
+      "boot_id": "922a8ac8-9610-43d9-9d05-f54f4bb35c8d",
+      "pid": 1,
+      "request_index": 3,
+      "process_started_unix_s": 1790007704.5441043,
+      "process_age_at_request_ms": 193.4023139765486,
+      "handler_started_unix_s": 1790007704.7385695,
+      "handler_finished_unix_s": 1790007704.7385876,
+      "handler_ms": 0.01788698136806488
+    }
+  ]
+}

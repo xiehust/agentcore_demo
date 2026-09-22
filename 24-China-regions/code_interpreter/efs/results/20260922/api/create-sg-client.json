@@ -1,0 +1,45 @@
+{
+  "at": "2026-09-22T02:05:40.087463+00:00",
+  "operation": "create_security_group",
+  "request": {
+    "GroupName": "cn_ci_efs_120715bd7f-client",
+    "Description": "Temporary Code Interpreter EFS verification",
+    "VpcId": "vpc-09a5df1bff56a3357",
+    "TagSpecifications": [
+      {
+        "ResourceType": "security-group",
+        "Tags": [
+          {
+            "Key": "Experiment",
+            "Value": "cn_ci_efs_120715bd7f"
+          }
+        ]
+      }
+    ]
+  },
+  "response": {
+    "GroupId": "sg-049391a8216deb6b8",
+    "Tags": [
+      {
+        "Key": "Experiment",
+        "Value": "cn_ci_efs_120715bd7f"
+      }
+    ],
+    "SecurityGroupArn": "arn:aws-cn:ec2:cn-northwest-1:447150580482:security-group/sg-049391a8216deb6b8",
+    "ResponseMetadata": {
+      "RequestId": "02082c23-86d8-4bc0-af35-8fcd70ee86b2",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "02082c23-86d8-4bc0-af35-8fcd70ee86b2",
+        "cache-control": "no-cache, no-store",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-type": "text/xml;charset=UTF-8",
+        "content-length": "467",
+        "date": "Tue, 22 Sep 2026 02:05:40 GMT",
+        "server": "AmazonEC2"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "elapsed_s": 0.4941608819644898
+}

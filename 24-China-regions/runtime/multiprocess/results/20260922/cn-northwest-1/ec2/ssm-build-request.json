@@ -1,0 +1,90 @@
+{
+  "commands": [
+    "set -eu",
+    "cloud-init status --wait",
+    "dnf install -y python3.12 python3.12-pip docker",
+    "systemctl enable --now docker",
+    "mkdir -p /opt/china-multiprocess",
+    "cd /opt/china-multiprocess",
+    "aws s3 cp s3://cn-ec2-bench-32629c0c37-447150580482/input/build.tar.gz input.tar.gz --region cn-northwest-1",
+    "tar -xzf input.tar.gz",
+    "python3.12 -m venv venv",
+    "venv/bin/pip install --disable-pip-version-check --index-url https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt",
+    "export AWS_REGION=cn-northwest-1 AWS_DEFAULT_REGION=cn-northwest-1",
+    "venv/bin/python -u build_runtime.py > build.log 2>&1"
+  ],
+  "response": {
+    "Command": {
+      "CommandId": "ce7535a7-8a2b-404b-8394-a3bb4a36b288",
+      "DocumentName": "AWS-RunShellScript",
+      "DocumentVersion": "$DEFAULT",
+      "Comment": "China same-region benchmark: build",
+      "ExpiresAfter": "2026-09-22 08:45:09.672000+00:00",
+      "Parameters": {
+        "commands": [
+          "set -eu",
+          "cloud-init status --wait",
+          "dnf install -y python3.12 python3.12-pip docker",
+          "systemctl enable --now docker",
+          "mkdir -p /opt/china-multiprocess",
+          "cd /opt/china-multiprocess",
+          "aws s3 cp s3://cn-ec2-bench-32629c0c37-447150580482/input/build.tar.gz input.tar.gz --region cn-northwest-1",
+          "tar -xzf input.tar.gz",
+          "python3.12 -m venv venv",
+          "venv/bin/pip install --disable-pip-version-check --index-url https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt",
+          "export AWS_REGION=cn-northwest-1 AWS_DEFAULT_REGION=cn-northwest-1",
+          "venv/bin/python -u build_runtime.py > build.log 2>&1"
+        ],
+        "executionTimeout": [
+          "1800"
+        ]
+      },
+      "InstanceIds": [
+        "i-0c62090e8472b2c83"
+      ],
+      "Targets": [],
+      "RequestedDateTime": "2026-09-22 08:14:09.672000+00:00",
+      "Status": "Pending",
+      "StatusDetails": "Pending",
+      "OutputS3Region": "cn-northwest-1",
+      "OutputS3BucketName": "",
+      "OutputS3KeyPrefix": "",
+      "MaxConcurrency": "50",
+      "MaxErrors": "0",
+      "TargetCount": 1,
+      "CompletedCount": 0,
+      "ErrorCount": 0,
+      "DeliveryTimedOutCount": 0,
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "",
+        "CloudWatchOutputEnabled": false
+      },
+      "TimeoutSeconds": 60,
+      "AlarmConfiguration": {
+        "IgnorePollAlarmFailure": false,
+        "Alarms": []
+      },
+      "TriggeredAlarms": []
+    },
+    "ResponseMetadata": {
+      "RequestId": "cbcd3f4b-6747-4099-b31a-8eb32ed40853",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Tue, 22 Sep 2026 08:14:09 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "1606",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "cbcd3f4b-6747-4099-b31a-8eb32ed40853",
+        "cache-control": "no-store"
+      },
+      "RetryAttempts": 0
+    }
+  }
+}

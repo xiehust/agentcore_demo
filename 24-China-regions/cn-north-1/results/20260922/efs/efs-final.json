@@ -1,0 +1,24 @@
+{
+  "deleted": true,
+  "response": {
+    "Error": {
+      "Message": "File system 'fs-0fdffaca3f1fa9fa8' does not exist.",
+      "Code": "FileSystemNotFound"
+    },
+    "ResponseMetadata": {
+      "RequestId": "d47454b8-68d5-4a50-ad40-51e18d950211",
+      "HTTPStatusCode": 404,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 06:08:42 GMT",
+        "content-type": "application/json",
+        "content-length": "97",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "d47454b8-68d5-4a50-ad40-51e18d950211",
+        "x-amzn-errortype": "FileSystemNotFound:"
+      },
+      "RetryAttempts": 0
+    },
+    "ErrorCode": "FileSystemNotFound",
+    "Message": "File system 'fs-0fdffaca3f1fa9fa8' does not exist."
+  }
+}

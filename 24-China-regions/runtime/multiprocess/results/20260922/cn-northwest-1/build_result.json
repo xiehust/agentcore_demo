@@ -1,0 +1,161 @@
+{
+  "identity": {
+    "accountId": "447150580482",
+    "architecture": "arm64",
+    "availabilityZone": "cn-northwest-1a",
+    "billingProducts": null,
+    "devpayProductCodes": null,
+    "marketplaceProductCodes": null,
+    "imageId": "ami-0f7d342bc678ca8d2",
+    "instanceId": "i-0c62090e8472b2c83",
+    "instanceType": "c6g.2xlarge",
+    "kernelId": null,
+    "pendingTime": "2026-09-22T08:12:37Z",
+    "privateIp": "172.31.1.171",
+    "ramdiskId": null,
+    "region": "cn-northwest-1",
+    "version": "2017-09-30"
+  },
+  "image": {
+    "uri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-f6e47a809e:909fcedc1db64f28",
+    "immutable_uri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-f6e47a809e@sha256:796b25de081c959c69c92912a5b3c5d0fc3139c72646a455bfa4dec7c94d31bf",
+    "ecr": {
+      "registryId": "447150580482",
+      "repositoryName": "cn-runtime24-f6e47a809e",
+      "imageDigest": "sha256:796b25de081c959c69c92912a5b3c5d0fc3139c72646a455bfa4dec7c94d31bf",
+      "imageTags": [
+        "909fcedc1db64f28"
+      ],
+      "imageSizeInBytes": 46203249,
+      "imagePushedAt": "2026-09-22 08:16:56.176000+00:00",
+      "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "artifactMediaType": "application/vnd.docker.container.image.v1+json",
+      "imageStatus": "ACTIVE"
+    },
+    "local_size_bytes": 150101168,
+    "architecture": "arm64"
+  },
+  "container_checks": [
+    {
+      "ok": true,
+      "echo": "0",
+      "process_id": "1cf99055-4f30-4638-88b6-37115447d0bb",
+      "instance_id": "40eae9a1-ffd4-4a97-9f2f-158afad9de29",
+      "boot_id": "0da3dd89-fd4d-4983-bcdf-407bd8459add",
+      "pid": 1,
+      "request_index": 1,
+      "process_started_unix_s": 1790065000.138608,
+      "process_age_at_request_ms": 136.1370289999968,
+      "handler_started_unix_s": 1790065000.2747555,
+      "handler_finished_unix_s": 1790065000.2748165,
+      "handler_ms": 0.060004000005164926
+    },
+    {
+      "ok": true,
+      "echo": "1",
+      "process_id": "1cf99055-4f30-4638-88b6-37115447d0bb",
+      "instance_id": "40eae9a1-ffd4-4a97-9f2f-158afad9de29",
+      "boot_id": "0da3dd89-fd4d-4983-bcdf-407bd8459add",
+      "pid": 1,
+      "request_index": 2,
+      "process_started_unix_s": 1790065000.138608,
+      "process_age_at_request_ms": 137.09850399999368,
+      "handler_started_unix_s": 1790065000.2757173,
+      "handler_finished_unix_s": 1790065000.2757447,
+      "handler_ms": 0.026880000007167837
+    },
+    {
+      "ok": true,
+      "echo": "2",
+      "process_id": "1cf99055-4f30-4638-88b6-37115447d0bb",
+      "instance_id": "40eae9a1-ffd4-4a97-9f2f-158afad9de29",
+      "boot_id": "0da3dd89-fd4d-4983-bcdf-407bd8459add",
+      "pid": 1,
+      "request_index": 3,
+      "process_started_unix_s": 1790065000.138608,
+      "process_age_at_request_ms": 137.93847799999526,
+      "handler_started_unix_s": 1790065000.2765577,
+      "handler_finished_unix_s": 1790065000.2765763,
+      "handler_ms": 0.018092000004799047
+    }
+  ],
+  "app_sha256": "38f8341098c008765b2cc3fa746b968217e035fca220fcdc9937031f4b27ccfa",
+  "rootfs": {
+    "Type": "layers",
+    "Layers": [
+      "sha256:709e0d49f62206f760d5392af4f1dab26c0017f4242f3975ffe0b2ce705f42e6",
+      "sha256:e3a9f07577a4c05c007cb33e35dbf140834a1e3e51fbf0e7deab170b6e104995",
+      "sha256:35e2b66d2a1fe8a05b7d96c275310ebf8c159f97d60af23dbc39af18758db040",
+      "sha256:8b2b31e2185a5694c37b43e3dfc119cc36f646316391d69d9688a452c0cf5ffa",
+      "sha256:ad4da3210e665ce8d60394c717d03e94e6019a6fbd631db5dde214c9ff053e09",
+      "sha256:10a8ba65f810755ea7e8c78b209efe9c4504f16cfdd6c6376ead38f92c5dc2da"
+    ]
+  },
+  "config": {
+    "Hostname": "",
+    "Domainname": "",
+    "User": "1000:1000",
+    "AttachStdin": false,
+    "AttachStdout": false,
+    "AttachStderr": false,
+    "ExposedPorts": {
+      "8080/tcp": {}
+    },
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG=C.UTF-8",
+      "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+      "PYTHON_VERSION=3.12.14",
+      "PYTHON_SHA256=5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a",
+      "PYTHONUNBUFFERED=1",
+      "PYTHONDONTWRITEBYTECODE=1"
+    ],
+    "Cmd": [
+      "python",
+      "/app/app.py"
+    ],
+    "Image": "sha256:eb458afb311320293332091a909c4fbe1e31e2d38967335bd0d5a3cc22f8ea4f",
+    "Volumes": null,
+    "WorkingDir": "/app",
+    "Entrypoint": null,
+    "OnBuild": null,
+    "Labels": null
+  },
+  "offline_base": {
+    "source_ref": "python:3.12-slim-bookworm@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "image_id": "sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0",
+    "rootfs": {
+      "Type": "layers",
+      "Layers": [
+        "sha256:709e0d49f62206f760d5392af4f1dab26c0017f4242f3975ffe0b2ce705f42e6",
+        "sha256:e3a9f07577a4c05c007cb33e35dbf140834a1e3e51fbf0e7deab170b6e104995",
+        "sha256:35e2b66d2a1fe8a05b7d96c275310ebf8c159f97d60af23dbc39af18758db040",
+        "sha256:8b2b31e2185a5694c37b43e3dfc119cc36f646316391d69d9688a452c0cf5ffa"
+      ]
+    },
+    "config": {
+      "Cmd": [
+        "python3"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.14",
+        "PYTHON_SHA256=5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a"
+      ],
+      "Labels": null,
+      "OnBuild": null,
+      "User": "",
+      "Volumes": null,
+      "WorkingDir": ""
+    },
+    "archive_sha256": "69c337d74f57fbdf8b368cea685161c8d62b1d411a9367a7f1a8dd0af6bd07dd",
+    "s3_key": "input/offline-base.tar.gz",
+    "local_tag": "cn-verified-python-base:python312"
+  }
+}

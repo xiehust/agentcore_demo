@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-22T00:34:53.116225+00:00",
+  "operation": "stop_code_interpreter_session",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M338JX5NRWHVY4QPY5YZ7WNG"
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "609b2c0d-88b8-47d0-8263-568f4bbaa73a",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 00:34:53 GMT",
+        "content-type": "application/json",
+        "content-length": "144",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "609b2c0d-88b8-47d0-8263-568f4bbaa73a"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M338JX5NRWHVY4QPY5YZ7WNG",
+    "lastUpdatedAt": "2026-09-22T00:34:53.195851+00:00"
+  },
+  "elapsed_s": 0.09575751400006993
+}

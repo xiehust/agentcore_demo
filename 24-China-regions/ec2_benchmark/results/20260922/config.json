@@ -1,0 +1,24 @@
+{
+  "region": "cn-northwest-1",
+  "account": "447150580482",
+  "bucket": "cn-ec2-bench-8bbcd08d59-447150580482",
+  "instance_id": "i-0a685957c9b9355d7",
+  "runtime": {
+    "region": "cn-northwest-1",
+    "account": "447150580482",
+    "load_role_name": "cn-ec2-bench-8bbcd08d59",
+    "cold_samples": 100,
+    "warm_samples": 500,
+    "concurrency": 50,
+    "runtimes": {
+      "baseline": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_2463cd7d3a_baseline-8pCA6T2vdU",
+      "scale": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_2463cd7d3a_scale-53yvj3534q"
+    },
+    "load_client": {
+      "kind": "EC2",
+      "instance_id": "i-0a685957c9b9355d7",
+      "region": "cn-northwest-1",
+      "instance_type": "t3.small"
+    }
+  }
+}

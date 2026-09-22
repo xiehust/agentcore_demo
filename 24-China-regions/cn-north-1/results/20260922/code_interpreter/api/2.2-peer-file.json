@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-22T05:27:56.040815+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M33SBFTXJ6JE9JCEM2VTJGT6",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport pathlib, json\nprint(json.dumps({\"peer_file_exists\": pathlib.Path('/tmp/ci-private-500050afb6ba4dba94a06cfc1c17ea82.txt').exists()}))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "ccee2ee0-22de-4917-9994-924b3bc0310d",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:27:56 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "ccee2ee0-22de-4917-9994-924b3bc0310d",
+        "x-amzn-code-interpreter-session-id": "01M33SBFTXJ6JE9JCEM2VTJGT6"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33SBFTXJ6JE9JCEM2VTJGT6"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"peer_file_exists\": false}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"peer_file_exists\": false}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.04574465751647949
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.1422110349999457
+}

@@ -1,0 +1,60 @@
+{
+  "phase": "completed",
+  "at": "2026-09-22T08:15:34.602277+00:00",
+  "instance_identity": {
+    "accountId": "447150580482",
+    "architecture": "arm64",
+    "availabilityZone": "cn-north-1a",
+    "billingProducts": null,
+    "devpayProductCodes": null,
+    "marketplaceProductCodes": null,
+    "imageId": "ami-0eb115c3723a4077e",
+    "instanceId": "i-056c2c62a8508d683",
+    "instanceType": "c6g.2xlarge",
+    "kernelId": null,
+    "pendingTime": "2026-09-22T08:12:40Z",
+    "privateIp": "172.31.45.228",
+    "ramdiskId": null,
+    "region": "cn-north-1",
+    "version": "2017-09-30"
+  },
+  "inspect_config_differences": {
+    "Domainname": {
+      "source": null,
+      "loaded": ""
+    },
+    "Tty": {
+      "source": null,
+      "loaded": false
+    },
+    "StdinOnce": {
+      "source": null,
+      "loaded": false
+    },
+    "OpenStdin": {
+      "source": null,
+      "loaded": false
+    },
+    "Image": {
+      "source": null,
+      "loaded": ""
+    },
+    "AttachStdin": {
+      "source": null,
+      "loaded": false
+    },
+    "AttachStderr": {
+      "source": null,
+      "loaded": false
+    },
+    "AttachStdout": {
+      "source": null,
+      "loaded": false
+    },
+    "Hostname": {
+      "source": null,
+      "loaded": ""
+    }
+  },
+  "offline_base_verified": "sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0"
+}

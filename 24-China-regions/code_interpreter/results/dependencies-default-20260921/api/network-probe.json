@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-21T16:01:15.394350+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M32B6DSD8WTQ6SSCKJN1G58Z",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport json, urllib.request, urllib.error, socket, time, os\nurls = [\n    \"https://pypi.tuna.tsinghua.edu.cn/simple/pytimeparse/\",\n    \"https://mirrors.aliyun.com/pypi/simple/pytimeparse/\",\n    \"https://pypi.org/simple/pytimeparse/\",\n]\nresults = []\nfor url in urls:\n    start = time.monotonic()\n    result = {\"url\": url}\n    try:\n        with urllib.request.urlopen(url, timeout=8) as response:\n            result.update(status=response.status,\n                          content_type=response.headers.get(\"Content-Type\"),\n                          sample=response.read(512).decode(\"utf-8\", errors=\"replace\"))\n    except urllib.error.HTTPError as e:\n        result.update(status=e.code, error=str(e),\n                      sample=e.read(512).decode(\"utf-8\", errors=\"replace\"))\n    except Exception as e:\n        result.update(error=str(e), error_type=type(e).__name__)\n    result[\"elapsed_s\"] = time.monotonic() - start\n    results.append(result)\nprint(json.dumps({\"requests\": results,\n                  \"network_env_names\": sorted(k for k in os.environ\n                      if \"proxy\" in k.lower() or k.startswith(\"PIP_\"))}))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "15011e20-7689-4d91-96d0-58953c34d0dc",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 16:01:15 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "15011e20-7689-4d91-96d0-58953c34d0dc",
+        "x-amzn-code-interpreter-session-id": "01M32B6DSD8WTQ6SSCKJN1G58Z"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M32B6DSD8WTQ6SSCKJN1G58Z"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"requests\": [{\"url\": \"https://pypi.tuna.tsinghua.edu.cn/simple/pytimeparse/\", \"error\": \"<urlopen error [Errno -2] Name or service not known>\", \"error_type\": \"URLError\", \"elapsed_s\": 0.01830057000000096}, {\"url\": \"https://mirrors.aliyun.com/pypi/simple/pytimeparse/\", \"error\": \"<urlopen error [Errno -2] Name or service not known>\", \"error_type\": \"URLError\", \"elapsed_s\": 0.002715627000000609}, {\"url\": \"https://pypi.org/simple/pytimeparse/\", \"error\": \"<urlopen error [Errno -2] Name or service not known>\", \"error_type\": \"URLError\", \"elapsed_s\": 0.0024125369999996593}], \"network_env_names\": []}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"requests\": [{\"url\": \"https://pypi.tuna.tsinghua.edu.cn/simple/pytimeparse/\", \"error\": \"<urlopen error [Errno -2] Name or service not known>\", \"error_type\": \"URLError\", \"elapsed_s\": 0.01830057000000096}, {\"url\": \"https://mirrors.aliyun.com/pypi/simple/pytimeparse/\", \"error\": \"<urlopen error [Errno -2] Name or service not known>\", \"error_type\": \"URLError\", \"elapsed_s\": 0.002715627000000609}, {\"url\": \"https://pypi.org/simple/pytimeparse/\", \"error\": \"<urlopen error [Errno -2] Name or service not known>\", \"error_type\": \"URLError\", \"elapsed_s\": 0.0024125369999996593}], \"network_env_names\": []}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.0749368667602539
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.41715748398564756
+}

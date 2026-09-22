@@ -1,0 +1,56 @@
+{
+  "concurrency": 10,
+  "process_count": 8,
+  "hold_seconds": 0,
+  "cold_success": 10,
+  "cold_failures": 0,
+  "cold_ms": {
+    "n": 10,
+    "p50": 1676.626097000053,
+    "p95": 2048.1980829999884,
+    "p99": 2048.1980829999884,
+    "max": 2048.1980829999884
+  },
+  "warm_ms": {
+    "n": 10,
+    "p50": 125.91824300000098,
+    "p95": 311.6849519999505,
+    "p99": 311.6849519999505,
+    "max": 311.6849519999505
+  },
+  "api_start_spread_ms": 2.7611030000116443,
+  "before_send_spread_ms": 1.4676740000822974,
+  "client_peak": 10,
+  "handler_peak": 1,
+  "worker_cpu_seconds": 0.211100666,
+  "worker_peak_rss_sum_bytes": 448757760,
+  "cold_cpu_busy_pct": {
+    "n": 22,
+    "p50": 0.0,
+    "p95": 3.7974683544303796,
+    "p99": 91.95402298850574,
+    "max": 91.95402298850574
+  },
+  "cold_cpu_steal_pct": {
+    "n": 22,
+    "p50": 0.0,
+    "p95": 0.0,
+    "p99": 0.0,
+    "max": 0.0
+  },
+  "checks": {
+    "workers_complete": true,
+    "independent_processes": true,
+    "cold_count": true,
+    "unique_sessions": true,
+    "unique_instances": true,
+    "cold_success": true,
+    "warm_success": true,
+    "same_instances": true,
+    "sessions_stopped": true,
+    "no_retries": true,
+    "complete_cold_timing": true,
+    "warm_after_all_cold": true
+  },
+  "all_checks_pass": true
+}

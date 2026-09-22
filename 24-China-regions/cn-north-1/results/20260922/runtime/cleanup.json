@@ -1,0 +1,150 @@
+{
+  "at": "2026-09-22T05:35:55.313449+00:00",
+  "actions": [
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "cbe701cc-8391-4f03-89ea-53f47d025e8f",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 05:35:33 GMT",
+            "content-type": "application/json",
+            "content-length": "84",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "cbe701cc-8391-4f03-89ea-53f47d025e8f",
+            "x-amz-apigw-id": "EFgB1Ek7BTIEb_A=",
+            "x-amzn-trace-id": "Root=1-6ab213a4-7eee40cf2e5bd37c6c3133d6"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_ec55b7f117_baseline-zcut37GVyp"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "8a1da4ff-ec36-4b15-bc0e-babc86efd33f",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 05:35:33 GMT",
+            "content-type": "application/json",
+            "content-length": "81",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "8a1da4ff-ec36-4b15-bc0e-babc86efd33f",
+            "x-amz-apigw-id": "EFgB9G5FhTIERhQ=",
+            "x-amzn-trace-id": "Root=1-6ab213a5-7ffe244a44499c8d0622900a"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6"
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_ec55b7f117_baseline-zcut37GVyp-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "0b88d450-b0bc-4ae2-ba9c-bb5748b5b13b",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "0b88d450-b0bc-4ae2-ba9c-bb5748b5b13b",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 05:35:52 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "a8fdd28f-75d8-4ca4-b431-a5a530094893",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "a8fdd28f-75d8-4ca4-b431-a5a530094893",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 05:35:52 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-repository",
+      "resource": "cn-runtime24-ec55b7f117",
+      "status": "OK",
+      "response": {
+        "repository": {
+          "repositoryArn": "arn:aws-cn:ecr:cn-north-1:447150580482:repository/cn-runtime24-ec55b7f117",
+          "registryId": "447150580482",
+          "repositoryName": "cn-runtime24-ec55b7f117",
+          "repositoryUri": "447150580482.dkr.ecr.cn-north-1.amazonaws.com.cn/cn-runtime24-ec55b7f117",
+          "createdAt": "2026-09-22 05:05:02.205000+00:00",
+          "imageTagMutability": "IMMUTABLE"
+        },
+        "ResponseMetadata": {
+          "RequestId": "a39cf700-87d8-4282-b2e4-a369386b47e1",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "a39cf700-87d8-4282-b2e4-a369386b47e1",
+            "date": "Tue, 22 Sep 2026 05:35:53 GMT",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "332",
+            "connection": "keep-alive"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-inline-policy",
+      "resource": "cn-runtime24-ec55b7f117-runtime",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "15590088-f8cf-4c21-99b4-a9d17b5b2f01",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 05:35:54 GMT",
+            "x-amzn-requestid": "15590088-f8cf-4c21-99b4-a9d17b5b2f01",
+            "content-type": "text/xml",
+            "content-length": "212"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-role",
+      "resource": "cn-runtime24-ec55b7f117-runtime",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "430ba04a-cfa4-45b8-8a37-bbac5e2c162f",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 05:35:55 GMT",
+            "x-amzn-requestid": "430ba04a-cfa4-45b8-8a37-bbac5e2c162f",
+            "content-type": "text/xml",
+            "content-length": "200"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    }
+  ]
+}

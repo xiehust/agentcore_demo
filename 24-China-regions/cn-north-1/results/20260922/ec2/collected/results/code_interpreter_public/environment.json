@@ -1,0 +1,73 @@
+{
+  "at": "2026-09-22T05:31:20.203937+00:00",
+  "profile": null,
+  "region": "cn-north-1",
+  "identity": {
+    "UserId": "AROAWQHCAMMBJQOUF2IKZ:i-0ab621bda76e7f0af",
+    "Account": "447150580482",
+    "Arn": "arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-0eec9b6240/i-0ab621bda76e7f0af",
+    "ResponseMetadata": {
+      "RequestId": "a4c51e55-ede8-4fc8-96e6-bdf1b2119adc",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "a4c51e55-ede8-4fc8-96e6-bdf1b2119adc",
+        "x-amz-sts-extended-request-id": "MTpjbi1ub3J0aC0xOlM6MTc5MDA1NTA4MDE5NTpSOlRPcDVoSzZz",
+        "content-type": "text/xml",
+        "content-length": "471",
+        "date": "Tue, 22 Sep 2026 05:31:20 GMT"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "endpoint": "https://bedrock-agentcore.cn-north-1.amazonaws.com.cn",
+  "identifier": "cn_runtime24_ec55b7f117_public-X94BdJdLva",
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "python": "3.12.14",
+  "client_platform": "Linux-6.18.48-109.150.amzn2023.aarch64-aarch64-with-glibc2.34",
+  "sdk_total_max_attempts": 1,
+  "connect_timeout_s": 10,
+  "read_timeout_s": 300,
+  "invoke_argument_fields": [
+    "code",
+    "language",
+    "clearContext",
+    "command",
+    "path",
+    "paths",
+    "content",
+    "directoryPath",
+    "taskId",
+    "runtime"
+  ],
+  "command": [
+    "run_benchmarks.py",
+    "--config",
+    "config.json"
+  ],
+  "resource": {
+    "ResponseMetadata": {
+      "RequestId": "abfed219-ee92-44ab-a67e-e8f4e44eea3b",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:31:20 GMT",
+        "content-type": "application/json",
+        "content-length": "406",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "abfed219-ee92-44ab-a67e-e8f4e44eea3b",
+        "x-amz-apigw-id": "EFfaXEe3hTIEBEA=",
+        "x-amzn-trace-id": "Root=1-6ab212a8-74dfab0c663258db3bd4e597"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "cn_runtime24_ec55b7f117_public-X94BdJdLva",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:code-interpreter-custom/cn_runtime24_ec55b7f117_public-X94BdJdLva",
+    "name": "cn_runtime24_ec55b7f117_public",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "status": "READY",
+    "createdAt": "2026-09-22T05:16:55.334617+00:00",
+    "lastUpdatedAt": "2026-09-22T05:16:55.334617+00:00"
+  }
+}

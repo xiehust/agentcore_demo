@@ -1,0 +1,92 @@
+{
+  "commands": [
+    "set -eu",
+    "cloud-init status --wait",
+    "mkdir -p /opt/cn-agentcore-benchmark",
+    "cd /opt/cn-agentcore-benchmark",
+    "test ! -e results/run_status.json",
+    "test ! -e results/runtime/requests.jsonl",
+    "dnf install -y python3.12 python3.12-pip",
+    "aws s3 cp s3://cn-ec2-bench-8bbcd08d59-447150580482/input/bench.tar.gz input.tar.gz --region cn-northwest-1",
+    "tar -xzf input.tar.gz",
+    "python3.12 -m venv --clear venv",
+    "venv/bin/pip install --disable-pip-version-check --index-url https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt",
+    "export AWS_REGION=cn-northwest-1 AWS_DEFAULT_REGION=cn-northwest-1 AWS_EC2_METADATA_DISABLED=false",
+    "venv/bin/python -u run_benchmarks.py --config config.json > run.log 2>&1"
+  ],
+  "response": {
+    "Command": {
+      "CommandId": "e9edcb2e-38c6-4425-b3f4-9e4d9ee47e76",
+      "DocumentName": "AWS-RunShellScript",
+      "DocumentVersion": "$DEFAULT",
+      "Comment": "China same-region benchmark: benchmark-2",
+      "ExpiresAfter": "2026-09-22 01:10:39.919000+00:00",
+      "Parameters": {
+        "commands": [
+          "set -eu",
+          "cloud-init status --wait",
+          "mkdir -p /opt/cn-agentcore-benchmark",
+          "cd /opt/cn-agentcore-benchmark",
+          "test ! -e results/run_status.json",
+          "test ! -e results/runtime/requests.jsonl",
+          "dnf install -y python3.12 python3.12-pip",
+          "aws s3 cp s3://cn-ec2-bench-8bbcd08d59-447150580482/input/bench.tar.gz input.tar.gz --region cn-northwest-1",
+          "tar -xzf input.tar.gz",
+          "python3.12 -m venv --clear venv",
+          "venv/bin/pip install --disable-pip-version-check --index-url https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt",
+          "export AWS_REGION=cn-northwest-1 AWS_DEFAULT_REGION=cn-northwest-1 AWS_EC2_METADATA_DISABLED=false",
+          "venv/bin/python -u run_benchmarks.py --config config.json > run.log 2>&1"
+        ],
+        "executionTimeout": [
+          "2400"
+        ]
+      },
+      "InstanceIds": [
+        "i-0a685957c9b9355d7"
+      ],
+      "Targets": [],
+      "RequestedDateTime": "2026-09-22 00:29:39.919000+00:00",
+      "Status": "Pending",
+      "StatusDetails": "Pending",
+      "OutputS3Region": "cn-northwest-1",
+      "OutputS3BucketName": "",
+      "OutputS3KeyPrefix": "",
+      "MaxConcurrency": "50",
+      "MaxErrors": "0",
+      "TargetCount": 1,
+      "CompletedCount": 0,
+      "ErrorCount": 0,
+      "DeliveryTimedOutCount": 0,
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "",
+        "CloudWatchOutputEnabled": false
+      },
+      "TimeoutSeconds": 60,
+      "AlarmConfiguration": {
+        "IgnorePollAlarmFailure": false,
+        "Alarms": []
+      },
+      "TriggeredAlarms": []
+    },
+    "ResponseMetadata": {
+      "RequestId": "909c54b9-e9f6-4881-8e19-9f9c4318a94a",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Tue, 22 Sep 2026 00:29:39 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "1720",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "909c54b9-e9f6-4881-8e19-9f9c4318a94a",
+        "cache-control": "no-store"
+      },
+      "RetryAttempts": 0
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "at": "2026-09-21T15:58:12.596363+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M32B0R7MT16W4D0JE8SHE2SG",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nprint(\"BEFORE_CONTROLLED_ERROR\")\nraise ValueError(\"CN_EXPECTED_EXCEPTION\")\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "bb90a9a7-3fd3-4901-9356-2b5a7fc74bed",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 15:58:12 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "bb90a9a7-3fd3-4901-9356-2b5a7fc74bed",
+        "x-amzn-code-interpreter-session-id": "01M32B0R7MT16W4D0JE8SHE2SG"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M32B0R7MT16W4D0JE8SHE2SG"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "BEFORE_CONTROLLED_ERROR"
+          },
+          {
+            "type": "text",
+            "text": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "BEFORE_CONTROLLED_ERROR",
+          "stderr": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION",
+          "exitCode": 1,
+          "executionTime": 0.07263517379760742
+        },
+        "isError": true
+      }
+    }
+  ],
+  "elapsed_s": 0.44445547193754464
+}

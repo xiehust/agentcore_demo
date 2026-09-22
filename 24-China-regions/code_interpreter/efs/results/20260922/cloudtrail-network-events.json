@@ -1,0 +1,198 @@
+[
+  {
+    "eventTime": "2026-09-22T02:07:31Z",
+    "eventName": "CreateNetworkInterface",
+    "errorCode": null,
+    "errorMessage": null,
+    "requestParameters": {
+      "subnetId": "subnet-01c597ab731966fe0",
+      "groupSet": {
+        "items": [
+          {
+            "groupId": "sg-049391a8216deb6b8"
+          }
+        ]
+      },
+      "privateIpAddressesSet": {},
+      "tagSpecificationSet": {
+        "items": [
+          {
+            "resourceType": "network-interface",
+            "tags": [
+              {
+                "key": "AmazonBedrockAgentCoreManaged",
+                "value": "true"
+              }
+            ]
+          }
+        ]
+      },
+      "clientToken": "27781522-6a46-4f2f-ae47-f377471e53ff"
+    },
+    "responseElements": {
+      "requestId": "4e0af82b-bd15-474f-a3b3-82e2c68e5fa1",
+      "networkInterface": {
+        "networkInterfaceId": "eni-0951f5e08b0da0589",
+        "subnetId": "subnet-01c597ab731966fe0",
+        "vpcId": "vpc-09a5df1bff56a3357",
+        "availabilityZone": "cn-northwest-1a",
+        "availabilityZoneId": "cnnw1-az1",
+        "ownerId": "447150580482",
+        "requesterId": "AROAWQHCAMMBDAFIETMPE:431294761918",
+        "requesterManaged": false,
+        "operator": {
+          "managed": false
+        },
+        "status": "pending",
+        "macAddress": "02:ff:ce:8a:10:a7",
+        "privateIpAddress": "172.31.57.149",
+        "privateDnsName": "ip-172-31-57-149.cn-northwest-1.compute.internal",
+        "sourceDestCheck": true,
+        "interfaceType": "interface",
+        "groupSet": {
+          "items": [
+            {
+              "groupId": "sg-049391a8216deb6b8",
+              "groupName": "cn_ci_efs_120715bd7f-client"
+            }
+          ]
+        },
+        "privateIpAddressesSet": {
+          "item": [
+            {
+              "privateIpAddress": "172.31.57.149",
+              "privateDnsName": "ip-172-31-57-149.cn-northwest-1.compute.internal",
+              "primary": true
+            }
+          ]
+        },
+        "ipv6AddressesSet": {},
+        "tagSet": {
+          "items": [
+            {
+              "key": "AmazonBedrockAgentCoreManaged",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    "eventID": "6b3690ef-9b02-4f4f-955d-9c4ed5629135"
+  },
+  {
+    "eventTime": "2026-09-22T02:07:30Z",
+    "eventName": "CreateNetworkInterface",
+    "errorCode": "Client.DryRunOperation",
+    "errorMessage": "Request would have succeeded, but DryRun flag is set.",
+    "requestParameters": {
+      "subnetId": "subnet-01c597ab731966fe0",
+      "groupSet": {
+        "items": [
+          {
+            "groupId": "sg-049391a8216deb6b8"
+          }
+        ]
+      },
+      "privateIpAddressesSet": {},
+      "tagSpecificationSet": {
+        "items": [
+          {
+            "resourceType": "network-interface",
+            "tags": [
+              {
+                "key": "AmazonBedrockAgentCoreManaged",
+                "value": "true"
+              }
+            ]
+          }
+        ]
+      },
+      "clientToken": "7d621734-97c1-4df5-8a2f-babea0c9b727"
+    },
+    "responseElements": null,
+    "eventID": "956c54b1-f0e9-4f04-85b2-4cfaf1227f8f"
+  },
+  {
+    "eventTime": "2026-09-22T02:05:49Z",
+    "eventName": "CreateNetworkInterface",
+    "errorCode": null,
+    "errorMessage": null,
+    "requestParameters": {
+      "subnetId": "subnet-01c597ab731966fe0",
+      "description": "EFS mount target for fs-0951a92f04a3e9c3a (fsmt-06b0208466374b1c0)",
+      "groupSet": {
+        "items": [
+          {
+            "groupId": "sg-031d760d30d5e5365"
+          }
+        ]
+      },
+      "privateIpAddressesSet": {},
+      "ipv6AddressCount": 0
+    },
+    "responseElements": {
+      "requestId": "79c43513-18c7-4fc9-a165-cf95200185fe",
+      "networkInterface": {
+        "networkInterfaceId": "eni-0a65dc87b56b34c0e",
+        "subnetId": "subnet-01c597ab731966fe0",
+        "vpcId": "vpc-09a5df1bff56a3357",
+        "availabilityZone": "cn-northwest-1a",
+        "availabilityZoneId": "cnnw1-az1",
+        "description": "EFS mount target for fs-0951a92f04a3e9c3a (fsmt-06b0208466374b1c0)",
+        "ownerId": "447150580482",
+        "requesterId": "360361003593",
+        "requesterManaged": true,
+        "operator": {
+          "managed": false
+        },
+        "status": "pending",
+        "macAddress": "02:ff:d3:29:12:c5",
+        "privateIpAddress": "172.31.54.17",
+        "privateDnsName": "ip-172-31-54-17.cn-northwest-1.compute.internal",
+        "sourceDestCheck": true,
+        "interfaceType": "interface",
+        "groupSet": {
+          "items": [
+            {
+              "groupId": "sg-031d760d30d5e5365",
+              "groupName": "cn_ci_efs_120715bd7f-efs"
+            }
+          ]
+        },
+        "privateIpAddressesSet": {
+          "item": [
+            {
+              "privateIpAddress": "172.31.54.17",
+              "privateDnsName": "ip-172-31-54-17.cn-northwest-1.compute.internal",
+              "primary": true
+            }
+          ]
+        },
+        "ipv6AddressesSet": {},
+        "tagSet": {}
+      }
+    },
+    "eventID": "e9a68bcf-38b7-421f-ae57-8a9587166125"
+  },
+  {
+    "eventTime": "2026-09-22T02:05:48Z",
+    "eventName": "CreateNetworkInterface",
+    "errorCode": "Client.DryRunOperation",
+    "errorMessage": "Request would have succeeded, but DryRun flag is set.",
+    "requestParameters": {
+      "subnetId": "subnet-01c597ab731966fe0",
+      "description": "EFS mount target for fs-0951a92f04a3e9c3a",
+      "groupSet": {
+        "items": [
+          {
+            "groupId": "sg-031d760d30d5e5365"
+          }
+        ]
+      },
+      "privateIpAddressesSet": {},
+      "clientToken": "0d535840-da1e-46b7-a549-cc6b0fa6fb37"
+    },
+    "responseElements": null,
+    "eventID": "843d8c4d-f0ba-4b13-b1a9-3f0015c304e6"
+  }
+]

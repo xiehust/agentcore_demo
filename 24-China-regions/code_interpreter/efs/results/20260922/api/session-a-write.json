@@ -1,0 +1,49 @@
+{
+  "at": "2026-09-22T02:12:03.455168+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "cn_ci_efs_120715bd7f-FoxnNjfYyO",
+    "sessionId": "01M33E4KXZA0EQFBYTJDTMZMC7",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport os, pathlib, json, hashlib\np = pathlib.Path('/mnt/efs/proof-20b196f4a4b941c89a02c7bcc9089ea1.txt')\np.write_text('EFS persistence proof 20b196f4a4b941c89a02c7bcc9089ea1\\n')\nwith p.open(\"rb\") as f: os.fsync(f.fileno())\nmounts = [line for line in pathlib.Path(\"/proc/mounts\").read_text().splitlines() if \"/mnt/efs\" in line]\nprint(json.dumps({\"exists\":p.exists(),\"sha256\":hashlib.sha256(p.read_bytes()).hexdigest(),\n                  \"mounts\":mounts,\"is_mount\":os.path.ismount(\"/mnt/efs\"),\"stat\":{\"uid\":p.stat().st_uid,\"gid\":p.stat().st_gid}}))\n"
+    }
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"exists\": true, \"sha256\": \"ff11a237e58e0872897f300ead903b71ea5e51c931be5209ecaee188e2f2d30f\", \"mounts\": [\"127.0.0.1:/ /mnt/efs nfs4 rw,nosuid,nodev,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20625,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1 0 0\"], \"is_mount\": true, \"stat\": {\"uid\": 1000, \"gid\": 1000}}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"exists\": true, \"sha256\": \"ff11a237e58e0872897f300ead903b71ea5e51c931be5209ecaee188e2f2d30f\", \"mounts\": [\"127.0.0.1:/ /mnt/efs nfs4 rw,nosuid,nodev,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20625,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1 0 0\"], \"is_mount\": true, \"stat\": {\"uid\": 1000, \"gid\": 1000}}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.07861948013305664
+        },
+        "isError": false
+      }
+    }
+  ],
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "1fdf5079-e6fa-4113-ac54-28716f76c441",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 02:12:04 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "1fdf5079-e6fa-4113-ac54-28716f76c441",
+        "x-amzn-code-interpreter-session-id": "01M33E4KXZA0EQFBYTJDTMZMC7"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33E4KXZA0EQFBYTJDTMZMC7"
+  },
+  "elapsed_s": 0.9347913289675489
+}

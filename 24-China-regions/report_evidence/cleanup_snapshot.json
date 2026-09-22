@@ -1,0 +1,84 @@
+[
+  {
+    "region": "cn-northwest-1",
+    "at": "2026-09-22T07:06:43.537705+00:00",
+    "instance": {
+      "id": "i-0a685957c9b9355d7",
+      "state": "stopped",
+      "type": "t3.small",
+      "az": "cn-northwest-1a"
+    },
+    "efs_id": "fs-0951a92f04a3e9c3a",
+    "interpreter_id": "cn_ci_efs_120715bd7f-FoxnNjfYyO",
+    "role_name": "cn_ci_efs_120715bd7f",
+    "resources": {
+      "interpreter": "absent",
+      "file_system": "absent",
+      "role": "absent"
+    },
+    "security_groups": {
+      "client": {
+        "id": "sg-049391a8216deb6b8",
+        "state": "present",
+        "interfaces": [
+          {
+            "id": "eni-0951f5e08b0da0589",
+            "status": "in-use",
+            "attachment": {
+              "AttachmentId": "ela-attach-0eae8ce3de2f34557",
+              "DeleteOnTermination": false,
+              "DeviceIndex": 1,
+              "InstanceOwnerId": "amazon-aws",
+              "Status": "attached"
+            }
+          }
+        ]
+      },
+      "efs": {
+        "id": "sg-031d760d30d5e5365",
+        "state": "absent"
+      }
+    }
+  },
+  {
+    "region": "cn-north-1",
+    "at": "2026-09-22T07:06:43.679247+00:00",
+    "instance": {
+      "id": "i-0ab621bda76e7f0af",
+      "state": "stopped",
+      "type": "t4g.small",
+      "az": "cn-north-1a"
+    },
+    "efs_id": "fs-0fdffaca3f1fa9fa8",
+    "interpreter_id": "cn_ci_efs_53c6d40f78-eXhLPXpSHB",
+    "role_name": "cn_ci_efs_53c6d40f78",
+    "resources": {
+      "interpreter": "absent",
+      "file_system": "absent",
+      "role": "present"
+    },
+    "security_groups": {
+      "client": {
+        "id": "sg-02b4c907a70fbe1be",
+        "state": "present",
+        "interfaces": [
+          {
+            "id": "eni-026863d42344eab61",
+            "status": "in-use",
+            "attachment": {
+              "AttachmentId": "ela-attach-0d2826288a3069a9f",
+              "DeleteOnTermination": false,
+              "DeviceIndex": 1,
+              "InstanceOwnerId": "amazon-aws",
+              "Status": "attached"
+            }
+          }
+        ]
+      },
+      "efs": {
+        "id": "sg-040d03b6d253d1c49",
+        "state": "absent"
+      }
+    }
+  }
+]

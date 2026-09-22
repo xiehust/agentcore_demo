@@ -1,0 +1,54 @@
+{
+  "at": "2026-09-22T07:33:57.946384+00:00",
+  "imds_identity": {
+    "accountId": "447150580482",
+    "architecture": "x86_64",
+    "availabilityZone": "cn-northwest-1a",
+    "billingProducts": null,
+    "devpayProductCodes": null,
+    "marketplaceProductCodes": null,
+    "imageId": "ami-0cd8b949613a8418b",
+    "instanceId": "i-0a685957c9b9355d7",
+    "instanceType": "t3.small",
+    "kernelId": null,
+    "pendingTime": "2026-09-22T07:29:12Z",
+    "privateIp": "172.31.0.90",
+    "ramdiskId": null,
+    "region": "cn-northwest-1",
+    "version": "2017-09-30"
+  },
+  "sts": {
+    "UserId": "AROAWQHCAMMBPK6TGPRUY:i-0a685957c9b9355d7",
+    "Account": "447150580482",
+    "Arn": "arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-8bbcd08d59/i-0a685957c9b9355d7",
+    "ResponseMetadata": {
+      "RequestId": "fd3b7ec9-28cb-4803-a125-55c6a42ac6d5",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "fd3b7ec9-28cb-4803-a125-55c6a42ac6d5",
+        "x-amz-sts-extended-request-id": "MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTAwNjI0Mzc5Mjk6UjpWV2tWOFVGMA==",
+        "content-type": "text/xml",
+        "content-length": "471",
+        "date": "Tue, 22 Sep 2026 07:33:57 GMT"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "endpoint": "https://bedrock-agentcore.cn-northwest-1.amazonaws.com.cn",
+  "client_read_timeout_s": 260,
+  "session_timeout_documentation": "<p>The duration in seconds (time-to-live) after which the session automatically terminates, regardless of ongoing activity. Defaults to 900 seconds (15 minutes). Recommended minimum: 60 seconds. Maximum allowed: 28,800 seconds (8 hours).</p>",
+  "invoke_argument_fields": [
+    "code",
+    "language",
+    "clearContext",
+    "command",
+    "path",
+    "paths",
+    "content",
+    "directoryPath",
+    "taskId",
+    "runtime"
+  ]
+}

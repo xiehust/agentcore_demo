@@ -1,0 +1,104 @@
+{
+  "at": "2026-09-22T07:54:40.279896+00:00",
+  "owner": "River",
+  "verdict": "CONDITIONAL_PASS",
+  "native_session_ttl": [
+    {
+      "region": "cn-northwest-1",
+      "mode": "executeCode",
+      "ttl_s": 60,
+      "planned_work_s": 180,
+      "terminal_s": 62.117411613464355,
+      "last_s3_s": 63.99170398712158,
+      "last_observation_s": 209.46105074882507,
+      "status": "PASS",
+      "post_terminal_write_window_s": 1.8742923736572266,
+      "invoke_return_s": 98.828301523
+    },
+    {
+      "region": "cn-northwest-1",
+      "mode": "async",
+      "ttl_s": 60,
+      "planned_work_s": 180,
+      "terminal_s": 62.45899271965027,
+      "last_s3_s": 62.98545503616333,
+      "last_observation_s": 209.8027446269989,
+      "status": "PASS",
+      "post_terminal_write_window_s": 0.5264623165130615
+    },
+    {
+      "region": "cn-north-1",
+      "mode": "executeCode",
+      "ttl_s": 60,
+      "planned_work_s": 180,
+      "terminal_s": 62.20356321334839,
+      "last_s3_s": 63.15179991722107,
+      "last_observation_s": 209.95637464523315,
+      "status": "PASS",
+      "post_terminal_write_window_s": 0.9482367038726807,
+      "invoke_return_s": 71.88058440000003
+    },
+    {
+      "region": "cn-north-1",
+      "mode": "async",
+      "ttl_s": 60,
+      "planned_work_s": 180,
+      "terminal_s": 62.63982677459717,
+      "last_s3_s": 63.15189504623413,
+      "last_observation_s": 210.199147939682,
+      "status": "PASS",
+      "post_terminal_write_window_s": 0.5120682716369629
+    }
+  ],
+  "sandbox_command_timeout": [
+    {
+      "region": "cn-northwest-1",
+      "mode": "normal",
+      "elapsed_s": 5.190622060999999,
+      "exit_code": 124,
+      "parent_child_stopped": true,
+      "same_session_recovery": true
+    },
+    {
+      "region": "cn-northwest-1",
+      "mode": "ignore",
+      "elapsed_s": 7.132020166999951,
+      "exit_code": 137,
+      "parent_child_stopped": true,
+      "same_session_recovery": true
+    },
+    {
+      "region": "cn-north-1",
+      "mode": "normal",
+      "elapsed_s": 5.3056162629999335,
+      "exit_code": 124,
+      "parent_child_stopped": true,
+      "same_session_recovery": true
+    },
+    {
+      "region": "cn-north-1",
+      "mode": "ignore",
+      "elapsed_s": 7.1859900370000105,
+      "exit_code": 137,
+      "parent_child_stopped": true,
+      "same_session_recovery": true
+    }
+  ],
+  "audits": [
+    {
+      "region": "cn-northwest-1",
+      "native_cases_verified": 2,
+      "command_cases_verified": 2,
+      "source_hashes_match": true,
+      "no_signed_urls_in_evidence": true
+    },
+    {
+      "region": "cn-north-1",
+      "native_cases_verified": 2,
+      "command_cases_verified": 2,
+      "source_hashes_match": true,
+      "no_signed_urls_in_evidence": true
+    }
+  ],
+  "scope": "Session TTL and GNU timeout proven; no independent executeCode deadline field or hard real-time guarantee claimed."
+}

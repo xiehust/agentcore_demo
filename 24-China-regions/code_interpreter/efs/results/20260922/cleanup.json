@@ -1,0 +1,169 @@
+{
+  "at": "2026-09-22T02:17:52.026654+00:00",
+  "actions": [
+    {
+      "action": "delete-interpreter",
+      "resource": "cn_ci_efs_120715bd7f-FoxnNjfYyO",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "ffd0e0a0-d764-4375-aa8e-40ba812e83eb",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 02:12:15 GMT",
+            "content-type": "application/json",
+            "content-length": "124",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "ffd0e0a0-d764-4375-aa8e-40ba812e83eb",
+            "x-amz-apigw-id": "EFCQBFEIZPgEMEQ=",
+            "x-amzn-trace-id": "Root=1-6ab1e3ff-0a581fbe7d9d6b1456ea598b"
+          },
+          "RetryAttempts": 0
+        },
+        "codeInterpreterId": "cn_ci_efs_120715bd7f-FoxnNjfYyO",
+        "status": "DELETING",
+        "lastUpdatedAt": "2026-09-22 02:12:15.794267+00:00"
+      }
+    },
+    {
+      "action": "delete-mount-target",
+      "resource": "fsmt-06b0208466374b1c0",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "fc7d090e-4dce-4d14-9bbe-e34a5a11e98a",
+          "HTTPStatusCode": 204,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 02:12:22 GMT",
+            "content-type": "application/json",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "fc7d090e-4dce-4d14-9bbe-e34a5a11e98a"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-access-point",
+      "resource": "fsap-0abf9e902a5423200",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "3d0f65d9-c9ac-4d24-a695-b5db40e17446",
+          "HTTPStatusCode": 204,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 02:12:38 GMT",
+            "content-type": "application/json",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "3d0f65d9-c9ac-4d24-a695-b5db40e17446"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-file-system",
+      "resource": "fs-0951a92f04a3e9c3a",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "2291b0d1-0ef0-43db-9c24-43ea77893c1d",
+          "HTTPStatusCode": 204,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 02:12:38 GMT",
+            "content-type": "application/json",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "2291b0d1-0ef0-43db-9c24-43ea77893c1d"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-policy",
+      "resource": "cn_ci_efs_120715bd7f",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "42c52c05-ebdf-40d3-aa5f-4bf609248308",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 02:12:43 GMT",
+            "x-amzn-requestid": "42c52c05-ebdf-40d3-aa5f-4bf609248308",
+            "content-type": "text/xml",
+            "content-length": "212"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-role",
+      "resource": "cn_ci_efs_120715bd7f",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "5968618d-f445-4790-9f59-a94b9b4c6d3b",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 02:12:43 GMT",
+            "x-amzn-requestid": "5968618d-f445-4790-9f59-a94b9b4c6d3b",
+            "content-type": "text/xml",
+            "content-length": "200"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-sg",
+      "resource": "sg-031d760d30d5e5365",
+      "status": "OK",
+      "response": {
+        "Return": true,
+        "GroupId": "sg-031d760d30d5e5365",
+        "ResponseMetadata": {
+          "RequestId": "f6624952-8ce9-4065-b773-680a4bee498f",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "f6624952-8ce9-4065-b773-680a4bee498f",
+            "cache-control": "no-cache, no-store",
+            "strict-transport-security": "max-age=31536000; includeSubDomains",
+            "content-type": "text/xml;charset=UTF-8",
+            "content-length": "266",
+            "date": "Tue, 22 Sep 2026 02:12:44 GMT",
+            "server": "AmazonEC2"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-sg",
+      "resource": "sg-049391a8216deb6b8",
+      "status": "ERROR",
+      "error": {
+        "Error": {
+          "Code": "DependencyViolation",
+          "Message": "resource sg-049391a8216deb6b8 has a dependent object"
+        },
+        "ResponseMetadata": {
+          "RequestId": "788cae63-607e-4ea4-aeb1-d15ad988b6d0",
+          "HTTPStatusCode": 400,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "788cae63-607e-4ea4-aeb1-d15ad988b6d0",
+            "cache-control": "no-cache, no-store",
+            "strict-transport-security": "max-age=31536000; includeSubDomains",
+            "vary": "accept-encoding",
+            "content-type": "text/xml;charset=UTF-8",
+            "transfer-encoding": "chunked",
+            "date": "Tue, 22 Sep 2026 02:17:51 GMT",
+            "connection": "close",
+            "server": "AmazonEC2"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    }
+  ]
+}

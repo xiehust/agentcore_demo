@@ -1,0 +1,57 @@
+{
+  "success": {
+    "stdout": "CN_STDOUT_中文_123",
+    "stderr": "CN_STDERR_错误_456",
+    "isError": false,
+    "results": [
+      {
+        "content": [
+          {
+            "type": "text",
+            "text": "CN_STDOUT_中文_123"
+          },
+          {
+            "type": "text",
+            "text": "CN_STDERR_错误_456"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "CN_STDOUT_中文_123",
+          "stderr": "CN_STDERR_错误_456",
+          "exitCode": 0,
+          "executionTime": 0.04885697364807129
+        },
+        "isError": false
+      }
+    ],
+    "exceptions": []
+  },
+  "controlled_exception": {
+    "stdout": "BEFORE_CONTROLLED_ERROR",
+    "stderr": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION",
+    "isError": true,
+    "results": [
+      {
+        "content": [
+          {
+            "type": "text",
+            "text": "BEFORE_CONTROLLED_ERROR"
+          },
+          {
+            "type": "text",
+            "text": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "BEFORE_CONTROLLED_ERROR",
+          "stderr": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION",
+          "exitCode": 1,
+          "executionTime": 0.07263517379760742
+        },
+        "isError": true
+      }
+    ],
+    "exceptions": []
+  },
+  "integration_scope": "Python Agent-side SDK tool adapter; no LLM/framework invocation"
+}

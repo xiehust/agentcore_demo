@@ -1,0 +1,61 @@
+{
+  "at": "2026-09-22T05:13:59.983667+00:00",
+  "operation": "create_role",
+  "request": {
+    "RoleName": "cn_ci_efs_53c6d40f78",
+    "AssumeRolePolicyDocument": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Principal\": {\"Service\": \"bedrock-agentcore.amazonaws.com\"}, \"Action\": \"sts:AssumeRole\", \"Condition\": {\"StringEquals\": {\"aws:SourceAccount\": \"447150580482\"}, \"ArnLike\": {\"aws:SourceArn\": \"arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:*\"}}}]}",
+    "Tags": [
+      {
+        "Key": "Experiment",
+        "Value": "cn_ci_efs_53c6d40f78"
+      }
+    ]
+  },
+  "response": {
+    "Role": {
+      "Path": "/",
+      "RoleName": "cn_ci_efs_53c6d40f78",
+      "RoleId": "AROAWQHCAMMBB4SF75UJA",
+      "Arn": "arn:aws-cn:iam::447150580482:role/cn_ci_efs_53c6d40f78",
+      "CreateDate": "2026-09-22 05:14:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "bedrock-agentcore.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "StringEquals": {
+                "aws:SourceAccount": "447150580482"
+              },
+              "ArnLike": {
+                "aws:SourceArn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:*"
+              }
+            }
+          }
+        ]
+      },
+      "Tags": [
+        {
+          "Key": "Experiment",
+          "Value": "cn_ci_efs_53c6d40f78"
+        }
+      ]
+    },
+    "ResponseMetadata": {
+      "RequestId": "cd5e2988-60f6-49dc-ab98-432d7a3ecb5f",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:14:00 GMT",
+        "x-amzn-requestid": "cd5e2988-60f6-49dc-ab98-432d7a3ecb5f",
+        "content-type": "text/xml",
+        "content-length": "1190"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "elapsed_s": 0.9602448699297383
+}

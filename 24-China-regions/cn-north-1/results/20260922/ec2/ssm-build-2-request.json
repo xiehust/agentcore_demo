@@ -1,0 +1,90 @@
+{
+  "commands": [
+    "set -eu",
+    "cloud-init status --wait",
+    "dnf install -y python3.12 python3.12-pip docker",
+    "systemctl enable --now docker",
+    "mkdir -p /opt/beijing-agentcore",
+    "cd /opt/beijing-agentcore",
+    "aws s3 cp s3://cn-ec2-bench-0eec9b6240-447150580482/input/build.tar.gz build.tar.gz --region cn-north-1",
+    "tar -xzf build.tar.gz",
+    "python3.12 -m venv venv",
+    "venv/bin/pip install --disable-pip-version-check --index-url https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt",
+    "export AWS_REGION=cn-north-1 AWS_DEFAULT_REGION=cn-north-1",
+    "venv/bin/python -u build_runtime.py > build.log 2>&1"
+  ],
+  "response": {
+    "Command": {
+      "CommandId": "fa0d423f-6cf5-4c13-9eec-89f55cb7a8db",
+      "DocumentName": "AWS-RunShellScript",
+      "DocumentVersion": "$DEFAULT",
+      "Comment": "China same-region benchmark: build-2",
+      "ExpiresAfter": "2026-09-22 05:44:01.149000+00:00",
+      "Parameters": {
+        "commands": [
+          "set -eu",
+          "cloud-init status --wait",
+          "dnf install -y python3.12 python3.12-pip docker",
+          "systemctl enable --now docker",
+          "mkdir -p /opt/beijing-agentcore",
+          "cd /opt/beijing-agentcore",
+          "aws s3 cp s3://cn-ec2-bench-0eec9b6240-447150580482/input/build.tar.gz build.tar.gz --region cn-north-1",
+          "tar -xzf build.tar.gz",
+          "python3.12 -m venv venv",
+          "venv/bin/pip install --disable-pip-version-check --index-url https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt",
+          "export AWS_REGION=cn-north-1 AWS_DEFAULT_REGION=cn-north-1",
+          "venv/bin/python -u build_runtime.py > build.log 2>&1"
+        ],
+        "executionTimeout": [
+          "1800"
+        ]
+      },
+      "InstanceIds": [
+        "i-0ab621bda76e7f0af"
+      ],
+      "Targets": [],
+      "RequestedDateTime": "2026-09-22 05:13:01.149000+00:00",
+      "Status": "Pending",
+      "StatusDetails": "Pending",
+      "OutputS3Region": "cn-north-1",
+      "OutputS3BucketName": "",
+      "OutputS3KeyPrefix": "",
+      "MaxConcurrency": "50",
+      "MaxErrors": "0",
+      "TargetCount": 1,
+      "CompletedCount": 0,
+      "ErrorCount": 0,
+      "DeliveryTimedOutCount": 0,
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "",
+        "CloudWatchOutputEnabled": false
+      },
+      "TimeoutSeconds": 60,
+      "AlarmConfiguration": {
+        "IgnorePollAlarmFailure": false,
+        "Alarms": []
+      },
+      "TriggeredAlarms": []
+    },
+    "ResponseMetadata": {
+      "RequestId": "bac85b35-4b29-4ee5-b0b9-f04afd976335",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Tue, 22 Sep 2026 05:13:01 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "1590",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "bac85b35-4b29-4ee5-b0b9-f04afd976335",
+        "cache-control": "no-store"
+      },
+      "RetryAttempts": 0
+    }
+  }
+}

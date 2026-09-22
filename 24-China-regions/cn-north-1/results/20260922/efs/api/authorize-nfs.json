@@ -1,0 +1,53 @@
+{
+  "at": "2026-09-22T05:12:33.286836+00:00",
+  "operation": "authorize_security_group_ingress",
+  "request": {
+    "GroupId": "sg-040d03b6d253d1c49",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 2049,
+        "ToPort": 2049,
+        "UserIdGroupPairs": [
+          {
+            "GroupId": "sg-02b4c907a70fbe1be"
+          }
+        ]
+      }
+    ]
+  },
+  "response": {
+    "Return": true,
+    "SecurityGroupRules": [
+      {
+        "SecurityGroupRuleId": "sgr-0c9acdc87e22ccb76",
+        "GroupId": "sg-040d03b6d253d1c49",
+        "GroupOwnerId": "447150580482",
+        "IsEgress": false,
+        "IpProtocol": "tcp",
+        "FromPort": 2049,
+        "ToPort": 2049,
+        "ReferencedGroupInfo": {
+          "GroupId": "sg-02b4c907a70fbe1be",
+          "UserId": "447150580482"
+        },
+        "SecurityGroupRuleArn": "arn:aws-cn:ec2:cn-north-1:447150580482:security-group-rule/sgr-0c9acdc87e22ccb76"
+      }
+    ],
+    "ResponseMetadata": {
+      "RequestId": "480a4a78-5009-4fe7-876d-5e3c9147fc3c",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "480a4a78-5009-4fe7-876d-5e3c9147fc3c",
+        "cache-control": "no-cache, no-store",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-type": "text/xml;charset=UTF-8",
+        "content-length": "785",
+        "date": "Tue, 22 Sep 2026 05:12:33 GMT",
+        "server": "AmazonEC2"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "elapsed_s": 0.5143687169766054
+}

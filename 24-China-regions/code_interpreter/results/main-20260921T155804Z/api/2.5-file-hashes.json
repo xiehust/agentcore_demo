@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-21T15:58:16.247441+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M32B0R7MT16W4D0JE8SHE2SG",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport hashlib, json, pathlib\ncsv = pathlib.Path(\"input.csv\").read_bytes()\nbinary = pathlib.Path(\"input.bin\").read_bytes()\npathlib.Path(\"output.csv\").write_bytes(csv + \"processed,49\\n\".encode())\npathlib.Path(\"output.bin\").write_bytes(binary[::-1])\nprint(json.dumps({\"input_csv_sha256\": hashlib.sha256(csv).hexdigest(),\n                  \"input_bin_sha256\": hashlib.sha256(binary).hexdigest()}))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "20a15455-545f-4e27-8888-a24a0a5dd001",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 15:58:16 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "20a15455-545f-4e27-8888-a24a0a5dd001",
+        "x-amzn-code-interpreter-session-id": "01M32B0R7MT16W4D0JE8SHE2SG"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M32B0R7MT16W4D0JE8SHE2SG"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"input_csv_sha256\": \"ec2cd9e449273ac7aced426b11a7a5dd6d889c124dcbbd429cb70d71051981cd\", \"input_bin_sha256\": \"c8f5d0341d54d951a71b136e6e2afcb14d11ed8489a7ae126a8fee0df6ecf193\"}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"input_csv_sha256\": \"ec2cd9e449273ac7aced426b11a7a5dd6d889c124dcbbd429cb70d71051981cd\", \"input_bin_sha256\": \"c8f5d0341d54d951a71b136e6e2afcb14d11ed8489a7ae126a8fee0df6ecf193\"}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.012382984161376953
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.3558471130672842
+}

@@ -1,0 +1,18 @@
+{
+  "reference_source_sha256": {
+    "21-runtime-v2-beta/multiprocess_coldstart_client.py": "e7b715ad9817e9ae9751e4500a142425eaa3de2b99d6bd7f8087b0012f6ec4ca",
+    "21-runtime-v2-beta/verify_multiprocess_coldstart.py": "95b0d831ea706303eefef4a942b5fb4a52ab9a05813b77dac3d08ea8c508958f",
+    "21-runtime-v2-beta/coldstart_v2_multiprocess.py": "b1dc711cb0a518faeafdb8c9acbe964740fd8ae89ab727ab07ce770667ec66c0",
+    "24-China-regions/runtime/app.py": "38f8341098c008765b2cc3fa746b968217e035fca220fcdc9937031f4b27ccfa",
+    "24-China-regions/runtime/Dockerfile": "29a941cd550e9e43ad9fa54f6de876433153a630b499ff3b0d2e44aa9423c93a"
+  },
+  "adaptations": [
+    "China endpoint via explicit region",
+    "post-restore instance_id and request_index protocol",
+    "one never-invoked runtime per repetition",
+    "cold/warm phase barriers",
+    "1/10/50/100/200 x 3",
+    "regional c6g.2xlarge clients",
+    "CPU sampling and independent cleanup audit"
+  ]
+}

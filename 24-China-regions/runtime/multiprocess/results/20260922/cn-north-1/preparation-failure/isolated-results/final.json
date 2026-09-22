@@ -1,0 +1,10 @@
+{
+  "started_at": "2026-09-22T08:27:10.828753+00:00",
+  "region": "cn-north-1",
+  "completed_cells": [],
+  "current_cell": "isolated-scale-c50",
+  "error": "AccessDenied: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-f5060bb011/i-056c2c62a8508d683 is not authorized to perform: s3:PutObject on resource: \"arn:aws-cn:s3:::cn-ec2-bench-f5060bb011-447150580482/isolated/progress.json\" because no identity-based policy allows the s3:PutObject action",
+  "traceback": "Traceback (most recent call last):\n  File \"/opt/china-multiprocess/run.py\", line 71, in main\n    publish()\n  File \"/opt/china-multiprocess/run.py\", line 42, in publish\n    s3.put_object(Bucket=cfg[\"bucket\"], Key=args.key_prefix + \"/progress.json\", Body=json.dumps(status).encode())\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/client.py\", line 606, in _api_call\n    return self._make_api_call(operation_name, kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/context.py\", line 123, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/china-multiprocess/venv/lib64/python3.12/site-packages/botocore/client.py\", line 1094, in _make_api_call\n    raise error_class(parsed_response, operation_name)\nbotocore.errorfactory.AccessDenied: An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-f5060bb011/i-056c2c62a8508d683 is not authorized to perform: s3:PutObject on resource: \"arn:aws-cn:s3:::cn-ec2-bench-f5060bb011-447150580482/isolated/progress.json\" because no identity-based policy allows the s3:PutObject action\n",
+  "finished_at": "2026-09-22T08:27:10.910111+00:00",
+  "exit_code": 1
+}

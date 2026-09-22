@@ -1,0 +1,113 @@
+{
+  "at": "2026-09-22T05:39:25.557868+00:00",
+  "ec2": {
+    "id": "i-0ab621bda76e7f0af",
+    "state": "stopped",
+    "az": "cn-north-1a",
+    "type": "t4g.small"
+  },
+  "sessions": {
+    "runtime_stop_acknowledged": 151,
+    "default_ci_terminated": 164,
+    "public_ci_stop_acknowledged": 1,
+    "efs_ci_stop_acknowledged": 3
+  },
+  "deletion_checks": [
+    {
+      "resource": "cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+      "deleted": true,
+      "request_id": "691a754c-32e8-4389-af65-33cdae05a855"
+    },
+    {
+      "resource": "cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+      "deleted": true,
+      "request_id": "9c523c5d-8916-421b-a39e-877c1b5872de"
+    },
+    {
+      "resource": "cn_runtime24_ec55b7f117_public-X94BdJdLva",
+      "deleted": true,
+      "request_id": "154a2c11-e7fa-40c4-a352-2ea4c507d03a"
+    },
+    {
+      "resource": "cn_ci_efs_53c6d40f78-eXhLPXpSHB",
+      "deleted": true,
+      "request_id": "25b16d66-6d10-4738-aab9-ba11edcab6ef"
+    },
+    {
+      "resource": "fs-0fdffaca3f1fa9fa8",
+      "deleted": true,
+      "request_id": "dfed2313-8fcd-46c3-ad6f-df0fcd87fca3"
+    },
+    {
+      "resource": "fsap-0746b08f9ed31a81c",
+      "deleted": true,
+      "request_id": "14bf07ed-5114-40d7-9653-9de30234fd6e"
+    },
+    {
+      "resource": "fsmt-0593f099897908535",
+      "deleted": true,
+      "request_id": "9946fa88-8358-414f-88bb-13de945b5671"
+    },
+    {
+      "resource": "cn-runtime24-ec55b7f117",
+      "deleted": true,
+      "request_id": "5db5142a-1de8-4190-ad8e-7cc8a0b3a8db"
+    },
+    {
+      "resource": "cn-ec2-bench-0eec9b6240-447150580482",
+      "deleted": true,
+      "request_id": "3WH767EGJD7DP1XQ"
+    },
+    {
+      "resource": "cn-runtime24-ec55b7f117-runtime",
+      "deleted": true,
+      "request_id": "e80e7261-c229-4908-9268-15357f3dc829"
+    },
+    {
+      "resource": "cn_ci_efs_53c6d40f78",
+      "deleted": false
+    },
+    {
+      "resource": "sg-02b4c907a70fbe1be",
+      "deleted": false
+    },
+    {
+      "resource": "sg-040d03b6d253d1c49",
+      "deleted": true,
+      "request_id": "6f8e2675-45a0-4d70-861e-0c1bd2b792cd"
+    }
+  ],
+  "retained": {
+    "instance": "i-0ab621bda76e7f0af",
+    "instance_state": "stopped",
+    "role": "cn-ec2-bench-0eec9b6240",
+    "profile": "cn-ec2-bench-0eec9b6240",
+    "security_group": "sg-05e4383d86a02b2b2",
+    "volumes": [
+      "vol-0f849d955f70fa9f5"
+    ]
+  },
+  "existing_runtimes": [
+    {
+      "id": "uat_smoke-7r6g859pPV",
+      "status": "READY",
+      "version": "1"
+    },
+    {
+      "id": "uat_obs_runtime-7Jdad74K4S",
+      "status": "READY",
+      "version": "1"
+    },
+    {
+      "id": "hosted_agent_wf7di-QuFH9IBBx8",
+      "status": "READY",
+      "version": "1"
+    },
+    {
+      "id": "efs_write_test-NNI37O554n",
+      "status": "READY",
+      "version": "1"
+    }
+  ],
+  "network_retry": "efs/cleanup-retry.json"
+}

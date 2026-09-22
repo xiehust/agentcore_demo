@@ -1,0 +1,32 @@
+{
+  "at": "2026-09-21T16:44:57.589861+00:00",
+  "name": "getTask",
+  "events": [
+    {
+      "result": {
+        "content": [],
+        "structuredContent": {
+          "taskStatus": "completed",
+          "stdout": "",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 252.70153832435608
+        },
+        "isError": false
+      }
+    }
+  ],
+  "metadata": {
+    "RequestId": "5f8a630a-3e49-428f-9e55-57f5493ee0d2",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Mon, 21 Sep 2026 16:44:57 GMT",
+      "content-type": "application/vnd.amazon.eventstream",
+      "transfer-encoding": "chunked",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "5f8a630a-3e49-428f-9e55-57f5493ee0d2",
+      "x-amzn-code-interpreter-session-id": "01M32DCBNZ5QT588QCXXPAE0RJ"
+    },
+    "RetryAttempts": 0
+  }
+}

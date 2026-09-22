@@ -1,0 +1,42 @@
+{
+  "at": "2026-09-21T16:01:34.689744+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M32B156E8Y9GEQ74H2SX3P0W",
+    "name": "stopTask",
+    "arguments": {
+      "taskId": "1c6ab8df-111c-4f4d-a4e8-a59f9824b760"
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "7accb7b5-309a-4d75-89c5-eba1527c5631",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 16:01:35 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "7accb7b5-309a-4d75-89c5-eba1527c5631",
+        "x-amzn-code-interpreter-session-id": "01M32B156E8Y9GEQ74H2SX3P0W"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M32B156E8Y9GEQ74H2SX3P0W"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully canceled a command execution task"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.8443607909139246
+}

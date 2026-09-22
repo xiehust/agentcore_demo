@@ -1,0 +1,42 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": "arn:aws-cn:s3:::cn-ec2-bench-8bbcd08d59-447150580482/input/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws-cn:s3:::cn-ec2-bench-8bbcd08d59-447150580482/results/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:InvokeAgentRuntime",
+        "bedrock-agentcore:StopRuntimeSession"
+      ],
+      "Resource": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_2463cd7d3a_*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:StartCodeInterpreterSession",
+        "bedrock-agentcore:InvokeCodeInterpreter",
+        "bedrock-agentcore:StopCodeInterpreterSession",
+        "bedrock-agentcore:GetCodeInterpreterSession",
+        "bedrock-agentcore:ListCodeInterpreterSessions",
+        "bedrock-agentcore:GetCodeInterpreter"
+      ],
+      "Resource": [
+        "arn:aws-cn:bedrock-agentcore:cn-northwest-1:aws:code-interpreter/aws.codeinterpreter.v1",
+        "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:code-interpreter/aws.codeinterpreter.v1"
+      ]
+    }
+  ]
+}

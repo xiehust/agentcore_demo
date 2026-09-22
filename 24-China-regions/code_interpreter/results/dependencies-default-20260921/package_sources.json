@@ -1,0 +1,58 @@
+{
+  "china_mirror": {
+    "index_url": "https://pypi.tuna.tsinghua.edu.cn/simple",
+    "elapsed_s": 1.0677133080316707,
+    "output": {
+      "stdout": "",
+      "stderr": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\n\u001b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\u001b[0m\u001b[31m\r\n\u001b[0m\u001b[31mERROR: No matching distribution found for pytimeparse==1.1.8\u001b[0m\u001b[31m\r\n\u001b[0m",
+      "isError": true,
+      "results": [
+        {
+          "content": [
+            {
+              "type": "text",
+              "text": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\n\u001b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\u001b[0m\u001b[31m\r\n\u001b[0m\u001b[31mERROR: No matching distribution found for pytimeparse==1.1.8\u001b[0m\u001b[31m\r\n\u001b[0m"
+            }
+          ],
+          "structuredContent": {
+            "stdout": "",
+            "stderr": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\n\u001b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\u001b[0m\u001b[31m\r\n\u001b[0m\u001b[31mERROR: No matching distribution found for pytimeparse==1.1.8\u001b[0m\u001b[31m\r\n\u001b[0m",
+            "exitCode": 1,
+            "executionTime": 0.711094856262207
+          },
+          "isError": true
+        }
+      ],
+      "exceptions": []
+    },
+    "import": null
+  },
+  "default": {
+    "index_url": null,
+    "elapsed_s": 0.8301882169907913,
+    "output": {
+      "stdout": "",
+      "stderr": "\u001b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\u001b[0m\u001b[31m\r\n\u001b[0m\u001b[31mERROR: No matching distribution found for pytimeparse==1.1.8\u001b[0m\u001b[31m\r\n\u001b[0m",
+      "isError": true,
+      "results": [
+        {
+          "content": [
+            {
+              "type": "text",
+              "text": "\u001b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\u001b[0m\u001b[31m\r\n\u001b[0m\u001b[31mERROR: No matching distribution found for pytimeparse==1.1.8\u001b[0m\u001b[31m\r\n\u001b[0m"
+            }
+          ],
+          "structuredContent": {
+            "stdout": "",
+            "stderr": "\u001b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\u001b[0m\u001b[31m\r\n\u001b[0m\u001b[31mERROR: No matching distribution found for pytimeparse==1.1.8\u001b[0m\u001b[31m\r\n\u001b[0m",
+            "exitCode": 1,
+            "executionTime": 0.47344160079956055
+          },
+          "isError": true
+        }
+      ],
+      "exceptions": []
+    },
+    "import": null
+  }
+}

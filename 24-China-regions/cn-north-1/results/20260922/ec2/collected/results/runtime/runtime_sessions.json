@@ -1,0 +1,3475 @@
+{
+  "36d4142f-c019-4159-98ec-e3c0f27acb66": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:28.509013+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "6a00c3c5-c2be-4378-a8c8-9288e1c047cd",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:31 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6a00c3c5-c2be-4378-a8c8-9288e1c047cd",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "36d4142f-c019-4159-98ec-e3c0f27acb66"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "36d4142f-c019-4159-98ec-e3c0f27acb66",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:31.053526+00:00"
+  },
+  "64b6c805-2891-4a89-a0d0-24d6df0dddb0": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:31.053956+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "3d0cbc80-4edd-4376-8578-8400232a6f17",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:33 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "3d0cbc80-4edd-4376-8578-8400232a6f17",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "64b6c805-2891-4a89-a0d0-24d6df0dddb0"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "64b6c805-2891-4a89-a0d0-24d6df0dddb0",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:33.562810+00:00"
+  },
+  "6ae780ff-f2a1-4637-8fb5-7dd0aaf8350d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:33.563204+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "44c67056-0b3a-4ff2-bd5b-1b942bd1c16f",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:35 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "44c67056-0b3a-4ff2-bd5b-1b942bd1c16f",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "6ae780ff-f2a1-4637-8fb5-7dd0aaf8350d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "6ae780ff-f2a1-4637-8fb5-7dd0aaf8350d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:35.551790+00:00"
+  },
+  "7aa977c2-2c5b-4dc6-8d24-6d639c7b5077": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:35.552221+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "bfe160dd-9741-4885-9577-518ccf73b2f2",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:37 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "bfe160dd-9741-4885-9577-518ccf73b2f2",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "7aa977c2-2c5b-4dc6-8d24-6d639c7b5077"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "7aa977c2-2c5b-4dc6-8d24-6d639c7b5077",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:37.673317+00:00"
+  },
+  "6dfaa009-18a3-421e-9a1c-6668f8004f77": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:37.673777+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "1a8bfb97-7802-42f0-9565-d1c7642e4ab2",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:39 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "1a8bfb97-7802-42f0-9565-d1c7642e4ab2",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "6dfaa009-18a3-421e-9a1c-6668f8004f77"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "6dfaa009-18a3-421e-9a1c-6668f8004f77",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:39.716234+00:00"
+  },
+  "20270e34-9a67-4053-89c8-f6ba9bf42448": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:39.716762+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "f35b8e82-155c-4498-a342-01c7ff1698cb",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:42 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "f35b8e82-155c-4498-a342-01c7ff1698cb",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "20270e34-9a67-4053-89c8-f6ba9bf42448"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "20270e34-9a67-4053-89c8-f6ba9bf42448",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:42.059915+00:00"
+  },
+  "43f2191e-0422-44f9-b932-e2fb89c77ae0": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:42.060553+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "c4cca072-b699-42a5-bfe6-afce6778cdf6",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:44 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "c4cca072-b699-42a5-bfe6-afce6778cdf6",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "43f2191e-0422-44f9-b932-e2fb89c77ae0"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "43f2191e-0422-44f9-b932-e2fb89c77ae0",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:44.013529+00:00"
+  },
+  "8f3b786f-11bb-4344-bdf5-a2b6bbed4f3d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:44.014143+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "0132d4e8-31d1-4bc4-b586-b78b227d4069",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:46 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "0132d4e8-31d1-4bc4-b586-b78b227d4069",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "8f3b786f-11bb-4344-bdf5-a2b6bbed4f3d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "8f3b786f-11bb-4344-bdf5-a2b6bbed4f3d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:46.700104+00:00"
+  },
+  "ce90fb22-ada1-4992-805d-f6a38df18b33": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:46.700724+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "962c953f-7f83-4e1e-acbf-3e576e113ee2",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:48 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "962c953f-7f83-4e1e-acbf-3e576e113ee2",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ce90fb22-ada1-4992-805d-f6a38df18b33"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ce90fb22-ada1-4992-805d-f6a38df18b33",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:48.948193+00:00"
+  },
+  "76c4540d-b5ab-4b76-8a7f-818d3fcb9838": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:48.948921+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "37f2fdcd-8c22-4e5d-a573-ab376afaab0a",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:51 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "37f2fdcd-8c22-4e5d-a573-ab376afaab0a",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "76c4540d-b5ab-4b76-8a7f-818d3fcb9838"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "76c4540d-b5ab-4b76-8a7f-818d3fcb9838",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:51.469193+00:00"
+  },
+  "837005b0-1213-4447-8d18-b5b5255c00ce": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:51.469834+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "ec4052ea-b017-4730-8331-61f0734a3261",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:53 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "ec4052ea-b017-4730-8331-61f0734a3261",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "837005b0-1213-4447-8d18-b5b5255c00ce"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "837005b0-1213-4447-8d18-b5b5255c00ce",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:53.820558+00:00"
+  },
+  "6d0041ff-3a3f-41d0-b032-f16c57b274d3": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:53.821183+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "9cecb562-3946-4dbc-bf46-3e82e227e846",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:55 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "9cecb562-3946-4dbc-bf46-3e82e227e846",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "6d0041ff-3a3f-41d0-b032-f16c57b274d3"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "6d0041ff-3a3f-41d0-b032-f16c57b274d3",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:55.955315+00:00"
+  },
+  "d51e5b8d-e902-445d-a9c0-933fbefe1e11": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:55.956003+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "2df8d657-da82-4da3-b779-02cd144adb84",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:21:58 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "2df8d657-da82-4da3-b779-02cd144adb84",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d51e5b8d-e902-445d-a9c0-933fbefe1e11"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d51e5b8d-e902-445d-a9c0-933fbefe1e11",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:21:58.076793+00:00"
+  },
+  "91005dc3-848d-4d95-957f-82c6417d6799": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:21:58.077524+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "30fdbd60-8531-41da-af8f-1189ead15d80",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:00 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "30fdbd60-8531-41da-af8f-1189ead15d80",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "91005dc3-848d-4d95-957f-82c6417d6799"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "91005dc3-848d-4d95-957f-82c6417d6799",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:00.117155+00:00"
+  },
+  "d692e797-a8f1-4ee0-8ad8-fd7e30647f1a": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:00.129138+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "0099681b-75c9-4547-8e0a-a543b6a8fa98",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:02 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "0099681b-75c9-4547-8e0a-a543b6a8fa98",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d692e797-a8f1-4ee0-8ad8-fd7e30647f1a"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d692e797-a8f1-4ee0-8ad8-fd7e30647f1a",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:02.147951+00:00"
+  },
+  "77bc9762-8ce7-428a-aa75-84f0d2102529": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:02.148769+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "ba78d6d3-a330-475d-803c-1778f44105e9",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:04 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "ba78d6d3-a330-475d-803c-1778f44105e9",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "77bc9762-8ce7-428a-aa75-84f0d2102529"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "77bc9762-8ce7-428a-aa75-84f0d2102529",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:04.152146+00:00"
+  },
+  "834ec284-1454-4b67-8480-f8987ca1c310": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:04.152975+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a384df7f-ef5f-4054-a718-51d4b7989488",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:06 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a384df7f-ef5f-4054-a718-51d4b7989488",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "834ec284-1454-4b67-8480-f8987ca1c310"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "834ec284-1454-4b67-8480-f8987ca1c310",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:06.220724+00:00"
+  },
+  "67cc44e2-d4f6-4155-8f74-5eae5c2f51e0": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:06.221522+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "5b9186ac-924e-4bce-abdb-0171d5d560cd",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:08 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "5b9186ac-924e-4bce-abdb-0171d5d560cd",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "67cc44e2-d4f6-4155-8f74-5eae5c2f51e0"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "67cc44e2-d4f6-4155-8f74-5eae5c2f51e0",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:08.201194+00:00"
+  },
+  "77398114-6b07-46e2-a939-082bae716d07": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:08.202021+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "8c34f582-70bf-42e9-8f19-b54ecef6a185",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:10 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "8c34f582-70bf-42e9-8f19-b54ecef6a185",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "77398114-6b07-46e2-a939-082bae716d07"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "77398114-6b07-46e2-a939-082bae716d07",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:10.166509+00:00"
+  },
+  "af9633f4-669a-43c3-ae82-fcbd46e0c868": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:10.167422+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a621336d-c08b-4ebe-abd7-8a5e79ca7b83",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:12 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a621336d-c08b-4ebe-abd7-8a5e79ca7b83",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "af9633f4-669a-43c3-ae82-fcbd46e0c868"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "af9633f4-669a-43c3-ae82-fcbd46e0c868",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:12.213731+00:00"
+  },
+  "1fb82f3a-51ef-44bf-a76e-d23722234ef1": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:12.214652+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "4694c269-f822-4d4e-bb90-e0598939c093",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:14 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "4694c269-f822-4d4e-bb90-e0598939c093",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "1fb82f3a-51ef-44bf-a76e-d23722234ef1"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "1fb82f3a-51ef-44bf-a76e-d23722234ef1",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:14.509130+00:00"
+  },
+  "410a28d2-1a3d-4343-8025-c9aaf5294f49": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:14.509997+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "4b69fbfa-c4ce-4ed3-bf4f-3a95d82e4072",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:16 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "4b69fbfa-c4ce-4ed3-bf4f-3a95d82e4072",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "410a28d2-1a3d-4343-8025-c9aaf5294f49"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "410a28d2-1a3d-4343-8025-c9aaf5294f49",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:16.371699+00:00"
+  },
+  "ccefdbe9-6189-49f1-9af9-4d356e716572": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:16.372626+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "c7b50118-e129-448f-8ad7-889d34809ba1",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:18 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "c7b50118-e129-448f-8ad7-889d34809ba1",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ccefdbe9-6189-49f1-9af9-4d356e716572"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ccefdbe9-6189-49f1-9af9-4d356e716572",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:18.461025+00:00"
+  },
+  "91b8a6f3-116f-4734-9398-328e77a6223e": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:18.462003+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "7ceca6cd-31db-4de0-b439-2888480e2a53",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:20 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "7ceca6cd-31db-4de0-b439-2888480e2a53",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "91b8a6f3-116f-4734-9398-328e77a6223e"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "91b8a6f3-116f-4734-9398-328e77a6223e",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:20.248822+00:00"
+  },
+  "97a2595a-00f1-41d6-9a8a-24de77126154": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:20.249773+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "9bbd1063-d84e-4523-853d-0e13a90fc32d",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:22 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "9bbd1063-d84e-4523-853d-0e13a90fc32d",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "97a2595a-00f1-41d6-9a8a-24de77126154"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "97a2595a-00f1-41d6-9a8a-24de77126154",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:22.210996+00:00"
+  },
+  "b289e327-9beb-409b-ab36-bbb1f5a6d44a": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:22.212022+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "c84a6af3-7948-4703-b8d3-287c78150ff2",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:24 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "c84a6af3-7948-4703-b8d3-287c78150ff2",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "b289e327-9beb-409b-ab36-bbb1f5a6d44a"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "b289e327-9beb-409b-ab36-bbb1f5a6d44a",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:24.283564+00:00"
+  },
+  "644e2615-94f9-4f04-816b-289a79dc6395": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:24.284639+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "f2fc0c6e-ebd4-429b-8e09-eb51f1b2e144",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:26 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "f2fc0c6e-ebd4-429b-8e09-eb51f1b2e144",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "644e2615-94f9-4f04-816b-289a79dc6395"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "644e2615-94f9-4f04-816b-289a79dc6395",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:26.458707+00:00"
+  },
+  "ff96501b-7877-4082-b000-26aa5c76baa7": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:26.459844+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a24ca372-dbaa-4f09-a579-9b0ef48aaf5e",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:28 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a24ca372-dbaa-4f09-a579-9b0ef48aaf5e",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ff96501b-7877-4082-b000-26aa5c76baa7"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ff96501b-7877-4082-b000-26aa5c76baa7",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:28.678468+00:00"
+  },
+  "2d1e896d-b700-41a5-8887-9f8dd8bd78fc": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:28.679499+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "6dbed8c6-3c9a-47a5-a485-907734ca636c",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:30 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6dbed8c6-3c9a-47a5-a485-907734ca636c",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "2d1e896d-b700-41a5-8887-9f8dd8bd78fc"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "2d1e896d-b700-41a5-8887-9f8dd8bd78fc",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:30.387066+00:00"
+  },
+  "869acb33-7b32-4f24-89bc-d6db21f7ba65": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:30.388158+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "7ee4eec8-defa-40b2-8de5-74dfc1e74733",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:32 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "7ee4eec8-defa-40b2-8de5-74dfc1e74733",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "869acb33-7b32-4f24-89bc-d6db21f7ba65"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "869acb33-7b32-4f24-89bc-d6db21f7ba65",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:32.467079+00:00"
+  },
+  "e6b4fd9e-88ad-43f8-af94-f5c1fe9aa196": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:32.468234+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "53eb2773-50b1-4c1a-803f-3520d1a37582",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:34 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "53eb2773-50b1-4c1a-803f-3520d1a37582",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e6b4fd9e-88ad-43f8-af94-f5c1fe9aa196"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e6b4fd9e-88ad-43f8-af94-f5c1fe9aa196",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:34.692502+00:00"
+  },
+  "72576e1a-a913-46cb-afea-d9e1a29ac813": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:34.693626+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "20966583-4828-415b-9289-c5bb984ada73",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:36 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "20966583-4828-415b-9289-c5bb984ada73",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "72576e1a-a913-46cb-afea-d9e1a29ac813"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "72576e1a-a913-46cb-afea-d9e1a29ac813",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:36.560661+00:00"
+  },
+  "bdf73f26-c7a9-4837-98ca-01de40a5eada": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:36.561819+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "1c37b701-58ec-4fac-903c-2bd426224849",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:38 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "1c37b701-58ec-4fac-903c-2bd426224849",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "bdf73f26-c7a9-4837-98ca-01de40a5eada"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "bdf73f26-c7a9-4837-98ca-01de40a5eada",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:38.415142+00:00"
+  },
+  "b533de03-a898-4bc9-b10e-9ea740cfe119": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:38.416353+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "27becd1c-056a-4679-8de1-29c3621492b0",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:40 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "27becd1c-056a-4679-8de1-29c3621492b0",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "b533de03-a898-4bc9-b10e-9ea740cfe119"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "b533de03-a898-4bc9-b10e-9ea740cfe119",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:40.224281+00:00"
+  },
+  "7236b915-67ae-4a68-aa92-160f3fa2c412": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:40.225552+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "ab81e70b-455c-4a51-986c-cf04c0122060",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:42 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "ab81e70b-455c-4a51-986c-cf04c0122060",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "7236b915-67ae-4a68-aa92-160f3fa2c412"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "7236b915-67ae-4a68-aa92-160f3fa2c412",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:42.130625+00:00"
+  },
+  "9b4f4be8-ac34-43a4-83d8-daab2f1c8262": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:42.132031+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "9797d40d-c9a5-4fae-a406-c0d4918195be",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:44 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "9797d40d-c9a5-4fae-a406-c0d4918195be",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "9b4f4be8-ac34-43a4-83d8-daab2f1c8262"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "9b4f4be8-ac34-43a4-83d8-daab2f1c8262",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:44.031950+00:00"
+  },
+  "755830c5-e524-4a86-9e00-0d7a4748738d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:44.033275+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "fb174673-3969-4943-a79b-3227ed22b66a",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:45 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "fb174673-3969-4943-a79b-3227ed22b66a",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "755830c5-e524-4a86-9e00-0d7a4748738d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "755830c5-e524-4a86-9e00-0d7a4748738d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:45.991265+00:00"
+  },
+  "d5b696bc-2083-459d-aae1-3919f85e11a6": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:45.992613+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "35dd31c2-81f3-40af-b071-09201e55a07d",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:47 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "35dd31c2-81f3-40af-b071-09201e55a07d",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d5b696bc-2083-459d-aae1-3919f85e11a6"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d5b696bc-2083-459d-aae1-3919f85e11a6",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:47.757890+00:00"
+  },
+  "61ee89a3-c2d2-4189-a842-fb11499f7c8e": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:47.759209+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "6d1999df-e5dc-4251-bc28-00f350180a45",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:49 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6d1999df-e5dc-4251-bc28-00f350180a45",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "61ee89a3-c2d2-4189-a842-fb11499f7c8e"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "61ee89a3-c2d2-4189-a842-fb11499f7c8e",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:49.512204+00:00"
+  },
+  "b23ede3e-053d-4a16-b6cc-4e1df40695d6": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:49.513585+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "f63326d9-2473-4776-b5bb-a99e3deef636",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:51 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "f63326d9-2473-4776-b5bb-a99e3deef636",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "b23ede3e-053d-4a16-b6cc-4e1df40695d6"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "b23ede3e-053d-4a16-b6cc-4e1df40695d6",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:51.448060+00:00"
+  },
+  "77bf34ec-8fa7-4b3c-a818-cafa268d2562": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:51.449483+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "9351ad1c-d88f-4901-934b-70b108089fa0",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:53 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "9351ad1c-d88f-4901-934b-70b108089fa0",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "77bf34ec-8fa7-4b3c-a818-cafa268d2562"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "77bf34ec-8fa7-4b3c-a818-cafa268d2562",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:53.413512+00:00"
+  },
+  "725e84f9-a625-4e1e-bca6-ff1872a643e6": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:53.414923+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "49651d25-96a3-4720-bfee-6fe1372aa709",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:55 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "49651d25-96a3-4720-bfee-6fe1372aa709",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "725e84f9-a625-4e1e-bca6-ff1872a643e6"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "725e84f9-a625-4e1e-bca6-ff1872a643e6",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:55.238388+00:00"
+  },
+  "0ddc9083-3832-4df1-8217-7409bf205ae2": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:55.239887+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "8fdbb307-be45-4089-b186-c46d5579f94b",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "8fdbb307-be45-4089-b186-c46d5579f94b",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "0ddc9083-3832-4df1-8217-7409bf205ae2"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "0ddc9083-3832-4df1-8217-7409bf205ae2",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:57.088994+00:00"
+  },
+  "3041dd1f-ba74-4b26-90e4-24e6185288af": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:57.090479+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "1aac9147-343e-496b-a8a8-f885d3adc524",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:22:59 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "1aac9147-343e-496b-a8a8-f885d3adc524",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "3041dd1f-ba74-4b26-90e4-24e6185288af"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "3041dd1f-ba74-4b26-90e4-24e6185288af",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:22:59.016925+00:00"
+  },
+  "c86baf5b-878d-4d25-9901-7420cb388dd7": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:22:59.018427+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "2125d17a-5a9d-4238-93e4-c11a166da805",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:01 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "2125d17a-5a9d-4238-93e4-c11a166da805",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "c86baf5b-878d-4d25-9901-7420cb388dd7"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "c86baf5b-878d-4d25-9901-7420cb388dd7",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:01.355059+00:00"
+  },
+  "7a4f0922-3010-4aa4-a8c3-8fbdba9172ed": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:01.356597+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "5e10ea5b-6af9-4a68-8da7-93611936e728",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:03 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "5e10ea5b-6af9-4a68-8da7-93611936e728",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "7a4f0922-3010-4aa4-a8c3-8fbdba9172ed"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "7a4f0922-3010-4aa4-a8c3-8fbdba9172ed",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:03.336877+00:00"
+  },
+  "9048b8e0-bea8-495e-83a2-9bb4f54adee6": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:03.338489+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "c4850080-b620-4602-beed-1823f3a0fbcd",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:05 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "c4850080-b620-4602-beed-1823f3a0fbcd",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "9048b8e0-bea8-495e-83a2-9bb4f54adee6"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "9048b8e0-bea8-495e-83a2-9bb4f54adee6",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:05.121032+00:00"
+  },
+  "43c5a1bb-2a98-4f49-bf41-a49210ecaa0f": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:05.122593+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a7a14ddf-8ca3-4d61-a49d-e1b13347ed71",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:06 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a7a14ddf-8ca3-4d61-a49d-e1b13347ed71",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "43c5a1bb-2a98-4f49-bf41-a49210ecaa0f"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "43c5a1bb-2a98-4f49-bf41-a49210ecaa0f",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:06.997672+00:00"
+  },
+  "1aa44bc4-f513-4d70-ad08-c2be56972e98": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:06.999252+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "10461359-f388-4abc-9363-aa01a876f042",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:09 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "10461359-f388-4abc-9363-aa01a876f042",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "1aa44bc4-f513-4d70-ad08-c2be56972e98"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "1aa44bc4-f513-4d70-ad08-c2be56972e98",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:09.125553+00:00"
+  },
+  "d1c5871e-bbd9-4bbc-a850-c152681647f7": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:09.127134+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "6e095447-7267-4898-9e32-330d8f36fca2",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:11 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6e095447-7267-4898-9e32-330d8f36fca2",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d1c5871e-bbd9-4bbc-a850-c152681647f7"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d1c5871e-bbd9-4bbc-a850-c152681647f7",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:11.008046+00:00"
+  },
+  "907ad489-2a17-4bca-98b8-09b2e15982ba": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:11.009917+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "26df5ff2-3f44-49b1-b9fc-a92dc3dc95df",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:13 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "26df5ff2-3f44-49b1-b9fc-a92dc3dc95df",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "907ad489-2a17-4bca-98b8-09b2e15982ba"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "907ad489-2a17-4bca-98b8-09b2e15982ba",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:13.035656+00:00"
+  },
+  "15cf6364-5817-4f2a-a430-fc422d1544a3": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:13.037402+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "3afcf34e-8ec5-4ee1-9f2d-5b2f31ec4bbb",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:14 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "3afcf34e-8ec5-4ee1-9f2d-5b2f31ec4bbb",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "15cf6364-5817-4f2a-a430-fc422d1544a3"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "15cf6364-5817-4f2a-a430-fc422d1544a3",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:14.998391+00:00"
+  },
+  "0cb9e954-628c-4daf-a2d1-714779b01e2c": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:15.000022+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "0d301237-dda3-4b81-b670-5462418b5943",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:16 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "0d301237-dda3-4b81-b670-5462418b5943",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "0cb9e954-628c-4daf-a2d1-714779b01e2c"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "0cb9e954-628c-4daf-a2d1-714779b01e2c",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:16.717258+00:00"
+  },
+  "a96c6abb-c3e6-4d50-9620-d2889daf770f": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:16.718949+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a3557a0f-1d1c-49e1-a913-7a1ed483d9d3",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:18 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a3557a0f-1d1c-49e1-a913-7a1ed483d9d3",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "a96c6abb-c3e6-4d50-9620-d2889daf770f"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "a96c6abb-c3e6-4d50-9620-d2889daf770f",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:18.676172+00:00"
+  },
+  "4f9523c3-c752-4a50-893c-89ef44921d51": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:18.677977+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "b071fce0-f264-4e1d-946a-cf9e5b0cbfde",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:20 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "b071fce0-f264-4e1d-946a-cf9e5b0cbfde",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "4f9523c3-c752-4a50-893c-89ef44921d51"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "4f9523c3-c752-4a50-893c-89ef44921d51",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:20.347737+00:00"
+  },
+  "69f4fe38-5f6b-42fd-ba24-a28938183d33": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:20.349512+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "bee247ed-c22b-4c07-94a2-a8966f284bea",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:22 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "bee247ed-c22b-4c07-94a2-a8966f284bea",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "69f4fe38-5f6b-42fd-ba24-a28938183d33"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "69f4fe38-5f6b-42fd-ba24-a28938183d33",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:22.368941+00:00"
+  },
+  "2e4fef30-be14-4a1d-895a-5a0ee4945e1b": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:22.370833+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "6f5bca8b-7ca9-4b35-b18b-bf6dfc91dc3f",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:24 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6f5bca8b-7ca9-4b35-b18b-bf6dfc91dc3f",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "2e4fef30-be14-4a1d-895a-5a0ee4945e1b"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "2e4fef30-be14-4a1d-895a-5a0ee4945e1b",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:24.416042+00:00"
+  },
+  "75ceb52d-e7de-4cbc-8c4a-a4d2a3b5257c": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:24.417815+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "eed56528-38e0-4b1d-af06-ee3322c23971",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:26 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "eed56528-38e0-4b1d-af06-ee3322c23971",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "75ceb52d-e7de-4cbc-8c4a-a4d2a3b5257c"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "75ceb52d-e7de-4cbc-8c4a-a4d2a3b5257c",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:26.373515+00:00"
+  },
+  "e85f5498-24d9-4eec-bb31-d2c154dc6467": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:26.375285+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "866c401f-be97-4ca8-b74e-94459c146538",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:28 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "866c401f-be97-4ca8-b74e-94459c146538",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e85f5498-24d9-4eec-bb31-d2c154dc6467"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e85f5498-24d9-4eec-bb31-d2c154dc6467",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:28.084738+00:00"
+  },
+  "e026a929-7a91-4c4e-a583-7094f2767523": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:28.086601+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "7b7b9f4c-2c9a-4b4a-a1ba-3d34a910eb37",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:30 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "7b7b9f4c-2c9a-4b4a-a1ba-3d34a910eb37",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e026a929-7a91-4c4e-a583-7094f2767523"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e026a929-7a91-4c4e-a583-7094f2767523",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:30.033692+00:00"
+  },
+  "703bbe23-216c-455f-a7ae-4ab91aa6f536": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:30.036693+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "e115677a-8647-445b-bd9c-70d87f986709",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:31 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "e115677a-8647-445b-bd9c-70d87f986709",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "703bbe23-216c-455f-a7ae-4ab91aa6f536"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "703bbe23-216c-455f-a7ae-4ab91aa6f536",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:31.936771+00:00"
+  },
+  "58107e76-ad51-4924-97bd-c04a26c5ad91": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:31.938809+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a999401b-1c2a-4ac9-afe8-85f3ac34a91d",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:33 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a999401b-1c2a-4ac9-afe8-85f3ac34a91d",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "58107e76-ad51-4924-97bd-c04a26c5ad91"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "58107e76-ad51-4924-97bd-c04a26c5ad91",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:33.882733+00:00"
+  },
+  "a66506d1-0a69-4886-987d-d050bb44d5ba": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:33.884703+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "d855f39f-f84e-4718-ac29-cf31ed48a526",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:35 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "d855f39f-f84e-4718-ac29-cf31ed48a526",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "a66506d1-0a69-4886-987d-d050bb44d5ba"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "a66506d1-0a69-4886-987d-d050bb44d5ba",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:35.565450+00:00"
+  },
+  "c13db34c-c993-4666-8c07-543c9ab4715b": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:35.567452+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "3674a7a0-abfd-46a3-b0f4-37650b7ef789",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:37 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "3674a7a0-abfd-46a3-b0f4-37650b7ef789",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "c13db34c-c993-4666-8c07-543c9ab4715b"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "c13db34c-c993-4666-8c07-543c9ab4715b",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:37.781378+00:00"
+  },
+  "ace7d165-8f6c-45f7-b507-8297d595a75d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:37.783326+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "5259f702-55f8-4a3a-accd-2898a05f5dd9",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:39 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "5259f702-55f8-4a3a-accd-2898a05f5dd9",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ace7d165-8f6c-45f7-b507-8297d595a75d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ace7d165-8f6c-45f7-b507-8297d595a75d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:39.811997+00:00"
+  },
+  "5a413f58-bf5d-402f-9754-716aec81c10e": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:39.813974+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "04e74fb3-448c-4091-a341-e78fb031f6ee",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:41 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "04e74fb3-448c-4091-a341-e78fb031f6ee",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "5a413f58-bf5d-402f-9754-716aec81c10e"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "5a413f58-bf5d-402f-9754-716aec81c10e",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:41.552449+00:00"
+  },
+  "fe8b0f50-5594-41f7-aca4-fd1d1df9bba7": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:41.554435+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a0a5e382-b502-47db-a077-e4d8f8625346",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:43 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a0a5e382-b502-47db-a077-e4d8f8625346",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "fe8b0f50-5594-41f7-aca4-fd1d1df9bba7"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "fe8b0f50-5594-41f7-aca4-fd1d1df9bba7",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:43.507890+00:00"
+  },
+  "791543a8-c62d-489f-a0ec-2f9b2e135e30": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:43.509904+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "bb7a9b74-e02b-4ec2-bdf2-8e162b8ba028",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:45 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "bb7a9b74-e02b-4ec2-bdf2-8e162b8ba028",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "791543a8-c62d-489f-a0ec-2f9b2e135e30"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "791543a8-c62d-489f-a0ec-2f9b2e135e30",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:45.558566+00:00"
+  },
+  "f2297afd-4a49-4fdb-839f-d15015902f77": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:45.560661+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "4e65ebb5-5ebc-42ac-9dc1-d1bfc1214a34",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:47 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "4e65ebb5-5ebc-42ac-9dc1-d1bfc1214a34",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "f2297afd-4a49-4fdb-839f-d15015902f77"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "f2297afd-4a49-4fdb-839f-d15015902f77",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:47.608876+00:00"
+  },
+  "50876028-8f07-4aba-b720-3b775f082299": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:47.610973+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a0d79572-731c-4b5a-b0c6-2b030c764200",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:49 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a0d79572-731c-4b5a-b0c6-2b030c764200",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "50876028-8f07-4aba-b720-3b775f082299"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "50876028-8f07-4aba-b720-3b775f082299",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:49.646121+00:00"
+  },
+  "a2908a81-1a31-45f8-ad90-efc6e9ee898b": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:49.648270+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "e6572d31-dfdf-428c-8255-f7008812bfab",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:51 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "e6572d31-dfdf-428c-8255-f7008812bfab",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "a2908a81-1a31-45f8-ad90-efc6e9ee898b"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "a2908a81-1a31-45f8-ad90-efc6e9ee898b",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:51.372064+00:00"
+  },
+  "ca2e92a9-1fb7-429f-af05-70c0822b93f9": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:51.374277+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "88ace1c8-2ee3-448e-98c8-393839c8e587",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:53 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "88ace1c8-2ee3-448e-98c8-393839c8e587",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ca2e92a9-1fb7-429f-af05-70c0822b93f9"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ca2e92a9-1fb7-429f-af05-70c0822b93f9",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:53.469626+00:00"
+  },
+  "e17d6a7d-0582-42ef-b47f-2a6b99f276b3": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:53.471872+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "2f9df431-2c8b-471c-a907-e76008908e4a",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:55 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "2f9df431-2c8b-471c-a907-e76008908e4a",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e17d6a7d-0582-42ef-b47f-2a6b99f276b3"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e17d6a7d-0582-42ef-b47f-2a6b99f276b3",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:55.211722+00:00"
+  },
+  "a14fd6af-1656-4658-8767-24afd899901d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:55.214233+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a16b57e7-e9ac-4f46-824b-a1c4d820674e",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a16b57e7-e9ac-4f46-824b-a1c4d820674e",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "a14fd6af-1656-4658-8767-24afd899901d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "a14fd6af-1656-4658-8767-24afd899901d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:56.947817+00:00"
+  },
+  "02b26bed-8a99-45a1-ac16-74d2c4ae3ae9": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:56.950082+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "83c31193-adf9-446f-9ab5-6343ea1e8d8d",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:23:59 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "83c31193-adf9-446f-9ab5-6343ea1e8d8d",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "02b26bed-8a99-45a1-ac16-74d2c4ae3ae9"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "02b26bed-8a99-45a1-ac16-74d2c4ae3ae9",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:23:59.001551+00:00"
+  },
+  "39a563a7-79da-4eea-badc-df250474b50b": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:23:59.003918+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "ed9f4160-eaf3-4867-a83a-7685bec9c902",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:01 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "ed9f4160-eaf3-4867-a83a-7685bec9c902",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "39a563a7-79da-4eea-badc-df250474b50b"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "39a563a7-79da-4eea-badc-df250474b50b",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:01.114304+00:00"
+  },
+  "da41053f-0028-41d5-bea6-61f8906621f4": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:01.116829+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "0760a5c5-aa9c-4075-8a8f-34ba4b3ce716",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:02 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "0760a5c5-aa9c-4075-8a8f-34ba4b3ce716",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "da41053f-0028-41d5-bea6-61f8906621f4"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "da41053f-0028-41d5-bea6-61f8906621f4",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:02.899824+00:00"
+  },
+  "ab288b36-6f78-4557-91d4-85aba0cdc8d3": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:02.902139+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "319c5df1-dcfa-40b9-ba6c-0eb00913fa03",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:04 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "319c5df1-dcfa-40b9-ba6c-0eb00913fa03",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ab288b36-6f78-4557-91d4-85aba0cdc8d3"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ab288b36-6f78-4557-91d4-85aba0cdc8d3",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:04.770909+00:00"
+  },
+  "7bfdb9b2-71fe-49d1-a9e3-304bec489752": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:04.773275+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "127f0fb7-2e79-41fc-982e-829461bb6d15",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:06 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "127f0fb7-2e79-41fc-982e-829461bb6d15",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "7bfdb9b2-71fe-49d1-a9e3-304bec489752"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "7bfdb9b2-71fe-49d1-a9e3-304bec489752",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:06.788892+00:00"
+  },
+  "ffa2ef6f-9195-48d0-a42f-7f1ec97396dc": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:06.791194+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "59704e92-5160-4964-8955-abf9c270b217",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:08 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "59704e92-5160-4964-8955-abf9c270b217",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ffa2ef6f-9195-48d0-a42f-7f1ec97396dc"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ffa2ef6f-9195-48d0-a42f-7f1ec97396dc",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:08.601910+00:00"
+  },
+  "0f5e41c1-07c7-4f21-b5ac-927591163fd1": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:08.604569+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "65141cb4-e6bb-4fce-8ccc-cd8086371bfc",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:10 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "65141cb4-e6bb-4fce-8ccc-cd8086371bfc",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "0f5e41c1-07c7-4f21-b5ac-927591163fd1"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "0f5e41c1-07c7-4f21-b5ac-927591163fd1",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:10.576562+00:00"
+  },
+  "979a1196-4776-4927-b497-9983968c8862": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:10.578982+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "6ce2a46e-c3c4-41bc-8cba-c27ca8cc8105",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:12 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6ce2a46e-c3c4-41bc-8cba-c27ca8cc8105",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "979a1196-4776-4927-b497-9983968c8862"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "979a1196-4776-4927-b497-9983968c8862",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:12.263659+00:00"
+  },
+  "1ece708d-07c6-46a6-9fee-3e817660a953": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:12.266109+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a24c112c-34be-4c4c-ac3e-310a7452d8d5",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:14 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a24c112c-34be-4c4c-ac3e-310a7452d8d5",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "1ece708d-07c6-46a6-9fee-3e817660a953"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "1ece708d-07c6-46a6-9fee-3e817660a953",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:14.277110+00:00"
+  },
+  "ee5a4ec7-478c-4a7d-a37f-a52fcb580743": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:14.279654+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "74f7ee4a-68ea-4f44-99c9-0c69ac1f528e",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:16 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "74f7ee4a-68ea-4f44-99c9-0c69ac1f528e",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ee5a4ec7-478c-4a7d-a37f-a52fcb580743"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ee5a4ec7-478c-4a7d-a37f-a52fcb580743",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:16.171079+00:00"
+  },
+  "d3eedf2c-0b57-404a-b23d-c48e2811e84e": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:16.173511+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "cf5d245a-e3d8-44fe-9395-cda1b2782e2b",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:18 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "cf5d245a-e3d8-44fe-9395-cda1b2782e2b",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d3eedf2c-0b57-404a-b23d-c48e2811e84e"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d3eedf2c-0b57-404a-b23d-c48e2811e84e",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:18.166525+00:00"
+  },
+  "0425d3af-f2ee-4ee7-b1cd-f29eb30890f0": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:18.169046+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "b71cf3db-ba40-4bd8-9010-8cc06ad81fca",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:20 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "b71cf3db-ba40-4bd8-9010-8cc06ad81fca",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "0425d3af-f2ee-4ee7-b1cd-f29eb30890f0"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "0425d3af-f2ee-4ee7-b1cd-f29eb30890f0",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:20.199264+00:00"
+  },
+  "22cdd53c-530f-4684-97ec-f33358a51160": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:20.201846+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "04772ed5-0e44-4f5b-b40d-7ed6d0dd78dd",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:22 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "04772ed5-0e44-4f5b-b40d-7ed6d0dd78dd",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "22cdd53c-530f-4684-97ec-f33358a51160"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "22cdd53c-530f-4684-97ec-f33358a51160",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:22.167152+00:00"
+  },
+  "d739e3cc-2374-4ab1-b10e-383ce5b81d2c": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:22.169740+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "79dc983c-2158-4295-844a-5d17e7240265",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:24 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "79dc983c-2158-4295-844a-5d17e7240265",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d739e3cc-2374-4ab1-b10e-383ce5b81d2c"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d739e3cc-2374-4ab1-b10e-383ce5b81d2c",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:24.195782+00:00"
+  },
+  "a8c08618-41b5-4dff-9287-a614ecc55a0d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:24.198385+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "bc14bee1-8b4c-4f77-b385-fc4257faac9d",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:26 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "bc14bee1-8b4c-4f77-b385-fc4257faac9d",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "a8c08618-41b5-4dff-9287-a614ecc55a0d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "a8c08618-41b5-4dff-9287-a614ecc55a0d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:26.203940+00:00"
+  },
+  "8b26ec70-c96d-4cab-8aa7-e60b57f4d42c": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:26.206670+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "2ccd5c29-1c44-4d07-8afc-832d349aec9f",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:27 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "2ccd5c29-1c44-4d07-8afc-832d349aec9f",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "8b26ec70-c96d-4cab-8aa7-e60b57f4d42c"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "8b26ec70-c96d-4cab-8aa7-e60b57f4d42c",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:27.975255+00:00"
+  },
+  "502f1f3c-91c7-48ec-8af6-ef3e90429526": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:27.977879+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a45123f8-6bc2-4ba8-a2b1-61fdd34321c9",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:29 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a45123f8-6bc2-4ba8-a2b1-61fdd34321c9",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "502f1f3c-91c7-48ec-8af6-ef3e90429526"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "502f1f3c-91c7-48ec-8af6-ef3e90429526",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:29.869978+00:00"
+  },
+  "118d3e20-fec0-418d-acb9-a6e94239fee7": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:29.872644+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "6c9bbf77-6e4d-4a70-bb1e-4ead18a1d4ef",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:31 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6c9bbf77-6e4d-4a70-bb1e-4ead18a1d4ef",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "118d3e20-fec0-418d-acb9-a6e94239fee7"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "118d3e20-fec0-418d-acb9-a6e94239fee7",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:31.741958+00:00"
+  },
+  "a449ddd9-f627-4046-b0d2-9839b7d26ca2": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:31.744576+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "e8c4aadb-193d-4d3d-95af-5b9f5432523e",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:33 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "e8c4aadb-193d-4d3d-95af-5b9f5432523e",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "a449ddd9-f627-4046-b0d2-9839b7d26ca2"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "a449ddd9-f627-4046-b0d2-9839b7d26ca2",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:33.711255+00:00"
+  },
+  "9b6bb64a-a961-49cd-a2d7-11d9860652d2": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:33.713979+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "c3d620a8-2c29-484e-a78c-3c29e00bf220",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:35 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "c3d620a8-2c29-484e-a78c-3c29e00bf220",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "9b6bb64a-a961-49cd-a2d7-11d9860652d2"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "9b6bb64a-a961-49cd-a2d7-11d9860652d2",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:35.520708+00:00"
+  },
+  "1b0d2f77-f685-46e1-bcf2-925aec31ce81": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:35.523394+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "85ea5a5d-15ea-4a0e-8db3-5102e3190f63",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:37 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "85ea5a5d-15ea-4a0e-8db3-5102e3190f63",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "1b0d2f77-f685-46e1-bcf2-925aec31ce81"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "1b0d2f77-f685-46e1-bcf2-925aec31ce81",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:37.271407+00:00"
+  },
+  "41f977fb-0ff1-4bcb-84f3-0be213e2e595": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:37.274117+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "4c6a948a-79ed-43ae-848d-95b0e6b26314",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:38 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "4c6a948a-79ed-43ae-848d-95b0e6b26314",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "41f977fb-0ff1-4bcb-84f3-0be213e2e595"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "41f977fb-0ff1-4bcb-84f3-0be213e2e595",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:38.952469+00:00"
+  },
+  "83be0d3f-d6ff-4305-9f08-13b74cabefa0": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:38.955400+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "4aeaead6-295b-4f65-ad1a-feb0323c375c",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:40 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "4aeaead6-295b-4f65-ad1a-feb0323c375c",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "83be0d3f-d6ff-4305-9f08-13b74cabefa0"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "83be0d3f-d6ff-4305-9f08-13b74cabefa0",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:40.921502+00:00"
+  },
+  "f7f830bf-266d-4be3-bab5-474b7e2bdddf": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:40.924425+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "51e6bbac-6b77-439d-abae-152e587ece00",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:42 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "51e6bbac-6b77-439d-abae-152e587ece00",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "f7f830bf-266d-4be3-bab5-474b7e2bdddf"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "f7f830bf-266d-4be3-bab5-474b7e2bdddf",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:42.739317+00:00"
+  },
+  "d22a7987-3124-4d0d-bd00-c02370aa161c": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:42.742149+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "f2dedd25-6a30-4a7d-9f5e-7ea14c249b07",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:44 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "f2dedd25-6a30-4a7d-9f5e-7ea14c249b07",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d22a7987-3124-4d0d-bd00-c02370aa161c"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d22a7987-3124-4d0d-bd00-c02370aa161c",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:44.459316+00:00"
+  },
+  "95c7acc1-72d6-45eb-8743-ebfaef6bf7d1": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:44.462210+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "605ee318-e3cd-4200-ae4c-a7be4d6027e3",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:24:46 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "605ee318-e3cd-4200-ae4c-a7be4d6027e3",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "95c7acc1-72d6-45eb-8743-ebfaef6bf7d1"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "95c7acc1-72d6-45eb-8743-ebfaef6bf7d1",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:24:46.307643+00:00"
+  },
+  "61eb6df9-0b90-4181-a26c-b3c3747df913": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_baseline-zcut37GVyp",
+    "created_at": "2026-09-22T05:24:46.310576+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "e259c606-7bfb-49d0-b67a-f2a483fba2ec",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:49 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "e259c606-7bfb-49d0-b67a-f2a483fba2ec",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "61eb6df9-0b90-4181-a26c-b3c3747df913"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "61eb6df9-0b90-4181-a26c-b3c3747df913",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:49.184903+00:00"
+  },
+  "abc6ff30-c81c-4bd2-beac-6e1c234f7f2a": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.187846+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "ea23089c-187d-4952-b936-943dbbb8bde6",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "ea23089c-187d-4952-b936-943dbbb8bde6",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "abc6ff30-c81c-4bd2-beac-6e1c234f7f2a"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "abc6ff30-c81c-4bd2-beac-6e1c234f7f2a",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.012824+00:00"
+  },
+  "a36d42dc-1bcb-4e63-af4d-1fd75128fd46": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.190681+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "d3e7cca5-22d6-45e0-a52c-a89c9d8d73cf",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "d3e7cca5-22d6-45e0-a52c-a89c9d8d73cf",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "a36d42dc-1bcb-4e63-af4d-1fd75128fd46"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "a36d42dc-1bcb-4e63-af4d-1fd75128fd46",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:56.981599+00:00"
+  },
+  "5a1d52bc-d49c-4226-ae1a-783a48c6fa20": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.193421+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "328956c7-0901-4dd2-aa62-1697789fe7b9",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "328956c7-0901-4dd2-aa62-1697789fe7b9",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "5a1d52bc-d49c-4226-ae1a-783a48c6fa20"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "5a1d52bc-d49c-4226-ae1a-783a48c6fa20",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:56.987312+00:00"
+  },
+  "5eecff0a-0c11-4d70-a43c-a991099c832c": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.196073+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "e44de562-9e64-416e-af6e-50b6f8ec66c2",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "e44de562-9e64-416e-af6e-50b6f8ec66c2",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "5eecff0a-0c11-4d70-a43c-a991099c832c"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "5eecff0a-0c11-4d70-a43c-a991099c832c",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.004201+00:00"
+  },
+  "7db6747a-1d94-429a-998d-a44b9de83fa1": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.198777+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "2321426d-a428-448b-acbd-02cac99dd2bd",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "2321426d-a428-448b-acbd-02cac99dd2bd",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "7db6747a-1d94-429a-998d-a44b9de83fa1"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "7db6747a-1d94-429a-998d-a44b9de83fa1",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:56.998334+00:00"
+  },
+  "2fdbd5d5-a7db-49d2-923e-e2c4a2c2ae4f": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.201410+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "896ca65c-4b71-4042-b792-4966ad68773c",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "896ca65c-4b71-4042-b792-4966ad68773c",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "2fdbd5d5-a7db-49d2-923e-e2c4a2c2ae4f"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "2fdbd5d5-a7db-49d2-923e-e2c4a2c2ae4f",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:56.974770+00:00"
+  },
+  "e881256e-5b15-4af5-97dd-30989ba8c974": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.204161+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "62bc49a4-5ecb-4661-b062-de44fdb25eda",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "62bc49a4-5ecb-4661-b062-de44fdb25eda",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e881256e-5b15-4af5-97dd-30989ba8c974"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e881256e-5b15-4af5-97dd-30989ba8c974",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:56.952078+00:00"
+  },
+  "cf11e654-45c2-4c6a-8934-308086b2e44d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.206758+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "0cf205a4-73a7-4cff-a99c-7c516609efd5",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "0cf205a4-73a7-4cff-a99c-7c516609efd5",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "cf11e654-45c2-4c6a-8934-308086b2e44d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "cf11e654-45c2-4c6a-8934-308086b2e44d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:56.993325+00:00"
+  },
+  "73dceeb4-ab70-4fb4-b907-b72dadf0fff9": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.209373+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "73fa7330-115a-48c2-ac61-d95aa8a599d1",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:56 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "73fa7330-115a-48c2-ac61-d95aa8a599d1",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "73dceeb4-ab70-4fb4-b907-b72dadf0fff9"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "73dceeb4-ab70-4fb4-b907-b72dadf0fff9",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:56.969166+00:00"
+  },
+  "6086b5d5-50bf-43b6-b33d-35677a64babf": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.211986+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "fbd2c665-ba14-4824-a30c-c9c42b08c8a7",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "fbd2c665-ba14-4824-a30c-c9c42b08c8a7",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "6086b5d5-50bf-43b6-b33d-35677a64babf"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "6086b5d5-50bf-43b6-b33d-35677a64babf",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.034451+00:00"
+  },
+  "e1f99478-17f0-4da9-af35-ae975175f29a": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.214797+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "12e70aa0-7566-46ce-aa65-045892c0094b",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "12e70aa0-7566-46ce-aa65-045892c0094b",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e1f99478-17f0-4da9-af35-ae975175f29a"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e1f99478-17f0-4da9-af35-ae975175f29a",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.154025+00:00"
+  },
+  "47bd3334-6800-4346-b731-7c545e7e6946": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.217456+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "6a9b2720-2a65-423a-a7c7-5a0a6f6395bc",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "6a9b2720-2a65-423a-a7c7-5a0a6f6395bc",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "47bd3334-6800-4346-b731-7c545e7e6946"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "47bd3334-6800-4346-b731-7c545e7e6946",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.133635+00:00"
+  },
+  "0211279a-cff0-4e3b-b042-3d18cb8724a3": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.220088+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "c0ca5c5e-deb8-460e-9da9-5cb7886ff4ad",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "c0ca5c5e-deb8-460e-9da9-5cb7886ff4ad",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "0211279a-cff0-4e3b-b042-3d18cb8724a3"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "0211279a-cff0-4e3b-b042-3d18cb8724a3",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.163724+00:00"
+  },
+  "3a8bdb69-524d-45d5-8bd9-ff9612d1ed50": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.222783+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "45885935-485b-4a75-9c81-dbf67b368d84",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "45885935-485b-4a75-9c81-dbf67b368d84",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "3a8bdb69-524d-45d5-8bd9-ff9612d1ed50"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "3a8bdb69-524d-45d5-8bd9-ff9612d1ed50",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.169630+00:00"
+  },
+  "5e31743f-f911-45aa-9237-e08f3d419121": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.225402+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "5f76d67c-7164-4060-a32e-ceaf4d46a23d",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "5f76d67c-7164-4060-a32e-ceaf4d46a23d",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "5e31743f-f911-45aa-9237-e08f3d419121"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "5e31743f-f911-45aa-9237-e08f3d419121",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.181708+00:00"
+  },
+  "688703d2-52b8-4a65-8e74-7c77fcee3414": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.228067+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "c74e700f-7148-4763-b036-dd38097907f4",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "c74e700f-7148-4763-b036-dd38097907f4",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "688703d2-52b8-4a65-8e74-7c77fcee3414"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "688703d2-52b8-4a65-8e74-7c77fcee3414",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.148227+00:00"
+  },
+  "3ed39e56-483f-4ab6-81ee-aea9cab3ced5": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.230854+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "cc9ab0ca-0e57-48fb-a11c-15e27c70d427",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "cc9ab0ca-0e57-48fb-a11c-15e27c70d427",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "3ed39e56-483f-4ab6-81ee-aea9cab3ced5"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "3ed39e56-483f-4ab6-81ee-aea9cab3ced5",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.199845+00:00"
+  },
+  "9c583a6a-60e2-4b27-8c69-24c0e75ab420": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.233577+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "24c510b8-041b-4ebc-955d-b2453afcc45f",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "24c510b8-041b-4ebc-955d-b2453afcc45f",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "9c583a6a-60e2-4b27-8c69-24c0e75ab420"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "9c583a6a-60e2-4b27-8c69-24c0e75ab420",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.193935+00:00"
+  },
+  "e8891532-d86b-460d-a3c8-586026e5fcd7": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.236361+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "144dc3c1-fe29-47df-a09b-d55d0be6a3b3",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "144dc3c1-fe29-47df-a09b-d55d0be6a3b3",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e8891532-d86b-460d-a3c8-586026e5fcd7"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e8891532-d86b-460d-a3c8-586026e5fcd7",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.208129+00:00"
+  },
+  "db1b5aa9-913c-4329-ad90-0468d019fb82": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.238999+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "3075e1a3-e7c3-4792-b2fc-dc2631e04bc7",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "3075e1a3-e7c3-4792-b2fc-dc2631e04bc7",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "db1b5aa9-913c-4329-ad90-0468d019fb82"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "db1b5aa9-913c-4329-ad90-0468d019fb82",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.214134+00:00"
+  },
+  "246e8295-e429-4beb-9fc1-033d8ee0043f": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.241765+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "603deee9-88fb-40db-9f5b-559e03344f77",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "603deee9-88fb-40db-9f5b-559e03344f77",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "246e8295-e429-4beb-9fc1-033d8ee0043f"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "246e8295-e429-4beb-9fc1-033d8ee0043f",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.311353+00:00"
+  },
+  "0e7b1401-2e61-418f-933c-458792b28eb6": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.244454+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "a31f7487-39de-4de8-812f-c2261ecbe6b5",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "a31f7487-39de-4de8-812f-c2261ecbe6b5",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "0e7b1401-2e61-418f-933c-458792b28eb6"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "0e7b1401-2e61-418f-933c-458792b28eb6",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.302469+00:00"
+  },
+  "89bc5d63-4506-422f-9e49-036130a858d2": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.247208+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "580caa49-b567-447d-80f2-89ea52cfb6d7",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "580caa49-b567-447d-80f2-89ea52cfb6d7",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "89bc5d63-4506-422f-9e49-036130a858d2"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "89bc5d63-4506-422f-9e49-036130a858d2",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.380176+00:00"
+  },
+  "419ccf00-284f-493b-8578-ec4ade623baf": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.249819+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "4caa5d1d-9f4e-4d35-985e-4577770a6edf",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "4caa5d1d-9f4e-4d35-985e-4577770a6edf",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "419ccf00-284f-493b-8578-ec4ade623baf"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "419ccf00-284f-493b-8578-ec4ade623baf",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.337681+00:00"
+  },
+  "dde9903b-f739-49b9-9269-da526e132d0f": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.252584+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "9e326443-801d-4bf6-ab97-3c2e6b915e55",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "9e326443-801d-4bf6-ab97-3c2e6b915e55",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "dde9903b-f739-49b9-9269-da526e132d0f"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "dde9903b-f739-49b9-9269-da526e132d0f",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.354533+00:00"
+  },
+  "12cc2615-f89e-4ce6-80d3-f7f31fadcdfb": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.255295+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "dedbd1eb-1204-4375-baec-ef9b783354d3",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "dedbd1eb-1204-4375-baec-ef9b783354d3",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "12cc2615-f89e-4ce6-80d3-f7f31fadcdfb"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "12cc2615-f89e-4ce6-80d3-f7f31fadcdfb",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.367637+00:00"
+  },
+  "def7ce06-7d24-4532-9b4a-48e8c323dbff": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.257980+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "af554492-2cb1-4ae8-863a-07663a5420b1",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "af554492-2cb1-4ae8-863a-07663a5420b1",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "def7ce06-7d24-4532-9b4a-48e8c323dbff"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "def7ce06-7d24-4532-9b4a-48e8c323dbff",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.374418+00:00"
+  },
+  "ffb306e9-1156-4cd8-8a80-c4903a521e50": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.260755+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "1b867e88-b2e4-4f2b-8903-049646d10329",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "1b867e88-b2e4-4f2b-8903-049646d10329",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ffb306e9-1156-4cd8-8a80-c4903a521e50"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ffb306e9-1156-4cd8-8a80-c4903a521e50",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.360882+00:00"
+  },
+  "76fbaa32-7bde-4de3-9b10-6411d359c184": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.263460+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "2b6feeb1-7159-4347-a6ec-bf76a9fad656",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "2b6feeb1-7159-4347-a6ec-bf76a9fad656",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "76fbaa32-7bde-4de3-9b10-6411d359c184"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "76fbaa32-7bde-4de3-9b10-6411d359c184",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.392885+00:00"
+  },
+  "b6063da2-f664-4a75-8442-ac350b17b668": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.266213+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "e706948f-7aae-4afe-a4c2-f832f68a35be",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "e706948f-7aae-4afe-a4c2-f832f68a35be",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "b6063da2-f664-4a75-8442-ac350b17b668"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "b6063da2-f664-4a75-8442-ac350b17b668",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.386395+00:00"
+  },
+  "1bcc8765-dcc7-4e67-9e88-11a8db6d54af": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.269042+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "0c659c3b-3f54-44fb-9b8d-9652a4d97d1c",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "0c659c3b-3f54-44fb-9b8d-9652a4d97d1c",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "1bcc8765-dcc7-4e67-9e88-11a8db6d54af"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "1bcc8765-dcc7-4e67-9e88-11a8db6d54af",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.468045+00:00"
+  },
+  "49c96b79-7923-408a-874d-015b43b2052e": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.271822+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "1ade6348-61f1-4e25-8ca5-4e1869f17d01",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "1ade6348-61f1-4e25-8ca5-4e1869f17d01",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "49c96b79-7923-408a-874d-015b43b2052e"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "49c96b79-7923-408a-874d-015b43b2052e",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.515524+00:00"
+  },
+  "ffca72f9-9686-4003-98e9-0de4f9b3a83b": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.274547+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "17e474c3-0a87-47bf-95f8-6138c00d4006",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "17e474c3-0a87-47bf-95f8-6138c00d4006",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "ffca72f9-9686-4003-98e9-0de4f9b3a83b"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "ffca72f9-9686-4003-98e9-0de4f9b3a83b",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.529626+00:00"
+  },
+  "61de8525-da3d-48c3-a8d8-a6b25a9752bf": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.277459+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "201783c9-3bf0-45f6-8737-8862d7cf206f",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "201783c9-3bf0-45f6-8737-8862d7cf206f",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "61de8525-da3d-48c3-a8d8-a6b25a9752bf"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "61de8525-da3d-48c3-a8d8-a6b25a9752bf",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.569421+00:00"
+  },
+  "534aebc5-61f1-4568-9450-43fb2b970789": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.280239+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "ca77acf8-625b-408e-b700-79336252e09b",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "ca77acf8-625b-408e-b700-79336252e09b",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "534aebc5-61f1-4568-9450-43fb2b970789"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "534aebc5-61f1-4568-9450-43fb2b970789",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.548003+00:00"
+  },
+  "d2026299-b998-43bf-bbea-d69ddbaec53d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.283197+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "4d221eb9-bcc6-439e-be50-fa6592620b87",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "4d221eb9-bcc6-439e-be50-fa6592620b87",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d2026299-b998-43bf-bbea-d69ddbaec53d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d2026299-b998-43bf-bbea-d69ddbaec53d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.542478+00:00"
+  },
+  "48f08713-224c-43fc-9408-3f40f9a47ff0": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.286007+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "d53c2370-0dd6-406d-a854-e5fb1f9050e6",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "d53c2370-0dd6-406d-a854-e5fb1f9050e6",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "48f08713-224c-43fc-9408-3f40f9a47ff0"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "48f08713-224c-43fc-9408-3f40f9a47ff0",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.593766+00:00"
+  },
+  "80ded9c5-1082-4593-8315-6185c299b312": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.288816+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "ef43c66f-7c20-438d-9079-b46ac6b5d5e3",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "ef43c66f-7c20-438d-9079-b46ac6b5d5e3",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "80ded9c5-1082-4593-8315-6185c299b312"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "80ded9c5-1082-4593-8315-6185c299b312",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.536055+00:00"
+  },
+  "5bb55e4b-0663-480c-a16e-beb73113cc4d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.291620+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "c0252d00-c9cc-4a52-bef9-73f4cb7b1c9e",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "c0252d00-c9cc-4a52-bef9-73f4cb7b1c9e",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "5bb55e4b-0663-480c-a16e-beb73113cc4d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "5bb55e4b-0663-480c-a16e-beb73113cc4d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.553649+00:00"
+  },
+  "e85d4647-6c7c-47cc-a432-c092c2456371": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.294383+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "e75a7908-b2ac-4696-b6ed-7d440b9ba17f",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "e75a7908-b2ac-4696-b6ed-7d440b9ba17f",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e85d4647-6c7c-47cc-a432-c092c2456371"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e85d4647-6c7c-47cc-a432-c092c2456371",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.579291+00:00"
+  },
+  "16dd0efe-54cf-4bda-ba59-512b7c5114aa": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.297120+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "03ee70c0-2adf-44cc-ae37-efcda322b6ca",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "03ee70c0-2adf-44cc-ae37-efcda322b6ca",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "16dd0efe-54cf-4bda-ba59-512b7c5114aa"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "16dd0efe-54cf-4bda-ba59-512b7c5114aa",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.678997+00:00"
+  },
+  "80e6d79a-f642-40b6-87f1-584d41d7b552": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.299816+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "526f5636-f23d-4013-88f7-f47207759469",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "526f5636-f23d-4013-88f7-f47207759469",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "80e6d79a-f642-40b6-87f1-584d41d7b552"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "80e6d79a-f642-40b6-87f1-584d41d7b552",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.671998+00:00"
+  },
+  "946ee487-7aab-47af-95ed-9b4b3ee17870": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.302608+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "3a5b3eea-06ab-4e66-8f42-51f84bcbc750",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "3a5b3eea-06ab-4e66-8f42-51f84bcbc750",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "946ee487-7aab-47af-95ed-9b4b3ee17870"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "946ee487-7aab-47af-95ed-9b4b3ee17870",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.696997+00:00"
+  },
+  "e60157e4-b566-43aa-9e77-22fd01235600": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.305392+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "4e4d3ca2-8652-4e39-b1f3-1b971fef1c9d",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "4e4d3ca2-8652-4e39-b1f3-1b971fef1c9d",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "e60157e4-b566-43aa-9e77-22fd01235600"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "e60157e4-b566-43aa-9e77-22fd01235600",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.701919+00:00"
+  },
+  "310051fc-240b-4c99-84d4-f87c783902e6": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.308144+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "29ea6aaa-f07d-4452-b65f-056048dba2db",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "29ea6aaa-f07d-4452-b65f-056048dba2db",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "310051fc-240b-4c99-84d4-f87c783902e6"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "310051fc-240b-4c99-84d4-f87c783902e6",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.798213+00:00"
+  },
+  "c80677bb-3cfd-4a52-a34c-f86af0a51b46": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.310930+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "710bf851-fd66-48a7-8d1d-102209c60865",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "710bf851-fd66-48a7-8d1d-102209c60865",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "c80677bb-3cfd-4a52-a34c-f86af0a51b46"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "c80677bb-3cfd-4a52-a34c-f86af0a51b46",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.734098+00:00"
+  },
+  "d6e70a15-8b8c-4c7e-9857-c77422f5a43c": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.313702+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "53ee4b17-b160-4bdb-9b71-b73ea90e25b7",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "53ee4b17-b160-4bdb-9b71-b73ea90e25b7",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "d6e70a15-8b8c-4c7e-9857-c77422f5a43c"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "d6e70a15-8b8c-4c7e-9857-c77422f5a43c",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.724152+00:00"
+  },
+  "17268f74-f995-4a47-8014-f9d4cc428a2c": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.316477+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "2606cd2b-c57f-4c07-8c0d-a51e0d9751bf",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "2606cd2b-c57f-4c07-8c0d-a51e0d9751bf",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "17268f74-f995-4a47-8014-f9d4cc428a2c"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "17268f74-f995-4a47-8014-f9d4cc428a2c",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.729194+00:00"
+  },
+  "9cd878c4-9f0f-428a-9cfd-8247bb8fef42": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.319281+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "9eb83112-5bf5-4683-8fdc-9a7d697ac336",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "9eb83112-5bf5-4683-8fdc-9a7d697ac336",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "9cd878c4-9f0f-428a-9cfd-8247bb8fef42"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "9cd878c4-9f0f-428a-9cfd-8247bb8fef42",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.816327+00:00"
+  },
+  "a653bf54-7f02-4c83-ac0c-b1df6c771e9d": {
+    "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-north-1:447150580482:runtime/cn_runtime24_ec55b7f117_scale-9gxMJk2Ys6",
+    "created_at": "2026-09-22T05:25:49.322042+00:00",
+    "stop_confirmed": true,
+    "stop_response": {
+      "ResponseMetadata": {
+        "RequestId": "f099de48-5c92-4f62-b3c5-f7c0beb82010",
+        "HTTPStatusCode": 200,
+        "HTTPHeaders": {
+          "date": "Tue, 22 Sep 2026 05:25:57 GMT",
+          "content-type": "application/json",
+          "content-length": "2",
+          "connection": "keep-alive",
+          "x-amzn-requestid": "f099de48-5c92-4f62-b3c5-f7c0beb82010",
+          "x-amzn-bedrock-agentcore-runtime-session-id": "a653bf54-7f02-4c83-ac0c-b1df6c771e9d"
+        },
+        "RetryAttempts": 0
+      },
+      "runtimeSessionId": "a653bf54-7f02-4c83-ac0c-b1df6c771e9d",
+      "statusCode": 200
+    },
+    "stopped_at": "2026-09-22T05:25:57.763724+00:00"
+  }
+}

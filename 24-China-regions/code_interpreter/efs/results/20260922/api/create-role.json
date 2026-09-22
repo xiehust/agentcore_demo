@@ -1,0 +1,61 @@
+{
+  "at": "2026-09-22T02:07:13.260583+00:00",
+  "operation": "create_role",
+  "request": {
+    "RoleName": "cn_ci_efs_120715bd7f",
+    "AssumeRolePolicyDocument": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Principal\": {\"Service\": \"bedrock-agentcore.amazonaws.com\"}, \"Action\": \"sts:AssumeRole\", \"Condition\": {\"StringEquals\": {\"aws:SourceAccount\": \"447150580482\"}, \"ArnLike\": {\"aws:SourceArn\": \"arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:*\"}}}]}",
+    "Tags": [
+      {
+        "Key": "Experiment",
+        "Value": "cn_ci_efs_120715bd7f"
+      }
+    ]
+  },
+  "response": {
+    "Role": {
+      "Path": "/",
+      "RoleName": "cn_ci_efs_120715bd7f",
+      "RoleId": "AROAWQHCAMMBEYOFHLQDZ",
+      "Arn": "arn:aws-cn:iam::447150580482:role/cn_ci_efs_120715bd7f",
+      "CreateDate": "2026-09-22 02:07:14+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "bedrock-agentcore.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "StringEquals": {
+                "aws:SourceAccount": "447150580482"
+              },
+              "ArnLike": {
+                "aws:SourceArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:*"
+              }
+            }
+          }
+        ]
+      },
+      "Tags": [
+        {
+          "Key": "Experiment",
+          "Value": "cn_ci_efs_120715bd7f"
+        }
+      ]
+    },
+    "ResponseMetadata": {
+      "RequestId": "85b78a95-9db6-4d1a-a6cc-1796abe17414",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 02:07:14 GMT",
+        "x-amzn-requestid": "85b78a95-9db6-4d1a-a6cc-1796abe17414",
+        "content-type": "text/xml",
+        "content-length": "1194"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "elapsed_s": 0.9785911369835958
+}

@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-22T05:26:21.576252+00:00",
+  "operation": "start_code_interpreter_session",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "name": "cn-ci-serial-017-0cd44ff3",
+    "sessionTimeoutSeconds": 900,
+    "clientToken": "d22926dc-84a0-49a6-b84e-4f58724dde03"
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "b9be8509-b177-4a2f-8435-9f7c723773d2",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:26:22 GMT",
+        "content-type": "application/json",
+        "content-length": "140",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "b9be8509-b177-4a2f-8435-9f7c723773d2"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M33S8MNA6JWRX1MS9GHYA254",
+    "createdAt": "2026-09-22T05:26:21.602164+00:00"
+  },
+  "elapsed_s": 0.9891795429998638
+}

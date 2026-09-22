@@ -1,0 +1,118 @@
+{
+  "01M340J9F158FQJXPE6A0T79EA": {
+    "label": "ttl-async",
+    "interpreter": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "ttl": 60,
+    "created_at": "2026-09-22T07:33:57.848105+00:00",
+    "stop_acknowledged": false,
+    "cleanup_at": "2026-09-22T07:37:33.192456+00:00",
+    "cleanup_result": {
+      "at": "2026-09-22T07:37:33.133143+00:00",
+      "operation": "stop_code_interpreter_session",
+      "request": {
+        "codeInterpreterIdentifier": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+        "sessionId": "01M340J9F158FQJXPE6A0T79EA"
+      },
+      "error": {
+        "type": "ConflictException",
+        "message": "An error occurred (ConflictException) when calling the StopCodeInterpreterSession operation: Session already terminated: 01M340J9F158FQJXPE6A0T79EA",
+        "response": {
+          "Error": {
+            "Message": "Session already terminated: 01M340J9F158FQJXPE6A0T79EA",
+            "Code": "ConflictException"
+          },
+          "ResponseMetadata": {
+            "RequestId": "520983f1-323b-4f75-bbc4-af5dad0b42db",
+            "HTTPStatusCode": 409,
+            "HTTPHeaders": {
+              "date": "Tue, 22 Sep 2026 07:37:33 GMT",
+              "content-type": "application/json",
+              "content-length": "68",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "520983f1-323b-4f75-bbc4-af5dad0b42db",
+              "x-amzn-errortype": "ConflictException:http://internal.amazon.com/coral/com.amazon.bedrock.agentcore.common/"
+            },
+            "RetryAttempts": 0
+          },
+          "message": "Session already terminated: 01M340J9F158FQJXPE6A0T79EA"
+        }
+      },
+      "elapsed_s": 0.05867307699998037
+    }
+  },
+  "01M340J9F4N92ZNWK9W4GHZHN3": {
+    "label": "ttl-executeCode",
+    "interpreter": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "ttl": 60,
+    "created_at": "2026-09-22T07:33:57.848200+00:00",
+    "stop_acknowledged": false,
+    "cleanup_at": "2026-09-22T07:37:32.935066+00:00",
+    "cleanup_result": {
+      "at": "2026-09-22T07:37:32.889168+00:00",
+      "operation": "stop_code_interpreter_session",
+      "request": {
+        "codeInterpreterIdentifier": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+        "sessionId": "01M340J9F4N92ZNWK9W4GHZHN3"
+      },
+      "error": {
+        "type": "ConflictException",
+        "message": "An error occurred (ConflictException) when calling the StopCodeInterpreterSession operation: Session already terminated: 01M340J9F4N92ZNWK9W4GHZHN3",
+        "response": {
+          "Error": {
+            "Message": "Session already terminated: 01M340J9F4N92ZNWK9W4GHZHN3",
+            "Code": "ConflictException"
+          },
+          "ResponseMetadata": {
+            "RequestId": "c7735739-9642-4257-a1db-3b26ae465311",
+            "HTTPStatusCode": 409,
+            "HTTPHeaders": {
+              "date": "Tue, 22 Sep 2026 07:37:32 GMT",
+              "content-type": "application/json",
+              "content-length": "68",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "c7735739-9642-4257-a1db-3b26ae465311",
+              "x-amzn-errortype": "ConflictException:http://internal.amazon.com/coral/com.amazon.bedrock.agentcore.common/"
+            },
+            "RetryAttempts": 0
+          },
+          "message": "Session already terminated: 01M340J9F4N92ZNWK9W4GHZHN3"
+        }
+      },
+      "elapsed_s": 0.04544833999995035
+    }
+  },
+  "01M340J9FWJSGEMBXG73AFNXD5": {
+    "label": "command-deadlines",
+    "interpreter": "aws.codeinterpreter.v1",
+    "ttl": 300,
+    "created_at": "2026-09-22T07:33:57.876119+00:00",
+    "stop_acknowledged": true,
+    "cleanup_at": "2026-09-22T07:34:09.425836+00:00",
+    "cleanup_result": {
+      "at": "2026-09-22T07:34:09.319268+00:00",
+      "operation": "stop_code_interpreter_session",
+      "request": {
+        "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+        "sessionId": "01M340J9FWJSGEMBXG73AFNXD5"
+      },
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "9e6cb1e9-0d64-48a7-8c11-8fb510292c75",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 07:34:09 GMT",
+            "content-type": "application/json",
+            "content-length": "144",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "9e6cb1e9-0d64-48a7-8c11-8fb510292c75"
+          },
+          "RetryAttempts": 0
+        },
+        "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+        "sessionId": "01M340J9FWJSGEMBXG73AFNXD5",
+        "lastUpdatedAt": "2026-09-22T07:34:09.405061+00:00"
+      },
+      "elapsed_s": 0.10612934900001392
+    }
+  }
+}

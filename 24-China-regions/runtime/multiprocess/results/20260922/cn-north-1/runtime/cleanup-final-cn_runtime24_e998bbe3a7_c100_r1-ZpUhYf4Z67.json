@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-22T08:39:22.432548+00:00",
+  "deleted": true,
+  "response": {
+    "Error": {
+      "Message": "Agent with agentId: cn_runtime24_e998bbe3a7_c100_r1-ZpUhYf4Z67, accountId: 447150580482, and version: null not found!",
+      "Code": "ResourceNotFoundException"
+    },
+    "ResponseMetadata": {
+      "RequestId": "a6b0beb9-bfc6-4353-8f01-6e9a92f360e3",
+      "HTTPStatusCode": 404,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 08:39:22 GMT",
+        "content-type": "application/json",
+        "content-length": "131",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "a6b0beb9-bfc6-4353-8f01-6e9a92f360e3",
+        "x-amzn-errortype": "ResourceNotFoundException",
+        "x-amz-apigw-id": "EF69LG6GhTIEfyQ=",
+        "x-amzn-trace-id": "Root=1-6ab23eba-04984d530fadc26f175ad6ca"
+      },
+      "RetryAttempts": 0
+    },
+    "message": "Agent with agentId: cn_runtime24_e998bbe3a7_c100_r1-ZpUhYf4Z67, accountId: 447150580482, and version: null not found!"
+  }
+}

@@ -1,0 +1,583 @@
+{
+  "runtime": {
+    "7.1": {
+      "status": "PASS",
+      "metric": "p50_ms",
+      "observed_ms": 1737.4709199998506,
+      "strict_target_ms": 3000,
+      "sample_integrity": true,
+      "samples": 100
+    },
+    "7.2": {
+      "status": "PASS",
+      "metric": "p99_ms",
+      "observed_ms": 2196.43852899992,
+      "strict_target_ms": 5000,
+      "sample_integrity": true,
+      "samples": 100
+    },
+    "7.3": {
+      "status": "PASS",
+      "metric": "p99_ms",
+      "observed_ms": 199.44036600008985,
+      "strict_target_ms": 200,
+      "sample_integrity": true,
+      "samples": 500
+    },
+    "7.4": {
+      "status": "PASS",
+      "samples": 50,
+      "errors": 0,
+      "error_rate": 0.0,
+      "unique_instances": 50,
+      "client_call_peak_overlap": 50,
+      "handler_peak_overlap": 50,
+      "scope": "0 user sessions on a never-invoked runtime; platform prewarmed pool unobservable"
+    }
+  },
+  "ci_performance": {
+    "concurrency": [
+      {
+        "concurrency": 1,
+        "success": 1,
+        "failure": 0,
+        "start": {
+          "p50_s": 0.7916751630000363,
+          "p90_s": 0.7916751630000363,
+          "p95_s": 0.7916751630000363,
+          "min_s": 0.7916751630000363,
+          "max_s": 0.7916751630000363,
+          "mean_s": 0.7916751630000363
+        },
+        "first_execute": {
+          "p50_s": 0.12095640600000479,
+          "p90_s": 0.12095640600000479,
+          "p95_s": 0.12095640600000479,
+          "min_s": 0.12095640600000479,
+          "max_s": 0.12095640600000479,
+          "mean_s": 0.12095640600000479
+        },
+        "end_to_end": {
+          "p50_s": 0.914184621000004,
+          "p90_s": 0.914184621000004,
+          "p95_s": 0.914184621000004,
+          "min_s": 0.914184621000004,
+          "max_s": 0.914184621000004,
+          "mean_s": 0.914184621000004
+        },
+        "max_launch_skew_s": 8.104899984573422e-05,
+        "sessions_held_until_batch_complete": 1
+      },
+      {
+        "concurrency": 10,
+        "success": 10,
+        "failure": 0,
+        "start": {
+          "p50_s": 0.9362818184998787,
+          "p90_s": 1.1560710163999375,
+          "p95_s": 1.2095551067000316,
+          "min_s": 0.8397502179998355,
+          "max_s": 1.2630391970001256,
+          "mean_s": 0.9714907934999701
+        },
+        "first_execute": {
+          "p50_s": 0.13469010599999365,
+          "p90_s": 0.16699625319993175,
+          "p95_s": 0.17143439709996075,
+          "min_s": 0.1128984730000866,
+          "max_s": 0.17587254099998972,
+          "mean_s": 0.14134899029995723
+        },
+        "end_to_end": {
+          "p50_s": 1.096876489000124,
+          "p90_s": 1.2754752357000598,
+          "p95_s": 1.333578487350019,
+          "min_s": 1.0025926170001185,
+          "max_s": 1.3916817389999778,
+          "mean_s": 1.1276499629000454
+        },
+        "max_launch_skew_s": 0.0007545770001797791,
+        "sessions_held_until_batch_complete": 10
+      },
+      {
+        "concurrency": 50,
+        "success": 50,
+        "failure": 0,
+        "start": {
+          "p50_s": 0.8362917274999973,
+          "p90_s": 0.9564318621000212,
+          "p95_s": 1.2780161594499873,
+          "min_s": 0.6935055409999222,
+          "max_s": 1.9274028410000028,
+          "mean_s": 0.8804340041000114
+        },
+        "first_execute": {
+          "p50_s": 0.1351279439999189,
+          "p90_s": 0.15707052180000575,
+          "p95_s": 0.16505001264994232,
+          "min_s": 0.1039140430000316,
+          "max_s": 0.17771478000008756,
+          "mean_s": 0.1349615304000008
+        },
+        "end_to_end": {
+          "p50_s": 1.0986400209999374,
+          "p90_s": 1.301818006900021,
+          "p95_s": 1.5550616967499764,
+          "min_s": 0.86241247199996,
+          "max_s": 2.0783404049998353,
+          "mean_s": 1.136387012959999
+        },
+        "max_launch_skew_s": 0.004416639000055511,
+        "sessions_held_until_batch_complete": 50
+      }
+    ],
+    "serial": {
+      "at": "2026-09-22T05:27:54.063148+00:00",
+      "samples": 100,
+      "success": 100,
+      "failure": 0,
+      "unique_sessions": 100,
+      "start": {
+        "n": 100,
+        "min_ms": 645.0502329998926,
+        "max_ms": 1353.3879030001117,
+        "mean_ms": 831.3991709400057,
+        "p50_ms": 815.6300269999974,
+        "p90_ms": 866.0295949998726,
+        "p95_ms": 1021.3920520000102,
+        "p99_ms": 1350.2896580000652
+      },
+      "first_execute": {
+        "n": 100,
+        "min_ms": 107.36280600008286,
+        "max_ms": 185.65229400019234,
+        "mean_ms": 153.28620490000958,
+        "p50_ms": 152.9231270001219,
+        "p90_ms": 168.49833099990974,
+        "p95_ms": 174.2726259999472,
+        "p99_ms": 183.93619199991917
+      },
+      "end_to_end": {
+        "n": 100,
+        "min_ms": 814.762655000095,
+        "max_ms": 1533.307652999838,
+        "mean_ms": 990.7119268799966,
+        "p50_ms": 968.5547869999027,
+        "p90_ms": 1047.277591000011,
+        "p95_ms": 1191.7012080000404,
+        "p99_ms": 1493.4527980001349
+      },
+      "percentile_method": "nearest-rank"
+    }
+  },
+  "ci_functional": {
+    "2.1": {
+      "status": "PASS",
+      "priority": "P0",
+      "at": "2026-09-22T05:27:55.846354+00:00",
+      "details": {
+        "arithmetic": 36,
+        "factorial": 3628800,
+        "sqrt": 9.0,
+        "mean": 4,
+        "date": "2026-09-30",
+        "json_roundtrip": {
+          "\u4e2d\u6587": [
+            1,
+            2
+          ]
+        },
+        "sha256": "69d4655afc945ce117bd1522d6674abc3f85cb57e57ea5ce1be1486636dab8eb"
+      }
+    },
+    "2.2": {
+      "status": "PASS",
+      "priority": "P0",
+      "at": "2026-09-22T05:27:56.183651+00:00",
+      "details": {
+        "host_file_existed_locally": true,
+        "host_marker_removed": true,
+        "host_probe": {
+          "host_marker": {
+            "accessible": false,
+            "error": "FileNotFoundError",
+            "errno": 2
+          },
+          "pid1_root_marker": {
+            "accessible": false,
+            "error": "PermissionError",
+            "errno": 13
+          },
+          "cwd": "/opt/amazon/genesis1p-tools/var",
+          "uid": 991
+        },
+        "own": {
+          "own_file_readable": true
+        },
+        "peer": {
+          "peer_file_exists": false
+        },
+        "scope": "Client host marker and cross-session files; no provider-host escape audit."
+      }
+    },
+    "2.3": {
+      "status": "PASS",
+      "priority": "P0",
+      "at": "2026-09-22T05:27:56.436894+00:00",
+      "details": {
+        "success": {
+          "stdout": "CN_STDOUT_\u4e2d\u6587_123",
+          "stderr": "CN_STDERR_\u9519\u8bef_456",
+          "isError": false,
+          "results": [
+            {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "CN_STDOUT_\u4e2d\u6587_123"
+                },
+                {
+                  "type": "text",
+                  "text": "CN_STDERR_\u9519\u8bef_456"
+                }
+              ],
+              "structuredContent": {
+                "stdout": "CN_STDOUT_\u4e2d\u6587_123",
+                "stderr": "CN_STDERR_\u9519\u8bef_456",
+                "exitCode": 0,
+                "executionTime": 0.035233259201049805
+              },
+              "isError": false
+            }
+          ],
+          "exceptions": []
+        },
+        "controlled_exception": {
+          "stdout": "BEFORE_CONTROLLED_ERROR",
+          "stderr": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION",
+          "isError": true,
+          "results": [
+            {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "BEFORE_CONTROLLED_ERROR"
+                },
+                {
+                  "type": "text",
+                  "text": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION"
+                }
+              ],
+              "structuredContent": {
+                "stdout": "BEFORE_CONTROLLED_ERROR",
+                "stderr": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION",
+                "exitCode": 1,
+                "executionTime": 0.04113578796386719
+              },
+              "isError": true
+            }
+          ],
+          "exceptions": []
+        },
+        "integration_scope": "Python Agent-side SDK tool adapter; no LLM/framework invocation"
+      }
+    },
+    "2.4": {
+      "status": "PASS",
+      "priority": "P1",
+      "at": "2026-09-22T05:27:58.485059+00:00",
+      "details": {
+        "versions": {
+          "numpy": "1.26.4",
+          "pandas": "2.3.1",
+          "matplotlib": "3.9.0"
+        },
+        "matrix_square": [
+          [
+            7,
+            10
+          ],
+          [
+            15,
+            22
+          ]
+        ],
+        "grouped": {
+          "a": 30,
+          "b": 40
+        },
+        "png_bytes": 7945,
+        "png_signature_hex": "89504e470d0a1a0a"
+      }
+    },
+    "2.5": {
+      "status": "PASS",
+      "priority": "P1",
+      "at": "2026-09-22T05:27:58.733458+00:00",
+      "details": {
+        "input_csv_sha256": "ec2cd9e449273ac7aced426b11a7a5dd6d889c124dcbbd429cb70d71051981cd",
+        "input_bin_sha256": "c8f5d0341d54d951a71b136e6e2afcb14d11ed8489a7ae126a8fee0df6ecf193",
+        "downloaded": {
+          "output.csv": {
+            "bytes": 49,
+            "sha256": "54132cc92e0ccb1f111413923a0890f3bab35167678e04ae5870667a2e7abab8"
+          },
+          "output.bin": {
+            "bytes": 4096,
+            "sha256": "191016cc9f08e7f1187290730ae5ea234aa5e4073168f28b478100dee65988da"
+          },
+          "analysis.png": {
+            "bytes": 7945,
+            "sha256": "56a44369098d02c9e4720a4820da89f9b5cfa31575722e729788ba6eb66719f6"
+          }
+        }
+      }
+    },
+    "2.6": {
+      "status": "PARTIAL",
+      "priority": "P0",
+      "at": "2026-09-22T05:31:19.799558+00:00",
+      "details": {
+        "native_observation_seconds": 180,
+        "native_elapsed_s": 180.17805420800005,
+        "native_output": {
+          "stdout": "NATIVE_LONG_TASK_COMPLETED",
+          "stderr": "",
+          "isError": false,
+          "results": [
+            {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "NATIVE_LONG_TASK_COMPLETED"
+                }
+              ],
+              "structuredContent": {
+                "stdout": "NATIVE_LONG_TASK_COMPLETED",
+                "stderr": "",
+                "exitCode": 0,
+                "executionTime": 180.08855557441711
+              },
+              "isError": false
+            }
+          ],
+          "exceptions": []
+        },
+        "native_checks": [
+          {
+            "heartbeat": "179",
+            "done": true,
+            "recovery": 42
+          },
+          {
+            "heartbeat": "179",
+            "done": true,
+            "recovery": 42
+          }
+        ],
+        "native_timeout_proven": false,
+        "caller_deadline_seconds": 5,
+        "cancel_checks": [
+          {
+            "heartbeat": "4",
+            "done": false,
+            "recovery": 42
+          },
+          {
+            "heartbeat": "4",
+            "done": false,
+            "recovery": 42
+          }
+        ],
+        "cancel_termination_proven": true,
+        "task_id": "9139f48f-e068-4f0e-bec0-2fe9beacd401",
+        "before": {
+          "stdout": "",
+          "stderr": "",
+          "isError": false,
+          "results": [
+            {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Task is working"
+                }
+              ],
+              "structuredContent": {
+                "taskStatus": "working",
+                "stdout": "",
+                "stderr": ""
+              },
+              "isError": false
+            }
+          ],
+          "exceptions": []
+        },
+        "stop": {
+          "stdout": "",
+          "stderr": "",
+          "isError": false,
+          "results": [
+            {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Successfully canceled a command execution task"
+                }
+              ],
+              "isError": false
+            }
+          ],
+          "exceptions": []
+        },
+        "after": {
+          "stdout": "",
+          "stderr": "",
+          "isError": false,
+          "results": [
+            {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Task is canceled"
+                }
+              ],
+              "structuredContent": {
+                "taskStatus": "canceled",
+                "stdout": "",
+                "stderr": ""
+              },
+              "isError": false
+            }
+          ],
+          "exceptions": []
+        },
+        "scope": "No per-execution timeout argument in installed service model. Caller deadline plus stopTask is tested separately from native automatic timeout."
+      }
+    },
+    "2.9": {
+      "status": "PASS",
+      "priority": "P1",
+      "at": "2026-09-22T05:27:59.146142+00:00",
+      "details": {
+        "initial": {
+          "counter": 40,
+          "history": [
+            "first"
+          ]
+        },
+        "updated": {
+          "counter": 42,
+          "history": [
+            "first",
+            "second"
+          ]
+        },
+        "final": {
+          "counter": 42,
+          "history": [
+            "first",
+            "second"
+          ]
+        },
+        "peer": {
+          "exists": false
+        }
+      }
+    }
+  },
+  "ci_dependencies": {
+    "default": {
+      "status": "FAIL",
+      "priority": "P0",
+      "at": "2026-09-22T05:28:00.208639+00:00",
+      "details": {
+        "error": {
+          "type": "AssertionError",
+          "message": "{'index_url': 'https://pypi.tuna.tsinghua.edu.cn/simple', 'elapsed_s': 0.6328272970001763, 'output': {'stdout': '', 'stderr': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m', 'isError': True, 'results': [{'content': [{'type': 'text', 'text': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m'}], 'structuredContent': {'stdout': '', 'stderr': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m', 'exitCode': 1, 'executionTime': 0.539013147354126}, 'isError': True}], 'exceptions': []}, 'import': None}",
+          "response": null
+        },
+        "traceback": "Traceback (most recent call last):\n  File \"/opt/beijing-agentcore/verify_code_interpreter.py\", line 193, in check\n    details = fn()\n              ^^^^\n  File \"/opt/beijing-agentcore/verify_code_interpreter.py\", line 231, in <lambda>\n    self.check(\"2.10\", lambda: self.packages(a))\n                               ^^^^^^^^^^^^^^^^\n  File \"/opt/beijing-agentcore/verify_code_interpreter.py\", line 442, in packages\n    assert not mirror_result[\"output\"][\"isError\"], mirror_result\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'index_url': 'https://pypi.tuna.tsinghua.edu.cn/simple', 'elapsed_s': 0.6328272970001763, 'output': {'stdout': '', 'stderr': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m', 'isError': True, 'results': [{'content': [{'type': 'text', 'text': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m'}], 'structuredContent': {'stdout': '', 'stderr': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m', 'exitCode': 1, 'executionTime': 0.539013147354126}, 'isError': True}], 'exceptions': []}, 'import': None}\n"
+      }
+    },
+    "public": {
+      "status": "PASS",
+      "priority": "P0",
+      "at": "2026-09-22T05:31:25.823100+00:00",
+      "details": {
+        "package": "pytimeparse==1.1.8",
+        "before": {
+          "package_preinstalled": false,
+          "python_executable": "/opt/amazon/genesis1p-tools/venv/bin/python"
+        },
+        "sources": {
+          "china_mirror": {
+            "index_url": "https://pypi.tuna.tsinghua.edu.cn/simple",
+            "elapsed_s": 1.2168141500001184,
+            "output": {
+              "stdout": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\nCollecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n",
+              "stderr": "",
+              "isError": false,
+              "results": [
+                {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\nCollecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n"
+                    }
+                  ],
+                  "structuredContent": {
+                    "stdout": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\nCollecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n",
+                    "stderr": "",
+                    "exitCode": 0,
+                    "executionTime": 1.110095739364624
+                  },
+                  "isError": false
+                }
+              ],
+              "exceptions": []
+            },
+            "import": {
+              "seconds": 4800,
+              "module_file": "/tmp/ci-pip-china_mirror-7d89b7c4fb104e2791b86bf855f26452/pytimeparse/__init__.py",
+              "target_exists": true
+            }
+          },
+          "default": {
+            "index_url": null,
+            "elapsed_s": 1.4712357500000053,
+            "output": {
+              "stdout": "Collecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl.metadata (3.4 kB)\r\nDownloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n",
+              "stderr": "",
+              "isError": false,
+              "results": [
+                {
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Collecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl.metadata (3.4 kB)\r\nDownloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n"
+                    }
+                  ],
+                  "structuredContent": {
+                    "stdout": "Collecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl.metadata (3.4 kB)\r\nDownloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n",
+                    "stderr": "",
+                    "exitCode": 0,
+                    "executionTime": 1.3767168521881104
+                  },
+                  "isError": false
+                }
+              ],
+              "exceptions": []
+            },
+            "import": {
+              "seconds": 4800,
+              "module_file": "/tmp/ci-pip-default-f9debdacb7f44ab2810e82866f65deff/pytimeparse/__init__.py",
+              "target_exists": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "efs": "PASS"
+}

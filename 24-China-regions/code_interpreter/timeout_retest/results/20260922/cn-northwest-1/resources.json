@@ -1,0 +1,60 @@
+{
+  "name": "ci_timeout_7e9b807a6e",
+  "region": "cn-northwest-1",
+  "created_at": "2026-09-22T07:29:04.921023+00:00",
+  "instance_id": "i-0a685957c9b9355d7",
+  "role_name": "cn-ec2-bench-8bbcd08d59",
+  "python": "/opt/cn-agentcore-benchmark/venv/bin/python",
+  "bucket_intent": "ci-timeout-7e9b807a6e-447150580482",
+  "bucket": "ci-timeout-7e9b807a6e-447150580482",
+  "interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "12f19cc3-f492-4f5b-b5cc-432d12bc491d",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:29:08 GMT",
+        "content-type": "application/json",
+        "content-length": "255",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "12f19cc3-f492-4f5b-b5cc-432d12bc491d",
+        "x-amz-apigw-id": "EFwqzH_75PgEmOw=",
+        "x-amzn-trace-id": "Root=1-6ab22e44-2c2156151f5c2caa4ffd228e"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "ci_timeout_7e9b807a6e-4txxj1i8C9",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:code-interpreter-custom/ci_timeout_7e9b807a6e-4txxj1i8C9",
+    "createdAt": "2026-09-22 07:29:08.750928+00:00",
+    "status": "READY"
+  },
+  "ready_interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "20183fd7-f1c9-4b86-bd3f-c4a373c7c220",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:29:25 GMT",
+        "content-type": "application/json",
+        "content-length": "383",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "20183fd7-f1c9-4b86-bd3f-c4a373c7c220",
+        "x-amz-apigw-id": "EFwtZH-h5PgEvxQ=",
+        "x-amzn-trace-id": "Root=1-6ab22e55-72a098e73baa37ce092c0292"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "ci_timeout_7e9b807a6e-4txxj1i8C9",
+    "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:code-interpreter-custom/ci_timeout_7e9b807a6e-4txxj1i8C9",
+    "name": "ci_timeout_7e9b807a6e",
+    "networkConfiguration": {
+      "networkMode": "PUBLIC"
+    },
+    "status": "READY",
+    "createdAt": "2026-09-22 07:29:08.750928+00:00",
+    "lastUpdatedAt": "2026-09-22 07:29:08.750928+00:00"
+  },
+  "command_id": "972eeadb-2d6a-4a92-aade-bd4a23d210c6",
+  "remote_directory": "/opt/ci_timeout_7e9b807a6e",
+  "command_retry_id": "ed9a29fe-5da6-432f-88bb-4bd989a10ba1",
+  "collected_at": "2026-09-22T07:49:47.366479+00:00",
+  "command_retry_collected_at": "2026-09-22T07:49:48.282573+00:00"
+}

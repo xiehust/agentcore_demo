@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-22T05:27:55.714579+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M33SBEZNH9MJKTFZHA6DC6MX",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport json, math, datetime, statistics, hashlib\nprint(json.dumps({\n    \"arithmetic\": (7 + 5) * 3, \"factorial\": math.factorial(10),\n    \"sqrt\": math.sqrt(81), \"mean\": statistics.mean([2, 4, 6]),\n    \"date\": (datetime.date(2026, 9, 21) + datetime.timedelta(days=9)).isoformat(),\n    \"json_roundtrip\": json.loads(json.dumps({\"中文\": [1, 2]})),\n    \"sha256\": hashlib.sha256(b\"agentcore-cn\").hexdigest()\n}, ensure_ascii=False))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "87e293a0-1c93-493d-ae59-5df608778a2d",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:27:55 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "87e293a0-1c93-493d-ae59-5df608778a2d",
+        "x-amzn-code-interpreter-session-id": "01M33SBEZNH9MJKTFZHA6DC6MX"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33SBEZNH9MJKTFZHA6DC6MX"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"arithmetic\": 36, \"factorial\": 3628800, \"sqrt\": 9.0, \"mean\": 4, \"date\": \"2026-09-30\", \"json_roundtrip\": {\"中文\": [1, 2]}, \"sha256\": \"69d4655afc945ce117bd1522d6674abc3f85cb57e57ea5ce1be1486636dab8eb\"}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"arithmetic\": 36, \"factorial\": 3628800, \"sqrt\": 9.0, \"mean\": 4, \"date\": \"2026-09-30\", \"json_roundtrip\": {\"中文\": [1, 2]}, \"sha256\": \"69d4655afc945ce117bd1522d6674abc3f85cb57e57ea5ce1be1486636dab8eb\"}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.05514836311340332
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.1312176480000744
+}

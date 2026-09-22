@@ -1,0 +1,150 @@
+{
+  "at": "2026-09-22T00:38:45.272922+00:00",
+  "actions": [
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_2463cd7d3a_baseline-8pCA6T2vdU",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "0d0064eb-d6be-4653-afe5-291cb2b2df47",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 00:38:23 GMT",
+            "content-type": "application/json",
+            "content-length": "84",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "0d0064eb-d6be-4653-afe5-291cb2b2df47",
+            "x-amz-apigw-id": "EE0f4Frn5PgEABw=",
+            "x-amzn-trace-id": "Root=1-6ab1cdfe-0fef19f614ea482d3e39f5a7"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_2463cd7d3a_baseline-8pCA6T2vdU"
+      }
+    },
+    {
+      "action": "delete-runtime",
+      "resource": "cn_runtime24_2463cd7d3a_scale-53yvj3534q",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "8d656692-9cc8-4799-bbae-f753c2a2d3a1",
+          "HTTPStatusCode": 202,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 00:38:23 GMT",
+            "content-type": "application/json",
+            "content-length": "81",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "8d656692-9cc8-4799-bbae-f753c2a2d3a1",
+            "x-amz-apigw-id": "EE0f_Ga3ZPgEs9w=",
+            "x-amzn-trace-id": "Root=1-6ab1cdff-3663616011a0168b6befe650"
+          },
+          "RetryAttempts": 0
+        },
+        "status": "DELETING",
+        "agentRuntimeId": "cn_runtime24_2463cd7d3a_scale-53yvj3534q"
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_2463cd7d3a_baseline-8pCA6T2vdU-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "0cf40377-c69d-42e2-93f2-85ba0930c9ba",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "0cf40377-c69d-42e2-93f2-85ba0930c9ba",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 00:38:42 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-test-log-group",
+      "resource": "/aws/bedrock-agentcore/runtimes/cn_runtime24_2463cd7d3a_scale-53yvj3534q-DEFAULT",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "6ee1824a-a9a6-416d-ba39-c9f45fc5a1d6",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "6ee1824a-a9a6-416d-ba39-c9f45fc5a1d6",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "0",
+            "date": "Tue, 22 Sep 2026 00:38:42 GMT"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-repository",
+      "resource": "cn-runtime24-2463cd7d3a",
+      "status": "OK",
+      "response": {
+        "repository": {
+          "repositoryArn": "arn:aws-cn:ecr:cn-northwest-1:447150580482:repository/cn-runtime24-2463cd7d3a",
+          "registryId": "447150580482",
+          "repositoryName": "cn-runtime24-2463cd7d3a",
+          "repositoryUri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-2463cd7d3a",
+          "createdAt": "2026-09-22 00:22:46.179000+00:00",
+          "imageTagMutability": "IMMUTABLE"
+        },
+        "ResponseMetadata": {
+          "RequestId": "d78e9410-3494-4b38-b69b-1a7a10499459",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "d78e9410-3494-4b38-b69b-1a7a10499459",
+            "date": "Tue, 22 Sep 2026 00:38:43 GMT",
+            "content-type": "application/x-amz-json-1.1",
+            "content-length": "340",
+            "connection": "keep-alive"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-inline-policy",
+      "resource": "cn-runtime24-2463cd7d3a-runtime",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "9db71073-967b-4978-a351-123d5307677a",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 00:38:44 GMT",
+            "x-amzn-requestid": "9db71073-967b-4978-a351-123d5307677a",
+            "content-type": "text/xml",
+            "content-length": "212"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    },
+    {
+      "action": "delete-role",
+      "resource": "cn-runtime24-2463cd7d3a-runtime",
+      "status": "OK",
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "de32d71a-dc0f-4bec-8cea-79b195a08512",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 00:38:45 GMT",
+            "x-amzn-requestid": "de32d71a-dc0f-4bec-8cea-79b195a08512",
+            "content-type": "text/xml",
+            "content-length": "200"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    }
+  ]
+}

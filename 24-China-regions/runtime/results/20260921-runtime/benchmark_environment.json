@@ -1,0 +1,47 @@
+{
+  "at": "2026-09-21T16:28:56.015137+00:00",
+  "identity": {
+    "UserId": "AROAWQHCAMMBMPBBP4WN7:BedrockAgentCore-01M32CRZBCTP2B1ANJ3WDY30SJ",
+    "Account": "447150580482",
+    "Arn": "arn:aws-cn:sts::447150580482:assumed-role/cn-runtime24-01e89f4038-load/BedrockAgentCore-01M32CRZBCTP2B1ANJ3WDY30SJ",
+    "ResponseMetadata": {
+      "RequestId": "b0ca221c-2119-4c85-9729-1e3124c3c0e4",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "b0ca221c-2119-4c85-9729-1e3124c3c0e4",
+        "x-amz-sts-extended-request-id": "MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTAwMDgxMzYwMDM6UjpoRHRaNW9QQQ==",
+        "content-type": "text/xml",
+        "content-length": "524",
+        "date": "Mon, 21 Sep 2026 16:28:56 GMT"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "region": "cn-northwest-1",
+  "endpoint": "https://bedrock-agentcore.cn-northwest-1.amazonaws.com.cn",
+  "python": "3.12.13 (main, Jun 18 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]",
+  "platform": "Linux-6.1.161-18.298.amzn2023.aarch64-aarch64-with-glibc2.34",
+  "boto3": "1.40.30",
+  "botocore": "1.40.76",
+  "settings": {
+    "region": "cn-northwest-1",
+    "account": "447150580482",
+    "runtimes": {
+      "baseline": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_baseline-LcigTt2oBB",
+      "scale": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_01e89f4038_scale-1q07nG7z5e"
+    },
+    "cold_samples": 100,
+    "warm_samples": 500,
+    "concurrency": 50,
+    "load_role_name": "cn-runtime24-01e89f4038-load",
+    "load_client": {
+      "kind": "CodeInterpreter",
+      "region": "cn-northwest-1",
+      "identifier": "cn_runtime24_01e89f4038_load-Ee16s0fFi2",
+      "session_id": "01M32CRZBCTP2B1ANJ3WDY30SJ"
+    }
+  },
+  "total_max_attempts": 1,
+  "read_timeout_s": 120,
+  "measurement": "SDK invoke call start through full response body read; nearest-rank percentiles"
+}

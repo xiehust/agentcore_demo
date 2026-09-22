@@ -1,0 +1,26 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "c66823d4-7ec9-4058-bc88-97487f34670b",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Mon, 21 Sep 2026 16:26:37 GMT",
+      "content-type": "application/json",
+      "content-length": "488",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "c66823d4-7ec9-4058-bc88-97487f34670b",
+      "x-amz-apigw-id": "EDsdnHnm5PgEF-w=",
+      "x-amzn-trace-id": "Root=1-6ab15abd-4152b8572c5c243d4e362d13"
+    },
+    "RetryAttempts": 0
+  },
+  "codeInterpreterId": "cn_runtime24_01e89f4038_load-Ee16s0fFi2",
+  "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:code-interpreter-custom/cn_runtime24_01e89f4038_load-Ee16s0fFi2",
+  "name": "cn_runtime24_01e89f4038_load",
+  "executionRoleArn": "arn:aws-cn:iam::447150580482:role/cn-runtime24-01e89f4038-load",
+  "networkConfiguration": {
+    "networkMode": "PUBLIC"
+  },
+  "status": "READY",
+  "createdAt": "2026-09-21 16:26:36.801867+00:00",
+  "lastUpdatedAt": "2026-09-21 16:26:36.801867+00:00"
+}

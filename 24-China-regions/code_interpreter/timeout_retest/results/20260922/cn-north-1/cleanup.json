@@ -1,0 +1,69 @@
+{
+  "delete_interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "f045028d-ba8c-4f5b-8bee-3662bd63deba",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:53:05 GMT",
+        "content-type": "application/json",
+        "content-length": "124",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "f045028d-ba8c-4f5b-8bee-3662bd63deba",
+        "x-amz-apigw-id": "EF0LWG2NBTIEUHg=",
+        "x-amzn-trace-id": "Root=1-6ab233e1-60d6e8c13ccc8f41589d4ec6"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "status": "DELETED",
+    "lastUpdatedAt": "2026-09-22 07:53:05.856510+00:00"
+  },
+  "stop_ec2": {
+    "StoppingInstances": [
+      {
+        "InstanceId": "i-0ab621bda76e7f0af",
+        "CurrentState": {
+          "Code": 64,
+          "Name": "stopping"
+        },
+        "PreviousState": {
+          "Code": 16,
+          "Name": "running"
+        }
+      }
+    ],
+    "ResponseMetadata": {
+      "RequestId": "d884c801-655c-463f-9b02-0c62e0fe9729",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "d884c801-655c-463f-9b02-0c62e0fe9729",
+        "cache-control": "no-cache, no-store",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-type": "text/xml;charset=UTF-8",
+        "content-length": "411",
+        "date": "Tue, 22 Sep 2026 07:53:07 GMT",
+        "server": "AmazonEC2"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "instance": {
+    "id": "i-0ab621bda76e7f0af",
+    "state": "stopped"
+  },
+  "delete_bucket": {
+    "ResponseMetadata": {
+      "RequestId": "QPEFP3EZ1B24276N",
+      "HostId": "hCT0y3oQwl/vegOHMJNhNrwpw1AQn7xfdqBnG6xO0762KMq1F0u7cwTCzOqAGi+DAYKbs0SWQGw=",
+      "HTTPStatusCode": 204,
+      "HTTPHeaders": {
+        "x-amz-id-2": "hCT0y3oQwl/vegOHMJNhNrwpw1AQn7xfdqBnG6xO0762KMq1F0u7cwTCzOqAGi+DAYKbs0SWQGw=",
+        "x-amz-request-id": "QPEFP3EZ1B24276N",
+        "date": "Tue, 22 Sep 2026 07:53:29 GMT",
+        "server": "AmazonS3"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "at": "2026-09-22T07:53:28.554888+00:00"
+}

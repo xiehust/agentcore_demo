@@ -1,0 +1,30 @@
+[
+  {
+    "NetworkInterfaceId": "eni-0a65dc87b56b34c0e",
+    "Status": "in-use",
+    "Description": "EFS mount target for fs-0951a92f04a3e9c3a (fsmt-06b0208466374b1c0)",
+    "InterfaceType": "efs",
+    "RequesterManaged": true,
+    "SubnetId": "subnet-01c597ab731966fe0",
+    "Groups": [
+      {
+        "GroupId": "sg-031d760d30d5e5365",
+        "GroupName": "cn_ci_efs_120715bd7f-efs"
+      }
+    ]
+  },
+  {
+    "NetworkInterfaceId": "eni-0951f5e08b0da0589",
+    "Status": "in-use",
+    "Description": "",
+    "InterfaceType": "agentic_ai",
+    "RequesterManaged": false,
+    "SubnetId": "subnet-01c597ab731966fe0",
+    "Groups": [
+      {
+        "GroupId": "sg-049391a8216deb6b8",
+        "GroupName": "cn_ci_efs_120715bd7f-client"
+      }
+    ]
+  }
+]

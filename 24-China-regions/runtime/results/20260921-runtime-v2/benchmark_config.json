@@ -1,0 +1,18 @@
+{
+  "region": "cn-northwest-1",
+  "account": "447150580482",
+  "runtimes": {
+    "baseline": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_9e54b7531d_baseline-Of9YWeDVCC",
+    "scale": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_9e54b7531d_scale-dKJ1ObA5TB"
+  },
+  "cold_samples": 100,
+  "warm_samples": 500,
+  "concurrency": 50,
+  "load_role_name": "cn-runtime24-9e54b7531d-load",
+  "load_client": {
+    "kind": "CodeInterpreter",
+    "region": "cn-northwest-1",
+    "identifier": "cn_runtime24_9e54b7531d_load-MhT5myrINh",
+    "session_id": "01M32DCBNZ5QT588QCXXPAE0RJ"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "at": "2026-09-22T02:05:48.258630+00:00",
+  "operation": "create_mount_target",
+  "request": {
+    "FileSystemId": "fs-0951a92f04a3e9c3a",
+    "SubnetId": "subnet-01c597ab731966fe0",
+    "SecurityGroups": [
+      "sg-031d760d30d5e5365"
+    ]
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "066091f7-d021-44ee-8182-3765ca559fef",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 02:05:49 GMT",
+        "content-type": "application/json",
+        "content-length": "368",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "066091f7-d021-44ee-8182-3765ca559fef"
+      },
+      "RetryAttempts": 0
+    },
+    "OwnerId": "447150580482",
+    "MountTargetId": "fsmt-06b0208466374b1c0",
+    "FileSystemId": "fs-0951a92f04a3e9c3a",
+    "SubnetId": "subnet-01c597ab731966fe0",
+    "LifeCycleState": "creating",
+    "IpAddress": "172.31.54.17",
+    "NetworkInterfaceId": "eni-0a65dc87b56b34c0e",
+    "AvailabilityZoneId": "cnnw1-az1",
+    "AvailabilityZoneName": "cn-northwest-1a",
+    "VpcId": "vpc-09a5df1bff56a3357"
+  },
+  "elapsed_s": 0.8583197250263765
+}

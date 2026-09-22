@@ -1,0 +1,82 @@
+{
+  "commands": [
+    "set -eu",
+    "cd /opt/china-multiprocess",
+    "test ! -e isolated-results/run.json",
+    "aws s3 cp s3://cn-ec2-bench-f5060bb011-447150580482/input/isolated.tar.gz benchmark.tar.gz --region cn-north-1",
+    "tar -xzf benchmark.tar.gz",
+    "export AWS_REGION=cn-north-1 AWS_DEFAULT_REGION=cn-north-1",
+    "venv/bin/python -m unittest -v test_client > client_checks.log 2>&1",
+    "venv/bin/python -u run.py --config isolated-config.json --output isolated-results --key-prefix isolated --interval-seconds 180 > isolated.log 2>&1"
+  ],
+  "response": {
+    "Command": {
+      "CommandId": "2d59b23b-360b-4c56-9f7a-1b21c946edf3",
+      "DocumentName": "AWS-RunShellScript",
+      "DocumentVersion": "$DEFAULT",
+      "Comment": "China same-region benchmark: isolated",
+      "ExpiresAfter": "2026-09-22 09:28:08.232000+00:00",
+      "Parameters": {
+        "commands": [
+          "set -eu",
+          "cd /opt/china-multiprocess",
+          "test ! -e isolated-results/run.json",
+          "aws s3 cp s3://cn-ec2-bench-f5060bb011-447150580482/input/isolated.tar.gz benchmark.tar.gz --region cn-north-1",
+          "tar -xzf benchmark.tar.gz",
+          "export AWS_REGION=cn-north-1 AWS_DEFAULT_REGION=cn-north-1",
+          "venv/bin/python -m unittest -v test_client > client_checks.log 2>&1",
+          "venv/bin/python -u run.py --config isolated-config.json --output isolated-results --key-prefix isolated --interval-seconds 180 > isolated.log 2>&1"
+        ],
+        "executionTimeout": [
+          "3600"
+        ]
+      },
+      "InstanceIds": [
+        "i-056c2c62a8508d683"
+      ],
+      "Targets": [],
+      "RequestedDateTime": "2026-09-22 08:27:08.232000+00:00",
+      "Status": "Pending",
+      "StatusDetails": "Pending",
+      "OutputS3Region": "cn-north-1",
+      "OutputS3BucketName": "",
+      "OutputS3KeyPrefix": "",
+      "MaxConcurrency": "50",
+      "MaxErrors": "0",
+      "TargetCount": 1,
+      "CompletedCount": 0,
+      "ErrorCount": 0,
+      "DeliveryTimedOutCount": 0,
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "",
+        "CloudWatchOutputEnabled": false
+      },
+      "TimeoutSeconds": 60,
+      "AlarmConfiguration": {
+        "IgnorePollAlarmFailure": false,
+        "Alarms": []
+      },
+      "TriggeredAlarms": []
+    },
+    "ResponseMetadata": {
+      "RequestId": "b4087f7d-100b-4385-9840-34ad4a55a79e",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Tue, 22 Sep 2026 08:27:08 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "1512",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "b4087f7d-100b-4385-9840-34ad4a55a79e",
+        "cache-control": "no-store"
+      },
+      "RetryAttempts": 0
+    }
+  }
+}

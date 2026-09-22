@@ -1,0 +1,29 @@
+{
+  "at": "2026-09-22T07:37:07.683537+00:00",
+  "operation": "get_code_interpreter_session",
+  "request": {
+    "codeInterpreterIdentifier": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "sessionId": "01M340J9F158FQJXPE6A0T79EA"
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "b257be5d-19d0-4415-96c6-bc133956ea11",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:37:07 GMT",
+        "content-type": "application/json",
+        "content-length": "285",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "b257be5d-19d0-4415-96c6-bc133956ea11"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterIdentifier": "ci_timeout_fd4d2ba0f5-3KbFxZkK3T",
+    "sessionId": "01M340J9F158FQJXPE6A0T79EA",
+    "name": "timeout-retest-ttl-async",
+    "createdAt": "2026-09-22T07:33:57.848105+00:00",
+    "sessionTimeoutSeconds": 60,
+    "status": "TERMINATED"
+  },
+  "elapsed_s": 0.06317971800001487
+}

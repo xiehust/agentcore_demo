@@ -1,0 +1,80 @@
+{
+  "commands": [
+    "set -eu",
+    "cd /opt/beijing-agentcore",
+    "test ! -e results/run_status.json",
+    "aws s3 cp s3://cn-ec2-bench-0eec9b6240-447150580482/input/benchmark.tar.gz benchmark.tar.gz --region cn-north-1",
+    "tar -xzf benchmark.tar.gz",
+    "export AWS_REGION=cn-north-1 AWS_DEFAULT_REGION=cn-north-1",
+    "venv/bin/python -u run_benchmarks.py --config config.json > run.log 2>&1"
+  ],
+  "response": {
+    "Command": {
+      "CommandId": "fa96f24b-8037-4f2f-a547-7177d7db18bf",
+      "DocumentName": "AWS-RunShellScript",
+      "DocumentVersion": "$DEFAULT",
+      "Comment": "China same-region benchmark: benchmark",
+      "ExpiresAfter": "2026-09-22 06:02:26.859000+00:00",
+      "Parameters": {
+        "commands": [
+          "set -eu",
+          "cd /opt/beijing-agentcore",
+          "test ! -e results/run_status.json",
+          "aws s3 cp s3://cn-ec2-bench-0eec9b6240-447150580482/input/benchmark.tar.gz benchmark.tar.gz --region cn-north-1",
+          "tar -xzf benchmark.tar.gz",
+          "export AWS_REGION=cn-north-1 AWS_DEFAULT_REGION=cn-north-1",
+          "venv/bin/python -u run_benchmarks.py --config config.json > run.log 2>&1"
+        ],
+        "executionTimeout": [
+          "2400"
+        ]
+      },
+      "InstanceIds": [
+        "i-0ab621bda76e7f0af"
+      ],
+      "Targets": [],
+      "RequestedDateTime": "2026-09-22 05:21:26.859000+00:00",
+      "Status": "Pending",
+      "StatusDetails": "Pending",
+      "OutputS3Region": "cn-north-1",
+      "OutputS3BucketName": "",
+      "OutputS3KeyPrefix": "",
+      "MaxConcurrency": "50",
+      "MaxErrors": "0",
+      "TargetCount": 1,
+      "CompletedCount": 0,
+      "ErrorCount": 0,
+      "DeliveryTimedOutCount": 0,
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "",
+        "CloudWatchOutputEnabled": false
+      },
+      "TimeoutSeconds": 60,
+      "AlarmConfiguration": {
+        "IgnorePollAlarmFailure": false,
+        "Alarms": []
+      },
+      "TriggeredAlarms": []
+    },
+    "ResponseMetadata": {
+      "RequestId": "0bc6ba63-247e-4ae1-bdf0-f22bfb4b42a9",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Tue, 22 Sep 2026 05:21:26 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "1367",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "0bc6ba63-247e-4ae1-bdf0-f22bfb4b42a9",
+        "cache-control": "no-store"
+      },
+      "RetryAttempts": 0
+    }
+  }
+}

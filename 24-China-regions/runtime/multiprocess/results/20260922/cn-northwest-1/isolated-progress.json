@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-22T08:32:20.219618+00:00",
+  "region": "cn-northwest-1",
+  "completed_cells": [
+    {
+      "cell": "isolated-scale-c50",
+      "all_checks_pass": true,
+      "cold_failures": 0,
+      "cold_p99_ms": 7692.942571999993,
+      "before_send_spread_ms": 25.017870999818115
+    },
+    {
+      "cell": "isolated-c100",
+      "all_checks_pass": false,
+      "cold_failures": 1,
+      "cold_p99_ms": 3003.3326770001167,
+      "before_send_spread_ms": 179.6155380000073
+    },
+    {
+      "cell": "isolated-c200",
+      "all_checks_pass": false,
+      "cold_failures": 60,
+      "cold_p99_ms": 6845.289544999787,
+      "before_send_spread_ms": 62.269289999903776
+    }
+  ],
+  "current_cell": "isolated-c200"
+}

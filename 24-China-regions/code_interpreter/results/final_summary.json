@@ -1,0 +1,72 @@
+{
+  "at": "2026-09-21T16:08:44.972991+00:00",
+  "account": "447150580482",
+  "profile": "agentcore_cn",
+  "region": "cn-northwest-1",
+  "counts": {
+    "PASS": 8,
+    "PARTIAL": 1,
+    "FAIL": 0,
+    "BLOCKED": 0
+  },
+  "all_p0_accepted": false,
+  "tests": {
+    "2.1": {
+      "status": "PASS",
+      "priority": "P0",
+      "scope": "As described in README.md",
+      "evidence": "main-20260921T155804Z/summary.json"
+    },
+    "2.2": {
+      "status": "PASS",
+      "priority": "P0",
+      "scope": "Client-host marker and cross-session file probes; AWS provider host escape not audited.",
+      "evidence": "main-20260921T155804Z/summary.json"
+    },
+    "2.3": {
+      "status": "PASS",
+      "priority": "P0",
+      "scope": "Python executeCode to SDK Agent-side tool adapter; no LLM or Agent framework invoked.",
+      "evidence": "main-20260921T155804Z/summary.json"
+    },
+    "2.4": {
+      "status": "PASS",
+      "priority": "P1",
+      "scope": "As described in README.md",
+      "evidence": "main-20260921T155804Z/summary.json"
+    },
+    "2.5": {
+      "status": "PASS",
+      "priority": "P1",
+      "scope": "As described in README.md",
+      "evidence": "main-20260921T155804Z/summary.json"
+    },
+    "2.6": {
+      "status": "PARTIAL",
+      "priority": "P0",
+      "scope": "Native single-execution timeout unproven after 180s observation; caller deadline plus stopTask confirmed.",
+      "evidence": "main-20260921T155804Z/summary.json"
+    },
+    "2.7": {
+      "status": "PASS",
+      "priority": "P0",
+      "scope": "New sessions and first executions, one batch per level; no provider microVM coldness or latency SLA claim.",
+      "evidence": "main-20260921T155804Z/summary.json"
+    },
+    "2.9": {
+      "status": "PASS",
+      "priority": "P1",
+      "scope": "As described in README.md",
+      "evidence": "main-20260921T155804Z/summary.json"
+    },
+    "2.10": {
+      "status": "PASS",
+      "priority": "P0",
+      "scope": "PASS only for PUBLIC networking. Default system sandbox failed external DNS and package installation.",
+      "evidence": "dependencies-public-20260921/summary.json"
+    }
+  },
+  "default_network_2.10_status": "FAIL",
+  "test_sessions_stopped": 67,
+  "custom_resource_deleted": true
+}

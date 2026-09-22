@@ -1,0 +1,68 @@
+{
+  "region": "cn-northwest-1",
+  "runtime_arn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_f6e47a809e_c10_r1-r0QCk1DnRn",
+  "concurrency": 10,
+  "process_count": 8,
+  "hold_seconds": 0,
+  "start_method": "spawn",
+  "assignments": [
+    [
+      [
+        0,
+        "4ef24585-bf5b-46c4-b249-4ac9cbfdcf57"
+      ],
+      [
+        8,
+        "7b69d1b1-4894-4a97-b3bc-7389abde1601"
+      ]
+    ],
+    [
+      [
+        1,
+        "f22aa560-ae6b-48f8-82d1-2e51a7a26523"
+      ],
+      [
+        9,
+        "fcc17f78-9a6a-4ee4-a8ef-143388709f86"
+      ]
+    ],
+    [
+      [
+        2,
+        "72aed48b-ea8b-4ac4-8434-9fff9be392a8"
+      ]
+    ],
+    [
+      [
+        3,
+        "b2820ec8-5623-47ce-9010-9604f3c5c002"
+      ]
+    ],
+    [
+      [
+        4,
+        "93d234be-7078-4a6b-b42f-a1008361bac4"
+      ]
+    ],
+    [
+      [
+        5,
+        "23867bf6-c475-4a00-838d-f8d1f92deb97"
+      ]
+    ],
+    [
+      [
+        6,
+        "56f06480-485e-4356-a0c6-d44113944a92"
+      ]
+    ],
+    [
+      [
+        7,
+        "30e3b30b-698d-4c82-b473-e360d97c0a50"
+      ]
+    ]
+  ],
+  "before_send_spread_target_ms": 100,
+  "created_at": "2026-09-22T08:21:27.356141+00:00"
+}

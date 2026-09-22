@@ -1,0 +1,813 @@
+{
+  "checked_at": "2026-09-22T08:42:41.975188+00:00",
+  "regions": {
+    "cn-northwest-1": {
+      "checks": {
+        "eight_cpu_regional_client": true,
+        "submitted_sources_match_executed": true,
+        "complete_matrix": true,
+        "independent_runtimes": true,
+        "build_executed_in_region": true,
+        "all_ready_at_least_60s": true,
+        "runtime_assignment_correct": true,
+        "all_request_ids_present": true,
+        "expected_cold_count": true,
+        "expected_warm_count": true,
+        "expected_stop_count": true,
+        "globally_unique_sessions": true,
+        "globally_unique_instance_markers": true,
+        "isolated_sources_match": true,
+        "isolated_cells_complete": true,
+        "isolated_sessions_unique": true,
+        "isolated_cooldowns_at_least_180s": true,
+        "preexisting_runtimes_still_present": true,
+        "previous_small_instance_still_stopped": true,
+        "cleanup_complete": true
+      },
+      "all_checks_pass": true,
+      "counts": {
+        "cold": 1133,
+        "warm": 858,
+        "stop": 1133
+      },
+      "cleanup": {
+        "instance_id": "i-0c62090e8472b2c83",
+        "instance_state": "stopped",
+        "runtimes": {
+          "c1-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "3b198d20-111c-46b2-b360-b34489c62ee0",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:44 GMT",
+                "content-type": "application/json",
+                "content-length": "129",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "3b198d20-111c-46b2-b360-b34489c62ee0",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7csHT_ZPgEXjQ=",
+                "x-amzn-trace-id": "Root=1-6ab23f83-564074306d5dbc775594e905"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c1-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "6d904a2e-f30f-4bfd-828c-b69b75cabd1c",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:44 GMT",
+                "content-type": "application/json",
+                "content-length": "129",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "6d904a2e-f30f-4bfd-828c-b69b75cabd1c",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7cvHQTZPgEP7A=",
+                "x-amzn-trace-id": "Root=1-6ab23f84-0cbffcdb0f1ff361558db586"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c1-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "97563cf8-bb3a-4d9b-b0f6-41e6c64a1db7",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:44 GMT",
+                "content-type": "application/json",
+                "content-length": "129",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "97563cf8-bb3a-4d9b-b0f6-41e6c64a1db7",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7cxEIlZPgEGjQ=",
+                "x-amzn-trace-id": "Root=1-6ab23f84-1e687ca538b25a764abfb5c6"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c10-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "97a66fe6-c308-43c1-aac3-c45d750ef504",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:44 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "97a66fe6-c308-43c1-aac3-c45d750ef504",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7c0E7f5PgEUrA=",
+                "x-amzn-trace-id": "Root=1-6ab23f84-2d722d3720be6d2d6ee1031a"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c10-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "38c5c32a-c305-4fa8-8d44-91abd250f17f",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:45 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "38c5c32a-c305-4fa8-8d44-91abd250f17f",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7c2E5o5PgETQw=",
+                "x-amzn-trace-id": "Root=1-6ab23f84-62b7c9d45518d55e4d3670a2"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c10-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "801dfd87-d535-4b9a-8b50-3d9f970afb6a",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:45 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "801dfd87-d535-4b9a-8b50-3d9f970afb6a",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7c6E1u5PgEDgw=",
+                "x-amzn-trace-id": "Root=1-6ab23f85-4a0730595f91445014588509"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c50-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "b5c46e0c-b5ff-42aa-b51c-1914c4d7b289",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:45 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "b5c46e0c-b5ff-42aa-b51c-1914c4d7b289",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7c9G4k5PgEDBQ=",
+                "x-amzn-trace-id": "Root=1-6ab23f85-2b72401841ff789c21e2205a"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c50-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "fb693623-86d2-461b-a9a8-3503087b6a17",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:45 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "fb693623-86d2-461b-a9a8-3503087b6a17",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7c_HyL5PgEi4g=",
+                "x-amzn-trace-id": "Root=1-6ab23f85-0380e1947a7395dc6d5bff5e"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c50-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "d151b45d-cdb5-42ad-863f-b036bf971c91",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:46 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "d151b45d-cdb5-42ad-863f-b036bf971c91",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dCEZu5PgEMEQ=",
+                "x-amzn-trace-id": "Root=1-6ab23f86-2dbb5eea3b4d707f197427f9"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c100-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "d0b12812-94c6-4b32-a1cd-098700c3badc",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:46 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "d0b12812-94c6-4b32-a1cd-098700c3badc",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dEH8s5PgEHZA=",
+                "x-amzn-trace-id": "Root=1-6ab23f86-7401b33664f2defa55617fa2"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c100-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "1a343154-5ae3-4e60-a154-aef95d7ce220",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:46 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "1a343154-5ae3-4e60-a154-aef95d7ce220",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dHGVoZPgEIHA=",
+                "x-amzn-trace-id": "Root=1-6ab23f86-05a5c7551b43e4c23881d097"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c100-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "2c69f2a9-57f2-4297-ab03-168f41d4f464",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:46 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "2c69f2a9-57f2-4297-ab03-168f41d4f464",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dJFt9ZPgEqag=",
+                "x-amzn-trace-id": "Root=1-6ab23f86-599d9ea76bba9e315c2ab192"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c200-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "9ded0206-66e1-40dd-85d3-a5eaa1750699",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:47 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "9ded0206-66e1-40dd-85d3-a5eaa1750699",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dMGEVZPgEPJQ=",
+                "x-amzn-trace-id": "Root=1-6ab23f87-6e070039145feea12e92911b"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c200-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "028935da-9376-44aa-b0cc-de876d04798a",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:47 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "028935da-9376-44aa-b0cc-de876d04798a",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dOGzb5PgESIQ=",
+                "x-amzn-trace-id": "Root=1-6ab23f87-62ff5bac7dffa6c96d9f9ecd"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c200-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "c1f4d09b-82f6-4add-9717-9fda7e7b72ce",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:47 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "c1f4d09b-82f6-4add-9717-9fda7e7b72ce",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dRFmQ5PgEIsw=",
+                "x-amzn-trace-id": "Root=1-6ab23f87-1202a9c60bcf51b92891b132"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "scale-c50": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "50bc073d-1b69-4602-ad91-9e61cfa4d512",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:47 GMT",
+                "content-type": "application/json",
+                "content-length": "133",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "50bc073d-1b69-4602-ad91-9e61cfa4d512",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dTFksZPgEtjg=",
+                "x-amzn-trace-id": "Root=1-6ab23f87-3738a48e28c41ba33c483c79"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "isolated-scale-c50": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "2b9fe031-dee5-465a-ad3f-efaf617080d4",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:48 GMT",
+                "content-type": "application/json",
+                "content-length": "142",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "2b9fe031-dee5-465a-ad3f-efaf617080d4",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dWH5R5PgEEqg=",
+                "x-amzn-trace-id": "Root=1-6ab23f88-008c11223ac5cb946dee3a64"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "isolated-c100": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "7968df1d-9185-4aba-ad73-6356bb3afdc9",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:48 GMT",
+                "content-type": "application/json",
+                "content-length": "137",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "7968df1d-9185-4aba-ad73-6356bb3afdc9",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dZHbmZPgEWbw=",
+                "x-amzn-trace-id": "Root=1-6ab23f88-331efc3169653c9d00d03465"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "isolated-c200": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "9b47cf42-e4d9-487f-b4fb-72269aff55f6",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:48 GMT",
+                "content-type": "application/json",
+                "content-length": "137",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "9b47cf42-e4d9-487f-b4fb-72269aff55f6",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7dbFotZPgEZyg=",
+                "x-amzn-trace-id": "Root=1-6ab23f88-78552d2d14409fc26a1ef0dd"
+              },
+              "RetryAttempts": 0
+            }
+          }
+        },
+        "repository": "RepositoryNotFoundException",
+        "runtime_role": "NoSuchEntity",
+        "transfer_bucket": "404",
+        "instance_inline_policies": [],
+        "previous_small_instance": {
+          "id": "i-0a685957c9b9355d7",
+          "state": "stopped"
+        }
+      },
+      "raw_sha256": {
+        "c1-r1": "833750ec8713c404800784e6b83d990eda023a6b8597e1071d5ad7f233b50f43",
+        "c1-r2": "8dffb6950d15494af643dbf7dc7ac1eb9f088e0c18e9dcfd11ec307a17ada81b",
+        "c1-r3": "2711f6f6076db5dd459a6b04dc4f2b405db5c7ea1592a9ea119a0cdac5095b4a",
+        "c10-r1": "04122c2654acddd37769f322cd959b8fca4dfbb7ef7e1f334facffafecb47d04",
+        "c10-r2": "1f3f1e51edf07fc008a4b41495c0421206b7c19e77f0fd7a24a152711810e622",
+        "c10-r3": "cf6e0600a912ce05c02cfc799b6fba9fc6eb8eebd81d0b2ca1a37446c1f6cba5",
+        "c100-r1": "f0b634d02ef72919c788640c7d967a31013a109be200c1e86186d2fd4d196213",
+        "c100-r2": "745000c4d18ecadf720155ff32fbab68303953534071de4c7f27176a03272c75",
+        "c100-r3": "fe99146efa6689a06147c05ad622c689d726fba2d112b03a3e745c500e6c09c4",
+        "c200-r1": "9e7cc14ce4a791f930b4d75b255a8a5475dacc5f81c85dbe66b72e3d166d57c7",
+        "c200-r2": "8c46ece22acf5bb8711f3b67f8c0facb1955319115ca61a12e95d0d17d77883c",
+        "c200-r3": "5e1a18a158d1b549a19c2cafb7a85ccdede6afecce019e4d3c9d790f90823d18",
+        "c50-r1": "ffeb21798cdd86601f66da5b024c7c2b60677fe7cc05030a91830dc2dda4c8bd",
+        "c50-r2": "aae0d94773a0aab1ae6ff3136fd057315a687c06b2b96382634dbc22c6227ab7",
+        "c50-r3": "28dd22499c1cc97dec176d2937ddbceb4effc5b608743ed4f992f73ab2e82bc9",
+        "scale-c50": "15983253e6f2f15137a85da14327ebf763f8c1c685e693da6bf1b705e7311548"
+      }
+    },
+    "cn-north-1": {
+      "checks": {
+        "eight_cpu_regional_client": true,
+        "submitted_sources_match_executed": true,
+        "complete_matrix": true,
+        "independent_runtimes": true,
+        "build_executed_in_region": true,
+        "all_ready_at_least_60s": true,
+        "runtime_assignment_correct": true,
+        "all_request_ids_present": true,
+        "expected_cold_count": true,
+        "expected_warm_count": true,
+        "expected_stop_count": true,
+        "globally_unique_sessions": true,
+        "globally_unique_instance_markers": true,
+        "isolated_sources_match": true,
+        "isolated_cells_complete": true,
+        "isolated_sessions_unique": true,
+        "isolated_cooldowns_at_least_180s": true,
+        "preexisting_runtimes_still_present": true,
+        "previous_small_instance_still_stopped": true,
+        "cleanup_complete": true
+      },
+      "all_checks_pass": true,
+      "counts": {
+        "cold": 1133,
+        "warm": 776,
+        "stop": 1133
+      },
+      "cleanup": {
+        "instance_id": "i-056c2c62a8508d683",
+        "instance_state": "stopped",
+        "runtimes": {
+          "c1-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "c4c69e31-e073-4bf2-be1e-4da5045f4e82",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:57 GMT",
+                "content-type": "application/json",
+                "content-length": "129",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "c4c69e31-e073-4bf2-be1e-4da5045f4e82",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7ewEXqhTIEQ3g=",
+                "x-amzn-trace-id": "Root=1-6ab23f91-0c38b93658b8ab6d7024e326"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c1-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "c39d76d7-d6ec-4b9a-88c8-3364f8f37978",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:57 GMT",
+                "content-type": "application/json",
+                "content-length": "129",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "c39d76d7-d6ec-4b9a-88c8-3364f8f37978",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7eyHqphTIENvA=",
+                "x-amzn-trace-id": "Root=1-6ab23f91-141399cd1c65a4b222e5cc8e"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c1-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "132afc5c-7b61-4563-b1ac-5c42052febde",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:57 GMT",
+                "content-type": "application/json",
+                "content-length": "129",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "132afc5c-7b61-4563-b1ac-5c42052febde",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7e1FAJBTIEP9Q=",
+                "x-amzn-trace-id": "Root=1-6ab23f91-22432f9f419680cf79d9773c"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c10-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "3e4cbedb-23d1-4f28-8603-e8ccc7881c20",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:57 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "3e4cbedb-23d1-4f28-8603-e8ccc7881c20",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7e3GMPBTIEFBg=",
+                "x-amzn-trace-id": "Root=1-6ab23f91-20b23c564a3a4e69521f5f23"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c10-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "c26a5a6a-1cd2-4981-8b7f-da11ad88d83b",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:58 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "c26a5a6a-1cd2-4981-8b7f-da11ad88d83b",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7e6GtSBTIEIyA=",
+                "x-amzn-trace-id": "Root=1-6ab23f92-1e9950746eca3d602691238f"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c10-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "54e02d7b-b488-49d8-9f27-901617e03353",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:58 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "54e02d7b-b488-49d8-9f27-901617e03353",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7e8GY4hTIESTg=",
+                "x-amzn-trace-id": "Root=1-6ab23f92-7ba2937160bdc23564598910"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c50-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "d1d5146c-1c0b-47c4-b926-079e28b63f27",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:58 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "d1d5146c-1c0b-47c4-b926-079e28b63f27",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7e_G-wBTIEdzg=",
+                "x-amzn-trace-id": "Root=1-6ab23f92-392e7cd13e755576042f5410"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c50-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "35d8308c-d60e-47e1-923f-5d0070e8ad40",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:58 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "35d8308c-d60e-47e1-923f-5d0070e8ad40",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fBH0QBTIEDNQ=",
+                "x-amzn-trace-id": "Root=1-6ab23f92-4d1a8b161d4f669139b86691"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c50-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "09e3502f-dbcf-4edd-a466-772a5e0ee134",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:59 GMT",
+                "content-type": "application/json",
+                "content-length": "130",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "09e3502f-dbcf-4edd-a466-772a5e0ee134",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fEE1xhTIEdRA=",
+                "x-amzn-trace-id": "Root=1-6ab23f93-36cb0ad558ec8a6c1b0cae00"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c100-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "13c7615c-ac39-4c25-9314-bd47cc80fe12",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:59 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "13c7615c-ac39-4c25-9314-bd47cc80fe12",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fGH8ahTIEJyw=",
+                "x-amzn-trace-id": "Root=1-6ab23f93-42d9c526579fcce53afb3cdc"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c100-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "e53cab01-7c41-48e1-8809-6f7f847ef067",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:59 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "e53cab01-7c41-48e1-8809-6f7f847ef067",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fJHEJhTIEH0A=",
+                "x-amzn-trace-id": "Root=1-6ab23f93-3d3df94704525e91163c3d3c"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c100-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "fdad4338-cdf7-4b9f-acc6-9149f1f89d4c",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:42:59 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "fdad4338-cdf7-4b9f-acc6-9149f1f89d4c",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fLFGzhTIEb_A=",
+                "x-amzn-trace-id": "Root=1-6ab23f93-4050b13a7ae112c844756d28"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c200-r1": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "30cedf22-a49f-4dfb-a424-1954fb6050d0",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:43:00 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "30cedf22-a49f-4dfb-a424-1954fb6050d0",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fOG7SBTIEefw=",
+                "x-amzn-trace-id": "Root=1-6ab23f94-0212278d4a4d4f2e672f1ea4"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c200-r2": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "fd7061e6-a1c4-44af-b2bc-a80bbce12ed4",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:43:00 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "fd7061e6-a1c4-44af-b2bc-a80bbce12ed4",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fQFzihTIEHoA=",
+                "x-amzn-trace-id": "Root=1-6ab23f94-5fb2e9b64a39efdf740dffaa"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "c200-r3": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "437c4b4f-9d8d-4202-b00e-3bfbd50d2fb3",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:43:00 GMT",
+                "content-type": "application/json",
+                "content-length": "131",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "437c4b4f-9d8d-4202-b00e-3bfbd50d2fb3",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fTExSBTIEELw=",
+                "x-amzn-trace-id": "Root=1-6ab23f94-455ab863291efb8544722e2e"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "scale-c50": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "3c3205c4-e27e-4f57-bacc-4309a55e31e4",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:43:00 GMT",
+                "content-type": "application/json",
+                "content-length": "133",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "3c3205c4-e27e-4f57-bacc-4309a55e31e4",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fVGuLhTIEe8w=",
+                "x-amzn-trace-id": "Root=1-6ab23f94-7897286b150745485ac05f13"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "isolated-scale-c50": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "94f5824b-7296-4526-a07f-973c5916b833",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:43:01 GMT",
+                "content-type": "application/json",
+                "content-length": "142",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "94f5824b-7296-4526-a07f-973c5916b833",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fYHXDhTIEWoA=",
+                "x-amzn-trace-id": "Root=1-6ab23f95-0584736f4fc02cfe1814d2ee"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "isolated-c100": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "e49ef59c-500f-4013-9bca-c0d7e801a595",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:43:01 GMT",
+                "content-type": "application/json",
+                "content-length": "137",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "e49ef59c-500f-4013-9bca-c0d7e801a595",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7faHxChTIEKBw=",
+                "x-amzn-trace-id": "Root=1-6ab23f95-0e0bcda86d60e84128cd93ae"
+              },
+              "RetryAttempts": 0
+            }
+          },
+          "isolated-c200": {
+            "state": "absent",
+            "metadata": {
+              "RequestId": "582be142-5e55-4a5c-a0c1-b67835bb98ab",
+              "HTTPStatusCode": 404,
+              "HTTPHeaders": {
+                "date": "Tue, 22 Sep 2026 08:43:01 GMT",
+                "content-type": "application/json",
+                "content-length": "137",
+                "connection": "keep-alive",
+                "x-amzn-requestid": "582be142-5e55-4a5c-a0c1-b67835bb98ab",
+                "x-amzn-errortype": "ResourceNotFoundException",
+                "x-amz-apigw-id": "EF7fdHyLhTIEdyQ=",
+                "x-amzn-trace-id": "Root=1-6ab23f95-14cda5b61f4947766820982c"
+              },
+              "RetryAttempts": 0
+            }
+          }
+        },
+        "repository": "RepositoryNotFoundException",
+        "runtime_role": "NoSuchEntity",
+        "transfer_bucket": "404",
+        "instance_inline_policies": [],
+        "previous_small_instance": {
+          "id": "i-0ab621bda76e7f0af",
+          "state": "stopped"
+        }
+      },
+      "raw_sha256": {
+        "c1-r1": "dd7c0f778208e79c78a859cac8ba8385df66ff1e6d69399f99ecd7429de9135e",
+        "c1-r2": "9973c9d0cc1851634d4d47daae65c3bca8e148b0d9f5e3fc32fe39de18c19425",
+        "c1-r3": "8dd99f4f7f3110f1f933e4f1da388634ae6968e9d82bc90d01075b63a7b08c00",
+        "c10-r1": "6051f3dee5ca6ee4a3389379c096330d0ea9b4a327ce103b772ad9285002c95b",
+        "c10-r2": "b45527e63af75e3e19138f7b049b73408461280729d3115e657afc764c41a6db",
+        "c10-r3": "dc2d4fe2774c92154fd4f527da3c21a96ece8628b59575e92879c48fd3eda297",
+        "c100-r1": "1ad93cce3720789005c23c884897ecfc1e79540d0da97a82a8184b3772c5fdcf",
+        "c100-r2": "f541dcd81b0eeb8edffc9e92101b2d757acc5e29f010904094db16e5c4d85636",
+        "c100-r3": "888e5b73de49cfdc88e2605e2e7de48b11be77d6f9737823975e0e227ccfd13f",
+        "c200-r1": "fefb7b6faae2aefbf78560629eddd3e2b7333a0480e707bc695556365a66a0b3",
+        "c200-r2": "0ec818d076969b5e78c0f4c2475dd30239945c2060c2cdc67fec29fecbea9c34",
+        "c200-r3": "c9fa52eecdff69e57fdca7b2856db771ecf1d75d70f7cf45d06522c157fde813",
+        "c50-r1": "ad2d5c62ff7ca6ea0a225e400a0ffe24c942a3e89e5ef5af5adf5062fc04fa2b",
+        "c50-r2": "01804abdef740180d0f7a850e3c62a45166e6054ea190efeaa58c9a2318166d8",
+        "c50-r3": "31fe3265803b08c0dc98bf60a807c62dca888961c7a810bd82f98ce7b11fb598",
+        "scale-c50": "a777cbf0bc9e7ae8c34b14fe09be3d3d2292d184d49391f7393476044f4e15cc"
+      }
+    }
+  }
+}

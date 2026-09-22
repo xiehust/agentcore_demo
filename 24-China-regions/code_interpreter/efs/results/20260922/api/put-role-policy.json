@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-22T02:07:14.240035+00:00",
+  "operation": "put_role_policy",
+  "request": {
+    "RoleName": "cn_ci_efs_120715bd7f",
+    "PolicyName": "EfsVerification",
+    "PolicyDocument": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Action\": [\"elasticfilesystem:ClientMount\", \"elasticfilesystem:ClientWrite\"], \"Resource\": \"arn:aws-cn:elasticfilesystem:cn-northwest-1:447150580482:file-system/fs-0951a92f04a3e9c3a\", \"Condition\": {\"StringEquals\": {\"elasticfilesystem:AccessPointArn\": \"arn:aws-cn:elasticfilesystem:cn-northwest-1:447150580482:access-point/fsap-0abf9e902a5423200\"}}}, {\"Effect\": \"Allow\", \"Action\": [\"elasticfilesystem:DescribeMountTargets\", \"elasticfilesystem:DescribeAccessPoints\", \"elasticfilesystem:DescribeFileSystems\"], \"Resource\": \"*\"}, {\"Effect\": \"Allow\", \"Action\": [\"ec2:CreateNetworkInterface\", \"ec2:DeleteNetworkInterface\", \"ec2:DescribeNetworkInterfaces\", \"ec2:DescribeSubnets\", \"ec2:DescribeSecurityGroups\", \"ec2:DescribeVpcs\", \"ec2:CreateTags\", \"ec2:AssignPrivateIpAddresses\", \"ec2:UnassignPrivateIpAddresses\"], \"Resource\": \"*\", \"Condition\": {\"StringEquals\": {\"aws:RequestedRegion\": \"cn-northwest-1\"}}}]}"
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "497b9b4a-36a4-4cd6-a484-bfe7b852678d",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 02:07:14 GMT",
+        "x-amzn-requestid": "497b9b4a-36a4-4cd6-a484-bfe7b852678d",
+        "content-type": "text/xml",
+        "content-length": "206"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "elapsed_s": 0.23158618598245084
+}

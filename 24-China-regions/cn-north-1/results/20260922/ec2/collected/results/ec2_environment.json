@@ -1,0 +1,65 @@
+{
+  "at": "2026-09-22T05:21:28.338605+00:00",
+  "instance_identity_document": {
+    "accountId": "447150580482",
+    "architecture": "arm64",
+    "availabilityZone": "cn-north-1a",
+    "billingProducts": null,
+    "devpayProductCodes": null,
+    "marketplaceProductCodes": null,
+    "imageId": "ami-0eb115c3723a4077e",
+    "instanceId": "i-0ab621bda76e7f0af",
+    "instanceType": "t4g.small",
+    "kernelId": null,
+    "pendingTime": "2026-09-22T05:05:24Z",
+    "privateIp": "172.31.44.156",
+    "ramdiskId": null,
+    "region": "cn-north-1",
+    "version": "2017-09-30"
+  },
+  "platform": "Linux-6.18.48-109.150.amzn2023.aarch64-aarch64-with-glibc2.34",
+  "cpu_count": 2,
+  "cpu_info": [
+    "processor\t: 0",
+    "processor\t: 1"
+  ],
+  "python": "3.12.14",
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "sts": {
+    "UserId": "AROAWQHCAMMBJQOUF2IKZ:i-0ab621bda76e7f0af",
+    "Account": "447150580482",
+    "Arn": "arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-0eec9b6240/i-0ab621bda76e7f0af",
+    "ResponseMetadata": {
+      "RequestId": "cf5c4706-76e9-44ad-ae97-608f4b728c52",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "cf5c4706-76e9-44ad-ae97-608f4b728c52",
+        "x-amz-sts-extended-request-id": "MTpjbi1ub3J0aC0xOlM6MTc5MDA1NDQ4ODM4MTpSOnkwdzAzV3Vm",
+        "content-type": "text/xml",
+        "content-length": "471",
+        "date": "Tue, 22 Sep 2026 05:21:28 GMT"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "target_endpoint": "https://bedrock-agentcore.cn-north-1.amazonaws.com.cn",
+  "initial_cpu": {
+    "at": "2026-09-22T05:21:28.390918+00:00",
+    "unix_s": 1790054488.390936,
+    "cpu_total_ticks": 191766,
+    "idle_ticks": 178291,
+    "steal_ticks": 257,
+    "load_average": [
+      0.0,
+      0.11,
+      0.11
+    ],
+    "memory": {
+      "MemTotal": "1885188 kB",
+      "MemAvailable": "1359640 kB",
+      "SwapTotal": "0 kB",
+      "SwapFree": "0 kB"
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "commands": [
+    "set -eu",
+    "mkdir -p /opt/ci_timeout_7e9b807a6e",
+    "cd /opt/ci_timeout_7e9b807a6e",
+    "aws s3 cp s3://ci-timeout-7e9b807a6e-447150580482/input/input.tar.gz input.tar.gz --region cn-northwest-1",
+    "tar -xzf input.tar.gz",
+    "export AWS_REGION=cn-northwest-1 AWS_DEFAULT_REGION=cn-northwest-1",
+    "/opt/cn-agentcore-benchmark/venv/bin/python -u verify_timeout.py > run.log 2>&1"
+  ],
+  "response": {
+    "Command": {
+      "CommandId": "972eeadb-2d6a-4a92-aade-bd4a23d210c6",
+      "DocumentName": "AWS-RunShellScript",
+      "DocumentVersion": "$DEFAULT",
+      "Comment": "Code Interpreter 2.6 timeout retest",
+      "ExpiresAfter": "2026-09-22 07:49:55.168000+00:00",
+      "Parameters": {
+        "commands": [
+          "set -eu",
+          "mkdir -p /opt/ci_timeout_7e9b807a6e",
+          "cd /opt/ci_timeout_7e9b807a6e",
+          "aws s3 cp s3://ci-timeout-7e9b807a6e-447150580482/input/input.tar.gz input.tar.gz --region cn-northwest-1",
+          "tar -xzf input.tar.gz",
+          "export AWS_REGION=cn-northwest-1 AWS_DEFAULT_REGION=cn-northwest-1",
+          "/opt/cn-agentcore-benchmark/venv/bin/python -u verify_timeout.py > run.log 2>&1"
+        ],
+        "executionTimeout": [
+          "900"
+        ]
+      },
+      "InstanceIds": [
+        "i-0a685957c9b9355d7"
+      ],
+      "Targets": [],
+      "RequestedDateTime": "2026-09-22 07:33:55.168000+00:00",
+      "Status": "Pending",
+      "StatusDetails": "Pending",
+      "OutputS3Region": "cn-northwest-1",
+      "OutputS3BucketName": "",
+      "OutputS3KeyPrefix": "",
+      "MaxConcurrency": "50",
+      "MaxErrors": "0",
+      "TargetCount": 1,
+      "CompletedCount": 0,
+      "ErrorCount": 0,
+      "DeliveryTimedOutCount": 0,
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "",
+        "CloudWatchOutputEnabled": false
+      },
+      "TimeoutSeconds": 60,
+      "AlarmConfiguration": {
+        "IgnorePollAlarmFailure": false,
+        "Alarms": []
+      },
+      "TriggeredAlarms": []
+    },
+    "ResponseMetadata": {
+      "RequestId": "02e63571-f2c2-4368-b423-5314fd31d650",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Tue, 22 Sep 2026 07:33:55 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "1378",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "02e63571-f2c2-4368-b423-5314fd31d650",
+        "cache-control": "no-store"
+      },
+      "RetryAttempts": 0
+    }
+  }
+}

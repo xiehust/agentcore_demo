@@ -1,0 +1,59 @@
+{
+  "at": "2026-09-22T05:43:45.282368+00:00",
+  "region": "cn-north-1",
+  "instance": "i-0ab621bda76e7f0af",
+  "source_hashes_verified": true,
+  "runtime_rows": 651,
+  "runtime_sessions": 151,
+  "ci_sessions": {
+    "code_interpreter": 164,
+    "code_interpreter_public": 1,
+    "efs": 3
+  },
+  "quantiles_recomputed": true,
+  "efs_hash_verified": true,
+  "cpu": {
+    "code_interpreter_concurrency": {
+      "n": 5,
+      "mean_busy": 16.50636888642383,
+      "max_busy": 29.824561403508774,
+      "max_steal": 11.403508771929825
+    },
+    "code_interpreter_efs": {
+      "n": 11,
+      "mean_busy": 2.1741616890955298,
+      "max_busy": 10.396039603960395,
+      "max_steal": 0.49504950495049505
+    },
+    "code_interpreter_functional": {
+      "n": 6,
+      "mean_busy": 0.6679271779774306,
+      "max_busy": 2.0000000000000018,
+      "max_steal": 0.0
+    },
+    "code_interpreter_public_dependencies": {
+      "n": 6,
+      "mean_busy": 2.3947958228658677,
+      "max_busy": 12.376237623762377,
+      "max_steal": 0.4975124378109453
+    },
+    "code_interpreter_serial": {
+      "n": 110,
+      "mean_busy": 1.3748595379490574,
+      "max_busy": 11.05527638190955,
+      "max_steal": 4.405286343612334
+    },
+    "code_interpreter_timeout": {
+      "n": 199,
+      "mean_busy": 0.3683623553371234,
+      "max_busy": 10.952380952380958,
+      "max_steal": 8.095238095238095
+    },
+    "runtime": {
+      "n": 268,
+      "mean_busy": 1.123770397598733,
+      "max_busy": 46.37681159420289,
+      "max_steal": 3.8461538461538463
+    }
+  }
+}

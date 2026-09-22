@@ -1,0 +1,49 @@
+{
+  "at": "2026-09-22T07:33:58.793257+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "ci_timeout_7e9b807a6e-4txxj1i8C9",
+    "sessionId": "01M340J9M4EGMEQBKA1RCJVPP8",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code_sha256": "c09b7430aaba880c33ec2390288419d025a9a4f845895209d1fc1fc375ce9d14"
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "79a3b9bc-3ba3-4576-aa87-0edc286b716e",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:33:58 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "79a3b9bc-3ba3-4576-aa87-0edc286b716e",
+        "x-amzn-code-interpreter-session-id": "01M340J9M4EGMEQBKA1RCJVPP8"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M340J9M4EGMEQBKA1RCJVPP8"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "/opt/amazon/genesis1p-tools/var"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "/opt/amazon/genesis1p-tools/var",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.051865577697753906
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.16508032400003003
+}

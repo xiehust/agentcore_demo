@@ -1,0 +1,44 @@
+{
+  "at": "2026-09-22T07:42:04.976460+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M341146PQB6K3QAC4KY1KV0D",
+    "name": "writeFiles",
+    "arguments": {
+      "uploaded_paths": [
+        "process-worker.py"
+      ]
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "02d25833-1299-4599-b6ea-b8b5c13be1ba",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:42:05 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "02d25833-1299-4599-b6ea-b8b5c13be1ba",
+        "x-amzn-code-interpreter-session-id": "01M341146PQB6K3QAC4KY1KV0D"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M341146PQB6K3QAC4KY1KV0D"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully wrote all 1 files"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.1332392690000006
+}

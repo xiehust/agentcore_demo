@@ -1,0 +1,21 @@
+{
+  "error": {
+    "Error": {
+      "Message": "This service is not available in the current Region. Choose a different Region or a different service. ",
+      "Code": "NoSuchResourceException"
+    },
+    "ResponseMetadata": {
+      "RequestId": "c8bf3134-d154-4f3e-9147-ea165dc834c5",
+      "HTTPStatusCode": 400,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 08:24:13 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "152",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "c8bf3134-d154-4f3e-9147-ea165dc834c5"
+      },
+      "RetryAttempts": 0
+    },
+    "Message": "This service is not available in the current Region. Choose a different Region or a different service. "
+  }
+}

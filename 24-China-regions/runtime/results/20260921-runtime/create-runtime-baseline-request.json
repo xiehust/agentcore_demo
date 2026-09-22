@@ -1,0 +1,23 @@
+{
+  "agentRuntimeName": "cn_runtime24_01e89f4038_baseline",
+  "agentRuntimeArtifact": {
+    "containerConfiguration": {
+      "containerUri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-01e89f4038@sha256:b2ce5f96258e027c308ee962334f0af9c8948ad1bf1a24a0cb5773dfd6c6c454"
+    }
+  },
+  "roleArn": "arn:aws-cn:iam::447150580482:role/cn-runtime24-01e89f4038-runtime",
+  "networkConfiguration": {
+    "networkMode": "PUBLIC"
+  },
+  "protocolConfiguration": {
+    "serverProtocol": "HTTP"
+  },
+  "lifecycleConfiguration": {
+    "idleRuntimeSessionTimeout": 60,
+    "maxLifetime": 1800
+  },
+  "clientToken": "7f3dba09-ffb5-4539-9fda-3da4b18f6a6b",
+  "tags": {
+    "Experiment": "cn-runtime24-01e89f4038"
+  }
+}

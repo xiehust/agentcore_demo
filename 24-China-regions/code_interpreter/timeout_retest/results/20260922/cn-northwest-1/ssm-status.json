@@ -1,0 +1,36 @@
+{
+  "CommandId": "972eeadb-2d6a-4a92-aade-bd4a23d210c6",
+  "InstanceId": "i-0a685957c9b9355d7",
+  "Comment": "Code Interpreter 2.6 timeout retest",
+  "DocumentName": "AWS-RunShellScript",
+  "DocumentVersion": "$DEFAULT",
+  "PluginName": "aws:runShellScript",
+  "ResponseCode": 0,
+  "ExecutionStartDateTime": "2026-09-22T07:33:55.565Z",
+  "ExecutionElapsedTime": "PT3M37.556S",
+  "ExecutionEndDateTime": "2026-09-22T07:37:32.565Z",
+  "Status": "Success",
+  "StatusDetails": "Success",
+  "StandardOutputContent": "Completed 6.9 KiB/6.9 KiB (181.2 KiB/s) with 1 file(s) remaining\rdownload: s3://ci-timeout-7e9b807a6e-447150580482/input/input.tar.gz to ./input.tar.gz\n",
+  "StandardOutputUrl": "",
+  "StandardErrorContent": "",
+  "StandardErrorUrl": "",
+  "CloudWatchOutputConfig": {
+    "CloudWatchLogGroupName": "",
+    "CloudWatchOutputEnabled": false
+  },
+  "ResponseMetadata": {
+    "RequestId": "9fce0065-a01d-4021-991d-51dcabbec497",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "server": "Server",
+      "date": "Tue, 22 Sep 2026 07:46:44 GMT",
+      "content-type": "application/x-amz-json-1.1",
+      "content-length": "774",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "9fce0065-a01d-4021-991d-51dcabbec497",
+      "cache-control": "no-store"
+    },
+    "RetryAttempts": 0
+  }
+}

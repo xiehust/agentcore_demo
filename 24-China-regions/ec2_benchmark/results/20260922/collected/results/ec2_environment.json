@@ -1,0 +1,67 @@
+{
+  "at": "2026-09-22T00:29:58.677347+00:00",
+  "instance_identity_document": {
+    "accountId": "447150580482",
+    "architecture": "x86_64",
+    "availabilityZone": "cn-northwest-1a",
+    "billingProducts": null,
+    "devpayProductCodes": null,
+    "marketplaceProductCodes": null,
+    "imageId": "ami-0cd8b949613a8418b",
+    "instanceId": "i-0a685957c9b9355d7",
+    "instanceType": "t3.small",
+    "kernelId": null,
+    "pendingTime": "2026-09-22T00:25:12Z",
+    "privateIp": "172.31.0.90",
+    "ramdiskId": null,
+    "region": "cn-northwest-1",
+    "version": "2017-09-30"
+  },
+  "platform": "Linux-6.18.48-109.150.amzn2023.x86_64-x86_64-with-glibc2.34",
+  "cpu_count": 2,
+  "cpu_info": [
+    "processor\t: 0",
+    "model name\t: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz",
+    "processor\t: 1",
+    "model name\t: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz"
+  ],
+  "python": "3.12.14",
+  "boto3": "1.43.87",
+  "botocore": "1.43.87",
+  "sts": {
+    "UserId": "AROAWQHCAMMBPK6TGPRUY:i-0a685957c9b9355d7",
+    "Account": "447150580482",
+    "Arn": "arn:aws-cn:sts::447150580482:assumed-role/cn-ec2-bench-8bbcd08d59/i-0a685957c9b9355d7",
+    "ResponseMetadata": {
+      "RequestId": "52b2ec88-2122-4c8d-a560-6344f5baf547",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "52b2ec88-2122-4c8d-a560-6344f5baf547",
+        "x-amz-sts-extended-request-id": "MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTAwMzY5OTg3MDk6Ujp4NTRwaDlNNw==",
+        "content-type": "text/xml",
+        "content-length": "471",
+        "date": "Tue, 22 Sep 2026 00:29:58 GMT"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "target_endpoint": "https://bedrock-agentcore.cn-northwest-1.amazonaws.com.cn",
+  "initial_cpu": {
+    "at": "2026-09-22T00:29:58.717824+00:00",
+    "unix_s": 1790036998.7178423,
+    "cpu_total_ticks": 56257,
+    "idle_ticks": 49231,
+    "steal_ticks": 140,
+    "load_average": [
+      0.76,
+      0.27,
+      0.1
+    ],
+    "memory": {
+      "MemTotal": "1955572 kB",
+      "MemAvailable": "1540212 kB",
+      "SwapTotal": "0 kB",
+      "SwapFree": "0 kB"
+    }
+  }
+}

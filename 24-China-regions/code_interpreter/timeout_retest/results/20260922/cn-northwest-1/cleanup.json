@@ -1,0 +1,69 @@
+{
+  "delete_interpreter": {
+    "ResponseMetadata": {
+      "RequestId": "2693be78-b2bc-4537-9064-43aa131b6eda",
+      "HTTPStatusCode": 202,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 07:53:05 GMT",
+        "content-type": "application/json",
+        "content-length": "124",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "2693be78-b2bc-4537-9064-43aa131b6eda",
+        "x-amz-apigw-id": "EF0LTGAPZPgEk-g=",
+        "x-amzn-trace-id": "Root=1-6ab233e1-423e973f2494e2ff1f5ec062"
+      },
+      "RetryAttempts": 0
+    },
+    "codeInterpreterId": "ci_timeout_7e9b807a6e-4txxj1i8C9",
+    "status": "DELETED",
+    "lastUpdatedAt": "2026-09-22 07:53:05.597405+00:00"
+  },
+  "stop_ec2": {
+    "StoppingInstances": [
+      {
+        "InstanceId": "i-0a685957c9b9355d7",
+        "CurrentState": {
+          "Code": 64,
+          "Name": "stopping"
+        },
+        "PreviousState": {
+          "Code": 16,
+          "Name": "running"
+        }
+      }
+    ],
+    "ResponseMetadata": {
+      "RequestId": "fb14cc0b-c796-4f17-b5f4-1bff13506d57",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "x-amzn-requestid": "fb14cc0b-c796-4f17-b5f4-1bff13506d57",
+        "cache-control": "no-cache, no-store",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-type": "text/xml;charset=UTF-8",
+        "content-length": "411",
+        "date": "Tue, 22 Sep 2026 07:53:06 GMT",
+        "server": "AmazonEC2"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "instance": {
+    "id": "i-0a685957c9b9355d7",
+    "state": "stopped"
+  },
+  "delete_bucket": {
+    "ResponseMetadata": {
+      "RequestId": "G2KTHTMTWXSD83P6",
+      "HostId": "CGf295ixHHcRNrZrAH53jZSgvPL5TPNgD/vHrSDx9y2uSpTwkzFkQ119JY/3hz3oIGxoHHXQcEc=",
+      "HTTPStatusCode": 204,
+      "HTTPHeaders": {
+        "x-amz-id-2": "CGf295ixHHcRNrZrAH53jZSgvPL5TPNgD/vHrSDx9y2uSpTwkzFkQ119JY/3hz3oIGxoHHXQcEc=",
+        "x-amz-request-id": "G2KTHTMTWXSD83P6",
+        "date": "Tue, 22 Sep 2026 07:53:23 GMT",
+        "server": "AmazonS3"
+      },
+      "RetryAttempts": 0
+    }
+  },
+  "at": "2026-09-22T07:53:22.786472+00:00"
+}

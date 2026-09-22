@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-22T05:27:59.148413+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M33SBEZNH9MJKTFZHA6DC6MX",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport importlib.util, json, sys\nprint(json.dumps({\"package_preinstalled\": importlib.util.find_spec(\"pytimeparse\") is not None,\n                  \"python_executable\": sys.executable}))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "7d9b21f4-5f10-4473-a573-d6aaa7992094",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:27:59 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "7d9b21f4-5f10-4473-a573-d6aaa7992094",
+        "x-amzn-code-interpreter-session-id": "01M33SBEZNH9MJKTFZHA6DC6MX"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33SBEZNH9MJKTFZHA6DC6MX"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"package_preinstalled\": false, \"python_executable\": \"/opt/amazon/genesis1p-tools/venv/bin/python\"}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"package_preinstalled\": false, \"python_executable\": \"/opt/amazon/genesis1p-tools/venv/bin/python\"}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.006830930709838867
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.06683009700009279
+}

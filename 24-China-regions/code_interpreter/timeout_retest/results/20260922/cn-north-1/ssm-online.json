@@ -1,0 +1,33 @@
+{
+  "InstanceInformationList": [
+    {
+      "InstanceId": "i-0ab621bda76e7f0af",
+      "PingStatus": "Online",
+      "LastPingDateTime": "2026-09-22 07:29:30.299000+00:00",
+      "AgentVersion": "3.3.4624.0",
+      "IsLatestVersion": false,
+      "PlatformType": "Linux",
+      "PlatformName": "Amazon Linux",
+      "PlatformVersion": "2023",
+      "ResourceType": "EC2Instance",
+      "IPAddress": "172.31.44.156",
+      "ComputerName": "ip-172-31-44-156.cn-north-1.compute.internal",
+      "SourceId": "i-0ab621bda76e7f0af",
+      "SourceType": "AWS::EC2::Instance"
+    }
+  ],
+  "ResponseMetadata": {
+    "RequestId": "0a1e98f6-3083-404b-8564-de96104b4d50",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "server": "Server",
+      "date": "Tue, 22 Sep 2026 07:29:35 GMT",
+      "content-type": "application/x-amz-json-1.1",
+      "content-length": "440",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "0a1e98f6-3083-404b-8564-de96104b4d50",
+      "cache-control": "no-store"
+    },
+    "RetryAttempts": 0
+  }
+}

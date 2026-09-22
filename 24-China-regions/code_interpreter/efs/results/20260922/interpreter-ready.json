@@ -1,0 +1,43 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "ac5eae80-2fe8-46c2-ac57-5a6f26476c83",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Tue, 22 Sep 2026 02:11:54 GMT",
+      "content-type": "application/json",
+      "content-length": "843",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "ac5eae80-2fe8-46c2-ac57-5a6f26476c83",
+      "x-amz-apigw-id": "EFCMuGPMZPgEacQ=",
+      "x-amzn-trace-id": "Root=1-6ab1e3ea-0f26dc3832ae7d771ec1ec71"
+    },
+    "RetryAttempts": 0
+  },
+  "codeInterpreterId": "cn_ci_efs_120715bd7f-FoxnNjfYyO",
+  "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:code-interpreter-custom/cn_ci_efs_120715bd7f-FoxnNjfYyO",
+  "name": "cn_ci_efs_120715bd7f",
+  "executionRoleArn": "arn:aws-cn:iam::447150580482:role/cn_ci_efs_120715bd7f",
+  "networkConfiguration": {
+    "networkMode": "VPC",
+    "vpcConfig": {
+      "securityGroups": [
+        "sg-049391a8216deb6b8"
+      ],
+      "subnets": [
+        "subnet-01c597ab731966fe0"
+      ]
+    }
+  },
+  "status": "READY",
+  "filesystemConfigurations": [
+    {
+      "efsConfiguration": {
+        "accessPointArn": "arn:aws-cn:elasticfilesystem:cn-northwest-1:447150580482:access-point/fsap-0abf9e902a5423200",
+        "mountPath": "/mnt/efs",
+        "fileSystemArn": "arn:aws-cn:elasticfilesystem:cn-northwest-1:447150580482:file-system/fs-0951a92f04a3e9c3a"
+      }
+    }
+  ],
+  "createdAt": "2026-09-22 02:07:25.793135+00:00",
+  "lastUpdatedAt": "2026-09-22 02:11:49.809178+00:00"
+}

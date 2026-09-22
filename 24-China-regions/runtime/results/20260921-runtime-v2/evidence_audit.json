@@ -1,0 +1,35 @@
+{
+  "cold": {
+    "attempts": 100,
+    "successful": 100,
+    "statistics_recomputed": true,
+    "unique_instances": 100,
+    "all_first_request": true
+  },
+  "warm": {
+    "attempts": 500,
+    "successful": 500,
+    "statistics_recomputed": true,
+    "same_instance_contiguous_sequence": true
+  },
+  "warmup": {
+    "attempts": 1,
+    "successful": 1,
+    "statistics_recomputed": true
+  },
+  "scale": {
+    "attempts": 50,
+    "successful": 50,
+    "statistics_recomputed": true,
+    "unique_instances": 50,
+    "all_first_request": true
+  },
+  "app_sha256": "38f8341098c008765b2cc3fa746b968217e035fca220fcdc9937031f4b27ccfa",
+  "total_requests": 651,
+  "runtime_sessions": 151,
+  "all_stop_responses_received": true,
+  "benchmark_source_hash_verified": true,
+  "jsonl_matches_full_result": true,
+  "scale_acceptance_recomputed": true,
+  "at": "2026-09-21T16:48:17.960494+00:00"
+}

@@ -1,0 +1,36 @@
+{
+  "at": "2026-09-21T16:28:53.404657+00:00",
+  "name": "executeCommand",
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"python\": \"3.12.13 (main, Jun 18 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]\", \"boto3\": \"1.40.30\", \"botocore\": \"1.40.76\", \"identity\": {\"UserId\": \"AROAWQHCAMMBMPBBP4WN7:BedrockAgentCore-01M32CRZBCTP2B1ANJ3WDY30SJ\", \"Account\": \"447150580482\", \"Arn\": \"arn:aws-cn:sts::447150580482:assumed-role/cn-runtime24-01e89f4038-load/BedrockAgentCore-01M32CRZBCTP2B1ANJ3WDY30SJ\", \"ResponseMetadata\": {\"RequestId\": \"fa6d1ede-e57f-4be7-8ca0-7bf213e0cbaa\", \"HTTPStatusCode\": 200, \"HTTPHeaders\": {\"x-amzn-requestid\": \"fa6d1ede-e57f-4be7-8ca0-7bf213e0cbaa\", \"x-amz-sts-extended-request-id\": \"MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTAwMDgxMzMxOTg6UjpTZ1l3Yjg1Ug==\", \"content-type\": \"text/xml\", \"content-length\": \"524\", \"date\": \"Mon, 21 Sep 2026 16:28:53 GMT\"}, \"RetryAttempts\": 0}}}\r\n"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"python\": \"3.12.13 (main, Jun 18 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]\", \"boto3\": \"1.40.30\", \"botocore\": \"1.40.76\", \"identity\": {\"UserId\": \"AROAWQHCAMMBMPBBP4WN7:BedrockAgentCore-01M32CRZBCTP2B1ANJ3WDY30SJ\", \"Account\": \"447150580482\", \"Arn\": \"arn:aws-cn:sts::447150580482:assumed-role/cn-runtime24-01e89f4038-load/BedrockAgentCore-01M32CRZBCTP2B1ANJ3WDY30SJ\", \"ResponseMetadata\": {\"RequestId\": \"fa6d1ede-e57f-4be7-8ca0-7bf213e0cbaa\", \"HTTPStatusCode\": 200, \"HTTPHeaders\": {\"x-amzn-requestid\": \"fa6d1ede-e57f-4be7-8ca0-7bf213e0cbaa\", \"x-amz-sts-extended-request-id\": \"MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTAwMDgxMzMxOTg6UjpTZ1l3Yjg1Ug==\", \"content-type\": \"text/xml\", \"content-length\": \"524\", \"date\": \"Mon, 21 Sep 2026 16:28:53 GMT\"}, \"RetryAttempts\": 0}}}\r\n",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.6523129940032959
+        },
+        "isError": false
+      }
+    }
+  ],
+  "metadata": {
+    "RequestId": "86bae1c7-983a-4bcd-ae92-4c04f7b9f584",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Mon, 21 Sep 2026 16:28:53 GMT",
+      "content-type": "application/vnd.amazon.eventstream",
+      "transfer-encoding": "chunked",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "86bae1c7-983a-4bcd-ae92-4c04f7b9f584",
+      "x-amzn-code-interpreter-session-id": "01M32CRZBCTP2B1ANJ3WDY30SJ"
+    },
+    "RetryAttempts": 0
+  }
+}

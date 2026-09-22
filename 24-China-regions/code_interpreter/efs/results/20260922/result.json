@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "at": "2026-09-22T02:12:15.138821+00:00",
+  "region": "cn-northwest-1",
+  "session_ids": [
+    "01M33E4KXZA0EQFBYTJDTMZMC7",
+    "01M33E4YAX5NH62VTC924XBXM2",
+    "01M33E52Y50ESHZFBHWR4K9QFP"
+  ],
+  "session_a": {
+    "exists": true,
+    "sha256": "ff11a237e58e0872897f300ead903b71ea5e51c931be5209ecaee188e2f2d30f",
+    "mounts": [
+      "127.0.0.1:/ /mnt/efs nfs4 rw,nosuid,nodev,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20625,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1 0 0"
+    ],
+    "is_mount": true,
+    "stat": {
+      "uid": 1000,
+      "gid": 1000
+    }
+  },
+  "session_b": {
+    "previous": "EFS persistence proof 20b196f4a4b941c89a02c7bcc9089ea1\n",
+    "sha256": "95deb8fe6349330ee127fcf5234fa3f48590bf8dfc6aead162a477d5d245ca9e"
+  },
+  "session_c": {
+    "content": "EFS persistence proof 20b196f4a4b941c89a02c7bcc9089ea1\nAPPENDED_BY_SESSION_B\n",
+    "sha256": "95deb8fe6349330ee127fcf5234fa3f48590bf8dfc6aead162a477d5d245ca9e"
+  }
+}

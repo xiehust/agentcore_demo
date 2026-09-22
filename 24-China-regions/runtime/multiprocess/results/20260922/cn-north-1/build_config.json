@@ -1,0 +1,54 @@
+{
+  "region": "cn-north-1",
+  "account": "447150580482",
+  "instance_id": "i-056c2c62a8508d683",
+  "bucket": "cn-ec2-bench-f5060bb011-447150580482",
+  "repository": {
+    "repositoryArn": "arn:aws-cn:ecr:cn-north-1:447150580482:repository/cn-runtime24-e998bbe3a7",
+    "registryId": "447150580482",
+    "repositoryName": "cn-runtime24-e998bbe3a7",
+    "repositoryUri": "447150580482.dkr.ecr.cn-north-1.amazonaws.com.cn/cn-runtime24-e998bbe3a7",
+    "createdAt": "2026-09-22 08:12:19.498000+00:00",
+    "imageTagMutability": "IMMUTABLE",
+    "imageScanningConfiguration": {
+      "scanOnPush": false
+    },
+    "encryptionConfiguration": {
+      "encryptionType": "AES256"
+    }
+  },
+  "offline_base": {
+    "source_ref": "python:3.12-slim-bookworm@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "image_id": "sha256:b36d5dd2b034a05f0e0306472d25d0cb649a1f42dcade4b99f4d899f732823e0",
+    "rootfs": {
+      "Type": "layers",
+      "Layers": [
+        "sha256:709e0d49f62206f760d5392af4f1dab26c0017f4242f3975ffe0b2ce705f42e6",
+        "sha256:e3a9f07577a4c05c007cb33e35dbf140834a1e3e51fbf0e7deab170b6e104995",
+        "sha256:35e2b66d2a1fe8a05b7d96c275310ebf8c159f97d60af23dbc39af18758db040",
+        "sha256:8b2b31e2185a5694c37b43e3dfc119cc36f646316391d69d9688a452c0cf5ffa"
+      ]
+    },
+    "config": {
+      "Cmd": [
+        "python3"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.14",
+        "PYTHON_SHA256=5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a"
+      ],
+      "Labels": null,
+      "OnBuild": null,
+      "User": "",
+      "Volumes": null,
+      "WorkingDir": ""
+    },
+    "archive_sha256": "69c337d74f57fbdf8b368cea685161c8d62b1d411a9367a7f1a8dd0af6bd07dd",
+    "s3_key": "input/offline-base.tar.gz",
+    "local_tag": "cn-verified-python-base:python312"
+  }
+}

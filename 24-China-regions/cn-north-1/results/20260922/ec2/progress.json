@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-22T05:21:28.392654+00:00",
+  "phase": "code_interpreter_efs",
+  "state": "running",
+  "at": "2026-09-22T05:31:31.532042+00:00",
+  "last_cpu": {
+    "at": "2026-09-22T05:31:31.531861+00:00",
+    "unix_s": 1790055091.531879,
+    "cpu_total_ticks": 312426,
+    "idle_ticks": 297653,
+    "steal_ticks": 407,
+    "load_average": [
+      0.04,
+      0.07,
+      0.08
+    ],
+    "memory": {
+      "MemTotal": "1885188 kB",
+      "MemAvailable": "1261968 kB",
+      "SwapTotal": "0 kB",
+      "SwapFree": "0 kB"
+    },
+    "cpu_busy_percent": 0.0,
+    "cpu_steal_percent": 0.0,
+    "phase": "code_interpreter_efs"
+  },
+  "log_tail": "[2026-09-22T05:21:28.508951+00:00] Cold serial samples started\n[2026-09-22T05:21:51.469785+00:00] cold: 10/100\n[2026-09-22T05:22:12.214601+00:00] cold: 20/100\n[2026-09-22T05:22:32.468178+00:00] cold: 30/100\n[2026-09-22T05:22:51.449427+00:00] cold: 40/100\n[2026-09-22T05:23:11.009844+00:00] cold: 50/100\n[2026-09-22T05:23:30.036350+00:00] cold: 60/100\n[2026-09-22T05:23:49.648207+00:00] cold: 70/100\n[2026-09-22T05:24:08.604498+00:00] cold: 80/100\n[2026-09-22T05:24:27.977824+00:00] cold: 90/100\n[2026-09-22T05:24:46.310505+00:00] cold: 100/100\n[2026-09-22T05:24:46.310536+00:00] Warm same-session samples started\n[2026-09-22T05:25:01.612364+00:00] warm: 100/500\n[2026-09-22T05:25:13.777959+00:00] warm: 200/500\n[2026-09-22T05:25:25.295943+00:00] warm: 300/500\n[2026-09-22T05:25:37.095489+00:00] warm: 400/500\n[2026-09-22T05:25:48.984662+00:00] warm: 500/500\n[2026-09-22T05:25:49.187768+00:00] Fresh scale runtime: 0 user sessions -> 50 concurrent sessions\n[2026-09-22T05:25:57.821564+00:00] All samples completed\n[2026-09-22T05:25:58.112188+00:00] 2.7: starting 1 concurrent new sessions\n[2026-09-22T05:25:59.028387+00:00] 2.7: 1 concurrency: 1/1 passed; stopping sessions\n[2026-09-22T05:25:59.149602+00:00] 2.7: starting 10 concurrent new sessions\n[2026-09-22T05:26:00.547693+00:00] 2.7: 10 concurrency: 10/10 passed; stopping sessions\n[2026-09-22T05:26:00.706343+00:00] 2.7: starting 50 concurrent new sessions\n[2026-09-22T05:26:02.801577+00:00] 2.7: 50 concurrency: 50/50 passed; stopping sessions\n[2026-09-22T05:26:03.390240+00:00] 2.7: PASS\n[2026-09-22T05:26:14.003395+00:00] Code Interpreter serial: 10/100\n[2026-09-22T05:26:24.956139+00:00] Code Interpreter serial: 20/100\n[2026-09-22T05:26:36.241276+00:00] Code Interpreter serial: 30/100\n[2026-09-22T05:26:46.993418+00:00] Code Interpreter serial: 40/100\n[2026-09-22T05:26:57.899319+00:00] Code Interpreter serial: 50/100\n[2026-09-22T05:27:09.566365+00:00] Code Interpreter serial: 60/100\n[2026-09-22T05:27:20.944892+00:00] Code Interpreter serial: 70/100\n[2026-09-22T05:27:32.206580+00:00] Code Interpreter serial: 80/100\n[2026-09-22T05:27:43.416634+00:00] Code Interpreter serial: 90/100\n[2026-09-22T05:27:54.063094+00:00] Code Interpreter serial: 100/100\n[2026-09-22T05:27:55.848262+00:00] 2.1: PASS\n[2026-09-22T05:27:56.185595+00:00] 2.2: PASS\n[2026-09-22T05:27:56.438849+00:00] 2.3: PASS\n[2026-09-22T05:27:58.487127+00:00] 2.4: PASS\n[2026-09-22T05:27:58.735575+00:00] 2.5: PASS\n[2026-09-22T05:27:59.148330+00:00] 2.9: PASS\n[2026-09-22T05:28:00.215444+00:00] 2.10: FAIL\n[2026-09-22T05:28:01.250643+00:00] 2.6: observing native executeCode for up to 180s\n[2026-09-22T05:31:06.678359+00:00] 2.6: checking caller deadline + stopTask\n[2026-09-22T05:31:19.801979+00:00] 2.6: PARTIAL\n[2026-09-22T05:31:20.068800+00:00] Cleanup: 164/164 stopped\n[2026-09-22T05:31:25.823479+00:00] 2.10: PASS\n[2026-09-22T05:31:26.027710+00:00] Cleanup: 1/1 stopped\n"
+}

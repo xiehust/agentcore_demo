@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-22T05:28:01.250714+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M33SBN896JK6YBDJH5M7A8GZ",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport time, pathlib\nfor i in range(180):\n    pathlib.Path(\"/tmp/native-heartbeat.txt\").write_text(str(i))\n    time.sleep(1)\npathlib.Path(\"/tmp/native-done.txt\").write_text(\"COMPLETED\")\nprint(\"NATIVE_LONG_TASK_COMPLETED\")\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "77517fe9-5881-4142-9b8b-6ce2b91df78e",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:31:01 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "77517fe9-5881-4142-9b8b-6ce2b91df78e",
+        "x-amzn-code-interpreter-session-id": "01M33SBN896JK6YBDJH5M7A8GZ"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33SBN896JK6YBDJH5M7A8GZ"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "NATIVE_LONG_TASK_COMPLETED"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "NATIVE_LONG_TASK_COMPLETED",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 180.08855557441711
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 180.17805420800005
+}

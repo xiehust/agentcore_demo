@@ -1,0 +1,287 @@
+{
+  "status": "PASS",
+  "session_id": "01M34114C0G5J3505D07ZVCEP7",
+  "environment": {
+    "timeout_binary": "/usr/bin/timeout",
+    "cwd": "/opt/amazon/genesis1p-tools/var"
+  },
+  "control": {
+    "response": {
+      "at": "2026-09-22T07:42:05.302150+00:00",
+      "operation": "invoke_code_interpreter",
+      "request": {
+        "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+        "sessionId": "01M34114C0G5J3505D07ZVCEP7",
+        "name": "executeCommand",
+        "arguments": {
+          "command_sha256": "d83778fa5ab561acede2f29964f9b50d37787e172ba6f821d0879da5fab6877e"
+        }
+      },
+      "response": {
+        "ResponseMetadata": {
+          "RequestId": "bd33f8be-a7e3-4a08-ad5c-dff2d1a37831",
+          "HTTPStatusCode": 200,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 07:42:15 GMT",
+            "content-type": "application/vnd.amazon.eventstream",
+            "transfer-encoding": "chunked",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "bd33f8be-a7e3-4a08-ad5c-dff2d1a37831",
+            "x-amzn-code-interpreter-session-id": "01M34114C0G5J3505D07ZVCEP7"
+          },
+          "RetryAttempts": 0
+        },
+        "sessionId": "01M34114C0G5J3505D07ZVCEP7"
+      },
+      "events": [
+        {
+          "result": {
+            "content": [],
+            "structuredContent": {
+              "stdout": "",
+              "stderr": "",
+              "exitCode": 0,
+              "executionTime": 10.12039041519165
+            },
+            "isError": false
+          }
+        }
+      ],
+      "elapsed_s": 10.207827973999997
+    },
+    "snapshot": {
+      "parent": {
+        "process": {
+          "pid": 415,
+          "ppid": 301,
+          "pgid": 415,
+          "start_ticks": "1290"
+        },
+        "alive": false,
+        "state": null,
+        "heartbeat": "39",
+        "done": true
+      },
+      "child": {
+        "process": {
+          "pid": 423,
+          "ppid": 415,
+          "pgid": 415,
+          "start_ticks": "1297"
+        },
+        "alive": false,
+        "state": null,
+        "heartbeat": "39",
+        "done": true
+      }
+    }
+  },
+  "cases": [
+    {
+      "mode": "normal",
+      "command": "timeout --signal=TERM --kill-after=2s 5s python3 /opt/amazon/genesis1p-tools/var/process-worker.py parent normal /tmp/ci-timeout-normal 40",
+      "expected_exit": 124,
+      "response": {
+        "at": "2026-09-22T07:42:15.642649+00:00",
+        "operation": "invoke_code_interpreter",
+        "request": {
+          "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+          "sessionId": "01M34114C0G5J3505D07ZVCEP7",
+          "name": "executeCommand",
+          "arguments": {
+            "command_sha256": "2dd8855421ffe068af018d62b3042fde30fb41cf491dbc4ad4f57af2a5e53d72"
+          }
+        },
+        "response": {
+          "ResponseMetadata": {
+            "RequestId": "83918772-eb59-4128-a5e1-6b7142211f38",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Tue, 22 Sep 2026 07:42:20 GMT",
+              "content-type": "application/vnd.amazon.eventstream",
+              "transfer-encoding": "chunked",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "83918772-eb59-4128-a5e1-6b7142211f38",
+              "x-amzn-code-interpreter-session-id": "01M34114C0G5J3505D07ZVCEP7"
+            },
+            "RetryAttempts": 0
+          },
+          "sessionId": "01M34114C0G5J3505D07ZVCEP7"
+        },
+        "events": [
+          {
+            "result": {
+              "content": [],
+              "structuredContent": {
+                "stdout": "",
+                "stderr": "",
+                "exitCode": 124,
+                "executionTime": 5.109032154083252
+              },
+              "isError": true
+            }
+          }
+        ],
+        "elapsed_s": 5.190622060999999
+      },
+      "first": {
+        "parent": {
+          "process": {
+            "pid": 446,
+            "ppid": 428,
+            "pgid": 428,
+            "start_ticks": "2334"
+          },
+          "alive": false,
+          "state": null,
+          "heartbeat": "19",
+          "done": false
+        },
+        "child": {
+          "process": {
+            "pid": 447,
+            "ppid": 446,
+            "pgid": 428,
+            "start_ticks": "2336"
+          },
+          "alive": false,
+          "state": null,
+          "heartbeat": "19",
+          "done": false
+        }
+      },
+      "directory": "/tmp/ci-timeout-normal",
+      "final": {
+        "parent": {
+          "process": {
+            "pid": 446,
+            "ppid": 428,
+            "pgid": 428,
+            "start_ticks": "2334"
+          },
+          "alive": false,
+          "state": null,
+          "heartbeat": "19",
+          "done": false
+        },
+        "child": {
+          "process": {
+            "pid": 447,
+            "ppid": 446,
+            "pgid": 428,
+            "start_ticks": "2336"
+          },
+          "alive": false,
+          "state": null,
+          "heartbeat": "19",
+          "done": false
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "mode": "ignore",
+      "command": "timeout --signal=TERM --kill-after=2s 5s python3 /opt/amazon/genesis1p-tools/var/process-worker.py parent ignore /tmp/ci-timeout-ignore 40",
+      "expected_exit": 137,
+      "response": {
+        "at": "2026-09-22T07:42:20.907545+00:00",
+        "operation": "invoke_code_interpreter",
+        "request": {
+          "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+          "sessionId": "01M34114C0G5J3505D07ZVCEP7",
+          "name": "executeCommand",
+          "arguments": {
+            "command_sha256": "8596f2296bec3a366cd565a87b86d22d780926715442ed5332d96f6f186cad6e"
+          }
+        },
+        "response": {
+          "ResponseMetadata": {
+            "RequestId": "e45f66bf-e2f1-4aa0-90ea-20326db5c1f8",
+            "HTTPStatusCode": 200,
+            "HTTPHeaders": {
+              "date": "Tue, 22 Sep 2026 07:42:28 GMT",
+              "content-type": "application/vnd.amazon.eventstream",
+              "transfer-encoding": "chunked",
+              "connection": "keep-alive",
+              "x-amzn-requestid": "e45f66bf-e2f1-4aa0-90ea-20326db5c1f8",
+              "x-amzn-code-interpreter-session-id": "01M34114C0G5J3505D07ZVCEP7"
+            },
+            "RetryAttempts": 0
+          },
+          "sessionId": "01M34114C0G5J3505D07ZVCEP7"
+        },
+        "events": [
+          {
+            "result": {
+              "content": [],
+              "structuredContent": {
+                "stdout": "",
+                "stderr": "",
+                "exitCode": 137,
+                "executionTime": 7.0571911334991455
+              },
+              "isError": true
+            }
+          }
+        ],
+        "elapsed_s": 7.132020166999951
+      },
+      "first": {
+        "parent": {
+          "process": {
+            "pid": 456,
+            "ppid": 448,
+            "pgid": 448,
+            "start_ticks": "2855"
+          },
+          "alive": false,
+          "state": null,
+          "heartbeat": "27",
+          "done": false
+        },
+        "child": {
+          "process": {
+            "pid": 457,
+            "ppid": 456,
+            "pgid": 448,
+            "start_ticks": "2857"
+          },
+          "alive": false,
+          "state": null,
+          "heartbeat": "27",
+          "done": false
+        }
+      },
+      "directory": "/tmp/ci-timeout-ignore",
+      "final": {
+        "parent": {
+          "process": {
+            "pid": 456,
+            "ppid": 448,
+            "pgid": 448,
+            "start_ticks": "2855"
+          },
+          "alive": false,
+          "state": null,
+          "heartbeat": "27",
+          "done": false
+        },
+        "child": {
+          "process": {
+            "pid": 457,
+            "ppid": 456,
+            "pgid": 448,
+            "start_ticks": "2857"
+          },
+          "alive": false,
+          "state": null,
+          "heartbeat": "27",
+          "done": false
+        }
+      },
+      "status": "PASS"
+    }
+  ],
+  "same_session_recovery": true,
+  "scope": "GNU timeout inside sandbox; not a per-invocation API timeout field"
+}

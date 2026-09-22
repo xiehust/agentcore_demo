@@ -1,0 +1,66 @@
+{
+  "china_mirror": {
+    "index_url": "https://pypi.tuna.tsinghua.edu.cn/simple",
+    "elapsed_s": 1.2168141500001184,
+    "output": {
+      "stdout": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\nCollecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n",
+      "stderr": "",
+      "isError": false,
+      "results": [
+        {
+          "content": [
+            {
+              "type": "text",
+              "text": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\nCollecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n"
+            }
+          ],
+          "structuredContent": {
+            "stdout": "Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\r\nCollecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n",
+            "stderr": "",
+            "exitCode": 0,
+            "executionTime": 1.110095739364624
+          },
+          "isError": false
+        }
+      ],
+      "exceptions": []
+    },
+    "import": {
+      "seconds": 4800,
+      "module_file": "/tmp/ci-pip-china_mirror-7d89b7c4fb104e2791b86bf855f26452/pytimeparse/__init__.py",
+      "target_exists": true
+    }
+  },
+  "default": {
+    "index_url": null,
+    "elapsed_s": 1.4712357500000053,
+    "output": {
+      "stdout": "Collecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl.metadata (3.4 kB)\r\nDownloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n",
+      "stderr": "",
+      "isError": false,
+      "results": [
+        {
+          "content": [
+            {
+              "type": "text",
+              "text": "Collecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl.metadata (3.4 kB)\r\nDownloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n"
+            }
+          ],
+          "structuredContent": {
+            "stdout": "Collecting pytimeparse==1.1.8\r\n  Downloading pytimeparse-1.1.8-py2.py3-none-any.whl.metadata (3.4 kB)\r\nDownloading pytimeparse-1.1.8-py2.py3-none-any.whl (10.0 kB)\r\nInstalling collected packages: pytimeparse\r\nSuccessfully installed pytimeparse-1.1.8\r\n",
+            "stderr": "",
+            "exitCode": 0,
+            "executionTime": 1.3767168521881104
+          },
+          "isError": false
+        }
+      ],
+      "exceptions": []
+    },
+    "import": {
+      "seconds": 4800,
+      "module_file": "/tmp/ci-pip-default-f9debdacb7f44ab2810e82866f65deff/pytimeparse/__init__.py",
+      "target_exists": true
+    }
+  }
+}

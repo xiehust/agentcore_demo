@@ -1,0 +1,46 @@
+{
+  "SecurityGroups": [
+    {
+      "GroupId": "sg-05e4383d86a02b2b2",
+      "IpPermissionsEgress": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [],
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "cn-ec2-bench-0eec9b6240"
+        }
+      ],
+      "VpcId": "vpc-06e0b7c2406a2073b",
+      "SecurityGroupArn": "arn:aws-cn:ec2:cn-north-1:447150580482:security-group/sg-05e4383d86a02b2b2",
+      "OwnerId": "447150580482",
+      "GroupName": "cn-ec2-bench-0eec9b6240",
+      "Description": "SSM-only China region benchmark; no inbound",
+      "IpPermissions": []
+    }
+  ],
+  "ResponseMetadata": {
+    "RequestId": "8c61e1bd-e758-423e-9d9c-bde2d09b113a",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "x-amzn-requestid": "8c61e1bd-e758-423e-9d9c-bde2d09b113a",
+      "cache-control": "no-cache, no-store",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "content-type": "text/xml;charset=UTF-8",
+      "content-length": "887",
+      "date": "Tue, 22 Sep 2026 05:05:47 GMT",
+      "server": "AmazonEC2"
+    },
+    "RetryAttempts": 0
+  }
+}

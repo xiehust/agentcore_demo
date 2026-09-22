@@ -1,0 +1,36 @@
+{
+  "CommandId": "fa0d423f-6cf5-4c13-9eec-89f55cb7a8db",
+  "InstanceId": "i-0ab621bda76e7f0af",
+  "Comment": "China same-region benchmark: build-2",
+  "DocumentName": "AWS-RunShellScript",
+  "DocumentVersion": "$DEFAULT",
+  "PluginName": "aws:runShellScript",
+  "ResponseCode": 1,
+  "ExecutionStartDateTime": "2026-09-22T05:13:01.374Z",
+  "ExecutionElapsedTime": "PT9.07S",
+  "ExecutionEndDateTime": "2026-09-22T05:13:10.374Z",
+  "Status": "Failed",
+  "StatusDetails": "Failed",
+  "StandardOutputContent": "\nstatus: done\nLast metadata expiration check: 0:07:03 ago on Tue Sep 22 05:05:59 2026.\nPackage python3.12-3.12.14-2.amzn2023.0.1.aarch64 is already installed.\nPackage python3.12-pip-23.2.1-4.amzn2023.0.11.noarch is already installed.\nPackage docker-25.0.16-1.amzn2023.0.4.aarch64 is already installed.\nDependencies resolved.\nNothing to do.\nComplete!\nCompleted 4.8 KiB/4.8 KiB (107.3 KiB/s) with 1 file(s) remaining\rdownload: s3://cn-ec2-bench-0eec9b6240-447150580482/input/build.tar.gz to ./build.tar.gz\nLooking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\nRequirement already satisfied: boto3==1.43.87 in ./venv/lib64/python3.12/site-packages (from -r requirements.txt (line 1)) (1.43.87)\nRequirement already satisfied: botocore==1.43.87 in ./venv/lib64/python3.12/site-packages (from -r requirements.txt (line 2)) (1.43.87)\nRequirement already satisfied: jmespath<2.0.0,>=0.7.1 in ./venv/lib64/python3.12/site-packages (from boto3==1.43.87->-r requirements.txt (line 1)) (1.1.0)\nRequirement already satisfied: s3transfer<0.20.0,>=0.19.0 in ./venv/lib64/python3.12/site-packages (from boto3==1.43.87->-r requirements.txt (line 1)) (0.19.2)\nRequirement already satisfied: python-dateutil<3.0.0,>=2.1 in ./venv/lib64/python3.12/site-packages (from botocore==1.43.87->-r requirements.txt (line 2)) (2.9.0.post0)\nRequirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in ./venv/lib64/python3.12/site-packages (from botocore==1.43.87->-r requirements.txt (line 2)) (2.8.0)\nRequirement already satisfied: six>=1.5 in ./venv/lib64/python3.12/site-packages (from python-dateutil<3.0.0,>=2.1->botocore==1.43.87->-r requirements.txt (line 2)) (1.17.0)\n",
+  "StandardOutputUrl": "",
+  "StandardErrorContent": "failed to run commands: exit status 1",
+  "StandardErrorUrl": "",
+  "CloudWatchOutputConfig": {
+    "CloudWatchLogGroupName": "",
+    "CloudWatchOutputEnabled": false
+  },
+  "ResponseMetadata": {
+    "RequestId": "4626d6d7-8880-4a25-b8fc-b136656f3d3c",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "server": "Server",
+      "date": "Tue, 22 Sep 2026 05:13:47 GMT",
+      "content-type": "application/x-amz-json-1.1",
+      "content-length": "2325",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "4626d6d7-8880-4a25-b8fc-b136656f3d3c",
+      "cache-control": "no-store"
+    },
+    "RetryAttempts": 0
+  }
+}

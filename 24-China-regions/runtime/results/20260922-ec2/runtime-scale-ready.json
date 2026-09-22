@@ -1,0 +1,45 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "74354336-23f7-46a9-93fd-432674fbc89b",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Tue, 22 Sep 2026 00:26:50 GMT",
+      "content-type": "application/json",
+      "content-length": "1167",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "74354336-23f7-46a9-93fd-432674fbc89b",
+      "x-amz-apigw-id": "EEyztFmmZPgEYlg=",
+      "x-amzn-trace-id": "Root=1-6ab1cb4a-35a584df452bbbf4164d1940"
+    },
+    "RetryAttempts": 0
+  },
+  "agentRuntimeArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:runtime/cn_runtime24_2463cd7d3a_scale-53yvj3534q",
+  "agentRuntimeName": "cn_runtime24_2463cd7d3a_scale",
+  "agentRuntimeId": "cn_runtime24_2463cd7d3a_scale-53yvj3534q",
+  "agentRuntimeVersion": "1",
+  "createdAt": "2026-09-22 00:23:34.995741+00:00",
+  "lastUpdatedAt": "2026-09-22 00:26:49.272704+00:00",
+  "roleArn": "arn:aws-cn:iam::447150580482:role/cn-runtime24-2463cd7d3a-runtime",
+  "networkConfiguration": {
+    "networkMode": "PUBLIC"
+  },
+  "status": "READY",
+  "lifecycleConfiguration": {
+    "idleRuntimeSessionTimeout": 60,
+    "maxLifetime": 1800
+  },
+  "workloadIdentityDetails": {
+    "workloadIdentityArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:447150580482:workload-identity-directory/default/workload-identity/cn_runtime24_2463cd7d3a_scale-53yvj3534q"
+  },
+  "agentRuntimeArtifact": {
+    "containerConfiguration": {
+      "containerUri": "447150580482.dkr.ecr.cn-northwest-1.amazonaws.com.cn/cn-runtime24-2463cd7d3a@sha256:e2c02e990e8610ed7750b0279a939900c8ceb24ec8716247263a625d7a4aabe3"
+    }
+  },
+  "protocolConfiguration": {
+    "serverProtocol": "HTTP"
+  },
+  "metadataConfiguration": {
+    "requireMMDSV2": true
+  }
+}

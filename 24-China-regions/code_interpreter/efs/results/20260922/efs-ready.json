@@ -1,0 +1,45 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "ada23a83-a049-4d78-abb6-770104ff6b8f",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Tue, 22 Sep 2026 02:05:47 GMT",
+      "content-type": "application/json",
+      "content-length": "866",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "ada23a83-a049-4d78-abb6-770104ff6b8f"
+    },
+    "RetryAttempts": 0
+  },
+  "FileSystems": [
+    {
+      "OwnerId": "447150580482",
+      "CreationToken": "cn_ci_efs_120715bd7f",
+      "FileSystemId": "fs-0951a92f04a3e9c3a",
+      "FileSystemArn": "arn:aws-cn:elasticfilesystem:cn-northwest-1:447150580482:file-system/fs-0951a92f04a3e9c3a",
+      "CreationTime": "2026-09-22 02:05:42+00:00",
+      "LifeCycleState": "available",
+      "Name": "cn_ci_efs_120715bd7f",
+      "NumberOfMountTargets": 0,
+      "SizeInBytes": {
+        "Value": 6144,
+        "ValueInIA": 0,
+        "ValueInStandard": 6144,
+        "ValueInArchive": 0
+      },
+      "PerformanceMode": "generalPurpose",
+      "Encrypted": true,
+      "KmsKeyId": "arn:aws-cn:kms:cn-northwest-1:447150580482:key/4271cd22-848c-4f4f-832a-2a30f2cde954",
+      "ThroughputMode": "bursting",
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "cn_ci_efs_120715bd7f"
+        }
+      ],
+      "FileSystemProtection": {
+        "ReplicationOverwriteProtection": "ENABLED"
+      }
+    }
+  ]
+}

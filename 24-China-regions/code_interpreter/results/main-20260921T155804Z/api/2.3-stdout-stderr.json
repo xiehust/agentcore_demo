@@ -1,0 +1,54 @@
+{
+  "at": "2026-09-21T15:58:12.189029+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M32B0R7MT16W4D0JE8SHE2SG",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport sys\nprint(\"CN_STDOUT_中文_123\")\nprint(\"CN_STDERR_错误_456\", file=sys.stderr)\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "ea1b8acb-0c40-42b5-9cbd-13cb3feac428",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 21 Sep 2026 15:58:12 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "ea1b8acb-0c40-42b5-9cbd-13cb3feac428",
+        "x-amzn-code-interpreter-session-id": "01M32B0R7MT16W4D0JE8SHE2SG"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M32B0R7MT16W4D0JE8SHE2SG"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "CN_STDOUT_中文_123"
+          },
+          {
+            "type": "text",
+            "text": "CN_STDERR_错误_456"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "CN_STDOUT_中文_123",
+          "stderr": "CN_STDERR_错误_456",
+          "exitCode": 0,
+          "executionTime": 0.04885697364807129
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.40690402302425355
+}

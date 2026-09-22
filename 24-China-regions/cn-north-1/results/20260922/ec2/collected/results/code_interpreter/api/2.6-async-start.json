@@ -1,0 +1,48 @@
+{
+  "at": "2026-09-22T05:31:06.678405+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M33SBN896JK6YBDJH5M7A8GZ",
+    "name": "startCommandExecution",
+    "arguments": {
+      "command": "exec python3 -u -c '\nimport time, pathlib\nfor i in range(120):\n    pathlib.Path(\"/tmp/cancel-heartbeat.txt\").write_text(str(i))\n    time.sleep(1)\npathlib.Path(\"/tmp/cancel-done.txt\").write_text(\"COMPLETED\")\n'"
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "7f16073a-54a6-4a64-8e72-248d76555638",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Tue, 22 Sep 2026 05:31:06 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "7f16073a-54a6-4a64-8e72-248d76555638",
+        "x-amzn-code-interpreter-session-id": "01M33SBN896JK6YBDJH5M7A8GZ"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M33SBN896JK6YBDJH5M7A8GZ"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully started a command execution task"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "9139f48f-e068-4f0e-bec0-2fe9beacd401",
+          "taskStatus": "submitted",
+          "stdout": "",
+          "stderr": ""
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.11959586299985858
+}

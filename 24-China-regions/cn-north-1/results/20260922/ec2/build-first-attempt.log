@@ -1,0 +1,20 @@
+{"phase": "building_on_beijing_ec2", "at": "2026-09-22T05:08:46.518348+00:00", "instance_identity": {"accountId": "447150580482", "architecture": "arm64", "availabilityZone": "cn-north-1a", "billingProducts": null, "devpayProductCodes": null, "marketplaceProductCodes": null, "imageId": "ami-0eb115c3723a4077e", "instanceId": "i-0ab621bda76e7f0af", "instanceType": "t4g.small", "kernelId": null, "pendingTime": "2026-09-22T05:05:24Z", "privateIp": "172.31.44.156", "ramdiskId": null, "region": "cn-north-1", "version": "2017-09-30"}}
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 334B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134
+#2 ERROR: failed to do request: Head "https://registry-1.docker.io/v2/library/python/manifests/sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134": dial tcp 64.13.192.76:443: i/o timeout
+------
+ > [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134:
+------
+Dockerfile:1
+--------------------
+   1 | >>> FROM python:3.12-slim-bookworm@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134
+   2 |     WORKDIR /app
+   3 |     COPY app.py /app/app.py
+--------------------
+ERROR: failed to solve: python:3.12-slim-bookworm@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134: failed to do request: Head "https://registry-1.docker.io/v2/library/python/manifests/sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134": dial tcp 64.13.192.76:443: i/o timeout
+{"phase": "failed", "at": "2026-09-22T05:09:46.867900+00:00", "instance_identity": {"accountId": "447150580482", "architecture": "arm64", "availabilityZone": "cn-north-1a", "billingProducts": null, "devpayProductCodes": null, "marketplaceProductCodes": null, "imageId": "ami-0eb115c3723a4077e", "instanceId": "i-0ab621bda76e7f0af", "instanceType": "t4g.small", "kernelId": null, "pendingTime": "2026-09-22T05:05:24Z", "privateIp": "172.31.44.156", "ramdiskId": null, "region": "cn-north-1", "version": "2017-09-30"}, "error": "Command '['docker', 'build', '--platform', 'linux/arm64', '-t', '447150580482.dkr.ecr.cn-north-1.amazonaws.com.cn/cn-runtime24-ec55b7f117:909fcedc1db64f28', '/opt/beijing-agentcore']' returned non-zero exit status 1.", "traceback": "Traceback (most recent call last):\n  File \"/opt/beijing-agentcore/build_runtime.py\", line 45, in main\n    subprocess.run([\"docker\", \"build\", \"--platform\", \"linux/arm64\", \"-t\", image, str(ROOT)],\n  File \"/usr/lib64/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['docker', 'build', '--platform', 'linux/arm64', '-t', '447150580482.dkr.ecr.cn-north-1.amazonaws.com.cn/cn-runtime24-ec55b7f117:909fcedc1db64f28', '/opt/beijing-agentcore']' returned non-zero exit status 1.\n"}

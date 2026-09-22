@@ -1,0 +1,88 @@
+{
+  "commands": [
+    "set -eu",
+    "cd /opt/china-multiprocess",
+    "test ! -e isolated-results/cells",
+    "venv/bin/python -c 'import json; d=json.load(open('\"'\"'isolated-results/final.json'\"'\"')); assert not d['\"'\"'completed_cells'\"'\"'] and '\"'\"'AccessDenied'\"'\"' in d['\"'\"'error'\"'\"'] and '\"'\"'PutObject'\"'\"' in d['\"'\"'error'\"'\"']'",
+    "aws s3 cp isolated-results.tar.gz s3://cn-ec2-bench-f5060bb011-447150580482/results/isolated-preparation-failure.tar.gz --region cn-north-1",
+    "aws s3 cp isolated.log s3://cn-ec2-bench-f5060bb011-447150580482/results/isolated-preparation-failure.log --region cn-north-1",
+    "mv isolated-results isolated-preparation-failure",
+    "mv isolated-results.tar.gz isolated-preparation-failure.tar.gz",
+    "sleep 10",
+    "export AWS_REGION=cn-north-1 AWS_DEFAULT_REGION=cn-north-1",
+    "venv/bin/python -u run.py --config isolated-config.json --output isolated-results --key-prefix isolated --interval-seconds 180 > isolated.log 2>&1"
+  ],
+  "response": {
+    "Command": {
+      "CommandId": "1b2ba6af-3206-418e-b79f-cefc004ae5de",
+      "DocumentName": "AWS-RunShellScript",
+      "DocumentVersion": "$DEFAULT",
+      "Comment": "China same-region benchmark: isolated-retry",
+      "ExpiresAfter": "2026-09-22 09:03:21.381000+00:00",
+      "Parameters": {
+        "commands": [
+          "set -eu",
+          "cd /opt/china-multiprocess",
+          "test ! -e isolated-results/cells",
+          "venv/bin/python -c 'import json; d=json.load(open('\"'\"'isolated-results/final.json'\"'\"')); assert not d['\"'\"'completed_cells'\"'\"'] and '\"'\"'AccessDenied'\"'\"' in d['\"'\"'error'\"'\"'] and '\"'\"'PutObject'\"'\"' in d['\"'\"'error'\"'\"']'",
+          "aws s3 cp isolated-results.tar.gz s3://cn-ec2-bench-f5060bb011-447150580482/results/isolated-preparation-failure.tar.gz --region cn-north-1",
+          "aws s3 cp isolated.log s3://cn-ec2-bench-f5060bb011-447150580482/results/isolated-preparation-failure.log --region cn-north-1",
+          "mv isolated-results isolated-preparation-failure",
+          "mv isolated-results.tar.gz isolated-preparation-failure.tar.gz",
+          "sleep 10",
+          "export AWS_REGION=cn-north-1 AWS_DEFAULT_REGION=cn-north-1",
+          "venv/bin/python -u run.py --config isolated-config.json --output isolated-results --key-prefix isolated --interval-seconds 180 > isolated.log 2>&1"
+        ],
+        "executionTimeout": [
+          "1800"
+        ]
+      },
+      "InstanceIds": [
+        "i-056c2c62a8508d683"
+      ],
+      "Targets": [],
+      "RequestedDateTime": "2026-09-22 08:32:21.381000+00:00",
+      "Status": "Pending",
+      "StatusDetails": "Pending",
+      "OutputS3Region": "cn-north-1",
+      "OutputS3BucketName": "",
+      "OutputS3KeyPrefix": "",
+      "MaxConcurrency": "50",
+      "MaxErrors": "0",
+      "TargetCount": 1,
+      "CompletedCount": 0,
+      "ErrorCount": 0,
+      "DeliveryTimedOutCount": 0,
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "",
+        "CloudWatchOutputEnabled": false
+      },
+      "TimeoutSeconds": 60,
+      "AlarmConfiguration": {
+        "IgnorePollAlarmFailure": false,
+        "Alarms": []
+      },
+      "TriggeredAlarms": []
+    },
+    "ResponseMetadata": {
+      "RequestId": "ac9333b0-189e-4c78-b7ee-9720c6662773",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "server": "Server",
+        "date": "Tue, 22 Sep 2026 08:32:21 GMT",
+        "content-type": "application/x-amz-json-1.1",
+        "content-length": "1954",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "ac9333b0-189e-4c78-b7ee-9720c6662773",
+        "cache-control": "no-store"
+      },
+      "RetryAttempts": 0
+    }
+  }
+}

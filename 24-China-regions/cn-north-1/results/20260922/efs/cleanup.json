@@ -1,0 +1,137 @@
+{
+  "at": "2026-09-22T06:09:06.400061+00:00",
+  "actions": [
+    {
+      "action": "delete-interpreter",
+      "resource": "cn_ci_efs_53c6d40f78-eXhLPXpSHB",
+      "status": "ABSENT",
+      "error": {
+        "Error": {
+          "Message": "Code interpreter with ID cn_ci_efs_53c6d40f78-eXhLPXpSHB does not exist",
+          "Code": "ResourceNotFoundException"
+        },
+        "ResponseMetadata": {
+          "RequestId": "e8e78bfd-9899-4bce-be93-ae424ab9bec2",
+          "HTTPStatusCode": 404,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 06:08:39 GMT",
+            "content-type": "application/json",
+            "content-length": "85",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "e8e78bfd-9899-4bce-be93-ae424ab9bec2",
+            "x-amzn-errortype": "ResourceNotFoundException",
+            "x-amz-apigw-id": "EFk4SEotBTIEB3g=",
+            "x-amzn-trace-id": "Root=1-6ab21b67-0dc5b37853034d1973174e51"
+          },
+          "RetryAttempts": 0
+        },
+        "message": "Code interpreter with ID cn_ci_efs_53c6d40f78-eXhLPXpSHB does not exist"
+      }
+    },
+    {
+      "action": "delete-mount-target",
+      "resource": "fsmt-0593f099897908535",
+      "status": "ABSENT",
+      "error": {
+        "Error": {
+          "Message": "Mount target 'fsmt-0593f099897908535' does not exist.",
+          "Code": "MountTargetNotFound"
+        },
+        "ResponseMetadata": {
+          "RequestId": "5869d715-4533-4e0d-8cdc-47ebbfec2d12",
+          "HTTPStatusCode": 404,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 06:08:41 GMT",
+            "content-type": "application/json",
+            "content-length": "101",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "5869d715-4533-4e0d-8cdc-47ebbfec2d12",
+            "x-amzn-errortype": "MountTargetNotFound:"
+          },
+          "RetryAttempts": 0
+        },
+        "ErrorCode": "MountTargetNotFound",
+        "Message": "Mount target 'fsmt-0593f099897908535' does not exist."
+      }
+    },
+    {
+      "action": "delete-access-point",
+      "resource": "fsap-0746b08f9ed31a81c",
+      "status": "ABSENT",
+      "error": {
+        "Error": {
+          "Message": "Access point 'fsap-0746b08f9ed31a81c' does not exist.",
+          "Code": "AccessPointNotFound"
+        },
+        "ResponseMetadata": {
+          "RequestId": "07a1c414-d924-4f5c-a5cd-eca73ed674cd",
+          "HTTPStatusCode": 404,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 06:08:41 GMT",
+            "content-type": "application/json",
+            "content-length": "101",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "07a1c414-d924-4f5c-a5cd-eca73ed674cd",
+            "x-amzn-errortype": "AccessPointNotFound:"
+          },
+          "RetryAttempts": 0
+        },
+        "ErrorCode": "AccessPointNotFound",
+        "Message": "Access point 'fsap-0746b08f9ed31a81c' does not exist."
+      }
+    },
+    {
+      "action": "delete-file-system",
+      "resource": "fs-0fdffaca3f1fa9fa8",
+      "status": "ABSENT",
+      "error": {
+        "Error": {
+          "Message": "File system 'fs-0fdffaca3f1fa9fa8' does not exist.",
+          "Code": "FileSystemNotFound"
+        },
+        "ResponseMetadata": {
+          "RequestId": "8c68ae25-df70-4f23-a3b3-ae0028d422f5",
+          "HTTPStatusCode": 404,
+          "HTTPHeaders": {
+            "date": "Tue, 22 Sep 2026 06:08:41 GMT",
+            "content-type": "application/json",
+            "content-length": "97",
+            "connection": "keep-alive",
+            "x-amzn-requestid": "8c68ae25-df70-4f23-a3b3-ae0028d422f5",
+            "x-amzn-errortype": "FileSystemNotFound:"
+          },
+          "RetryAttempts": 0
+        },
+        "ErrorCode": "FileSystemNotFound",
+        "Message": "File system 'fs-0fdffaca3f1fa9fa8' does not exist."
+      }
+    },
+    {
+      "action": "delete-sg",
+      "resource": "sg-02b4c907a70fbe1be",
+      "status": "ERROR",
+      "error": {
+        "Error": {
+          "Code": "DependencyViolation",
+          "Message": "resource sg-02b4c907a70fbe1be has a dependent object"
+        },
+        "ResponseMetadata": {
+          "RequestId": "093d277b-25e7-4418-94d9-63d5b325f616",
+          "HTTPStatusCode": 400,
+          "HTTPHeaders": {
+            "x-amzn-requestid": "093d277b-25e7-4418-94d9-63d5b325f616",
+            "cache-control": "no-cache, no-store",
+            "strict-transport-security": "max-age=31536000; includeSubDomains",
+            "vary": "accept-encoding",
+            "content-type": "text/xml;charset=UTF-8",
+            "transfer-encoding": "chunked",
+            "date": "Tue, 22 Sep 2026 06:09:06 GMT",
+            "connection": "close",
+            "server": "AmazonEC2"
+          },
+          "RetryAttempts": 0
+        }
+      }
+    }
+  ]
+}
