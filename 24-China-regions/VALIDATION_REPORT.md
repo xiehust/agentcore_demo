@@ -5,14 +5,15 @@
 **账号：`447150580482`；AWS profile：`agentcore_cn`**  
 **Owner：River**  
 **测试日期：2026-09-21 至 2026-09-22，时间均为 UTC**  
-**资源状态补充复核：2026-09-22 07:06 UTC；2.6 超时补测于同日完成并补充收尾记录**
+**资源状态补充复核：既有资源 2026-09-22 07:06 UTC；Runtime 多进程补测资源同日 08:42 UTC；2.6 收尾见第 8 节**
 
 **Runtime 多进程补测：** 两区已增加同规格 8 vCPU EC2 的验证。
 连续三轮 50 并发各 150/150 成功，合并冷请求 P99 为宁夏 2.423 s、北京 2.375 s；
 100 并发连续压测出现 `New session creation rate exceeded` 限流；冷却后宁夏 99/100、北京 100/100。
 按用户最终要求，正式补测范围以 100 并发为上限，已完成的 200 并发仅归档。
 并发暖请求也不能沿用串行暖基线的通过结论。
-完整结果见 [Runtime 多进程报告](runtime/multiprocess/REPORT.md)；
+并发结果表、方法和结论已纳入本报告第 3.3、6.2–6.4 节；
+逐轮明细见 [Runtime 多进程报告](runtime/multiprocess/REPORT.md)。
 下文 7.1–7.3 的原始基线样本保留，不与新负载条件混合。
 
 ## 1. 验收结论
@@ -30,6 +31,8 @@ EFS 是额外验证项，两区均通过，不计入原清单的 13 项。
 - 两区 Runtime 原始串行冷请求 P50/P99、串行暖请求 P99 和首次 50 并发错误率均满足该轮样本的目标。
   北京暖请求 P99 为 **199.440 ms**，距 200 ms 阈值仅 **0.560 ms**，属于临界通过。
 - 后续 8 vCPU / 8 进程补测中，连续三轮 50 并发无失败；100 并发遇到新会话创建限流。
+  100 并发三轮分别成功 **294/300（宁夏）**、**255/300（北京）**；
+  加入 180 秒冷却间隔后，独立一轮为 **99/100**、**100/100**。
   50 并发暖请求 P99 为宁夏 **220.807 ms**、北京 **202.799 ms**，均超过 200 ms。
   这些结果限制了通过结论的适用负载，不能宣称任意并发下均满足原目标。
 - 两区 Code Interpreter 的基础 Python、数据分析库、文件往返、多轮状态、
@@ -122,6 +125,34 @@ Runtime 早期探针曾用启动时 UUID / guest boot ID 识别实例；这些�
 北京的 Docker Hub 访问超时发生在准备阶段。固定基础镜像经私有 S3 传输后，
 在北京 EC2 校验内容、离线构建、运行容器检查并推送北京 ECR。
 Docker 版本对可选 inspect 字段的表示差异也单独处理并保留记录；这些准备时间不计入时延。
+
+### 3.3 8 vCPU EC2 多进程补测环境
+
+| 项目 | 宁夏 | 北京 |
+| --- | --- | --- |
+| 区域 / AZ | cn-northwest-1 / cn-northwest-1a | cn-north-1 / cn-north-1a |
+| EC2 | i-0c62090e8472b2c83 | i-056c2c62a8508d683 |
+| 实例规格 | c6g.2xlarge，8 vCPU / 16 GiB，ARM64，非突发型 | 同左 |
+| Python / boto3 / botocore | 3.12.14 / 1.43.87 / 1.43.87 | 同左 |
+| 连续压测程序窗口（含初始等待） | 2026-09-22 08:20:38–08:22:18 | 2026-09-22 08:19:21–08:20:51 |
+| 冷却间隔诊断窗口 | 2026-09-22 08:32:20–08:38:41 | 2026-09-22 08:32:33–08:38:50 |
+| 压测进程 | 并发 1 使用 1 进程；10/50/100 使用 8 进程 | 同左 |
+| 被测应用 | 与原基线相同的标准库 HTTP echo，无 LLM 或业务 I/O | 同左 |
+
+客户端设计参考 `21-runtime-v2-beta/multiprocess_coldstart_client.py`：
+使用 spawn 启动独立进程，每个进程创建自己的 boto3 Session/client，
+在发令前解析实例角色凭据，各请求线程通过跨进程屏障统一发起请求。
+镜像构建、容器检查和全部计时 Invoke 均在对应区域 EC2 上执行。
+
+每档每轮使用独立、此前未 Invoke 的 Runtime，READY 后至少等待 60 秒。
+冷请求全部结束后，才统一发起各成功会话的第二次暖请求；暖阶段结束后停止会话。
+校验首次请求序号为 1、第二次为 2、会话内实例标记不变、不同会话的标记互异。
+SDK 自动重试关闭，测量阶段不写文件或传输结果；计时到完整响应读取结束。
+
+正式报告范围为 **1、10、50、100 并发**。用户收口前已完成的 200 并发保留在专题报告附录，
+不再追加；上表程序窗口包含这部分历史执行时间。
+参考的是多进程客户端方法，未采用美国区 500 MB 镜像，也未设置 V2 平台选项；
+中国区响应未返回 platformVersion，不据此认定已验证 V2。
 
 ## 4. 测量方法与限制
 
@@ -294,7 +325,9 @@ EFS 和 PUBLIC 包源使用不同解释器配置分别验证；
 
 ## 6. Runtime 详细结果
 
-正式批次每区 151 个会话、651 次请求：100 次冷请求、1 次暖准备、500 次暖请求、
+### 6.1 原始串行基线与单进程 50 并发
+
+原始批次每区 151 个会话、651 次请求：100 次冷请求、1 次暖准备、500 次暖请求、
 50 次并发请求。全部调用成功，SDK 无自动重试。
 
 单位：毫秒。
@@ -315,13 +348,89 @@ EFS 和 PUBLIC 包源使用不同解释器配置分别验证；
 客户端请求区间和应用处理区间的峰值重叠均为 50。
 含 5 秒工作负载的扩容时延不参与空载冷/暖 SLA 比较。
 
+### 6.2 8 进程连续三轮并发测试
+
+以下每档重复三轮，批次间没有额外冷却；前一批完成后重建客户端并开始下一批。
+冷请求 P50/P95/P99/max 按三轮的**成功请求合并计算**，失败按计划请求总数计入错误率，
+未重试或删除失败。暖请求只针对冷请求成功的会话发起，并采用并发突发方式。
+
+| 区域 | 并发 | 冷成功/计划 | 错误率 | 冷 P50 (s) | 冷 P95 (s) | 冷 P99 (s) | 冷 max (s) | 暖 P99 (ms) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 宁夏 | 1 | 3/3 | 0.00% | 1.861 | 1.884 | 1.884 | 1.884 | 196.933 |
+| 宁夏 | 10 | 30/30 | 0.00% | 1.761 | 1.962 | 2.048 | 2.048 | 371.283 |
+| 宁夏 | 50 | 150/150 | 0.00% | 1.702 | 2.274 | 2.423 | 2.461 | 220.807 |
+| 宁夏 | 100 | 294/300 | 2.00% | 1.688 | 2.237 | 2.824 | 2.950 | 155.380 |
+| 北京 | 1 | 3/3 | 0.00% | 1.940 | 2.073 | 2.073 | 2.073 | 226.457 |
+| 北京 | 10 | 30/30 | 0.00% | 1.730 | 2.101 | 2.111 | 2.111 | 211.969 |
+| 北京 | 50 | 150/150 | 0.00% | 1.690 | 2.153 | 2.375 | 2.502 | 202.799 |
+| 北京 | 100 | 255/300 | 15.00% | 1.694 | 2.046 | 2.200 | 2.296 | 183.631 |
+
+1/10/50 并发在两区均无失败。100 并发各轮失败数为宁夏 **0 / 0 / 6**、
+北京 **0 / 1 / 44**，全部返回 HTTP 429：
+
+```text
+ThrottlingException: New session creation rate exceeded
+```
+
+这是新会话创建速率限流；成功请求的延迟达标不能抵消被拒绝的请求。
+100 并发的暖样本也只覆盖冷请求成功的会话，因此较低的暖 P99 不能直接解释为扩容后性能改善。
+并发 1 仅有 3 个样本、并发 10 仅有 30 个样本，不能用这些样本 P99 替代长期尾延迟判断。
+
+CSV：[连续三轮并发结果（至 100）](runtime/multiprocess/results/20260922/up_to_100.csv)。
+
+### 6.3 冷却 180 秒后的独立并发测试
+
+为区分连续压测累积影响与独立突发请求的表现，使用新的 Runtime 追加诊断，
+批次之间在前一批完全结束后等待至少 180 秒。各组只测一轮，不与第 6.2 节合并。
+50 并发组故意停留 5 秒，用于确认应用处理重叠；100 并发组没有额外停留。
+
+| 区域 | 并发 / 处理方式 | 冷成功/计划 | 错误率 | 成功冷 P50 (s) | 成功冷 P99 (s) | 暖 P99 (ms) | 客户端重叠峰值 | 应用处理重叠峰值 |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 宁夏 | 50，停留 5s | 50/50 | 0.00% | 7.152 | 7.693 | 353.767 | 50 | 50 |
+| 北京 | 50，停留 5s | 50/50 | 0.00% | 6.843 | 7.713 | 340.296 | 50 | 50 |
+| 宁夏 | 100，无额外停留 | 99/100 | 1.00% | 1.971 | 3.003 | 293.904 | 100 | 1 |
+| 北京 | 100，无额外停留 | 100/100 | 0.00% | 2.208 | 3.192 | 275.046 | 100 | 2 |
+
+独立 50 并发在两区均成功，50 个会话的实例标记互异，客户端与应用处理峰值均为 50。
+其 7 秒左右的延迟包含故意添加的 5 秒停留，不参与空载冷启动目标比较。
+100 并发 echo 处理很短，应用处理重叠较低不等于客户端没有 100 个在途请求。
+
+宁夏独立 100 并发剩余的一次失败仍为上述 HTTP 429，
+RequestId 为 `12c23b9c-1859-4f0c-bdb3-1feb9e924332`。
+北京本轮 100/100 成功，但不能据一次冷却后的结果推断任意请求节奏都能零失败。
+按用户要求，到 100 并发收口，不再追加压测。
+
+CSV：[冷却后独立并发结果（至 100）](runtime/multiprocess/results/20260922/isolated_up_to_100.csv)。
+初次追加诊断曾因结果目录的 S3 权限遗漏，在首次 Invoke 前停止；
+修复后保留原失败记录再运行。该准备失败没有计入上表，详情见专题报告第 5 节。
+
+### 6.4 对验收项的影响与测量边界
+
+- **7.1 / 7.2：保留单实例串行冷基线通过结论。** 本轮至 100 并发的成功冷请求
+  P50/P99 也低于 3s/5s，但 100 并发有被限流的请求，不能据此写成整体零失败通过。
+- **7.3：部分通过。** 原同会话串行暖 P99 通过；本轮三轮 50 并发暖 P99
+  为 220.807 / 202.799 ms，超过 200 ms，冷却后独立 100 并发暖 P99 也超标。
+- **7.4：独立 50 并发通过。** 两区三轮每区 150/150，冷却后另有 50/50，
+  且应用重叠峰值均为 50。历史更高压力档之后，后置 50 并发仍曾受到新会话限流影响，
+  因此通过结论受请求节奏和配额条件约束。
+
+50 并发三轮的客户端 before-send 时间差均低于 100 ms，客户端重叠峰值均为 50。
+100 并发三轮的时间差约为宁夏 183–187 ms、北京 181–184 ms，未达到 100 ms 的发令目标。
+冷却后的 100 并发分别为 179.616 ms、49.502 ms；这些都是 SDK 传输前事件，
+不是网卡发包时间。两区冷阶段 steal 采样均为零，但短时 CPU busy 仍接近满载。
+
+本轮排除了客户端跨区域部署的影响，没有消除 SDK、连接建立、调度及区内网络开销，
+也没有隔离同账号的其他流量。Service Quotas API 对当前中国区内部测试服务返回不可用，
+因此不从本轮数据推测具体额度；新会话创建限流按已确认的配额问题记录。
+
 ## 7. 限制与待跟进事项
 
 | 编号 | 事项 | 当前判断 / 后续动作 | Owner |
 | --- | --- | --- | --- |
 | F1 | 超时方案接入边界 | 2.6 已按会话 TTL / GNU timeout 条件通过。落地时明确选用方案；独立 executeCode 原生 deadline 及硬实时返回不在已验证范围内。 | River |
-| F2 | 北京暖请求裕量 | 当前样本临界通过。建议在不同时间窗口扩大采样或重复测试；本报告不修改既有批次。 | River |
+| F2 | 暖请求目标的负载边界 | 原串行基线北京临界通过；多进程 50 并发暖 P99 两区均超 200 ms，7.3 记部分通过，不能沿用串行结论。 | River |
 | F3 | EFS 网络资源释放 | 两区仍有服务 ENI 占用临时安全组，有限重试已超时。需确认服务释放机制或协助回收，不能声称清理全部完成。 | River |
+| F4 | 新会话创建速率配额 | 100 并发连续批次两区均出现 HTTP 429；冷却后宁夏仍有一次。按已确认的 quota 问题记录，依用户要求到 100 并发收口。 | River |
 
 隔离探针、SDK 工具入口、样本量、客户端架构及默认/PUBLIC/VPC 配置边界见前文。
 这些限制不能通过将全部状态统一改为“通过”消除。
@@ -354,12 +463,30 @@ EC2 的 EBS、SSM 角色、instance profile 和安全组按保留要求留下。
 [宁夏](code_interpreter/timeout_retest/results/20260922/cn-northwest-1/cleanup.json)、
 [北京](code_interpreter/timeout_retest/results/20260922/cn-north-1/cleanup.json)。
 
+**Runtime 多进程补测收尾：** 2026-09-22 08:42 UTC 启动的独立只读审计确认：
+
+| 区域 | 8 vCPU EC2 | 最终状态 | 停止确认时间 UTC |
+| --- | --- | --- | --- |
+| 宁夏 | i-0c62090e8472b2c83 | stopped，按用户要求保留 | 08:42:13 |
+| 北京 | i-056c2c62a8508d683 | stopped，按用户要求保留 | 08:39:55 |
+
+本轮每区 19 个临时 Runtime、ECR 仓库、Runtime 运行角色和传输 bucket 已删除，
+实例临时内联授权已移除；保留 EC2、加密卷及 SSM 管理所需的角色和配置。
+19 个 Runtime 包含收口前已经完成的 200 并发历史批次，不表示继续追加测试。
+原有两台小规格 EC2 仍为 stopped，既有业务 Runtime 仍存在。
+本轮清理没有处理上述旧 EFS 遗留，因此“多进程补测资源已清理”不等于所有历史资源都已回收。
+证据见 [多进程证据与清理审计](runtime/multiprocess/results/20260922/audit.json)。
+
 ## 9. 证据索引
 
 | 内容 | 证据 |
 | --- | --- |
 | 宁夏同区 Runtime 原始请求与汇总 | [请求](runtime/results/20260922-ec2/benchmark_results.json)、[汇总](runtime/results/20260922-ec2/benchmark_summary.json) |
 | 北京同区 Runtime 原始请求与汇总 | [请求](cn-north-1/results/20260922/runtime/benchmark_results.json)、[汇总](cn-north-1/results/20260922/runtime/benchmark_summary.json) |
+| 宁夏 8 进程连续并发与冷却后诊断 | [连续三轮](runtime/multiprocess/results/20260922/cn-northwest-1/results/summary.json)、[冷却后](runtime/multiprocess/results/20260922/cn-northwest-1/isolated-results/summary.json) |
+| 北京 8 进程连续并发与冷却后诊断 | [连续三轮](runtime/multiprocess/results/20260922/cn-north-1/results/summary.json)、[冷却后](runtime/multiprocess/results/20260922/cn-north-1/isolated-results/summary.json) |
+| 多进程测试明细与正式范围 CSV | [专题报告](runtime/multiprocess/REPORT.md)、[连续三轮至 100](runtime/multiprocess/results/20260922/up_to_100.csv)、[冷却后至 100](runtime/multiprocess/results/20260922/isolated_up_to_100.csv) |
+| 8 vCPU EC2 环境、执行源码及收尾 | [宁夏环境与源码摘要](runtime/multiprocess/results/20260922/cn-northwest-1/results/run.json)、[北京环境与源码摘要](runtime/multiprocess/results/20260922/cn-north-1/results/run.json)、[审计](runtime/multiprocess/results/20260922/audit.json) |
 | 宁夏 CI 功能与超时 | [功能结果](code_interpreter/results/main-20260921T155804Z/summary.json)、[API 原始事件](code_interpreter/results/main-20260921T155804Z/api/) |
 | 北京 CI 功能与超时 | [功能结果](cn-north-1/results/20260922/code_interpreter/summary.json)、[API 原始事件](cn-north-1/results/20260922/code_interpreter/api/) |
 | 宁夏 CI 并发及串行基线 | [并发](code_interpreter/results/20260922-ec2/concurrency.json)、[串行](code_interpreter/results/20260922-ec2/serial_summary.json) |
@@ -371,12 +498,13 @@ EC2 的 EBS、SSM 角色、instance profile 和安全组按保留要求留下。
 | EC2 身份与环境 | [宁夏](ec2_benchmark/results/20260922/collected/results/ec2_environment.json)、[北京](cn-north-1/results/20260922/ec2/collected/results/ec2_environment.json) |
 | CPU 采样与既有完整性检查 | [宁夏采样](ec2_benchmark/results/20260922/collected/results/cpu_samples.jsonl)、[宁夏检查](ec2_benchmark/results/20260922/evidence_audit.json)、[北京采样](cn-north-1/results/20260922/ec2/collected/results/cpu_samples.jsonl)、[北京检查](cn-north-1/results/20260922/evidence_audit.json) |
 | 本次资源状态只读补核 | [cleanup_snapshot.json](report_evidence/cleanup_snapshot.json) |
-| 本报告数字与表格一致性核对 | [consistency_check.json](report_evidence/consistency_check.json) |
+| 原始基线数字与表格核对（追加补测前） | [consistency_check.json](report_evidence/consistency_check.json) |
 | 已结束的网络清理重试 | [宁夏](code_interpreter/efs/results/20260922/network_cleanup_retry.json)、[北京](cn-north-1/results/20260922/efs/cleanup-retry.json) |
 
 ### 代码与复现入口
 
 - [Runtime 探针](runtime/app.py)、[Runtime 压测](runtime/benchmark.py)。
+- [Runtime 多进程客户端](runtime/multiprocess/client.py)、[区域 EC2 管理](runtime/multiprocess/manage.py)、[多进程复测说明](runtime/multiprocess/README.md)；后续默认上限为 100 并发。
 - [Code Interpreter 测试](code_interpreter/verify_code_interpreter.py)。
 - [EFS 验证](code_interpreter/efs/verify_efs.py)。
 - [同区 EC2 测试入口](ec2_benchmark/run_benchmarks.py)。
