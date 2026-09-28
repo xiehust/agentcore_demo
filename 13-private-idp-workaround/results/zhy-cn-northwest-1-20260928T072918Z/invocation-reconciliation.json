@@ -1,0 +1,34 @@
+{
+  "queried_at": "2026-09-28T07:31:01.520771+00:00",
+  "start_ms": 1790580560309,
+  "end_ms": 1790580623106,
+  "source": "Read-only CloudWatch filter_log_events, all streams, same window as invocations.json",
+  "note": "Later observation after ingestion lag; initial invocations.json is preserved unchanged.",
+  "functions": {
+    "acdemo-idp-interceptor": {
+      "observed_invocations": 18,
+      "denials": [
+        {"authorized": false, "id": 4, "status": 403, "reason": "missing bearer token"},
+        {"authorized": false, "id": 6, "status": 403, "reason": "token rejected"},
+        {"authorized": false, "id": 8, "status": 403, "reason": "signature verification failed"},
+        {"authorized": false, "id": 10, "status": 403, "reason": "token expired"},
+        {"authorized": false, "id": 12, "status": 403, "reason": "wrong audience"},
+        {"authorized": false, "id": 14, "status": 403, "reason": "wrong issuer"},
+        {"authorized": false, "id": 16, "status": 403, "reason": "missing required scope orders.read"},
+        {"authorized": false, "id": 18, "status": 403, "reason": "unknown signing key"}
+      ],
+      "methods": [
+        {"method": "initialize", "id": 1}, {"method": "tools/call", "id": 2},
+        {"method": "initialize", "id": 3}, {"method": "tools/call", "id": 4},
+        {"method": "initialize", "id": 5}, {"method": "tools/call", "id": 6},
+        {"method": "initialize", "id": 7}, {"method": "tools/call", "id": 8},
+        {"method": "initialize", "id": 9}, {"method": "tools/call", "id": 10},
+        {"method": "initialize", "id": 11}, {"method": "tools/call", "id": 12},
+        {"method": "initialize", "id": 13}, {"method": "tools/call", "id": 14},
+        {"method": "initialize", "id": 15}, {"method": "tools/call", "id": 16},
+        {"method": "initialize", "id": 17}, {"method": "tools/call", "id": 18}
+      ]
+    },
+    "acdemo-idp-tool": {"observed_invocations": 2, "denials": [], "methods": []}
+  }
+}

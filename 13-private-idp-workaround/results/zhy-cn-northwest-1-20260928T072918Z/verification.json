@@ -1,0 +1,117 @@
+{
+  "gateway": "https://acdemo-idp-gw-jwrsvig6hf.gateway.bedrock-agentcore.cn-northwest-1.amazonaws.com.cn/mcp",
+  "issuer": "http://10.30.11.122:8081",
+  "inbound_auth": "AWS_IAM",
+  "token_header": "X-Idp-Authorization",
+  "region": "cn-northwest-1",
+  "profile": "zhy",
+  "verified_at": "2026-09-28T07:30:21.802110+00:00",
+  "signing_caller": "acdemo-idp-signed-caller",
+  "cases": [
+    {
+      "case": "valid token",
+      "expected_pass": true,
+      "expected_rejection": null,
+      "reached_tool": true,
+      "detail": {
+        "outbound_auth": {
+          "path": "tool Lambda (in VPC) -> private IdP /token -> downstream token",
+          "idp_issuer": "http://10.30.11.122:8081",
+          "idp_private_ip": "10.30.11.122",
+          "token_from_cache": false,
+          "client_id": "order-desk-agent",
+          "scope": "orders.read",
+          "expires_in_s": 900
+        },
+        "count": 2,
+        "orders": [
+          {
+            "order_ref": "ORD-1002",
+            "customer_email": "bob@example.com",
+            "status": "PENDING",
+            "amount": 42.5
+          },
+          {
+            "order_ref": "ORD-1005",
+            "customer_email": "erin@example.com",
+            "status": "PENDING",
+            "amount": 310.75
+          }
+        ]
+      },
+      "verdict": "PASS"
+    },
+    {
+      "case": "no business JWT header",
+      "expected_pass": false,
+      "expected_rejection": "HTTP 403 \u2014 missing bearer token",
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 missing bearer token",
+      "verdict": "PASS"
+    },
+    {
+      "case": "malformed token",
+      "expected_pass": false,
+      "expected_rejection": "HTTP 403 \u2014 token rejected",
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 token rejected",
+      "verdict": "PASS"
+    },
+    {
+      "case": "forged signature (attacker key)",
+      "expected_pass": false,
+      "expected_rejection": "HTTP 403 \u2014 signature verification failed",
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 signature verification failed",
+      "verdict": "PASS"
+    },
+    {
+      "case": "expired token",
+      "expected_pass": false,
+      "expected_rejection": "HTTP 403 \u2014 token expired",
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 token expired",
+      "verdict": "PASS"
+    },
+    {
+      "case": "wrong audience",
+      "expected_pass": false,
+      "expected_rejection": "HTTP 403 \u2014 wrong audience",
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 wrong audience",
+      "verdict": "PASS"
+    },
+    {
+      "case": "wrong issuer",
+      "expected_pass": false,
+      "expected_rejection": "HTTP 403 \u2014 wrong issuer",
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 wrong issuer",
+      "verdict": "PASS"
+    },
+    {
+      "case": "missing required scope",
+      "expected_pass": false,
+      "expected_rejection": "HTTP 403 \u2014 missing required scope orders.read",
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 missing required scope orders.read",
+      "verdict": "PASS"
+    },
+    {
+      "case": "unknown signing kid",
+      "expected_pass": false,
+      "expected_rejection": "HTTP 403 \u2014 unknown signing key",
+      "reached_tool": false,
+      "detail": "HTTP 403 \u2014 unknown signing key",
+      "verdict": "PASS"
+    },
+    {
+      "case": "valid token but unsigned (no SigV4)",
+      "expected_pass": false,
+      "expected_rejection": "initialize HTTP 401:",
+      "reached_tool": false,
+      "detail": "initialize HTTP 401: {\"jsonrpc\": \"2.0\", \"id\": 19, \"error\": {\"code\": -32001, \"message\": \"Authentication error - Invalid credentials\"}}",
+      "verdict": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "outbound_auth": {
+    "path": "tool Lambda (in VPC) -> private IdP /token -> downstream token",
+    "idp_issuer": "http://10.30.11.122:8081",
+    "idp_private_ip": "10.30.11.122",
+    "token_from_cache": true,
+    "client_id": "order-desk-agent",
+    "scope": "orders.read",
+    "expires_in_s": 871
+  },
+  "count": 2,
+  "orders": [
+    {
+      "order_ref": "ORD-1001",
+      "customer_email": "alice@example.com",
+      "status": "SHIPPED",
+      "amount": 129.99
+    },
+    {
+      "order_ref": "ORD-1003",
+      "customer_email": "carol@example.com",
+      "status": "SHIPPED",
+      "amount": 891.0
+    }
+  ]
+}

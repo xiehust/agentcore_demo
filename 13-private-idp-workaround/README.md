@@ -6,12 +6,63 @@
 （补充 · AgentCore Identity 不支持 Private IdP 的 Workaround）的**真机验证**。
 
 
-已在 **us-east-2** 部署验证，复用 [`11-vpc-no-egress-workaround`](../11-vpc-no-egress-workaround)
-那个**零互联网出口 VPC**（无 IGW、无 NAT）与其中的私有 RDS。
+本示例复用 [`11-vpc-no-egress-workaround`](../11-vpc-no-egress-workaround)
+的**零互联网出口 VPC**（无 IGW、无 NAT）与其中的私有 RDS。
+**中国区采用方案一：`AWS_IAM + REQUEST interceptor`，不依赖 `NONE`。**
+下文保留的 `us-east-2`、9/9 与延迟数据是原始美国区基线，不代表中国区测量。
+
+## 中国区方案一：IAM 接入 + 私有 IdP 业务鉴权
+
+```text
+Agent 后端（IAM Role 临时凭证 + 业务 JWT）
+  │ MCP over HTTPS，SigV4 签名
+  │ Authorization: AWS4-HMAC-SHA256 ...
+  │ X-Idp-Authorization: Bearer <JWT>
+  ▼
+AgentCore Gateway（authorizerType=AWS_IAM）
+  │ IAM 校验通过后，passRequestHeaders=true
+  ▼
+REQUEST interceptor Lambda（VPC 内）
+  │ 从私有 IdP 拉 JWKS，验证签名、iss/aud/exp/scope
+  │ 业务鉴权失败返回 403，不调用工具
+  ▼
+tool Lambda（VPC 内）
+  │ 向私有 IdP 换出站令牌，再查询私有 RDS
+```
+
+IAM 验证调用后端身份，interceptor 验证业务 JWT；两者不是替代关系。
+`Authorization` 由 SigV4 使用，因此 JWT 必须放在独立请求头中。
+interceptor 对 `initialize`、`notifications/initialized`、`ping` 跳过业务 JWT 校验，
+但这些请求仍须通过 Gateway 的 IAM 校验；工具调用必须同时通过两层校验。
+
+`scripts/lib.sh` 在 `aws-cn` 分区默认选择 `AWS_IAM` 与 `X-Idp-Authorization`。
+测试使用 `AWS_PROFILE=zhy` 调用 `signed-caller` Lambda，由该函数的执行角色
+直接签名调用 Gateway。它模拟方案一的 Agent 后端，**不是方案二的公网 MCP 代理**；
+生产后端可直接复用签名逻辑，无需部署测试调用器。调用角色仅获准访问本 Gateway。
+调用后端必须能访问 Gateway 端点；本测试调用器不放在无出口 VPC 内。
+
+中国区矩阵包含合法请求、八种非法/缺失业务 JWT，以及“合法 JWT 但无 SigV4”。
+负例必须匹配预期鉴权状态与原因，不能将 5xx 或工具故障算作鉴权通过。
+入站测试令牌使用与演示 IdP 相同的私钥在本地构造；出站 `/token` 请求则实际发生在 VPC 内。
+
+### 中国区本轮实测（2026-09-28）
+
+使用 **`AWS_PROFILE=zhy`、`cn-northwest-1`** 重新部署并验证，**10/10 通过**：
+
+| 类别 | 用例数 | 实测结果 |
+|---|---:|---|
+| 合法 JWT + SigV4 | 1 | 工具返回 2 条 PENDING 订单；首次出站换令牌未命中缓存 |
+| 非法或缺失业务 JWT + SigV4 | 8 | 均为预期的 HTTP 403 与对应拒绝原因 |
+| 合法 JWT、无 SigV4 | 1 | Gateway 在 initialize 阶段返回 HTTP 401 |
+
+IdP 公网 IP 为 `null`，仅 Lambda 安全组可访问；VPC 的 IGW/NAT 均为 0。
+完整证据见 [本轮归档](results/zhy-cn-northwest-1-20260928T072918Z/SUMMARY.md)、
+[验证矩阵](results/zhy-cn-northwest-1-20260928T072918Z/verification.json) 与
+[网络/IAM/出站证据](results/zhy-cn-northwest-1-20260928T072918Z/evidence.txt)。
 
 ---
 
-## 一句话结论
+## 美国区历史基线：一句话结论
 
 **interceptor Lambda 绕行方案完全可行，9/9 项验证全部通过。**
 
@@ -33,7 +84,7 @@ Lambda 安全组访问、VPC 无任何出网路由），我们做到了：
 
 ---
 
-## 实测架构
+## 美国区历史基线：实测架构（NONE，不适用于中国区）
 
 ```
   测试客户端（带 IdP 签发的 JWT）
@@ -67,7 +118,7 @@ Lambda 安全组访问、VPC 无任何出网路由），我们做到了：
 
 ---
 
-## 验证矩阵（9/9）
+## 美国区历史基线：验证矩阵（9/9）
 
 `python scripts/04-verify.py` 的实际输出，完整记录见
 [`results/verification.json`](results/verification.json)：
@@ -197,8 +248,9 @@ lambda/interceptor.py    REQUEST interceptor：入站 JWT 校验（PyJWT + 私�
 lambda/tool.py           工具 Lambda：出站 client_credentials + 查私有 RDS
 scripts/01-idp.sh        生成密钥、打包依赖、在私有子网起 IdP 实例
 scripts/02-lambdas.sh    构建并部署两个 Lambda，并确认 IdP 私有可达
-scripts/03-gateway.sh    创建 NONE 入站 + REQUEST interceptor 的 Gateway 与 target
-scripts/04-verify.py     9 项验证矩阵（本地铸造合法/非法令牌）
+scripts/03-gateway.sh    中国区 AWS_IAM + REQUEST interceptor + target + 测试调用器
+lambda/signed_caller.py  测试后端：使用执行角色直接 SigV4 签名调用 Gateway
+scripts/04-verify.py     中国区 10 项 / NONE 9 项矩阵（本地构造测试令牌）
 scripts/05-collect-evidence.sh  归档全部原始证据
 scripts/cleanup.sh       清理本项目资源
 results/                 verification.json / evidence.txt / interceptor-latency.json
@@ -207,17 +259,22 @@ results/                 verification.json / evidence.txt / interceptor-latency.
 ## 如何复现
 
 前置：先部署 [`11-vpc-no-egress-workaround`](../11-vpc-no-egress-workaround)
-（提供隔离 VPC、私有 RDS 与 S3 引导桶）。
+（使用同一 profile/region，提供隔离 VPC、私有 RDS 与 S3 引导桶）。
+仅需基础设施时，依次运行该项目的 `01-vpc-rds.sh`、`01b-bootstrap.sh`、
+`02-lambda.sh`，无需部署其 Gateway/API Gateway。不要复用其他账号或区域的 `state.env`。
 
 ```bash
 cd 13-private-idp-workaround
 python3 -m venv .venv && .venv/bin/pip install "pyjwt[crypto]" boto3
 
-bash scripts/01-idp.sh          # 私有 IdP（EC2，无公网 IP），约 2-3 分钟
+export AWS_PROFILE=zhy REGION=cn-northwest-1
+export INBOUND_AUTH=AWS_IAM TOKEN_HEADER=X-Idp-Authorization
+export RESULTS_DIR="$PWD/results/zhy-$REGION-$(date -u +%Y%m%dT%H%M%SZ)"
+
+bash scripts/01-idp.sh          # 私有 IdP（EC2，无公网 IP）
 bash scripts/02-lambdas.sh      # interceptor + tool Lambda，并等 IdP 就绪
-bash scripts/03-gateway.sh      # Gateway（NONE 入站 + interceptor）+ target
-.venv/bin/python scripts/04-verify.py       # 9 项验证矩阵
-bash scripts/05-collect-evidence.sh          # 归档证据
+bash scripts/03-gateway.sh      # AWS_IAM + interceptor + target + 测试调用器
+bash scripts/05-collect-evidence.sh  # 执行 10 项矩阵并归档网络、IAM 与出站证据
 ```
 
 `scripts/04-verify.py` 任一用例行为不符预期即以非零码退出，可直接当回归测试用。

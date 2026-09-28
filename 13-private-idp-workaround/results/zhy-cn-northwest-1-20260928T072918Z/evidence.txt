@@ -1,0 +1,228 @@
+Private IdP workaround verification
+profile=zhy region=cn-northwest-1 account=765922807571 date=2026-09-28T07:29:20Z
+gateway=acdemo-idp-gw-jwrsvig6hf url=https://acdemo-idp-gw-jwrsvig6hf.gateway.bedrock-agentcore.cn-northwest-1.amazonaws.com.cn/mcp
+idp=http://10.30.11.122:8081 instance=i-0a4019043e6fff63b
+
+############ 1. The IdP is genuinely private ############
+--- instance networking ---
+{
+    "PrivateIp": "10.30.11.122",
+    "PublicIp": null,
+    "Subnet": "subnet-092c3a6232adea872",
+    "State": "running"
+}
+--- who may reach the IdP port ---
+[
+    {
+        "IpProtocol": "tcp",
+        "FromPort": 8081,
+        "ToPort": 8081,
+        "UserIdGroupPairs": [
+            {
+                "UserId": "765922807571",
+                "GroupId": "sg-0e485cda29529a34e"
+            }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+    }
+]
+--- reaching the IdP from outside the VPC (expect failure) ---
+unreachable from outside: TimeoutError
+--- the VPC still has no internet egress ---
+IGWs: 0
+NATs: 0
+--- VPC routes ---
+[
+    {
+        "Id": "rtb-09045c09c229d0a60",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.30.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            },
+            {
+                "DestinationPrefixListId": "pl-79a54010",
+                "GatewayId": "vpce-052c8a6c1359fff28",
+                "Origin": "CreateRoute",
+                "State": "active"
+            }
+        ]
+    },
+    {
+        "Id": "rtb-0febc1c49e3b03c19",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.30.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ]
+    }
+]
+
+############ 2. Gateway config: AWS_IAM inbound + REQUEST interceptor ############
+{
+  "authorizerType": "AWS_IAM",
+  "status": "READY",
+  "interceptors": [
+    {
+      "interceptor": {
+        "lambda": {
+          "arn": "arn:aws-cn:lambda:cn-northwest-1:765922807571:function:acdemo-idp-interceptor"
+        }
+      },
+      "interceptionPoints": [
+        "REQUEST"
+      ],
+      "inputConfiguration": {
+        "passRequestHeaders": true
+      }
+    }
+  ],
+  "target": {
+    "mcp": {
+      "lambda": {
+        "lambdaArn": "arn:aws-cn:lambda:cn-northwest-1:765922807571:function:acdemo-idp-tool",
+        "toolSchema": {
+          "inlinePayload": [
+            {
+              "name": "secure_list_orders",
+              "description": "Read orders from the private database. The tool exchanges client_credentials at the private IdP first.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "description": "Max rows (1-100)"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "SHIPPED, PENDING or CANCELLED"
+                  }
+                },
+                "required": []
+              }
+            },
+            {
+              "name": "idp_reachability",
+              "description": "Prove the private IdP is reachable from inside the VPC and report its private IP.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "required": []
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+--- interceptor private networking and business JWT header ---
+{
+    "State": "Active",
+    "VpcConfig": {
+        "SubnetIds": [
+            "subnet-0c27a04258d59c3bb",
+            "subnet-092c3a6232adea872"
+        ],
+        "SecurityGroupIds": [
+            "sg-0e485cda29529a34e"
+        ],
+        "VpcId": "vpc-0dcb107a18ae9b4b4",
+        "Ipv6AllowedForDualStack": false
+    },
+    "TokenHeader": "X-Idp-Authorization",
+    "JwksUrl": "http://10.30.11.122:8081/jwks"
+}
+--- test backend signs with its execution role, not the zhy user's keys ---
+{
+    "State": "Active",
+    "Role": "arn:aws-cn:iam::765922807571:role/acdemo-idp-caller-role",
+    "VpcConfig": null
+}
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "bedrock-agentcore:InvokeGateway",
+            "Resource": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:765922807571:gateway/acdemo-idp-gw-jwrsvig6hf"
+        }
+    ]
+}
+
+############ 3. Inbound: JWT validated against the private JWKS ############
+gateway : https://acdemo-idp-gw-jwrsvig6hf.gateway.bedrock-agentcore.cn-northwest-1.amazonaws.com.cn/mcp
+IdP     : http://10.30.11.122:8081 (private, no public IP)
+audience: agentcore-gateway
+inbound : AWS_IAM (JWT in X-Idp-Authorization)
+
+[PASS      ] valid token                        -> reached tool
+             2 orders, outbound token from 10.30.11.122
+[PASS      ] no business JWT header             -> blocked
+             HTTP 403 — missing bearer token
+[PASS      ] malformed token                    -> blocked
+             HTTP 403 — token rejected
+[PASS      ] forged signature (attacker key)    -> blocked
+             HTTP 403 — signature verification failed
+[PASS      ] expired token                      -> blocked
+             HTTP 403 — token expired
+[PASS      ] wrong audience                     -> blocked
+             HTTP 403 — wrong audience
+[PASS      ] wrong issuer                       -> blocked
+             HTTP 403 — wrong issuer
+[PASS      ] missing required scope             -> blocked
+             HTTP 403 — missing required scope orders.read
+[PASS      ] unknown signing kid                -> blocked
+             HTTP 403 — unknown signing key
+[PASS      ] valid token but unsigned (no SigV4) -> blocked
+             initialize HTTP 401: {"jsonrpc": "2.0", "id": 19, "error": {"code": -32001, "message": "Authentication error - Invalid credentials"}}
+
+10/10 cases behaved as expected
+
+############ 4. Outbound: tool exchanges client_credentials at the private IdP ############
+{
+  "outbound_auth": {
+    "path": "tool Lambda (in VPC) -> private IdP /token -> downstream token",
+    "idp_issuer": "http://10.30.11.122:8081",
+    "idp_private_ip": "10.30.11.122",
+    "token_from_cache": true,
+    "client_id": "order-desk-agent",
+    "scope": "orders.read",
+    "expires_in_s": 871
+  },
+  "count": 2,
+  "orders": [
+    {
+      "order_ref": "ORD-1001",
+      "customer_email": "alice@example.com",
+      "status": "SHIPPED",
+      "amount": 129.99
+    },
+    {
+      "order_ref": "ORD-1003",
+      "customer_email": "carol@example.com",
+      "status": "SHIPPED",
+      "amount": 891.0
+    }
+  ]
+}
+Outbound token metadata and private RDS response validated
+
+############ 5. Run-window interceptor and tool logs (all streams) ############
+acdemo-idp-interceptor: observed 17 invocations in this run window
+{"authorized": false, "id": 4, "status": 403, "reason": "missing bearer token"}
+{"authorized": false, "id": 6, "status": 403, "reason": "token rejected"}
+{"authorized": false, "id": 8, "status": 403, "reason": "signature verification failed"}
+{"authorized": false, "id": 10, "status": 403, "reason": "token expired"}
+{"authorized": false, "id": 12, "status": 403, "reason": "wrong audience"}
+{"authorized": false, "id": 14, "status": 403, "reason": "wrong issuer"}
+{"authorized": false, "id": 16, "status": 403, "reason": "missing required scope orders.read"}
+acdemo-idp-tool: observed 1 invocations in this run window
+CloudWatch ingestion can lag; these are observed counts, not a completeness guarantee.

@@ -34,7 +34,7 @@ if ! aws iam get-role --role-name "$EC2_ROLE" >/dev/null 2>&1; then
     "Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},
                   "Action":"sts:AssumeRole"}]}' >/dev/null
   aws iam attach-role-policy --role-name "$EC2_ROLE" \
-    --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore >/dev/null
+    --policy-arn arn:$PARTITION:iam::aws:policy/AmazonSSMManagedInstanceCore >/dev/null
   aws iam create-instance-profile --instance-profile-name "$EC2_ROLE" >/dev/null
   aws iam add-role-to-instance-profile --instance-profile-name "$EC2_ROLE" \
     --role-name "$EC2_ROLE" >/dev/null
@@ -216,7 +216,7 @@ POLICY=$(cat <<JSON
   "Effect":"Allow",
   "Principal":{"Service":"bedrock-agentcore.amazonaws.com"},
   "Action":"execute-api:Invoke",
-  "Resource":["arn:aws:execute-api:$REGION:$ACCOUNT_ID:$API_ID/prod/*/*"],
+  "Resource":["arn:$PARTITION:execute-api:$REGION:$ACCOUNT_ID:$API_ID/prod/*/*"],
   "Condition":{"ArnEquals":{"aws:SourceArn":"$GW_ARN"}}
 }]}
 JSON
@@ -233,8 +233,8 @@ aws iam put-role-policy --role-name "$PREFIX-gw-role" --policy-name invoke-apigw
   --policy-document "{
     \"Version\":\"2012-10-17\",
     \"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"execute-api:Invoke\",
-      \"Resource\":\"arn:aws:execute-api:$REGION:$ACCOUNT_ID:$API_ID/prod/*/*\"}]}" >/dev/null
-save API_ENDPOINT "https://$API_ID.execute-api.$REGION.amazonaws.com/prod"
+      \"Resource\":\"arn:$PARTITION:execute-api:$REGION:$ACCOUNT_ID:$API_ID/prod/*/*\"}]}" >/dev/null
+save API_ENDPOINT "https://$API_ID.execute-api.$REGION.$DNS_SUFFIX/prod"
 ok "api endpoint $API_ENDPOINT"
 
 log "Phase 4 complete."

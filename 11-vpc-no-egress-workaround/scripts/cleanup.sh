@@ -128,12 +128,12 @@ try aws iam delete-role-policy --role-name "$PREFIX-gw-role" --policy-name invok
 try aws iam delete-role-policy --role-name "$PREFIX-gw-role" --policy-name invoke-apigw-target
 try aws iam delete-role --role-name "$PREFIX-gw-role"
 try aws iam detach-role-policy --role-name "$PREFIX-lambda-role" \
-  --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+  --policy-arn arn:$PARTITION:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
 try aws iam delete-role --role-name "$PREFIX-lambda-role"
 try aws iam remove-role-from-instance-profile --instance-profile-name "$PREFIX-ec2-role" --role-name "$PREFIX-ec2-role"
 try aws iam delete-instance-profile --instance-profile-name "$PREFIX-ec2-role"
 try aws iam detach-role-policy --role-name "$PREFIX-ec2-role" \
-  --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  --policy-arn arn:$PARTITION:iam::aws:policy/AmazonSSMManagedInstanceCore
 try aws iam delete-role --role-name "$PREFIX-ec2-role"
 
 mv "$STATE_FILE" "$STATE_FILE.deleted" 2>/dev/null || true

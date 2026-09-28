@@ -19,7 +19,7 @@ if ! aws iam get-role --role-name "$ROLE_NAME" >/dev/null 2>&1; then
       \"Action\":\"sts:AssumeRole\",
       \"Condition\":{
         \"StringEquals\":{\"aws:SourceAccount\":\"$ACCOUNT_ID\"},
-        \"ArnLike\":{\"aws:SourceArn\":\"arn:aws:bedrock-agentcore:$REGION:$ACCOUNT_ID:gateway/*\"}
+        \"ArnLike\":{\"aws:SourceArn\":\"arn:$PARTITION:bedrock-agentcore:$REGION:$ACCOUNT_ID:gateway/*\"}
       }
     }]}" >/dev/null
   sleep 12
@@ -63,7 +63,7 @@ for _ in $(seq 60); do
   sleep 5
 done
 save GW_URL "$URL"
-save GW_ARN "arn:aws:bedrock-agentcore:$REGION:$ACCOUNT_ID:gateway/$GW_ID"
+save GW_ARN "arn:$PARTITION:bedrock-agentcore:$REGION:$ACCOUNT_ID:gateway/$GW_ID"
 ok "gateway $GW_ID status=$ST"
 ok "url $URL"
 

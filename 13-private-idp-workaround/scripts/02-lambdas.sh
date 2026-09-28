@@ -17,7 +17,7 @@ if ! aws iam get-role --role-name "$ROLE_NAME" >/dev/null 2>&1; then
     "Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},
                   "Action":"sts:AssumeRole"}]}' >/dev/null
   aws iam attach-role-policy --role-name "$ROLE_NAME" \
-    --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole >/dev/null
+    --policy-arn arn:$PARTITION:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole >/dev/null
   sleep 12
 fi
 LAMBDA_ROLE_ARN=$(aws iam get-role --role-name "$ROLE_NAME" --query Role.Arn --output text)
@@ -36,7 +36,7 @@ build_pkg() { # dir_name source_file requirement...
     --platform manylinux2014_x86_64 --python-version 3.12 \
     --implementation cp --only-binary=:all: "$@" >/dev/null
   cp "$src" "$dir/"
-  (cd "$dir" && zip -qr "$BUILD/$name.zip" .)
+  (cd "$dir" && python3 -m zipfile -c "$BUILD/$name.zip" .)
   ok "$name.zip $(du -h "$BUILD/$name.zip" | cut -f1)"
 }
 log "Building deployment packages"
@@ -65,7 +65,7 @@ deploy_fn() { # name handler zip env_json
 
 log "Deploying interceptor Lambda"
 deploy_fn "$INT_FN" interceptor.lambda_handler "$BUILD/interceptor.zip" \
-  "Variables={IDP_JWKS_URL=$IDP_JWKS_URL,IDP_ISSUER=$IDP_ISSUER,IDP_AUDIENCE=$IDP_AUDIENCE,REQUIRED_SCOPE=$REQUIRED_SCOPE}"
+  "Variables={IDP_JWKS_URL=$IDP_JWKS_URL,IDP_ISSUER=$IDP_ISSUER,IDP_AUDIENCE=$IDP_AUDIENCE,REQUIRED_SCOPE=$REQUIRED_SCOPE,TOKEN_HEADER=$TOKEN_HEADER}"
 INT_ARN=$(aws lambda get-function --function-name "$INT_FN" --region "$REGION" \
   --query 'Configuration.FunctionArn' --output text)
 save INTERCEPTOR_ARN "$INT_ARN"

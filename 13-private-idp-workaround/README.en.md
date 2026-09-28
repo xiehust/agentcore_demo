@@ -4,13 +4,67 @@ Real-deployment verification of section 09 of
 `AgentCore 中国区无 VPC Egress Workaround 方案.html`
 (*supplement — working around AgentCore Identity not supporting a private IdP*).
 
-Deployed and verified in **us-east-2**, reusing the **zero-internet-egress VPC**
-(no IGW, no NAT) and private RDS from
-[`11-vpc-no-egress-workaround`](../11-vpc-no-egress-workaround).
+This example reuses the **zero-internet-egress VPC** (no IGW, no NAT) and private
+RDS from [`11-vpc-no-egress-workaround`](../11-vpc-no-egress-workaround).
+**For China, use option 1: `AWS_IAM + REQUEST interceptor`, without `NONE`.**
+The retained `us-east-2`, 9/9 and latency figures below are the original US-region
+baseline, not China-region measurements.
+
+## China option 1: IAM access plus private-IdP business authorization
+
+```text
+Agent backend (IAM role temporary credentials + business JWT)
+  | MCP over HTTPS, SigV4 signed
+  | Authorization: AWS4-HMAC-SHA256 ...
+  | X-Idp-Authorization: Bearer <JWT>
+  v
+AgentCore Gateway (authorizerType=AWS_IAM)
+  | IAM check, then passRequestHeaders=true
+  v
+REQUEST interceptor Lambda (inside VPC)
+  | Fetch private IdP JWKS; verify signature, iss/aud/exp/scope
+  | Reject business authorization failures with 403 before invoking the tool
+  v
+tool Lambda (inside VPC)
+  | Exchange an outbound token at the private IdP, then query private RDS
+```
+
+IAM authorizes the calling backend; the interceptor authorizes the business JWT.
+SigV4 owns `Authorization`, so the JWT uses a separate header. The interceptor
+skips JWT checks for `initialize`, `notifications/initialized` and `ping`, but
+Gateway IAM still applies to these requests. Tool calls require both checks.
+
+`scripts/lib.sh` defaults to `AWS_IAM` and `X-Idp-Authorization` in `aws-cn`.
+The test uses `AWS_PROFILE=zhy` to invoke the `signed-caller` Lambda, whose execution
+role signs requests directly to Gateway. This simulates the option-1 Agent backend,
+**not an option-2 public MCP proxy**. Production backends can sign directly without
+the test caller. The caller role is scoped to this Gateway only. The backend must
+be able to reach the Gateway endpoint; the test caller is outside the no-egress VPC.
+
+The China matrix covers a valid request, eight invalid/missing business JWT cases,
+and a valid JWT without SigV4. Negative cases must match the expected auth status
+and reason: a 5xx or tool failure cannot pass as an authorization rejection.
+Inbound tokens are constructed locally using the demo IdP key; outbound `/token`
+requests actually execute inside the VPC.
+
+### Fresh China verification (2026-09-28)
+
+Redeployed and tested with **`AWS_PROFILE=zhy`, `cn-northwest-1`: 10/10 passed**.
+
+| Category | Cases | Observed result |
+|---|---:|---|
+| Valid JWT + SigV4 | 1 | Tool returned 2 PENDING orders; first outbound token exchange was not cached |
+| Invalid/missing business JWT + SigV4 | 8 | Expected HTTP 403 and rejection reason in every case |
+| Valid JWT without SigV4 | 1 | Gateway returned HTTP 401 during initialize |
+
+The IdP has no public IP and allows only the Lambda security group; the VPC has
+zero IGWs/NATs. See the [run summary](results/zhy-cn-northwest-1-20260928T072918Z/SUMMARY.md),
+[verification matrix](results/zhy-cn-northwest-1-20260928T072918Z/verification.json) and
+[network/IAM/outbound evidence](results/zhy-cn-northwest-1-20260928T072918Z/evidence.txt).
 
 ---
 
-## Bottom line
+## Historical US baseline: bottom line
 
 **The interceptor-Lambda workaround works: 9/9 verification cases pass.**
 
@@ -34,7 +88,7 @@ the Lambda security group, in a VPC with no egress route at all):
 
 ---
 
-## Verified architecture
+## Historical US architecture (NONE, not for China)
 
 ```
   test client (JWT issued by the private IdP)
@@ -68,7 +122,7 @@ the Lambda security group, in a VPC with no egress route at all):
 
 ---
 
-## Verification matrix (9/9)
+## Historical US verification matrix (9/9)
 
 Actual output of `python scripts/04-verify.py`; full record in
 [`results/verification.json`](results/verification.json):
@@ -208,8 +262,9 @@ lambda/interceptor.py    REQUEST interceptor: inbound JWT validation (PyJWT + pr
 lambda/tool.py           tool Lambda: outbound client_credentials + private RDS read
 scripts/01-idp.sh        generate keys, bundle deps, launch the IdP in a private subnet
 scripts/02-lambdas.sh    build and deploy both Lambdas, confirm the IdP is reachable
-scripts/03-gateway.sh    gateway with NONE inbound + REQUEST interceptor, plus target
-scripts/04-verify.py     the 9-case matrix (mints valid/invalid tokens locally)
+scripts/03-gateway.sh    China AWS_IAM + REQUEST interceptor + target + test caller
+lambda/signed_caller.py  test backend: sign Gateway requests with its execution role
+scripts/04-verify.py     10 China cases / 9 NONE cases (constructs test tokens locally)
 scripts/05-collect-evidence.sh  archive all raw evidence
 scripts/cleanup.sh       remove this project's resources
 results/                 verification.json / evidence.txt / interceptor-latency.json
@@ -218,17 +273,23 @@ results/                 verification.json / evidence.txt / interceptor-latency.
 ## Reproducing
 
 Prerequisite: deploy [`11-vpc-no-egress-workaround`](../11-vpc-no-egress-workaround)
-first (it provides the isolated VPC, private RDS and the S3 bootstrap bucket).
+first with the same profile/region (isolated VPC, private RDS and S3 bootstrap
+bucket). For just these prerequisites, run that project's `01-vpc-rds.sh`,
+`01b-bootstrap.sh` and `02-lambda.sh`; its Gateway/API Gateway is not required.
+Do not reuse a `state.env` from another account or region.
 
 ```bash
 cd 13-private-idp-workaround
 python3 -m venv .venv && .venv/bin/pip install "pyjwt[crypto]" boto3
 
-bash scripts/01-idp.sh          # private IdP on EC2, no public IP (~2-3 min)
+export AWS_PROFILE=zhy REGION=cn-northwest-1
+export INBOUND_AUTH=AWS_IAM TOKEN_HEADER=X-Idp-Authorization
+export RESULTS_DIR="$PWD/results/zhy-$REGION-$(date -u +%Y%m%dT%H%M%SZ)"
+
+bash scripts/01-idp.sh          # private IdP on EC2, no public IP
 bash scripts/02-lambdas.sh      # interceptor + tool Lambda, waits for the IdP
-bash scripts/03-gateway.sh      # gateway (NONE inbound + interceptor) + target
-.venv/bin/python scripts/04-verify.py       # the 9-case matrix
-bash scripts/05-collect-evidence.sh          # archive evidence
+bash scripts/03-gateway.sh      # AWS_IAM + interceptor + target + test caller
+bash scripts/05-collect-evidence.sh  # run 10 cases and archive network/IAM/outbound evidence
 ```
 
 `scripts/04-verify.py` exits non-zero if any case deviates from expectation, so it

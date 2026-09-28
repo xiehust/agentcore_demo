@@ -3,8 +3,9 @@ Gateway REQUEST interceptor: inbound JWT authorization against a PRIVATE IdP.
 
 This is the workaround for "AgentCore Identity cannot reach a private IdP".
 Instead of giving the gateway a `customJWTAuthorizer.privateEndpoint` (which needs
-VPC Lattice), the gateway is created with inbound auth NONE and this Lambda — which
-IS attached to the VPC — does the JWT validation itself:
+VPC Lattice), the gateway uses AWS_IAM inbound in China (NONE elsewhere). This
+Lambda — which IS attached to the VPC — does the business JWT validation itself.
+With AWS_IAM, SigV4 owns Authorization and the JWT travels in TOKEN_HEADER:
 
   1. read the bearer token from the request headers (requires passRequestHeaders=true)
   2. fetch the IdP's JWKS over the private network, cached per `kid`
@@ -29,6 +30,9 @@ IDP_JWKS_URL = os.environ["IDP_JWKS_URL"]
 EXPECTED_ISS = os.environ["IDP_ISSUER"]
 EXPECTED_AUD = os.environ["IDP_AUDIENCE"]
 REQUIRED_SCOPE = os.environ.get("REQUIRED_SCOPE", "orders.read")
+# Header carrying the business JWT. "Authorization" with inbound auth NONE; with
+# AWS_IAM inbound SigV4 owns Authorization, so a custom header is used instead.
+TOKEN_HEADER = os.environ.get("TOKEN_HEADER", "Authorization").lower()
 
 # PyJWKClient keeps its own key cache. Holding it at module scope means the cache
 # survives across invocations for as long as the execution environment is reused,
@@ -40,14 +44,16 @@ _jwk_client = PyJWKClient(IDP_JWKS_URL, cache_keys=True, lifespan=300)
 OPEN_METHODS = {"initialize", "notifications/initialized", "ping"}
 
 
-def deny(request_id, message, detail=None):
+def deny(request_id, message, detail=None, *, status_code=403):
     """Short-circuit: the gateway returns this and never calls the target."""
     body = {"jsonrpc": "2.0", "id": request_id,
             "error": {"code": -32001, "message": message}}
     if detail:
         body["error"]["data"] = detail
+    print(json.dumps({"authorized": False, "id": request_id,
+                      "status": status_code, "reason": message}))
     return {"interceptorOutputVersion": "1.0",
-            "mcp": {"transformedGatewayResponse": {"statusCode": 403, "body": body}}}
+            "mcp": {"transformedGatewayResponse": {"statusCode": status_code, "body": body}}}
 
 
 def allow(body):
@@ -65,7 +71,7 @@ def allow(body):
 def bearer_from(headers):
     """Headers are case-insensitive on the wire but arrive as a plain dict."""
     for key, value in (headers or {}).items():
-        if key.lower() == "authorization":
+        if key.lower() == TOKEN_HEADER:
             parts = value.split(None, 1)
             if len(parts) == 2 and parts[0].lower() == "bearer":
                 return parts[1].strip()
@@ -117,8 +123,20 @@ def lambda_handler(event, _context):
         return deny(request_id, "wrong issuer")
     except jwt.InvalidSignatureError:
         return deny(request_id, "signature verification failed")
-    except (jwt.InvalidTokenError, urllib.error.URLError, Exception) as exc:
-        return deny(request_id, "token rejected", f"{type(exc).__name__}: {exc}")
+    except (jwt.PyJWKClientConnectionError, urllib.error.URLError, TimeoutError):
+        return deny(request_id, "private IdP JWKS unavailable", status_code=503)
+    except jwt.PyJWKClientError as exc:
+        # PyJWT 2.10.1 uses this error for a kid missing even after JWKS refresh.
+        # Other JWKS errors are infrastructure/configuration failures, not proof
+        # that an invalid token was correctly rejected.
+        if str(exc).startswith("Unable to find a signing key that matches:"):
+            return deny(request_id, "unknown signing key")
+        return deny(request_id, "private IdP JWKS unavailable", status_code=503)
+    except jwt.InvalidTokenError:
+        return deny(request_id, "token rejected")
+    except Exception as exc:
+        print(json.dumps({"id": request_id, "validation_error": type(exc).__name__}))
+        return deny(request_id, "JWT validation unavailable", status_code=503)
 
     scopes = (claims.get("scope") or "").split()
     if REQUIRED_SCOPE and REQUIRED_SCOPE not in scopes:

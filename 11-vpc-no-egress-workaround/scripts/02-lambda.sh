@@ -12,7 +12,7 @@ log "Building deployment package (pymysql is pure Python, no compilation)"
 rm -rf "$BUILD"; mkdir -p "$BUILD"
 python3 -m pip install --quiet --target "$BUILD" "pymysql==1.1.1"
 cp "$ROOT_DIR/lambda/handler.py" "$BUILD/"
-(cd "$BUILD" && zip -qr "$ROOT_DIR/build/lambda.zip" .)
+(cd "$BUILD" && python3 -m zipfile -c "$ROOT_DIR/build/lambda.zip" .)
 ok "package $(du -h "$ROOT_DIR/build/lambda.zip" | cut -f1)"
 
 # ---------- execution role ----------
@@ -26,7 +26,7 @@ if ! aws iam get-role --role-name "$ROLE_NAME" >/dev/null 2>&1; then
   # VPCAccessExecutionRole covers CloudWatch Logs *and* the ENI create/delete
   # permissions a VPC-attached Lambda needs.
   aws iam attach-role-policy --role-name "$ROLE_NAME" \
-    --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole >/dev/null
+    --policy-arn arn:$PARTITION:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole >/dev/null
   sleep 12  # let the role propagate before Lambda validates it
 fi
 LAMBDA_ROLE_ARN=$(aws iam get-role --role-name "$ROLE_NAME" --query Role.Arn --output text)

@@ -92,7 +92,7 @@ for svc in ssm ssmmessages ec2messages; do
   if [[ -z "${!var:-}" ]]; then
     log "Creating interface endpoint for $svc"
     id=$(aws ec2 create-vpc-endpoint --vpc-id "$VPC_ID" \
-      --service-name "com.amazonaws.$REGION.$svc" --vpc-endpoint-type Interface \
+      --service-name "$(vpce_service "$svc")" --vpc-endpoint-type Interface \
       --subnet-ids "$SUBNET_PRIV_A" "$SUBNET_PRIV_B" \
       --security-group-ids "$SG_VPCE" --private-dns-enabled \
       --region "$REGION" --query 'VpcEndpoint.VpcEndpointId' --output text)

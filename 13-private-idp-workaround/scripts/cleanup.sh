@@ -29,7 +29,7 @@ if [[ -n "${IDP_GW_ID:-}" ]]; then
 fi
 
 # ---------- lambdas ----------
-for fn in "${INTERCEPTOR_FN:-}" "${TOOL_FN:-}"; do
+for fn in "${INTERCEPTOR_FN:-}" "${TOOL_FN:-}" "${CALLER_FN:-}"; do
   [[ -z "$fn" ]] && continue
   log "Deleting Lambda $fn"
   try aws lambda delete-function --function-name "$fn" --region "$REGION"
@@ -64,8 +64,12 @@ fi
 log "Deleting IAM roles"
 try aws iam delete-role-policy --role-name "$PREFIX-gw-role" --policy-name invoke-lambdas
 try aws iam delete-role --role-name "$PREFIX-gw-role"
+try aws iam delete-role-policy --role-name "$PREFIX-caller-role" --policy-name invoke-gateway
+try aws iam detach-role-policy --role-name "$PREFIX-caller-role" \
+  --policy-arn arn:$PARTITION:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+try aws iam delete-role --role-name "$PREFIX-caller-role"
 try aws iam detach-role-policy --role-name "$PREFIX-lambda-role" \
-  --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+  --policy-arn arn:$PARTITION:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
 try aws iam delete-role --role-name "$PREFIX-lambda-role"
 
 rm -rf "$ROOT_DIR/build"

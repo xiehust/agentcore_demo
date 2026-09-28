@@ -1,0 +1,417 @@
+{
+  "start_ms": 1790580560309,
+  "end_ms": 1790580623106,
+  "functions": {
+    "acdemo-idp-interceptor": {
+      "observed_invocations": 17,
+      "events": [
+        {
+          "timestamp": 1790580591295,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "INIT_START Runtime Version: python:3.12.mainlinev2.v83\tRuntime Version ARN: arn:aws-cn:lambda:cn-northwest-1::runtime:121f1293694746a4bb4e2519f0389e2271b3bd6f4970d10fbfb69bfb9b53ca2d\n"
+        },
+        {
+          "timestamp": 1790580591599,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 93d4f966-df8e-4b70-825c-5ec05b9daf91 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580591600,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 1, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580591601,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 93d4f966-df8e-4b70-825c-5ec05b9daf91\n"
+        },
+        {
+          "timestamp": 1790580591601,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 93d4f966-df8e-4b70-825c-5ec05b9daf91\tDuration: 1.94 ms\tBilled Duration: 303 ms\tMemory Size: 512 MB\tMax Memory Used: 66 MB\tInit Duration: 300.65 ms\t\nXRAY TraceId: 1-6aba176f-0fdcce2419e93e283def347e\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580593158,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: e128fd20-d076-4db2-941a-5ccbeebcd348 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580593159,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"tools/call\", \"id\": 2, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580593231,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"authorized\": true, \"sub\": \"order-desk-agent\", \"client_id\": \"order-desk-agent\", \"scopes\": [\"orders.read\"], \"exp_in_s\": 895}\n"
+        },
+        {
+          "timestamp": 1790580593233,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: e128fd20-d076-4db2-941a-5ccbeebcd348\n"
+        },
+        {
+          "timestamp": 1790580593233,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: e128fd20-d076-4db2-941a-5ccbeebcd348\tDuration: 74.48 ms\tBilled Duration: 75 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1771-40f12e7b6cc1e65262906472\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580594868,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 6252115f-64d3-4a9c-a3c0-6c773a900d4d Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580594868,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 3, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580594870,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 6252115f-64d3-4a9c-a3c0-6c773a900d4d\n"
+        },
+        {
+          "timestamp": 1790580594870,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 6252115f-64d3-4a9c-a3c0-6c773a900d4d\tDuration: 1.62 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1772-184d44164ec0d2b830e617e6\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580596465,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 5d84d1e0-8fb9-453a-82e4-8156c310c9f4 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580596465,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"tools/call\", \"id\": 4, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580596465,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"authorized\": false, \"id\": 4, \"status\": 403, \"reason\": \"missing bearer token\"}\n"
+        },
+        {
+          "timestamp": 1790580596467,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 5d84d1e0-8fb9-453a-82e4-8156c310c9f4\n"
+        },
+        {
+          "timestamp": 1790580596467,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 5d84d1e0-8fb9-453a-82e4-8156c310c9f4\tDuration: 1.54 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1774-62e7250b206e9c4541c15188\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580598050,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 590cb985-60e8-4d61-a0c2-3a91ef38eb03 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580598051,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 5, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580598052,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 590cb985-60e8-4d61-a0c2-3a91ef38eb03\n"
+        },
+        {
+          "timestamp": 1790580598052,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 590cb985-60e8-4d61-a0c2-3a91ef38eb03\tDuration: 1.60 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1775-5fd4e27377a4ba9101866694\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580599633,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 1dac0ef7-5e81-48da-b9ed-7cdc7159eb2e Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580599634,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"tools/call\", \"id\": 6, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580599634,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"authorized\": false, \"id\": 6, \"status\": 403, \"reason\": \"token rejected\"}\n"
+        },
+        {
+          "timestamp": 1790580599635,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 1dac0ef7-5e81-48da-b9ed-7cdc7159eb2e\n"
+        },
+        {
+          "timestamp": 1790580599635,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 1dac0ef7-5e81-48da-b9ed-7cdc7159eb2e\tDuration: 1.97 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1777-0edb54704394dcc11c4d05db\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580601437,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: c6ef6260-fd76-478e-8ea1-2d753c2e158d Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580601438,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 7, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580601440,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: c6ef6260-fd76-478e-8ea1-2d753c2e158d\n"
+        },
+        {
+          "timestamp": 1790580601440,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: c6ef6260-fd76-478e-8ea1-2d753c2e158d\tDuration: 1.77 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1779-345086c06bdae1cd37292174\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580603152,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: a990c2ea-5467-4896-a3ef-bb37e93331ef Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580603152,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"tools/call\", \"id\": 8, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580603153,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"authorized\": false, \"id\": 8, \"status\": 403, \"reason\": \"signature verification failed\"}\n"
+        },
+        {
+          "timestamp": 1790580603154,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: a990c2ea-5467-4896-a3ef-bb37e93331ef\n"
+        },
+        {
+          "timestamp": 1790580603154,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: a990c2ea-5467-4896-a3ef-bb37e93331ef\tDuration: 1.80 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba177b-366da4111c087f1d565cad3f\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580604914,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: f18c8de4-928c-4004-9e31-0453fdf24565 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580604915,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 9, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580604916,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: f18c8de4-928c-4004-9e31-0453fdf24565\n"
+        },
+        {
+          "timestamp": 1790580604916,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: f18c8de4-928c-4004-9e31-0453fdf24565\tDuration: 1.69 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba177c-609555e01fbe661f53546d5f\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580606440,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 16f25df2-d873-4e2f-bbe5-860e86e878a9 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580606440,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"tools/call\", \"id\": 10, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580606441,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"authorized\": false, \"id\": 10, \"status\": 403, \"reason\": \"token expired\"}\n"
+        },
+        {
+          "timestamp": 1790580606442,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 16f25df2-d873-4e2f-bbe5-860e86e878a9\n"
+        },
+        {
+          "timestamp": 1790580606442,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 16f25df2-d873-4e2f-bbe5-860e86e878a9\tDuration: 1.76 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba177e-5016b2b0276d337368eac32b\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580608155,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 55b3bd9a-7607-4a36-9ee8-c8f176254c26 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580608156,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 11, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580608157,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 55b3bd9a-7607-4a36-9ee8-c8f176254c26\n"
+        },
+        {
+          "timestamp": 1790580608157,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 55b3bd9a-7607-4a36-9ee8-c8f176254c26\tDuration: 1.66 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1780-22ffadc374e231434a47982f\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580609714,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: a46638d7-e490-4764-b4ad-66a48244f781 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580609715,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"tools/call\", \"id\": 12, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580609715,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"authorized\": false, \"id\": 12, \"status\": 403, \"reason\": \"wrong audience\"}\n"
+        },
+        {
+          "timestamp": 1790580609717,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: a46638d7-e490-4764-b4ad-66a48244f781\n"
+        },
+        {
+          "timestamp": 1790580609717,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: a46638d7-e490-4764-b4ad-66a48244f781\tDuration: 2.10 ms\tBilled Duration: 3 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1781-3a1f52494d8b99c445146e7d\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580611531,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 58ea7cd3-d18b-400b-af62-7fb1442e2604 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580611532,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 13, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580611533,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 58ea7cd3-d18b-400b-af62-7fb1442e2604\n"
+        },
+        {
+          "timestamp": 1790580611534,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 58ea7cd3-d18b-400b-af62-7fb1442e2604\tDuration: 1.60 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1783-4874a467174fbb944c823ad2\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580613080,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 525c5327-a684-42d1-addc-392f4ae84a7d Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580613080,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"tools/call\", \"id\": 14, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580613081,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"authorized\": false, \"id\": 14, \"status\": 403, \"reason\": \"wrong issuer\"}\n"
+        },
+        {
+          "timestamp": 1790580613082,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 525c5327-a684-42d1-addc-392f4ae84a7d\n"
+        },
+        {
+          "timestamp": 1790580613082,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 525c5327-a684-42d1-addc-392f4ae84a7d\tDuration: 1.91 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1785-4af0bb073b8bfe71215533cf\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580614891,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 6622ba12-66d6-461f-be47-3522cbb729a7 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580614892,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 15, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580614894,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 6622ba12-66d6-461f-be47-3522cbb729a7\n"
+        },
+        {
+          "timestamp": 1790580614894,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 6622ba12-66d6-461f-be47-3522cbb729a7\tDuration: 2.26 ms\tBilled Duration: 3 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1786-55c4c27045f9f6a51d2e66df\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580616491,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: 2e544a71-7e55-496b-841d-7074e47dc7b4 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580616491,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"tools/call\", \"id\": 16, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580616492,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"authorized\": false, \"id\": 16, \"status\": 403, \"reason\": \"missing required scope orders.read\"}\n"
+        },
+        {
+          "timestamp": 1790580616493,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: 2e544a71-7e55-496b-841d-7074e47dc7b4\n"
+        },
+        {
+          "timestamp": 1790580616493,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: 2e544a71-7e55-496b-841d-7074e47dc7b4\tDuration: 2.02 ms\tBilled Duration: 3 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba1788-4bc6fcc10aac4ef87db6d3c3\tSampled: true\t\n"
+        },
+        {
+          "timestamp": 1790580618266,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "START RequestId: cb6f43c4-d524-4967-8275-00af0b9d35ee Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580618266,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "{\"method\": \"initialize\", \"id\": 17, \"has_headers\": true}\n"
+        },
+        {
+          "timestamp": 1790580618268,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "END RequestId: cb6f43c4-d524-4967-8275-00af0b9d35ee\n"
+        },
+        {
+          "timestamp": 1790580618268,
+          "logStreamName": "2026/09/28/[$LATEST]48ad7078c4324a788456df0403c6ffb8",
+          "message": "REPORT RequestId: cb6f43c4-d524-4967-8275-00af0b9d35ee\tDuration: 1.57 ms\tBilled Duration: 2 ms\tMemory Size: 512 MB\tMax Memory Used: 68 MB\t\nXRAY TraceId: 1-6aba178a-3417f3ed7f3a687019445188\tSampled: true\t\n"
+        }
+      ]
+    },
+    "acdemo-idp-tool": {
+      "observed_invocations": 1,
+      "events": [
+        {
+          "timestamp": 1790580593277,
+          "logStreamName": "2026/09/28/[$LATEST]3b79211bc6374c099a58ef48cc5e2722",
+          "message": "START RequestId: 684a24d4-9d03-4808-8ef5-6f90da384720 Version: $LATEST\n"
+        },
+        {
+          "timestamp": 1790580593314,
+          "logStreamName": "2026/09/28/[$LATEST]3b79211bc6374c099a58ef48cc5e2722",
+          "message": "END RequestId: 684a24d4-9d03-4808-8ef5-6f90da384720\n"
+        },
+        {
+          "timestamp": 1790580593315,
+          "logStreamName": "2026/09/28/[$LATEST]3b79211bc6374c099a58ef48cc5e2722",
+          "message": "REPORT RequestId: 684a24d4-9d03-4808-8ef5-6f90da384720\tDuration: 37.16 ms\tBilled Duration: 38 ms\tMemory Size: 512 MB\tMax Memory Used: 56 MB\t\nXRAY TraceId: 1-6aba1771-40f12e7b6cc1e65262906472\tSampled: true\t\n"
+        }
+      ]
+    }
+  },
+  "note": "CloudWatch ingestion can lag; these are observed counts, not a completeness guarantee."
+}

@@ -1,0 +1,21 @@
+{
+  "source": "CloudWatch REPORT lines of /aws/lambda/acdemo-idp-interceptor after the final code deploy (2026-09-28T06:47:35Z)",
+  "interceptor_invocation_ms": {
+    "n": 118,
+    "p50": 1.61,
+    "p90": 1.82,
+    "p99": 5.51,
+    "min": 1.37,
+    "max": 87.92
+  },
+  "interceptor_cold_init_ms": {
+    "n": 1,
+    "values": [
+      230.38
+    ],
+    "first_call_after_init_ms": [
+      1.93
+    ]
+  },
+  "raw_jwts_in_logs": 0
+}
