@@ -1,0 +1,36 @@
+{
+  "at": "2026-09-28T03:44:29.235869+00:00",
+  "name": "executeCommand",
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"python\": \"3.12.13 (main, Jun 18 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]\", \"boto3\": \"1.40.30\", \"botocore\": \"1.40.76\", \"identity\": {\"UserId\": \"AROA3EVEOR4JZ2TLCLUFP:BedrockAgentCore-01M3K1TB47CZ6AFAD2D8ERW8XJ\", \"Account\": \"765922807571\", \"Arn\": \"arn:aws-cn:sts::765922807571:assumed-role/cn-runtime24-40423c06cc-load/BedrockAgentCore-01M3K1TB47CZ6AFAD2D8ERW8XJ\", \"ResponseMetadata\": {\"RequestId\": \"d89e6354-bcfc-4598-acbf-a01093bad3e7\", \"HTTPStatusCode\": 200, \"HTTPHeaders\": {\"x-amzn-requestid\": \"d89e6354-bcfc-4598-acbf-a01093bad3e7\", \"x-amz-sts-extended-request-id\": \"MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTA1NjcwNjkwNTY6UjpPdnVZUVdGZA==\", \"content-type\": \"text/xml\", \"content-length\": \"524\", \"date\": \"Mon, 28 Sep 2026 03:44:29 GMT\"}, \"RetryAttempts\": 0}}}\r\n"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"python\": \"3.12.13 (main, Jun 18 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]\", \"boto3\": \"1.40.30\", \"botocore\": \"1.40.76\", \"identity\": {\"UserId\": \"AROA3EVEOR4JZ2TLCLUFP:BedrockAgentCore-01M3K1TB47CZ6AFAD2D8ERW8XJ\", \"Account\": \"765922807571\", \"Arn\": \"arn:aws-cn:sts::765922807571:assumed-role/cn-runtime24-40423c06cc-load/BedrockAgentCore-01M3K1TB47CZ6AFAD2D8ERW8XJ\", \"ResponseMetadata\": {\"RequestId\": \"d89e6354-bcfc-4598-acbf-a01093bad3e7\", \"HTTPStatusCode\": 200, \"HTTPHeaders\": {\"x-amzn-requestid\": \"d89e6354-bcfc-4598-acbf-a01093bad3e7\", \"x-amz-sts-extended-request-id\": \"MTpjbi1ub3J0aHdlc3QtMTpTOjE3OTA1NjcwNjkwNTY6UjpPdnVZUVdGZA==\", \"content-type\": \"text/xml\", \"content-length\": \"524\", \"date\": \"Mon, 28 Sep 2026 03:44:29 GMT\"}, \"RetryAttempts\": 0}}}\r\n",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.6200053691864014
+        },
+        "isError": false
+      }
+    }
+  ],
+  "metadata": {
+    "RequestId": "fdd69603-6bd5-4e41-88b4-65b2c0913853",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Mon, 28 Sep 2026 03:44:29 GMT",
+      "content-type": "application/vnd.amazon.eventstream",
+      "transfer-encoding": "chunked",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "fdd69603-6bd5-4e41-88b4-65b2c0913853",
+      "x-amzn-code-interpreter-session-id": "01M3K1TB47CZ6AFAD2D8ERW8XJ"
+    },
+    "RetryAttempts": 0
+  }
+}

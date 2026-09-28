@@ -1,0 +1,23 @@
+{
+  "requests": [
+    {
+      "url": "https://pypi.tuna.tsinghua.edu.cn/simple/pytimeparse/",
+      "error": "<urlopen error [Errno -2] Name or service not known>",
+      "error_type": "URLError",
+      "elapsed_s": 0.01937215100000067
+    },
+    {
+      "url": "https://mirrors.aliyun.com/pypi/simple/pytimeparse/",
+      "error": "<urlopen error [Errno -2] Name or service not known>",
+      "error_type": "URLError",
+      "elapsed_s": 0.0024363170000007983
+    },
+    {
+      "url": "https://pypi.org/simple/pytimeparse/",
+      "error": "<urlopen error [Errno -2] Name or service not known>",
+      "error_type": "URLError",
+      "elapsed_s": 0.006950986999999742
+    }
+  ],
+  "network_env_names": []
+}

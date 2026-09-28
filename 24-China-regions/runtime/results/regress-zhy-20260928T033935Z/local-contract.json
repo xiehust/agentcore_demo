@@ -1,0 +1,49 @@
+{
+  "ping": {
+    "status": "Healthy"
+  },
+  "replies": [
+    {
+      "ok": true,
+      "echo": "0",
+      "process_id": "915c4fcf-40c6-4b34-b649-45b777d18aed",
+      "instance_id": "bd07def0-30ba-4eb0-8d0b-90d9fb1ecd84",
+      "boot_id": "74d35d7a-c89c-45dc-8d20-bbdd98eb0145",
+      "pid": 1,
+      "request_index": 1,
+      "process_started_unix_s": 1790566783.4707944,
+      "process_age_at_request_ms": 137.83036172389984,
+      "handler_started_unix_s": 1790566783.6086373,
+      "handler_finished_unix_s": 1790566783.6087098,
+      "handler_ms": 0.0713840126991272
+    },
+    {
+      "ok": true,
+      "echo": "1",
+      "process_id": "915c4fcf-40c6-4b34-b649-45b777d18aed",
+      "instance_id": "bd07def0-30ba-4eb0-8d0b-90d9fb1ecd84",
+      "boot_id": "74d35d7a-c89c-45dc-8d20-bbdd98eb0145",
+      "pid": 1,
+      "request_index": 2,
+      "process_started_unix_s": 1790566783.4707944,
+      "process_age_at_request_ms": 139.05852288007736,
+      "handler_started_unix_s": 1790566783.6098661,
+      "handler_finished_unix_s": 1790566783.609895,
+      "handler_ms": 0.02800673246383667
+    },
+    {
+      "ok": true,
+      "echo": "2",
+      "process_id": "915c4fcf-40c6-4b34-b649-45b777d18aed",
+      "instance_id": "bd07def0-30ba-4eb0-8d0b-90d9fb1ecd84",
+      "boot_id": "74d35d7a-c89c-45dc-8d20-bbdd98eb0145",
+      "pid": 1,
+      "request_index": 3,
+      "process_started_unix_s": 1790566783.4707944,
+      "process_age_at_request_ms": 140.13517647981644,
+      "handler_started_unix_s": 1790566783.6109433,
+      "handler_finished_unix_s": 1790566783.610962,
+      "handler_ms": 0.018306076526641846
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-28T03:49:07.913506+00:00",
+  "deleted": true,
+  "response": {
+    "Error": {
+      "Message": "Code interpreter with ID cn_runtime24_40423c06cc_load-eeKhn8kzQM does not exist",
+      "Code": "ResourceNotFoundException"
+    },
+    "ResponseMetadata": {
+      "RequestId": "81a86a1f-a1e5-4429-acc2-7a639d07727e",
+      "HTTPStatusCode": 404,
+      "HTTPHeaders": {
+        "date": "Mon, 28 Sep 2026 03:49:07 GMT",
+        "content-type": "application/json",
+        "content-length": "93",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "81a86a1f-a1e5-4429-acc2-7a639d07727e",
+        "x-amzn-errortype": "ResourceNotFoundException",
+        "x-amz-apigw-id": "EZCEKEa05PgEcqw=",
+        "x-amzn-trace-id": "Root=1-6ab9e3b3-7b22644d5106adbb59424480"
+      },
+      "RetryAttempts": 0
+    },
+    "message": "Code interpreter with ID cn_runtime24_40423c06cc_load-eeKhn8kzQM does not exist"
+  }
+}

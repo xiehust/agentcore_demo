@@ -1,0 +1,47 @@
+{
+  "at": "2026-09-28T03:36:48.436443+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M3K16FTVN2VE47J3Z56J52HE",
+    "name": "getTask",
+    "arguments": {
+      "taskId": "ccead20a-f825-4470-ba10-daf82f9038aa"
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "21fed9f3-d18b-4fba-9694-2bc6ee2cb0d1",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 28 Sep 2026 03:36:48 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "21fed9f3-d18b-4fba-9694-2bc6ee2cb0d1",
+        "x-amzn-code-interpreter-session-id": "01M3K16FTVN2VE47J3Z56J52HE"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M3K16FTVN2VE47J3Z56J52HE"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Task is working"
+          }
+        ],
+        "structuredContent": {
+          "taskStatus": "working",
+          "stdout": "",
+          "stderr": ""
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.28455743193626404
+}

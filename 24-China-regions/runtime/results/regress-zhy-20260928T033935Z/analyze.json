@@ -1,0 +1,72 @@
+{
+  "tests": {
+    "7.1": {
+      "status": "PASS",
+      "metric": "p50_ms",
+      "observed_ms": 1537.4422199999885,
+      "strict_target_ms": 3000,
+      "sample_integrity": true,
+      "samples": 100
+    },
+    "7.2": {
+      "status": "PASS",
+      "metric": "p99_ms",
+      "observed_ms": 1916.5899650000001,
+      "strict_target_ms": 5000,
+      "sample_integrity": true,
+      "samples": 100
+    },
+    "7.3": {
+      "status": "PASS",
+      "metric": "p99_ms",
+      "observed_ms": 96.865839000003,
+      "strict_target_ms": 200,
+      "sample_integrity": true,
+      "samples": 500
+    },
+    "7.4": {
+      "status": "PASS",
+      "samples": 50,
+      "errors": 0,
+      "error_rate": 0.0,
+      "unique_instances": 50,
+      "client_call_peak_overlap": 50,
+      "handler_peak_overlap": 50,
+      "scope": "0 user sessions on a never-invoked runtime; platform prewarmed pool unobservable"
+    }
+  },
+  "evidence_audit": {
+    "cold": {
+      "attempts": 100,
+      "successful": 100,
+      "statistics_recomputed": true,
+      "unique_instances": 100,
+      "all_first_request": true
+    },
+    "warm": {
+      "attempts": 500,
+      "successful": 500,
+      "statistics_recomputed": true,
+      "same_instance_contiguous_sequence": true
+    },
+    "warmup": {
+      "attempts": 1,
+      "successful": 1,
+      "statistics_recomputed": true
+    },
+    "scale": {
+      "attempts": 50,
+      "successful": 50,
+      "statistics_recomputed": true,
+      "unique_instances": 50,
+      "all_first_request": true
+    },
+    "total_requests": 651,
+    "runtime_sessions": 151,
+    "all_stop_responses_received": true,
+    "benchmark_source_hash_verified": true,
+    "jsonl_matches_full_result": true,
+    "scale_acceptance_recomputed": true,
+    "at": "2026-09-28T03:49:49.941215+00:00"
+  }
+}

@@ -1,0 +1,1233 @@
+{
+  "2.1": {
+    "status": "PASS",
+    "priority": "P0",
+    "at": "2026-09-28T03:33:26.667254+00:00",
+    "details": {
+      "arithmetic": 36,
+      "factorial": 3628800,
+      "sqrt": 9.0,
+      "mean": 4,
+      "date": "2026-09-30",
+      "json_roundtrip": {
+        "中文": [
+          1,
+          2
+        ]
+      },
+      "sha256": "69d4655afc945ce117bd1522d6674abc3f85cb57e57ea5ce1be1486636dab8eb"
+    }
+  },
+  "2.2": {
+    "status": "PASS",
+    "priority": "P0",
+    "at": "2026-09-28T03:33:27.639262+00:00",
+    "details": {
+      "host_file_existed_locally": true,
+      "host_marker_removed": true,
+      "host_probe": {
+        "host_marker": {
+          "accessible": false,
+          "error": "FileNotFoundError",
+          "errno": 2
+        },
+        "pid1_root_marker": {
+          "accessible": false,
+          "error": "PermissionError",
+          "errno": 13
+        },
+        "cwd": "/opt/amazon/genesis1p-tools/var",
+        "uid": 991
+      },
+      "own": {
+        "own_file_readable": true
+      },
+      "peer": {
+        "peer_file_exists": false
+      },
+      "scope": "Client host marker and cross-session files; no provider-host escape audit."
+    }
+  },
+  "2.3": {
+    "status": "PASS",
+    "priority": "P0",
+    "at": "2026-09-28T03:33:28.349471+00:00",
+    "details": {
+      "success": {
+        "stdout": "CN_STDOUT_中文_123",
+        "stderr": "CN_STDERR_错误_456",
+        "isError": false,
+        "results": [
+          {
+            "content": [
+              {
+                "type": "text",
+                "text": "CN_STDOUT_中文_123"
+              },
+              {
+                "type": "text",
+                "text": "CN_STDERR_错误_456"
+              }
+            ],
+            "structuredContent": {
+              "stdout": "CN_STDOUT_中文_123",
+              "stderr": "CN_STDERR_错误_456",
+              "exitCode": 0,
+              "executionTime": 0.04911971092224121
+            },
+            "isError": false
+          }
+        ],
+        "exceptions": []
+      },
+      "controlled_exception": {
+        "stdout": "BEFORE_CONTROLLED_ERROR",
+        "stderr": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION",
+        "isError": true,
+        "results": [
+          {
+            "content": [
+              {
+                "type": "text",
+                "text": "BEFORE_CONTROLLED_ERROR"
+              },
+              {
+                "type": "text",
+                "text": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION"
+              }
+            ],
+            "structuredContent": {
+              "stdout": "BEFORE_CONTROLLED_ERROR",
+              "stderr": "---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[10], line 2\n      1 print(\"BEFORE_CONTROLLED_ERROR\")\n----> 2 raise ValueError(\"CN_EXPECTED_EXCEPTION\")\n\nValueError: CN_EXPECTED_EXCEPTION",
+              "exitCode": 1,
+              "executionTime": 0.0711359977722168
+            },
+            "isError": true
+          }
+        ],
+        "exceptions": []
+      },
+      "integration_scope": "Python Agent-side SDK tool adapter; no LLM/framework invocation"
+    }
+  },
+  "2.4": {
+    "status": "PASS",
+    "priority": "P1",
+    "at": "2026-09-28T03:33:31.123118+00:00",
+    "details": {
+      "versions": {
+        "numpy": "1.26.4",
+        "pandas": "2.3.1",
+        "matplotlib": "3.9.0"
+      },
+      "matrix_square": [
+        [
+          7,
+          10
+        ],
+        [
+          15,
+          22
+        ]
+      ],
+      "grouped": {
+        "a": 30,
+        "b": 40
+      },
+      "png_bytes": 7945,
+      "png_signature_hex": "89504e470d0a1a0a"
+    }
+  },
+  "2.5": {
+    "status": "PASS",
+    "priority": "P1",
+    "at": "2026-09-28T03:33:32.202391+00:00",
+    "details": {
+      "input_csv_sha256": "ec2cd9e449273ac7aced426b11a7a5dd6d889c124dcbbd429cb70d71051981cd",
+      "input_bin_sha256": "c8f5d0341d54d951a71b136e6e2afcb14d11ed8489a7ae126a8fee0df6ecf193",
+      "downloaded": {
+        "output.csv": {
+          "bytes": 49,
+          "sha256": "54132cc92e0ccb1f111413923a0890f3bab35167678e04ae5870667a2e7abab8"
+        },
+        "output.bin": {
+          "bytes": 4096,
+          "sha256": "191016cc9f08e7f1187290730ae5ea234aa5e4073168f28b478100dee65988da"
+        },
+        "analysis.png": {
+          "bytes": 7945,
+          "sha256": "56a44369098d02c9e4720a4820da89f9b5cfa31575722e729788ba6eb66719f6"
+        }
+      }
+    }
+  },
+  "2.9": {
+    "status": "PASS",
+    "priority": "P1",
+    "at": "2026-09-28T03:33:33.379535+00:00",
+    "details": {
+      "initial": {
+        "counter": 40,
+        "history": [
+          "first"
+        ]
+      },
+      "updated": {
+        "counter": 42,
+        "history": [
+          "first",
+          "second"
+        ]
+      },
+      "final": {
+        "counter": 42,
+        "history": [
+          "first",
+          "second"
+        ]
+      },
+      "peer": {
+        "exists": false
+      }
+    }
+  },
+  "2.10": {
+    "status": "FAIL",
+    "priority": "P0",
+    "at": "2026-09-28T03:33:35.471014+00:00",
+    "details": {
+      "error": {
+        "type": "AssertionError",
+        "message": "{'index_url': 'https://pypi.tuna.tsinghua.edu.cn/simple', 'elapsed_s': 1.04049963504076, 'output': {'stdout': '', 'stderr': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m', 'isError': True, 'results': [{'content': [{'type': 'text', 'text': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m'}], 'structuredContent': {'stdout': '', 'stderr': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m', 'exitCode': 1, 'executionTime': 0.7785592079162598}, 'isError': True}], 'exceptions': []}, 'import': None}",
+        "response": null
+      },
+      "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/workspace/agentcore_demo/24-China-regions/code_interpreter/verify_code_interpreter.py\", line 193, in check\n    details = fn()\n              ^^^^\n  File \"/home/ubuntu/workspace/agentcore_demo/24-China-regions/code_interpreter/verify_code_interpreter.py\", line 231, in <lambda>\n    self.check(\"2.10\", lambda: self.packages(a))\n                               ^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/agentcore_demo/24-China-regions/code_interpreter/verify_code_interpreter.py\", line 442, in packages\n    assert not mirror_result[\"output\"][\"isError\"], mirror_result\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'index_url': 'https://pypi.tuna.tsinghua.edu.cn/simple', 'elapsed_s': 1.04049963504076, 'output': {'stdout': '', 'stderr': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m', 'isError': True, 'results': [{'content': [{'type': 'text', 'text': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m'}], 'structuredContent': {'stdout': '', 'stderr': 'Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple\\r\\n\\x1b[31mERROR: Could not find a version that satisfies the requirement pytimeparse==1.1.8 (from versions: none)\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m\\x1b[31mERROR: No matching distribution found for pytimeparse==1.1.8\\x1b[0m\\x1b[31m\\r\\n\\x1b[0m', 'exitCode': 1, 'executionTime': 0.7785592079162598}, 'isError': True}], 'exceptions': []}, 'import': None}\n"
+    }
+  },
+  "2.6": {
+    "status": "PARTIAL",
+    "priority": "P0",
+    "at": "2026-09-28T03:36:57.372047+00:00",
+    "details": {
+      "native_observation_seconds": 180,
+      "native_elapsed_s": 180.40132865309715,
+      "native_output": {
+        "stdout": "NATIVE_LONG_TASK_COMPLETED",
+        "stderr": "",
+        "isError": false,
+        "results": [
+          {
+            "content": [
+              {
+                "type": "text",
+                "text": "NATIVE_LONG_TASK_COMPLETED"
+              }
+            ],
+            "structuredContent": {
+              "stdout": "NATIVE_LONG_TASK_COMPLETED",
+              "stderr": "",
+              "exitCode": 0,
+              "executionTime": 180.0979859828949
+            },
+            "isError": false
+          }
+        ],
+        "exceptions": []
+      },
+      "native_checks": [
+        {
+          "heartbeat": "179",
+          "done": true,
+          "recovery": 42
+        },
+        {
+          "heartbeat": "179",
+          "done": true,
+          "recovery": 42
+        }
+      ],
+      "native_timeout_proven": false,
+      "caller_deadline_seconds": 5,
+      "cancel_checks": [
+        {
+          "heartbeat": "5",
+          "done": false,
+          "recovery": 42
+        },
+        {
+          "heartbeat": "5",
+          "done": false,
+          "recovery": 42
+        }
+      ],
+      "cancel_termination_proven": true,
+      "task_id": "ccead20a-f825-4470-ba10-daf82f9038aa",
+      "before": {
+        "stdout": "",
+        "stderr": "",
+        "isError": false,
+        "results": [
+          {
+            "content": [
+              {
+                "type": "text",
+                "text": "Task is working"
+              }
+            ],
+            "structuredContent": {
+              "taskStatus": "working",
+              "stdout": "",
+              "stderr": ""
+            },
+            "isError": false
+          }
+        ],
+        "exceptions": []
+      },
+      "stop": {
+        "stdout": "",
+        "stderr": "",
+        "isError": false,
+        "results": [
+          {
+            "content": [
+              {
+                "type": "text",
+                "text": "Successfully canceled a command execution task"
+              }
+            ],
+            "isError": false
+          }
+        ],
+        "exceptions": []
+      },
+      "after": {
+        "stdout": "",
+        "stderr": "",
+        "isError": false,
+        "results": [
+          {
+            "content": [
+              {
+                "type": "text",
+                "text": "Task is canceled"
+              }
+            ],
+            "structuredContent": {
+              "taskStatus": "canceled",
+              "stdout": "",
+              "stderr": ""
+            },
+            "isError": false
+          }
+        ],
+        "exceptions": []
+      },
+      "scope": "No per-execution timeout argument in installed service model. Caller deadline plus stopTask is tested separately from native automatic timeout."
+    }
+  },
+  "2.7": {
+    "status": "PASS",
+    "priority": "P0",
+    "at": "2026-09-28T03:37:07.347606+00:00",
+    "details": {
+      "batches": [
+        {
+          "concurrency": 1,
+          "success": 1,
+          "failure": 0,
+          "rows": [
+            {
+              "index": 0,
+              "at": "2026-09-28T03:36:57.687455+00:00",
+              "launch_offset_s": 8.103996515274048e-05,
+              "session_id": "01M3K1CMP8D8XJY9MZ7H1HXRFT",
+              "start_s": 1.2268811836838722,
+              "start_request_id": "0bec60fc-2e36-4816-ae46-a8b4d76dca32",
+              "first_execute_s": 0.3382750600576401,
+              "end_to_end_s": 1.5667461231350899,
+              "execute_request_id": "c36c7e36-e30b-4070-9402-52500699860b",
+              "stdout": "CN_COLD_1_0_42",
+              "status": "PASS"
+            }
+          ],
+          "start": {
+            "p50_s": 1.2268811836838722,
+            "p90_s": 1.2268811836838722,
+            "p95_s": 1.2268811836838722,
+            "min_s": 1.2268811836838722,
+            "max_s": 1.2268811836838722,
+            "mean_s": 1.2268811836838722
+          },
+          "first_execute": {
+            "p50_s": 0.3382750600576401,
+            "p90_s": 0.3382750600576401,
+            "p95_s": 0.3382750600576401,
+            "min_s": 0.3382750600576401,
+            "max_s": 0.3382750600576401,
+            "mean_s": 0.3382750600576401
+          },
+          "end_to_end": {
+            "p50_s": 1.5667461231350899,
+            "p90_s": 1.5667461231350899,
+            "p95_s": 1.5667461231350899,
+            "min_s": 1.5667461231350899,
+            "max_s": 1.5667461231350899,
+            "mean_s": 1.5667461231350899
+          },
+          "max_launch_skew_s": 8.103996515274048e-05,
+          "sessions_held_until_batch_complete": 1
+        },
+        {
+          "concurrency": 10,
+          "success": 10,
+          "failure": 0,
+          "rows": [
+            {
+              "index": 0,
+              "at": "2026-09-28T03:36:59.553532+00:00",
+              "launch_offset_s": 0.00013723969459533691,
+              "session_id": "01M3K1CPGG5W1JEFMVMYQY85Z6",
+              "start_s": 1.1378456354141235,
+              "start_request_id": "e47a1eb0-4285-48ac-870c-b3df13a3774d",
+              "first_execute_s": 0.3291363790631294,
+              "end_to_end_s": 1.469253495335579,
+              "execute_request_id": "630101a4-5f16-40ac-b24a-db5e19a7a9dc",
+              "stdout": "CN_COLD_10_0_42",
+              "status": "PASS"
+            },
+            {
+              "index": 1,
+              "at": "2026-09-28T03:36:59.553875+00:00",
+              "launch_offset_s": 0.0004808753728866577,
+              "session_id": "01M3K1CQ8ZB1JWNKD0V66F5SEW",
+              "start_s": 1.759429782629013,
+              "start_request_id": "28cdd3bb-f0cf-4292-8f01-36062ec6301a",
+              "first_execute_s": 0.33237403631210327,
+              "end_to_end_s": 2.098985269665718,
+              "execute_request_id": "c11f4e35-ee85-479f-8ff1-699a02f89113",
+              "stdout": "CN_COLD_10_1_42",
+              "status": "PASS"
+            },
+            {
+              "index": 2,
+              "at": "2026-09-28T03:36:59.554139+00:00",
+              "launch_offset_s": 0.0007454603910446167,
+              "session_id": "01M3K1CQEN2G4B8EN0TFQ4EE92",
+              "start_s": 2.2042894139885902,
+              "start_request_id": "2d851d60-47aa-449d-ba1d-05cf48b4f6f1",
+              "first_execute_s": 0.3318752497434616,
+              "end_to_end_s": 2.5453011617064476,
+              "execute_request_id": "29c66159-ebd1-41b3-ae84-a5dacbb7596d",
+              "stdout": "CN_COLD_10_2_42",
+              "status": "PASS"
+            },
+            {
+              "index": 3,
+              "at": "2026-09-28T03:36:59.553952+00:00",
+              "launch_offset_s": 0.0005581080913543701,
+              "session_id": "01M3K1CQD7E7V34QNCBNZASQH6",
+              "start_s": 2.355358861386776,
+              "start_request_id": "3eaa3c7e-47a1-4b38-9292-976c2580352a",
+              "first_execute_s": 0.31356431543827057,
+              "end_to_end_s": 2.677281692624092,
+              "execute_request_id": "685cb2fe-6507-43f2-a7e5-3cb85815e517",
+              "stdout": "CN_COLD_10_3_42",
+              "status": "PASS"
+            },
+            {
+              "index": 4,
+              "at": "2026-09-28T03:36:59.554335+00:00",
+              "launch_offset_s": 0.000941842794418335,
+              "session_id": "01M3K1CQEJ4WFGHA4B9ZNXNYEX",
+              "start_s": 1.9556271731853485,
+              "start_request_id": "ead6b934-f39c-4aec-b10a-d255a682231f",
+              "first_execute_s": 0.34335261583328247,
+              "end_to_end_s": 2.311581015586853,
+              "execute_request_id": "09fc0c10-8839-4519-ae5a-e4aa25166e12",
+              "stdout": "CN_COLD_10_4_42",
+              "status": "PASS"
+            },
+            {
+              "index": 5,
+              "at": "2026-09-28T03:36:59.553658+00:00",
+              "launch_offset_s": 0.0002634301781654358,
+              "session_id": "01M3K1CQE7PR81PY6JPWEYW0VF",
+              "start_s": 1.8834030032157898,
+              "start_request_id": "259dd7f2-0ab8-4ccb-8613-3a8c6fcd69a6",
+              "first_execute_s": 0.3243396058678627,
+              "end_to_end_s": 2.2116908878087997,
+              "execute_request_id": "ed4d6443-7046-403b-8a2d-f739bc94a23a",
+              "stdout": "CN_COLD_10_5_42",
+              "status": "PASS"
+            },
+            {
+              "index": 6,
+              "at": "2026-09-28T03:36:59.554222+00:00",
+              "launch_offset_s": 0.0008274614810943604,
+              "session_id": "01M3K1CQDCKZMQ454AHGXCB648",
+              "start_s": 1.8615722879767418,
+              "start_request_id": "42c33cc1-38f6-4d19-b4a3-db1f2b559c54",
+              "first_execute_s": 0.3253926932811737,
+              "end_to_end_s": 2.197278745472431,
+              "execute_request_id": "adf5dac2-4ddb-4da4-8be6-73e69253c1b6",
+              "stdout": "CN_COLD_10_6_42",
+              "status": "PASS"
+            },
+            {
+              "index": 7,
+              "at": "2026-09-28T03:36:59.553730+00:00",
+              "launch_offset_s": 0.00033677369356155396,
+              "session_id": "01M3K1CQE8FV31901NFVKDAMBM",
+              "start_s": 1.9172704219818115,
+              "start_request_id": "463541d7-55b2-4c2f-9d2f-c1dcde1c3f14",
+              "first_execute_s": 0.3303849771618843,
+              "end_to_end_s": 2.2525462210178375,
+              "execute_request_id": "9b49c27b-954f-4d59-9d51-5e9a926877b5",
+              "stdout": "CN_COLD_10_7_42",
+              "status": "PASS"
+            },
+            {
+              "index": 8,
+              "at": "2026-09-28T03:36:59.554291+00:00",
+              "launch_offset_s": 0.0008969232439994812,
+              "session_id": "01M3K1CQCN2DHQMG6P3FRX0VSB",
+              "start_s": 1.82915747910738,
+              "start_request_id": "de0e926e-5493-4023-b497-8be5c4afbbcf",
+              "first_execute_s": 0.33561162650585175,
+              "end_to_end_s": 2.1762516871094704,
+              "execute_request_id": "287aa1c6-7aec-428f-8618-a727fd1b9f69",
+              "stdout": "CN_COLD_10_8_42",
+              "status": "PASS"
+            },
+            {
+              "index": 9,
+              "at": "2026-09-28T03:36:59.553788+00:00",
+              "launch_offset_s": 0.00039362162351608276,
+              "session_id": "01M3K1CQE28WY2BQVS15PS712C",
+              "start_s": 1.8964135125279427,
+              "start_request_id": "d63cbfc4-bfac-47c3-8dd5-c49cd7c7d992",
+              "first_execute_s": 0.34085630625486374,
+              "end_to_end_s": 2.243320018053055,
+              "execute_request_id": "192df29e-7252-443f-b7a4-c7ae9a90792e",
+              "stdout": "CN_COLD_10_9_42",
+              "status": "PASS"
+            }
+          ],
+          "start": {
+            "p50_s": 1.8899082578718662,
+            "p90_s": 2.219396358728409,
+            "p95_s": 2.2873776100575927,
+            "min_s": 1.1378456354141235,
+            "max_s": 2.355358861386776,
+            "mean_s": 1.8800367571413517
+          },
+          "first_execute": {
+            "p50_s": 0.33113011345267296,
+            "p90_s": 0.3411059372127056,
+            "p95_s": 0.34222927652299406,
+            "min_s": 0.31356431543827057,
+            "max_s": 0.34335261583328247,
+            "mean_s": 0.33068878054618833
+          },
+          "end_to_end": {
+            "p50_s": 2.2275054529309273,
+            "p90_s": 2.558499214798212,
+            "p95_s": 2.6178904537111523,
+            "min_s": 1.469253495335579,
+            "max_s": 2.677281692624092,
+            "mean_s": 2.2183490194380284
+          },
+          "max_launch_skew_s": 0.000941842794418335,
+          "sessions_held_until_batch_complete": 10
+        },
+        {
+          "concurrency": 50,
+          "success": 50,
+          "failure": 0,
+          "rows": [
+            {
+              "index": 0,
+              "at": "2026-09-28T03:37:02.567750+00:00",
+              "launch_offset_s": 0.0003733783960342407,
+              "session_id": "01M3K1CSF9KK1CT6JDJ3GD5S8S",
+              "start_s": 0.951626680791378,
+              "start_request_id": "57a1eafa-9e7d-40b4-83c4-4e2020ba5a45",
+              "first_execute_s": 0.29258231818675995,
+              "end_to_end_s": 1.2532983496785164,
+              "execute_request_id": "3b9dcfdc-88b4-47e8-8678-72eba4431818",
+              "stdout": "CN_COLD_50_0_42",
+              "status": "PASS"
+            },
+            {
+              "index": 1,
+              "at": "2026-09-28T03:37:02.570676+00:00",
+              "launch_offset_s": 0.0033004581928253174,
+              "session_id": "01M3K1CTXBEBFZ17RGSZXZAPQ4",
+              "start_s": 2.3419495970010757,
+              "start_request_id": "fd9b22b9-ebb7-484e-a528-3aee604f5ab9",
+              "first_execute_s": 0.3278762102127075,
+              "end_to_end_s": 2.729659378528595,
+              "execute_request_id": "fed48afe-40bf-4091-a437-18955d309b79",
+              "stdout": "CN_COLD_50_1_42",
+              "status": "PASS"
+            },
+            {
+              "index": 2,
+              "at": "2026-09-28T03:37:02.570234+00:00",
+              "launch_offset_s": 0.0028574466705322266,
+              "session_id": "01M3K1CTN7PQDENC6MRZYKART5",
+              "start_s": 2.058566153049469,
+              "start_request_id": "3b4de68f-bd78-4ca6-a1b6-4773c8c2704a",
+              "first_execute_s": 0.30832652002573013,
+              "end_to_end_s": 2.4202069342136383,
+              "execute_request_id": "dfd471eb-08af-4dad-9fd0-d3a0d04e933e",
+              "stdout": "CN_COLD_50_2_42",
+              "status": "PASS"
+            },
+            {
+              "index": 3,
+              "at": "2026-09-28T03:37:02.569503+00:00",
+              "launch_offset_s": 0.002127349376678467,
+              "session_id": "01M3K1CTPCSRJZ7J0N0JWVWC0S",
+              "start_s": 2.1411247476935387,
+              "start_request_id": "5ffaa87f-b4ca-4f4d-97bf-3482682b6421",
+              "first_execute_s": 0.3174828439950943,
+              "end_to_end_s": 2.499285861849785,
+              "execute_request_id": "b7949d18-440b-4067-9415-41cfb26b5207",
+              "stdout": "CN_COLD_50_3_42",
+              "status": "PASS"
+            },
+            {
+              "index": 4,
+              "at": "2026-09-28T03:37:02.570502+00:00",
+              "launch_offset_s": 0.0031253695487976074,
+              "session_id": "01M3K1CTT07ZQ33VKDC2HN89J0",
+              "start_s": 2.22759473323822,
+              "start_request_id": "ceea7c70-0129-47e0-8bc1-e0a681926fd1",
+              "first_execute_s": 0.324041411280632,
+              "end_to_end_s": 2.609133794903755,
+              "execute_request_id": "9c87b090-a1fb-4ad4-b908-fb453cf14d26",
+              "stdout": "CN_COLD_50_4_42",
+              "status": "PASS"
+            },
+            {
+              "index": 5,
+              "at": "2026-09-28T03:37:02.567913+00:00",
+              "launch_offset_s": 0.000536501407623291,
+              "session_id": "01M3K1CSES1JNYKJ2NH4RC0WVQ",
+              "start_s": 1.0230206027626991,
+              "start_request_id": "46f07c55-3cd0-4d29-997b-63f1d392d9f2",
+              "first_execute_s": 0.3815399631857872,
+              "end_to_end_s": 1.4299507960677147,
+              "execute_request_id": "bd563c3e-dd98-48af-9168-a312a7a114f1",
+              "stdout": "CN_COLD_50_5_42",
+              "status": "PASS"
+            },
+            {
+              "index": 6,
+              "at": "2026-09-28T03:37:02.568935+00:00",
+              "launch_offset_s": 0.0015593171119689941,
+              "session_id": "01M3K1CTNWY8CVD92H879X6DY0",
+              "start_s": 2.438654288649559,
+              "start_request_id": "36bf766f-9468-4720-a2b4-3d1b10219bb0",
+              "first_execute_s": 0.2840608283877373,
+              "end_to_end_s": 2.752550095319748,
+              "execute_request_id": "8c59ceee-18f7-4f56-aa8d-726851fa97a4",
+              "stdout": "CN_COLD_50_6_42",
+              "status": "PASS"
+            },
+            {
+              "index": 7,
+              "at": "2026-09-28T03:37:02.568886+00:00",
+              "launch_offset_s": 0.0015096217393875122,
+              "session_id": "01M3K1CTS94WTCTTEJ785EBDQ9",
+              "start_s": 2.2633022367954254,
+              "start_request_id": "b1843830-8e54-40c2-b6a8-6253128e1214",
+              "first_execute_s": 0.3110067918896675,
+              "end_to_end_s": 2.6011936217546463,
+              "execute_request_id": "46dc4760-5423-4604-aa59-4aed09000c28",
+              "stdout": "CN_COLD_50_7_42",
+              "status": "PASS"
+            },
+            {
+              "index": 8,
+              "at": "2026-09-28T03:37:02.567988+00:00",
+              "launch_offset_s": 0.0006115436553955078,
+              "session_id": "01M3K1CSETQKSGWGAMET3HVP9K",
+              "start_s": 0.9094027876853943,
+              "start_request_id": "9b152401-3317-4db8-9307-c39a0c0d5dfc",
+              "first_execute_s": 0.36595217883586884,
+              "end_to_end_s": 1.2831677421927452,
+              "execute_request_id": "498a2eec-56fb-4d64-bf67-ac9660cd9944",
+              "stdout": "CN_COLD_50_8_42",
+              "status": "PASS"
+            },
+            {
+              "index": 9,
+              "at": "2026-09-28T03:37:02.569542+00:00",
+              "launch_offset_s": 0.002166271209716797,
+              "session_id": "01M3K1CTWQHCFWB5SFPA35B87N",
+              "start_s": 2.4331894367933273,
+              "start_request_id": "fe88a54b-a3cf-4ca8-b9fd-76aa09e6935c",
+              "first_execute_s": 0.29338982701301575,
+              "end_to_end_s": 2.775181494653225,
+              "execute_request_id": "1edca631-e5f1-49bd-a155-f484583be5e9",
+              "stdout": "CN_COLD_50_9_42",
+              "status": "PASS"
+            },
+            {
+              "index": 10,
+              "at": "2026-09-28T03:37:02.568106+00:00",
+              "launch_offset_s": 0.0007291734218597412,
+              "session_id": "01M3K1CSF5M07SHKQKB00SHX3V",
+              "start_s": 0.9756098166108131,
+              "start_request_id": "8951d727-922a-4247-9029-bfeefdf52b83",
+              "first_execute_s": 0.3422919437289238,
+              "end_to_end_s": 1.3423854261636734,
+              "execute_request_id": "ffc6f400-aa95-4587-ad13-6fc118e9cff2",
+              "stdout": "CN_COLD_50_10_42",
+              "status": "PASS"
+            },
+            {
+              "index": 11,
+              "at": "2026-09-28T03:37:02.568994+00:00",
+              "launch_offset_s": 0.0016181692481040955,
+              "session_id": "01M3K1CTVT82K3WW38V8FTWDSE",
+              "start_s": 2.331525795161724,
+              "start_request_id": "9aac50f2-4a92-41f9-b41c-27beee84c0aa",
+              "first_execute_s": 0.33315855264663696,
+              "end_to_end_s": 2.6948774978518486,
+              "execute_request_id": "2b4d4189-0e2e-4170-8ea7-4d3806562721",
+              "stdout": "CN_COLD_50_11_42",
+              "status": "PASS"
+            },
+            {
+              "index": 12,
+              "at": "2026-09-28T03:37:02.569985+00:00",
+              "launch_offset_s": 0.002608858048915863,
+              "session_id": "01M3K1CTXPAKDEPBJKRTCMQJBM",
+              "start_s": 2.410957470536232,
+              "start_request_id": "9b33abe5-aaf3-4e23-b4ed-23ae2029245c",
+              "first_execute_s": 0.3336458206176758,
+              "end_to_end_s": 2.8036270141601562,
+              "execute_request_id": "6360d9fb-6955-402c-aec2-22572f868d81",
+              "stdout": "CN_COLD_50_12_42",
+              "status": "PASS"
+            },
+            {
+              "index": 13,
+              "at": "2026-09-28T03:37:02.568167+00:00",
+              "launch_offset_s": 0.0007910504937171936,
+              "session_id": "01M3K1CSF1WVD90RBKWW51ZE7E",
+              "start_s": 1.021985873579979,
+              "start_request_id": "3b320cd0-db10-48bc-8ce5-810c02d17055",
+              "first_execute_s": 0.31621789187192917,
+              "end_to_end_s": 1.4012354612350464,
+              "execute_request_id": "33c18f6a-2cda-4cf7-94bd-d7ca17cf3e8f",
+              "stdout": "CN_COLD_50_13_42",
+              "status": "PASS"
+            },
+            {
+              "index": 14,
+              "at": "2026-09-28T03:37:02.568048+00:00",
+              "launch_offset_s": 0.0006716251373291016,
+              "session_id": "01M3K1CSEZR37C4F3BRTTDVV64",
+              "start_s": 0.9558212459087372,
+              "start_request_id": "d2390a13-74fb-4999-ac0b-c21f293ac430",
+              "first_execute_s": 0.3195807412266731,
+              "end_to_end_s": 1.296213336288929,
+              "execute_request_id": "ccedcbe7-b5c4-4e20-94bb-9420fc0e9761",
+              "stdout": "CN_COLD_50_14_42",
+              "status": "PASS"
+            },
+            {
+              "index": 15,
+              "at": "2026-09-28T03:37:02.570011+00:00",
+              "launch_offset_s": 0.002635180950164795,
+              "session_id": "01M3K1CTYS03V8FRX650WCHF40",
+              "start_s": 2.4259383231401443,
+              "start_request_id": "45fe7b6f-8afd-4542-b39c-626fb08fa296",
+              "first_execute_s": 0.314009353518486,
+              "end_to_end_s": 2.793086290359497,
+              "execute_request_id": "4452cad4-47fd-48e6-9d53-3bd64b96a9a8",
+              "stdout": "CN_COLD_50_15_42",
+              "status": "PASS"
+            },
+            {
+              "index": 16,
+              "at": "2026-09-28T03:37:02.568211+00:00",
+              "launch_offset_s": 0.0008348152041435242,
+              "session_id": "01M3K1CTYSZZ9118TATA3Y8SMK",
+              "start_s": 2.4280583560466766,
+              "start_request_id": "5c9c9f9e-41f7-4a22-be63-4d8ea27840e8",
+              "first_execute_s": 0.3221260607242584,
+              "end_to_end_s": 2.815185286104679,
+              "execute_request_id": "df513152-9c89-42bb-836b-2a5673e66f9d",
+              "stdout": "CN_COLD_50_16_42",
+              "status": "PASS"
+            },
+            {
+              "index": 17,
+              "at": "2026-09-28T03:37:02.569590+00:00",
+              "launch_offset_s": 0.0022134780883789062,
+              "session_id": "01M3K1CTXRWEF48HB28NZMVKF9",
+              "start_s": 2.381123147904873,
+              "start_request_id": "06661143-7511-4690-8854-a2f8e2107c59",
+              "first_execute_s": 0.3102232366800308,
+              "end_to_end_s": 2.735600098967552,
+              "execute_request_id": "aaad464a-8147-438d-aac8-93d07e153674",
+              "stdout": "CN_COLD_50_17_42",
+              "status": "PASS"
+            },
+            {
+              "index": 18,
+              "at": "2026-09-28T03:37:02.569048+00:00",
+              "launch_offset_s": 0.0016727820038795471,
+              "session_id": "01M3K1CTYHBKPZYQZ1FFG2CQZB",
+              "start_s": 2.424160175025463,
+              "start_request_id": "9fe66cb4-61bc-4085-9df0-9bcf047f51cb",
+              "first_execute_s": 0.30762777477502823,
+              "end_to_end_s": 2.762299343943596,
+              "execute_request_id": "50e51ae1-ffdb-4b1e-884c-982249c5bf46",
+              "stdout": "CN_COLD_50_18_42",
+              "status": "PASS"
+            },
+            {
+              "index": 19,
+              "at": "2026-09-28T03:37:02.570849+00:00",
+              "launch_offset_s": 0.003472857177257538,
+              "session_id": "01M3K1CTXZ7BFFYDQBTNB6XHCV",
+              "start_s": 2.415542557835579,
+              "start_request_id": "4d58fc04-5492-4539-a35f-4c8416c09d0c",
+              "first_execute_s": 0.3141062781214714,
+              "end_to_end_s": 2.797458477318287,
+              "execute_request_id": "6f5e190e-b86f-4f50-b59b-46ac66b981a8",
+              "stdout": "CN_COLD_50_19_42",
+              "status": "PASS"
+            },
+            {
+              "index": 20,
+              "at": "2026-09-28T03:37:02.568242+00:00",
+              "launch_offset_s": 0.0008658915758132935,
+              "session_id": "01M3K1CSF60S9074X97XPBY8YZ",
+              "start_s": 0.9476163312792778,
+              "start_request_id": "b2443285-7355-4305-b9c3-c4e3af1936e1",
+              "first_execute_s": 0.34005945175886154,
+              "end_to_end_s": 1.3044790029525757,
+              "execute_request_id": "5a0ebcdd-4703-4c69-a28e-b29eaedec613",
+              "stdout": "CN_COLD_50_20_42",
+              "status": "PASS"
+            },
+            {
+              "index": 21,
+              "at": "2026-09-28T03:37:02.568298+00:00",
+              "launch_offset_s": 0.0009219273924827576,
+              "session_id": "01M3K1CSF342YZE48J0DKCMK3W",
+              "start_s": 0.9724650904536247,
+              "start_request_id": "19a6e467-1218-4778-9318-d597ee6fcc20",
+              "first_execute_s": 0.35689622163772583,
+              "end_to_end_s": 1.368393525481224,
+              "execute_request_id": "ffce681c-320e-4aa3-afdd-6c83a716cb0b",
+              "stdout": "CN_COLD_50_21_42",
+              "status": "PASS"
+            },
+            {
+              "index": 22,
+              "at": "2026-09-28T03:37:02.569684+00:00",
+              "launch_offset_s": 0.002307906746864319,
+              "session_id": "01M3K1CTYT96YCBKDVX5FHC9SK",
+              "start_s": 2.534794546663761,
+              "start_request_id": "eaf03361-c53e-470d-8dcf-97a3b9ad3445",
+              "first_execute_s": 0.308352492749691,
+              "end_to_end_s": 2.887821651995182,
+              "execute_request_id": "25363dfe-43d0-4106-b6b2-50c784c36606",
+              "stdout": "CN_COLD_50_22_42",
+              "status": "PASS"
+            },
+            {
+              "index": 23,
+              "at": "2026-09-28T03:37:02.569650+00:00",
+              "launch_offset_s": 0.0022736936807632446,
+              "session_id": "01M3K1CTY3YSCDH0N8N32JBY6Z",
+              "start_s": 2.4357926845550537,
+              "start_request_id": "9504c654-d145-4ba4-a8a0-3b94d7764420",
+              "first_execute_s": 0.3240235298871994,
+              "end_to_end_s": 2.82716616243124,
+              "execute_request_id": "aef3de77-1956-46da-8eec-7e8579f91237",
+              "stdout": "CN_COLD_50_23_42",
+              "status": "PASS"
+            },
+            {
+              "index": 24,
+              "at": "2026-09-28T03:37:02.569166+00:00",
+              "launch_offset_s": 0.001790158450603485,
+              "session_id": "01M3K1CTQPAZF6Y4W647MJ104D",
+              "start_s": 2.221687525510788,
+              "start_request_id": "3e8c71c8-2a27-4122-87f5-d1c14864fc1a",
+              "first_execute_s": 0.2974294647574425,
+              "end_to_end_s": 2.5522020906209946,
+              "execute_request_id": "79a6043b-b651-4528-87ac-03aa637f30e4",
+              "stdout": "CN_COLD_50_24_42",
+              "status": "PASS"
+            },
+            {
+              "index": 25,
+              "at": "2026-09-28T03:37:02.570065+00:00",
+              "launch_offset_s": 0.002689637243747711,
+              "session_id": "01M3K1CTXD81FWK7MN26WWARZY",
+              "start_s": 2.8828526064753532,
+              "start_request_id": "54fcd88f-315a-4516-8f50-35db0732629e",
+              "first_execute_s": 0.29498768597841263,
+              "end_to_end_s": 3.2273266538977623,
+              "execute_request_id": "8cea80bb-b635-4b36-ad40-2c1a31300f04",
+              "stdout": "CN_COLD_50_25_42",
+              "status": "PASS"
+            },
+            {
+              "index": 26,
+              "at": "2026-09-28T03:37:02.569101+00:00",
+              "launch_offset_s": 0.0017244741320610046,
+              "session_id": "01M3K1CTQ3W59VFRD4354WQZKY",
+              "start_s": 2.1461921483278275,
+              "start_request_id": "2c18733c-4ff9-4909-afbe-eae1d7ffabcb",
+              "first_execute_s": 0.3159653842449188,
+              "end_to_end_s": 2.4946914985775948,
+              "execute_request_id": "d86979cf-a459-4cc4-97d8-6e2cd53fccad",
+              "stdout": "CN_COLD_50_26_42",
+              "status": "PASS"
+            },
+            {
+              "index": 27,
+              "at": "2026-09-28T03:37:02.570328+00:00",
+              "launch_offset_s": 0.0029484927654266357,
+              "session_id": "01M3K1CTT89BYDR11F8WQETZN5",
+              "start_s": 2.2948671355843544,
+              "start_request_id": "57866fba-8a5c-48af-a3ac-eeb81544dc3f",
+              "first_execute_s": 0.34152477234601974,
+              "end_to_end_s": 2.704205296933651,
+              "execute_request_id": "68761fc3-2630-41f9-ac35-a0513e742b4e",
+              "stdout": "CN_COLD_50_27_42",
+              "status": "PASS"
+            },
+            {
+              "index": 28,
+              "at": "2026-09-28T03:37:02.568360+00:00",
+              "launch_offset_s": 0.0009840652346611023,
+              "session_id": "01M3K1CSF4792JPTKYAQ2JC196",
+              "start_s": 0.9949392080307007,
+              "start_request_id": "297d9213-9bbc-457a-a07e-0fbe9db5bb3f",
+              "first_execute_s": 0.3486080467700958,
+              "end_to_end_s": 1.3822540044784546,
+              "execute_request_id": "b7dcfa57-98eb-4fa8-ba89-5dbdec61e1fa",
+              "stdout": "CN_COLD_50_28_42",
+              "status": "PASS"
+            },
+            {
+              "index": 29,
+              "at": "2026-09-28T03:37:02.569211+00:00",
+              "launch_offset_s": 0.0018347054719924927,
+              "session_id": "01M3K1CTV1Y3D5YWQBEHRYT1KP",
+              "start_s": 2.343871809542179,
+              "start_request_id": "e8e14b22-b04f-43f8-84ca-1cbc85ae8b09",
+              "first_execute_s": 0.30045874416828156,
+              "end_to_end_s": 2.6796944588422775,
+              "execute_request_id": "084b14da-5914-4782-aad8-1cf03f3b3f9a",
+              "stdout": "CN_COLD_50_29_42",
+              "status": "PASS"
+            },
+            {
+              "index": 30,
+              "at": "2026-09-28T03:37:02.568464+00:00",
+              "launch_offset_s": 0.0010874196887016296,
+              "session_id": "01M3K1CTGNNAECX20WWPD16N7W",
+              "start_s": 2.0111074820160866,
+              "start_request_id": "0af85f4a-e3eb-47dd-aa02-f95207dc3f9d",
+              "first_execute_s": 0.2976396083831787,
+              "end_to_end_s": 2.327170729637146,
+              "execute_request_id": "0767c4f7-6916-4734-b272-8d916b1aba5f",
+              "stdout": "CN_COLD_50_30_42",
+              "status": "PASS"
+            },
+            {
+              "index": 31,
+              "at": "2026-09-28T03:37:02.568405+00:00",
+              "launch_offset_s": 0.001029275357723236,
+              "session_id": "01M3K1CSFE9W3Y7XV9WDBDASN5",
+              "start_s": 0.9646727442741394,
+              "start_request_id": "4bf513a5-0624-4832-8b1a-f217b9efbd34",
+              "first_execute_s": 0.33385278284549713,
+              "end_to_end_s": 1.3249478712677956,
+              "execute_request_id": "b45b725c-d547-43b2-b572-0ec98e2f62de",
+              "stdout": "CN_COLD_50_31_42",
+              "status": "PASS"
+            },
+            {
+              "index": 32,
+              "at": "2026-09-28T03:37:02.570107+00:00",
+              "launch_offset_s": 0.0027302205562591553,
+              "session_id": "01M3K1CTQG1VVEKVEKY16KNEBQ",
+              "start_s": 2.173482231795788,
+              "start_request_id": "a8ad12ab-32b1-4f45-935f-98664434230b",
+              "first_execute_s": 0.3015283867716789,
+              "end_to_end_s": 2.5253448709845543,
+              "execute_request_id": "ffa2fd60-532f-4594-ae6e-917ed25490d5",
+              "stdout": "CN_COLD_50_32_42",
+              "status": "PASS"
+            },
+            {
+              "index": 33,
+              "at": "2026-09-28T03:37:02.569723+00:00",
+              "launch_offset_s": 0.002347014844417572,
+              "session_id": "01M3K1CTVH00CWBR2Q53GT3RJX",
+              "start_s": 2.255902037024498,
+              "start_request_id": "fd76b3d1-c1ea-4c71-8300-ea63defbc62f",
+              "first_execute_s": 0.3004626929759979,
+              "end_to_end_s": 2.618438720703125,
+              "execute_request_id": "55e9aecd-9f12-42d1-98ea-c81a9e94f460",
+              "stdout": "CN_COLD_50_33_42",
+              "status": "PASS"
+            },
+            {
+              "index": 34,
+              "at": "2026-09-28T03:37:02.568507+00:00",
+              "launch_offset_s": 0.0011310428380966187,
+              "session_id": "01M3K1CTY1RPSW86B40HSS3195",
+              "start_s": 2.371979907155037,
+              "start_request_id": "9cfae6c1-5f5a-4f82-82ab-a62b986e510c",
+              "first_execute_s": 0.30165109783411026,
+              "end_to_end_s": 2.693571738898754,
+              "execute_request_id": "6ca0e022-cb11-432c-9b5a-f86b3787cecf",
+              "stdout": "CN_COLD_50_34_42",
+              "status": "PASS"
+            },
+            {
+              "index": 35,
+              "at": "2026-09-28T03:37:02.570379+00:00",
+              "launch_offset_s": 0.003003522753715515,
+              "session_id": "01M3K1CTVR3RXBW9TA5ZE93NEE",
+              "start_s": 2.277954064309597,
+              "start_request_id": "4df3155c-92a0-455e-b1b0-778b184a1220",
+              "first_execute_s": 0.3106304854154587,
+              "end_to_end_s": 2.6434886902570724,
+              "execute_request_id": "ad2a77fd-f02e-4de8-bd9f-62e47552959d",
+              "stdout": "CN_COLD_50_35_42",
+              "status": "PASS"
+            },
+            {
+              "index": 36,
+              "at": "2026-09-28T03:37:02.568564+00:00",
+              "launch_offset_s": 0.0011881068348884583,
+              "session_id": "01M3K1CTJNDXS281T3XCYJHASV",
+              "start_s": 2.065167136490345,
+              "start_request_id": "a96e7f86-ab5e-4607-908f-a1ee5e3d45d2",
+              "first_execute_s": 0.28707850724458694,
+              "end_to_end_s": 2.3902113139629364,
+              "execute_request_id": "3b38ce1f-afc4-4107-b444-c2d19cecdafc",
+              "stdout": "CN_COLD_50_36_42",
+              "status": "PASS"
+            },
+            {
+              "index": 37,
+              "at": "2026-09-28T03:37:02.569270+00:00",
+              "launch_offset_s": 0.0018940120935440063,
+              "session_id": "01M3K1CTWSB4YEWRNWXTY6FYY9",
+              "start_s": 2.3410418778657913,
+              "start_request_id": "1194cebd-072d-48c1-9772-a51fa30ebaf8",
+              "first_execute_s": 0.32009307295084,
+              "end_to_end_s": 2.697008393704891,
+              "execute_request_id": "68593fb9-610a-4b91-90c7-04552507f4c1",
+              "stdout": "CN_COLD_50_37_42",
+              "status": "PASS"
+            },
+            {
+              "index": 38,
+              "at": "2026-09-28T03:37:02.570155+00:00",
+              "launch_offset_s": 0.002779565751552582,
+              "session_id": "01M3K1CTPP73QENS1M4NGRMAJY",
+              "start_s": 2.150289051234722,
+              "start_request_id": "bcd2db0d-4de4-411d-b06c-0e53cb5b6643",
+              "first_execute_s": 0.29180698096752167,
+              "end_to_end_s": 2.4937418550252914,
+              "execute_request_id": "da01e9c6-cfd1-4da3-8d7e-2340f22915ae",
+              "stdout": "CN_COLD_50_38_42",
+              "status": "PASS"
+            },
+            {
+              "index": 39,
+              "at": "2026-09-28T03:37:02.569763+00:00",
+              "launch_offset_s": 0.002386525273323059,
+              "session_id": "01M3K1CTXXBQ6PBWKRBA4H2Y35",
+              "start_s": 2.4750518202781677,
+              "start_request_id": "eafb980f-b7e2-4d83-9ec1-b6cfd4b87162",
+              "first_execute_s": 0.2939523756504059,
+              "end_to_end_s": 2.814847745001316,
+              "execute_request_id": "8ce89e19-3bfe-4281-833f-28c7b2a3996a",
+              "stdout": "CN_COLD_50_39_42",
+              "status": "PASS"
+            },
+            {
+              "index": 40,
+              "at": "2026-09-28T03:37:02.568671+00:00",
+              "launch_offset_s": 0.0012945383787155151,
+              "session_id": "01M3K1CTZ88QX0YFQK5VFGN9ZA",
+              "start_s": 2.5129242539405823,
+              "start_request_id": "a57edd38-9642-4b53-af6c-5c3e243be2fc",
+              "first_execute_s": 0.32015611976385117,
+              "end_to_end_s": 2.8551874831318855,
+              "execute_request_id": "8e315e6f-8012-4763-9456-25ab903f194f",
+              "stdout": "CN_COLD_50_40_42",
+              "status": "PASS"
+            },
+            {
+              "index": 41,
+              "at": "2026-09-28T03:37:02.568598+00:00",
+              "launch_offset_s": 0.0012209266424179077,
+              "session_id": "01M3K1CTMRQ0R75NW22EB4TPMS",
+              "start_s": 2.1060464829206467,
+              "start_request_id": "c30c2181-3023-4879-a40c-2cb8e4d759ab",
+              "first_execute_s": 0.32568320631980896,
+              "end_to_end_s": 2.4525705575942993,
+              "execute_request_id": "7afe639b-0acd-4b99-a07c-5f044213b1f4",
+              "stdout": "CN_COLD_50_41_42",
+              "status": "PASS"
+            },
+            {
+              "index": 42,
+              "at": "2026-09-28T03:37:02.570443+00:00",
+              "launch_offset_s": 0.003067292273044586,
+              "session_id": "01M3K1CTS7EPBE626BJPQGDGYV",
+              "start_s": 2.721006952226162,
+              "start_request_id": "d4a8096a-cc2c-4a2d-ab64-ec1d1bfdd440",
+              "first_execute_s": 0.30773425847291946,
+              "end_to_end_s": 3.0852750912308693,
+              "execute_request_id": "cf376a4b-cbf6-4111-9dfe-f71131903666",
+              "stdout": "CN_COLD_50_42_42",
+              "status": "PASS"
+            },
+            {
+              "index": 43,
+              "at": "2026-09-28T03:37:02.568772+00:00",
+              "launch_offset_s": 0.001396670937538147,
+              "session_id": "01M3K1CTXNGX8668X7M7HGPFZ1",
+              "start_s": 2.534689150750637,
+              "start_request_id": "a6641585-349e-4eaa-81e4-d335974e423d",
+              "first_execute_s": 0.3003172129392624,
+              "end_to_end_s": 2.8595166504383087,
+              "execute_request_id": "121ade8d-c224-4b58-aeb2-5272f394b795",
+              "stdout": "CN_COLD_50_43_42",
+              "status": "PASS"
+            },
+            {
+              "index": 44,
+              "at": "2026-09-28T03:37:02.568719+00:00",
+              "launch_offset_s": 0.0013434067368507385,
+              "session_id": "01M3K1CTX2QF2F363C7WTEP1KG",
+              "start_s": 2.9266143664717674,
+              "start_request_id": "c5c6bfd8-a72c-47b7-8841-b5d2ff4d0eef",
+              "first_execute_s": 0.3104279711842537,
+              "end_to_end_s": 3.2605486065149307,
+              "execute_request_id": "0dd26317-bc32-4a28-b429-0c4663a61aa4",
+              "stdout": "CN_COLD_50_44_42",
+              "status": "PASS"
+            },
+            {
+              "index": 45,
+              "at": "2026-09-28T03:37:02.569344+00:00",
+              "launch_offset_s": 0.0019684135913848877,
+              "session_id": "01M3K1CTYETRX3JS1MTZJY4JGW",
+              "start_s": 2.384058766067028,
+              "start_request_id": "51e2d2f2-fa70-4481-9c56-51fd998b7bed",
+              "first_execute_s": 0.29999980330467224,
+              "end_to_end_s": 2.723417542874813,
+              "execute_request_id": "1060ed1c-c44d-4ddc-a45d-25dc867db359",
+              "stdout": "CN_COLD_50_45_42",
+              "status": "PASS"
+            },
+            {
+              "index": 46,
+              "at": "2026-09-28T03:37:02.570628+00:00",
+              "launch_offset_s": 0.0032516270875930786,
+              "session_id": "01M3K1CTXV6BKNM5QDXSP4KQXG",
+              "start_s": 2.40917906165123,
+              "start_request_id": "ba5a8c9e-3646-46aa-9ffb-e520855f9b3c",
+              "first_execute_s": 0.3060199245810509,
+              "end_to_end_s": 2.78164479136467,
+              "execute_request_id": "97ae92ee-9171-44b6-8614-ba6f19d7f9a6",
+              "stdout": "CN_COLD_50_46_42",
+              "status": "PASS"
+            },
+            {
+              "index": 47,
+              "at": "2026-09-28T03:37:02.569396+00:00",
+              "launch_offset_s": 0.0020196735858917236,
+              "session_id": "01M3K1CTZ03JK9KJR3QKXVYDS7",
+              "start_s": 2.446309380233288,
+              "start_request_id": "fbabacf8-304a-418d-83ee-dbeab962d9ca",
+              "first_execute_s": 0.29481372237205505,
+              "end_to_end_s": 2.781765453517437,
+              "execute_request_id": "1ec2b043-9263-4708-a752-db5e503b0415",
+              "stdout": "CN_COLD_50_47_42",
+              "status": "PASS"
+            },
+            {
+              "index": 48,
+              "at": "2026-09-28T03:37:02.569814+00:00",
+              "launch_offset_s": 0.0024385079741477966,
+              "session_id": "01M3K1CTXFVK3D1TYFK9G7EAK7",
+              "start_s": 2.362861543893814,
+              "start_request_id": "66a19c73-e4b7-417e-9922-57f6ad3f3555",
+              "first_execute_s": 0.31209444999694824,
+              "end_to_end_s": 2.721775159239769,
+              "execute_request_id": "3230a192-77f6-4e4a-a221-7ad8f9ed6dbc",
+              "stdout": "CN_COLD_50_48_42",
+              "status": "PASS"
+            },
+            {
+              "index": 49,
+              "at": "2026-09-28T03:37:02.568808+00:00",
+              "launch_offset_s": 0.001432083547115326,
+              "session_id": "01M3K1CTYEZAMKPY91QQQ8VKSE",
+              "start_s": 2.4421286657452583,
+              "start_request_id": "e3014d84-8d4a-4776-a09e-c82fe3868fb8",
+              "first_execute_s": 0.3149634227156639,
+              "end_to_end_s": 2.7899583280086517,
+              "execute_request_id": "d4e26ba9-ab05-4a24-afe3-f0cc09564fbf",
+              "stdout": "CN_COLD_50_49_42",
+              "status": "PASS"
+            }
+          ],
+          "start": {
+            "p50_s": 2.3362838365137577,
+            "p90_s": 2.5151007436215878,
+            "p95_s": 2.6372113697230812,
+            "min_s": 0.9094027876853943,
+            "max_s": 2.9266143664717674,
+            "mean_s": 2.085334001779556
+          },
+          "first_execute": {
+            "p50_s": 0.3115506209433079,
+            "p90_s": 0.34160148948431013,
+            "p95_s": 0.35316654294729233,
+            "min_s": 0.2840608283877373,
+            "max_s": 0.3815399631857872,
+            "mean_s": 0.3155691684782505
+          },
+          "end_to_end": {
+            "p50_s": 2.6942246183753014,
+            "p90_s": 2.855620399862528,
+            "p95_s": 2.9964210435748093,
+            "min_s": 1.2532983496785164,
+            "max_s": 3.2605486065149307,
+            "mean_s": 2.441285244822502
+          },
+          "max_launch_skew_s": 0.003472857177257538,
+          "sessions_held_until_batch_complete": 50
+        }
+      ],
+      "retries": 0,
+      "latency_sla": null,
+      "scope": "New sessions and first execution; provider microVM allocation is unobservable."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-28T03:33:34.786017+00:00",
+  "deleted": true,
+  "response": {
+    "Error": {
+      "Message": "Code interpreter with ID cn_ci_validation_82960734da27-uehdiineJb does not exist",
+      "Code": "ResourceNotFoundException"
+    },
+    "ResponseMetadata": {
+      "RequestId": "32e49598-6f0f-4ea6-83ad-d8bd2439a8b5",
+      "HTTPStatusCode": 404,
+      "HTTPHeaders": {
+        "date": "Mon, 28 Sep 2026 03:33:34 GMT",
+        "content-type": "application/json",
+        "content-length": "94",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "32e49598-6f0f-4ea6-83ad-d8bd2439a8b5",
+        "x-amzn-errortype": "ResourceNotFoundException",
+        "x-amz-apigw-id": "EY_yXHYzZPgENIA=",
+        "x-amzn-trace-id": "Root=1-6ab9e00e-71c8807f0567b3ac4cc9010e"
+      },
+      "RetryAttempts": 0
+    },
+    "message": "Code interpreter with ID cn_ci_validation_82960734da27-uehdiineJb does not exist"
+  }
+}

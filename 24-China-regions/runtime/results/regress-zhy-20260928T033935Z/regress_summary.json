@@ -1,0 +1,66 @@
+{
+  "at": "2026-09-28T03:50:00.417420+00:00",
+  "account": "765922807571",
+  "profile": "zhy",
+  "region": "cn-northwest-1",
+  "baseline": "results/20260921-runtime-v2",
+  "tests": {
+    "7.1": {
+      "baseline": "PASS",
+      "regress": "PASS"
+    },
+    "7.2": {
+      "baseline": "PASS",
+      "regress": "PASS"
+    },
+    "7.3": {
+      "baseline": "PASS",
+      "regress": "PASS"
+    },
+    "7.4": {
+      "baseline": "PASS",
+      "regress": "PASS"
+    }
+  },
+  "latency_ms": {
+    "cold": {
+      "p50_ms": {
+        "baseline": 1685.2,
+        "regress": 1537.4
+      },
+      "p99_ms": {
+        "baseline": 1988.7,
+        "regress": 1916.6
+      }
+    },
+    "warm": {
+      "p50_ms": {
+        "baseline": 87.6,
+        "regress": 58.2
+      },
+      "p99_ms": {
+        "baseline": 151.1,
+        "regress": 96.9
+      }
+    },
+    "scale": {
+      "p50_ms": {
+        "baseline": 7091.4,
+        "regress": 6872.8
+      },
+      "p99_ms": {
+        "baseline": 7517.9,
+        "regress": 7486.0
+      }
+    }
+  },
+  "residual_resources": {
+    "runtimes": 0,
+    "custom_code_interpreters": 0,
+    "ecr_repos": 0,
+    "iam_roles": 0,
+    "log_groups": 0,
+    "ready_ci_sessions": 0
+  },
+  "runtime_sessions_stopped": "151/151"
+}

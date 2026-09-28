@@ -51,8 +51,12 @@ class Lab:
         if self.state["profile"] != args.profile or self.state["region"] != args.region:
             raise ValueError("State/profile/region mismatch")
         identity = self.client("sts").get_caller_identity()
-        if identity["Account"] != "447150580482":
-            raise ValueError("Unexpected account")
+        # Account guard: explicit --expected-account wins; otherwise pin to the
+        # account recorded in existing state so a resumed run cannot switch accounts.
+        expected = args.expected_account or self.state.get("identity", {}).get("Account")
+        if expected and identity["Account"] != expected:
+            raise ValueError(f"Unexpected account {identity['Account']} (expected {expected})")
+        self.account = identity["Account"]
         self.state["identity"] = identity
         self.persist()
 
@@ -89,9 +93,9 @@ class Lab:
             self.persist()
             trust = policy([{"Effect": "Allow", "Principal": {
                 "Service": "bedrock-agentcore.amazonaws.com"}, "Action": "sts:AssumeRole",
-                "Condition": {"StringEquals": {"aws:SourceAccount": "447150580482"},
+                "Condition": {"StringEquals": {"aws:SourceAccount": self.account},
                               "ArnLike": {"aws:SourceArn":
-                                  f"arn:aws-cn:bedrock-agentcore:{self.args.region}:447150580482:*"}}}])
+                                  f"arn:aws-cn:bedrock-agentcore:{self.args.region}:{self.account}:*"}}}])
             try:
                 response = iam.create_role(RoleName=name, AssumeRolePolicyDocument=trust,
                                            Tags=[{"Key": "Experiment", "Value": self.state["name"]}])
@@ -175,9 +179,9 @@ class Lab:
         role = self.role("runtime", [
             allow(["ecr:GetAuthorizationToken"], "*"),
             allow(["ecr:BatchGetImage", "ecr:GetDownloadUrlForLayer"], self.state["repository"]["repositoryArn"]),
-            allow(["logs:DescribeLogGroups"], f"arn:aws-cn:logs:{region}:447150580482:log-group:*"),
+            allow(["logs:DescribeLogGroups"], f"arn:aws-cn:logs:{region}:{self.account}:log-group:*"),
             allow(["logs:CreateLogGroup", "logs:CreateLogStream", "logs:DescribeLogStreams", "logs:PutLogEvents"],
-                  f"arn:aws-cn:logs:{region}:447150580482:log-group:/aws/bedrock-agentcore/runtimes/{name.replace('-', '_')}*"),
+                  f"arn:aws-cn:logs:{region}:{self.account}:log-group:/aws/bedrock-agentcore/runtimes/{name.replace('-', '_')}*"),
         ])
         control = self.client("bedrock-agentcore-control")
         time.sleep(10)
@@ -258,7 +262,7 @@ class Lab:
             "\"botocore\":botocore.__version__,"
             "\"identity\":boto3.client(\"sts\",region_name=\"cn-northwest-1\").get_caller_identity()},default=str))'"})
         self.log("China load generator role preflight succeeded")
-        settings = {"region": self.args.region, "account": "447150580482",
+        settings = {"region": self.args.region, "account": self.account,
                     "runtimes": {k: v["agentRuntimeArn"] for k, v in self.state["runtimes"].items()},
                     "cold_samples": 100, "warm_samples": 500, "concurrency": 50,
                     "load_role_name": self.state["roles"]["load"]["RoleName"],
@@ -407,6 +411,9 @@ def main():
     parser.add_argument("--profile", default="agentcore_cn")
     parser.add_argument("--region", default="cn-northwest-1")
     parser.add_argument("--output", required=True)
+    parser.add_argument("--expected-account",
+                        help="Refuse to run unless STS returns this account (default: the "
+                             "account recorded in resources.json, else whatever STS returns).")
     parser.add_argument("--runtime-only", action="store_true",
                         help="Deploy the runtimes without a Code Interpreter load generator.")
     args = parser.parse_args()

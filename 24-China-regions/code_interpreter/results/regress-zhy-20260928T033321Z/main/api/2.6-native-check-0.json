@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-28T03:36:37.485594+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M3K16FTVN2VE47J3Z56J52HE",
+    "name": "executeCode",
+    "arguments": {
+      "language": "python",
+      "code": "\nimport pathlib, json\np = pathlib.Path(\"/tmp/native-heartbeat.txt\")\nprint(json.dumps({\"heartbeat\": p.read_text() if p.exists() else None,\n                  \"done\": pathlib.Path(\"/tmp/native-done.txt\").exists(),\n                  \"recovery\": 6 * 7}))\n",
+      "clearContext": false
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "d233191d-c69b-4e14-adf5-ea9886274d0a",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 28 Sep 2026 03:36:37 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "d233191d-c69b-4e14-adf5-ea9886274d0a",
+        "x-amzn-code-interpreter-session-id": "01M3K16FTVN2VE47J3Z56J52HE"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M3K16FTVN2VE47J3Z56J52HE"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"heartbeat\": \"179\", \"done\": true, \"recovery\": 42}"
+          }
+        ],
+        "structuredContent": {
+          "stdout": "{\"heartbeat\": \"179\", \"done\": true, \"recovery\": 42}",
+          "stderr": "",
+          "exitCode": 0,
+          "executionTime": 0.011690616607666016
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.3016870468854904
+}

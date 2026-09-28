@@ -1,0 +1,19 @@
+[2026-09-28T03:33:21.679739+00:00] Output: /home/ubuntu/workspace/agentcore_demo/24-China-regions/code_interpreter/results/regress-zhy-20260928T033321Z/main
+[2026-09-28T03:33:26.667469+00:00] 2.1: PASS
+[2026-09-28T03:33:27.639579+00:00] 2.2: PASS
+[2026-09-28T03:33:28.349860+00:00] 2.3: PASS
+[2026-09-28T03:33:31.123590+00:00] 2.4: PASS
+[2026-09-28T03:33:32.202892+00:00] 2.5: PASS
+[2026-09-28T03:33:33.380104+00:00] 2.9: PASS
+[2026-09-28T03:33:35.471666+00:00] 2.10: FAIL
+[2026-09-28T03:33:37.083725+00:00] 2.6: observing native executeCode for up to 180s
+[2026-09-28T03:36:43.143394+00:00] 2.6: checking caller deadline + stopTask
+[2026-09-28T03:36:57.372809+00:00] 2.6: PARTIAL
+[2026-09-28T03:36:57.686931+00:00] 2.7: starting 1 concurrent new sessions
+[2026-09-28T03:36:59.255139+00:00] 2.7: 1 concurrency: 1/1 passed; stopping sessions
+[2026-09-28T03:36:59.551239+00:00] 2.7: starting 10 concurrent new sessions
+[2026-09-28T03:37:02.233048+00:00] 2.7: 10 concurrency: 10/10 passed; stopping sessions
+[2026-09-28T03:37:02.559324+00:00] 2.7: starting 50 concurrent new sessions
+[2026-09-28T03:37:05.834640+00:00] 2.7: 50 concurrency: 50/50 passed; stopping sessions
+[2026-09-28T03:37:07.350017+00:00] 2.7: PASS
+[2026-09-28T03:37:07.819947+00:00] Cleanup: 64/64 stopped

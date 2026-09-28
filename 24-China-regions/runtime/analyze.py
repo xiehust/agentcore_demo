@@ -18,6 +18,8 @@ def read(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, help="Recorded result directory")
+    parser.add_argument("--report", default=str(ROOT / "REPORT.md"),
+                        help="Where to write the rendered report (default: REPORT.md)")
     args = parser.parse_args()
     folder = Path(args.output).resolve()
     data = read(folder / "benchmark_results.json")
@@ -116,7 +118,7 @@ def main():
                     if cleaned else "Runtime 会话已发出成功的 Stop；其他资源清理结果尚未完整确认。")
     text = f"""# AgentCore Runtime 中国区实测报告
 
-2026-09-21，账号 `447150580482`，区域 `cn-northwest-1`。
+{first_at[:10]}，账号 `{resources['identity']['Account']}`，区域 `{resources['region']}`。
 **最终一轮四项验收{'全部通过' if all_pass else '未全部通过'}**。
 这里的冷启动和从 0 扩容采用“全新用户会话”的可观测口径，不能据此声称已清空平台内部预热池。
 
@@ -134,8 +136,8 @@ P50/P99 使用 nearest-rank；SDK 自动重试关闭；所有请求均保留。
 
 | 项目 | 配置 |
 | --- | --- |
-| 管理端 profile | `agentcore_cn` |
-| 压测客户端 | 宁夏 `cn-northwest-1` 的 PUBLIC Code Interpreter，专用 IAM 执行角色 |
+| 管理端 profile | `{resources['profile']}` |
+| 压测客户端 | `{resources['region']}` 的 PUBLIC Code Interpreter，专用 IAM 执行角色 |
 | 客户端 boto3 / botocore | {data['environment']['boto3']} / {data['environment']['botocore']} |
 | 本地管理端 | us-west-2 工作站；不使用该工作站的网络延迟进行验收 |
 | 被测服务 | Python 标准库 HTTP echo，无 LLM、无外部业务依赖 |
@@ -235,7 +237,7 @@ python3 24-China-regions/runtime/analyze.py --output 24-China-regions/runtime/{r
 协议背景参考：[AgentCore HTTP contract](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-http-protocol-contract.html)。
 中国区可用性和性能结论以本次真实调用为依据。
 """
-    (ROOT / "REPORT.md").write_text(text)
+    Path(args.report).write_text(text)
     print(json.dumps({"tests": tests, "evidence_audit": checks}, indent=2))
 
 

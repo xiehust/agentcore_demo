@@ -1,0 +1,36 @@
+{
+  "at": "2026-09-28T03:44:31.264418+00:00",
+  "name": "startCommandExecution",
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Successfully started a command execution task"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "e96cf0bc-b64d-4299-9e65-3f8935482f53",
+          "taskStatus": "submitted",
+          "stdout": "",
+          "stderr": ""
+        },
+        "isError": false
+      }
+    }
+  ],
+  "metadata": {
+    "RequestId": "7f6ac893-8524-479d-97ba-db0e760ce44e",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Mon, 28 Sep 2026 03:44:31 GMT",
+      "content-type": "application/vnd.amazon.eventstream",
+      "transfer-encoding": "chunked",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "7f6ac893-8524-479d-97ba-db0e760ce44e",
+      "x-amzn-code-interpreter-session-id": "01M3K1TB47CZ6AFAD2D8ERW8XJ"
+    },
+    "RetryAttempts": 0
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "ResponseMetadata": {
+    "RequestId": "e274f0c3-e595-4ffb-9a76-d571ad4795fd",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "date": "Mon, 28 Sep 2026 03:33:24 GMT",
+      "content-type": "application/json",
+      "content-length": "478",
+      "connection": "keep-alive",
+      "x-amzn-requestid": "e274f0c3-e595-4ffb-9a76-d571ad4795fd",
+      "x-amz-apigw-id": "EY_wvHqO5PgEXDg=",
+      "x-amzn-trace-id": "Root=1-6ab9e004-0b87d4af46062f3202a30818"
+    },
+    "RetryAttempts": 0
+  },
+  "codeInterpreterId": "cn_ci_validation_82960734da27-uehdiineJb",
+  "codeInterpreterArn": "arn:aws-cn:bedrock-agentcore:cn-northwest-1:765922807571:code-interpreter-custom/cn_ci_validation_82960734da27-uehdiineJb",
+  "name": "cn_ci_validation_82960734da27",
+  "description": "Temporary China Code Interpreter dependency validation",
+  "networkConfiguration": {
+    "networkMode": "PUBLIC"
+  },
+  "status": "READY",
+  "createdAt": "2026-09-28T03:33:24.015110+00:00",
+  "lastUpdatedAt": "2026-09-28T03:33:24.015110+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "at": "2026-09-28T03:36:57.096780+00:00",
+  "operation": "invoke_code_interpreter",
+  "request": {
+    "codeInterpreterIdentifier": "aws.codeinterpreter.v1",
+    "sessionId": "01M3K16FTVN2VE47J3Z56J52HE",
+    "name": "getTask",
+    "arguments": {
+      "taskId": "ccead20a-f825-4470-ba10-daf82f9038aa"
+    }
+  },
+  "response": {
+    "ResponseMetadata": {
+      "RequestId": "2d2273e4-3bc5-4e47-a921-9e505b0eaf41",
+      "HTTPStatusCode": 200,
+      "HTTPHeaders": {
+        "date": "Mon, 28 Sep 2026 03:36:57 GMT",
+        "content-type": "application/vnd.amazon.eventstream",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "x-amzn-requestid": "2d2273e4-3bc5-4e47-a921-9e505b0eaf41",
+        "x-amzn-code-interpreter-session-id": "01M3K16FTVN2VE47J3Z56J52HE"
+      },
+      "RetryAttempts": 0
+    },
+    "sessionId": "01M3K16FTVN2VE47J3Z56J52HE"
+  },
+  "events": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Task is canceled"
+          }
+        ],
+        "structuredContent": {
+          "taskStatus": "canceled",
+          "stdout": "",
+          "stderr": ""
+        },
+        "isError": false
+      }
+    }
+  ],
+  "elapsed_s": 0.2745533064007759
+}

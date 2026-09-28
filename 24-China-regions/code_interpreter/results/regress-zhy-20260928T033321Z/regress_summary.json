@@ -1,0 +1,57 @@
+{
+  "at": "2026-09-28T03:39:16.773656+00:00",
+  "account": "765922807571",
+  "profile": "zhy",
+  "region": "cn-northwest-1",
+  "baseline": "results/final_summary.json",
+  "tests": {
+    "2.1": {
+      "baseline": "PASS",
+      "regress": "PASS",
+      "match": true
+    },
+    "2.2": {
+      "baseline": "PASS",
+      "regress": "PASS",
+      "match": true
+    },
+    "2.3": {
+      "baseline": "PASS",
+      "regress": "PASS",
+      "match": true
+    },
+    "2.4": {
+      "baseline": "PASS",
+      "regress": "PASS",
+      "match": true
+    },
+    "2.5": {
+      "baseline": "PASS",
+      "regress": "PASS",
+      "match": true
+    },
+    "2.6": {
+      "baseline": "PARTIAL",
+      "regress": "PARTIAL",
+      "match": true
+    },
+    "2.7": {
+      "baseline": "PASS",
+      "regress": "PASS",
+      "match": true
+    },
+    "2.9": {
+      "baseline": "PASS",
+      "regress": "PASS",
+      "match": true
+    },
+    "2.10": {
+      "baseline": "PASS",
+      "regress": "PASS",
+      "match": true
+    }
+  },
+  "default_network_2.10_status": "FAIL",
+  "custom_resources_remaining": 0,
+  "ready_sessions_remaining": 0
+}

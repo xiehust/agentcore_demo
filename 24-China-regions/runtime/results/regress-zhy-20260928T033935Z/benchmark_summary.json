@@ -1,0 +1,248 @@
+{
+  "at": "2026-09-28T03:48:03.631956+00:00",
+  "tests": {
+    "7.1": {
+      "status": "PASS",
+      "metric": "p50_ms",
+      "observed_ms": 1537.4422199999885,
+      "strict_target_ms": 3000,
+      "sample_integrity": true,
+      "samples": 100
+    },
+    "7.2": {
+      "status": "PASS",
+      "metric": "p99_ms",
+      "observed_ms": 1916.5899650000001,
+      "strict_target_ms": 5000,
+      "sample_integrity": true,
+      "samples": 100
+    },
+    "7.3": {
+      "status": "PASS",
+      "metric": "p99_ms",
+      "observed_ms": 96.865839000003,
+      "strict_target_ms": 200,
+      "sample_integrity": true,
+      "samples": 500
+    },
+    "7.4": {
+      "status": "PASS",
+      "samples": 50,
+      "errors": 0,
+      "error_rate": 0.0,
+      "unique_instances": 50,
+      "client_call_peak_overlap": 50,
+      "handler_peak_overlap": 50,
+      "scope": "0 user sessions on a never-invoked runtime; platform prewarmed pool unobservable"
+    }
+  },
+  "phases": {
+    "cold": {
+      "attempts": 100,
+      "successes": 100,
+      "failures": 0,
+      "latency": {
+        "n": 100,
+        "min_ms": 1382.841252999995,
+        "max_ms": 2156.9432790000037,
+        "mean_ms": 1566.391411340001,
+        "p50_ms": 1537.4422199999885,
+        "p90_ms": 1726.6789749999987,
+        "p95_ms": 1804.791453000007,
+        "p99_ms": 1916.5899650000001
+      },
+      "headers": {
+        "n": 100,
+        "min_ms": 1382.7494540000062,
+        "max_ms": 2156.860086000009,
+        "mean_ms": 1566.304177620001,
+        "p50_ms": 1537.3610209999952,
+        "p90_ms": 1726.5931369999983,
+        "p95_ms": 1804.7140689999992,
+        "p99_ms": 1916.504175
+      },
+      "handler": {
+        "n": 100,
+        "min_ms": 0.057725000004893445,
+        "max_ms": 0.10761699999761731,
+        "mean_ms": 0.07034519000058026,
+        "p50_ms": 0.06985000000270247,
+        "p90_ms": 0.0740100000058419,
+        "p95_ms": 0.07829199999775938,
+        "p99_ms": 0.09878900000614976
+      },
+      "process_age_at_request": {
+        "n": 100,
+        "min_ms": 78408.473941,
+        "max_ms": 79422.926627,
+        "mean_ms": 78836.89214452,
+        "p50_ms": 78826.541665,
+        "p90_ms": 79005.304477,
+        "p95_ms": 79077.99728800001,
+        "p99_ms": 79171.860848
+      },
+      "unique_instances": 100,
+      "unique_snapshot_process_ids": 2,
+      "unique_boot_ids": 2,
+      "all_first_request": true,
+      "client_call_peak_overlap": 1,
+      "handler_peak_overlap": 1
+    },
+    "warmup": {
+      "attempts": 1,
+      "successes": 1,
+      "failures": 0,
+      "latency": {
+        "n": 1,
+        "min_ms": 1681.0791869999946,
+        "max_ms": 1681.0791869999946,
+        "mean_ms": 1681.0791869999946,
+        "p50_ms": 1681.0791869999946,
+        "p90_ms": 1681.0791869999946,
+        "p95_ms": 1681.0791869999946,
+        "p99_ms": 1681.0791869999946
+      },
+      "headers": {
+        "n": 1,
+        "min_ms": 1680.9970200000066,
+        "max_ms": 1680.9970200000066,
+        "mean_ms": 1680.9970200000066,
+        "p50_ms": 1680.9970200000066,
+        "p90_ms": 1680.9970200000066,
+        "p95_ms": 1680.9970200000066,
+        "p99_ms": 1680.9970200000066
+      },
+      "handler": {
+        "n": 1,
+        "min_ms": 0.06715099999610175,
+        "max_ms": 0.06715099999610175,
+        "mean_ms": 0.06715099999610175,
+        "p50_ms": 0.06715099999610175,
+        "p90_ms": 0.06715099999610175,
+        "p95_ms": 0.06715099999610175,
+        "p99_ms": 0.06715099999610175
+      },
+      "process_age_at_request": {
+        "n": 1,
+        "min_ms": 78962.402911,
+        "max_ms": 78962.402911,
+        "mean_ms": 78962.402911,
+        "p50_ms": 78962.402911,
+        "p90_ms": 78962.402911,
+        "p95_ms": 78962.402911,
+        "p99_ms": 78962.402911
+      },
+      "unique_instances": 1,
+      "unique_snapshot_process_ids": 1,
+      "unique_boot_ids": 1,
+      "all_first_request": true,
+      "client_call_peak_overlap": 1,
+      "handler_peak_overlap": 1
+    },
+    "warm": {
+      "attempts": 500,
+      "successes": 500,
+      "failures": 0,
+      "latency": {
+        "n": 500,
+        "min_ms": 45.83416200000556,
+        "max_ms": 114.71634499997663,
+        "mean_ms": 60.82241979400004,
+        "p50_ms": 58.1655150000131,
+        "p90_ms": 73.54557400000772,
+        "p95_ms": 83.51200399999925,
+        "p99_ms": 96.865839000003
+      },
+      "headers": {
+        "n": 500,
+        "min_ms": 45.78632400000515,
+        "max_ms": 114.67035199999032,
+        "mean_ms": 60.706914307999966,
+        "p50_ms": 58.107015999979694,
+        "p90_ms": 73.49305200000344,
+        "p95_ms": 83.4069169999907,
+        "p99_ms": 96.818202999998
+      },
+      "handler": {
+        "n": 500,
+        "min_ms": 0.01810000000546097,
+        "max_ms": 0.08705600001235325,
+        "mean_ms": 0.028212670000300477,
+        "p50_ms": 0.026937000001225897,
+        "p90_ms": 0.03301700000690744,
+        "p95_ms": 0.03608599999438411,
+        "p99_ms": 0.04444700000760804
+      },
+      "process_age_at_request": {
+        "n": 500,
+        "min_ms": 79053.40095299999,
+        "max_ms": 109418.57758399998,
+        "mean_ms": 94584.818381944,
+        "p50_ms": 94612.573802,
+        "p90_ms": 106409.544097,
+        "p95_ms": 107885.34621599999,
+        "p99_ms": 109107.98717000001
+      },
+      "unique_instances": 1,
+      "unique_snapshot_process_ids": 1,
+      "unique_boot_ids": 1,
+      "all_first_request": false,
+      "client_call_peak_overlap": 1,
+      "handler_peak_overlap": 1
+    },
+    "scale": {
+      "attempts": 50,
+      "successes": 50,
+      "failures": 0,
+      "latency": {
+        "n": 50,
+        "min_ms": 6652.690205999988,
+        "max_ms": 7485.992088000017,
+        "mean_ms": 6866.73745448,
+        "p50_ms": 6872.828448999997,
+        "p90_ms": 6968.00331,
+        "p95_ms": 7008.690510999997,
+        "p99_ms": 7485.992088000017
+      },
+      "headers": {
+        "n": 50,
+        "min_ms": 6652.643096999981,
+        "max_ms": 7485.942913000003,
+        "mean_ms": 6866.6121806599995,
+        "p50_ms": 6872.520672999997,
+        "p90_ms": 6967.783807999978,
+        "p95_ms": 7008.66051600002,
+        "p99_ms": 7485.942913000003
+      },
+      "handler": {
+        "n": 50,
+        "min_ms": 5000.13616199999,
+        "max_ms": 5000.17432300001,
+        "mean_ms": 5000.150738040002,
+        "p50_ms": 5000.149183000005,
+        "p90_ms": 5000.16157200001,
+        "p95_ms": 5000.162967999998,
+        "p99_ms": 5000.17432300001
+      },
+      "process_age_at_request": {
+        "n": 50,
+        "min_ms": 78718.318277,
+        "max_ms": 79463.307855,
+        "mean_ms": 78906.30787061999,
+        "p50_ms": 78874.765537,
+        "p90_ms": 79025.864508,
+        "p95_ms": 79075.13553,
+        "p99_ms": 79463.307855
+      },
+      "unique_instances": 50,
+      "unique_snapshot_process_ids": 2,
+      "unique_boot_ids": 2,
+      "all_first_request": true,
+      "client_call_peak_overlap": 50,
+      "handler_peak_overlap": 50
+    }
+  },
+  "all_sessions_stop_confirmed": true,
+  "session_count": 151,
+  "method": "nearest-rank; no retries; full body latency; all samples retained"
+}
