@@ -5,6 +5,13 @@ V2 通过 `CreateAgentRuntime` / `UpdateAgentRuntime` 的 `platformVersion="V2"`
 公开 PyPI 最新 boto3/botocore **1.43.96**；公开 SDK 已支持该字段，不再需要私有 beta 模型。
 下文保留 beta 阶段的历史测试，旧脚本和证据不改写。
 
+## Claude Agent SDK 分阶段延迟（2026-10-14）
+
+[子项目：claude-agent-sdk-loading/](claude-agent-sdk-loading/README.md)。Claude Agent SDK 0.2.166 + Bedrock Haiku 5.5
+部署为 V2 Runtime，在服务端加时间戳探针，测 runtime 启动、Claude CLI 启动、收到请求、回复各阶段，120 次调用全部成功。
+**V2 新会话从创建 Runtime 时拍的快照恢复**（多个会话共用同一 boot_id 和进程启动时间，guest 暂停 68–830 秒），
+每会话恢复约 1.9 秒。CLI 在请求时才启动（lazy）冷请求 p90 达 35.6 秒；在服务启动时就启动（eager），CLI 会被拍进快照，p90 降到 8.4 秒。同会话热请求约 1.25 秒。
+
 ## v3 复测（2026-09-17）
 
 [报告：COLDSTART_V3_REPORT.zh.md](results/COLDSTART_V3_REPORT.zh.md)。

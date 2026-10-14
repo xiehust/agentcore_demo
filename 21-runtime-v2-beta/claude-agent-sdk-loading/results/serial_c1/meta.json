@@ -1,0 +1,64 @@
+{
+  "note": "meta.json rebuilt after the run (summary serialization bug); runtime versions unchanged since the run",
+  "first_send_iso": "2026-10-14T13:14:55Z",
+  "last_done_iso": "2026-10-14T13:19:35Z",
+  "args": {
+    "modes": "lazy,eager",
+    "sessions": 10,
+    "turns": 3,
+    "concurrency": 1
+  },
+  "deployment": {
+    "region": "us-west-2",
+    "account": "434444145045",
+    "model_id": "global.anthropic.claude-haiku-5-5",
+    "repository": "claude-sdk-v2-probe",
+    "role_name": "ClaudeSdkV2ProbeRole",
+    "role_arn": "arn:aws:iam::434444145045:role/ClaudeSdkV2ProbeRole",
+    "image": {
+      "uri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/claude-sdk-v2-probe@sha256:563148dbf965ce2d66c5dfd8978b4a15bedb4ada84548f5cb66586542d69f5c4",
+      "tag": "20261014T131103",
+      "digest": "sha256:563148dbf965ce2d66c5dfd8978b4a15bedb4ada84548f5cb66586542d69f5c4",
+      "compressed_bytes": 184539917
+    },
+    "runtimes": {
+      "lazy": {
+        "name": "casdk_v2_lazy",
+        "id": "casdk_v2_lazy-gFFK95CiPF",
+        "action": "updated",
+        "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/casdk_v2_lazy-gFFK95CiPF",
+        "platformVersion": "V2",
+        "version": "2",
+        "ready_s": 218.3,
+        "ready_iso": "2026-10-14T13:14:45Z"
+      },
+      "eager": {
+        "name": "casdk_v2_eager",
+        "id": "casdk_v2_eager-axDR2vBa8N",
+        "action": "updated",
+        "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/casdk_v2_eager-axDR2vBa8N",
+        "platformVersion": "V2",
+        "version": "2",
+        "ready_s": 217.0,
+        "ready_iso": "2026-10-14T13:14:46Z"
+      }
+    },
+    "boto3": "1.43.96"
+  },
+  "runtimes": {
+    "lazy": {
+      "agentRuntimeName": "casdk_v2_lazy",
+      "agentRuntimeVersion": "2",
+      "platformVersion": "V2",
+      "status": "READY",
+      "lastUpdatedAt": "2026-10-14 13:14:41.221830+00:00"
+    },
+    "eager": {
+      "agentRuntimeName": "casdk_v2_eager",
+      "agentRuntimeVersion": "2",
+      "platformVersion": "V2",
+      "status": "READY",
+      "lastUpdatedAt": "2026-10-14 13:14:12.380851+00:00"
+    }
+  }
+}

@@ -1,0 +1,818 @@
+{
+  "meta": {
+    "started_iso": "2026-10-14T13:27:05Z",
+    "args": {
+      "modes": "lazy,eager",
+      "sessions": 10,
+      "turns": 3,
+      "concurrency": 10,
+      "out": "results/burst_c10",
+      "report": null
+    },
+    "deployment": {
+      "region": "us-west-2",
+      "account": "434444145045",
+      "model_id": "global.anthropic.claude-haiku-5-5",
+      "repository": "claude-sdk-v2-probe",
+      "role_name": "ClaudeSdkV2ProbeRole",
+      "role_arn": "arn:aws:iam::434444145045:role/ClaudeSdkV2ProbeRole",
+      "image": {
+        "uri": "434444145045.dkr.ecr.us-west-2.amazonaws.com/claude-sdk-v2-probe@sha256:563148dbf965ce2d66c5dfd8978b4a15bedb4ada84548f5cb66586542d69f5c4",
+        "tag": "20261014T131103",
+        "digest": "sha256:563148dbf965ce2d66c5dfd8978b4a15bedb4ada84548f5cb66586542d69f5c4",
+        "compressed_bytes": 184539917
+      },
+      "runtimes": {
+        "lazy": {
+          "name": "casdk_v2_lazy",
+          "id": "casdk_v2_lazy-gFFK95CiPF",
+          "action": "updated",
+          "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/casdk_v2_lazy-gFFK95CiPF",
+          "platformVersion": "V2",
+          "version": "2",
+          "ready_s": 218.3,
+          "ready_iso": "2026-10-14T13:14:45Z"
+        },
+        "eager": {
+          "name": "casdk_v2_eager",
+          "id": "casdk_v2_eager-axDR2vBa8N",
+          "action": "updated",
+          "arn": "arn:aws:bedrock-agentcore:us-west-2:434444145045:runtime/casdk_v2_eager-axDR2vBa8N",
+          "platformVersion": "V2",
+          "version": "2",
+          "ready_s": 217.0,
+          "ready_iso": "2026-10-14T13:14:46Z"
+        }
+      },
+      "boto3": "1.43.96"
+    },
+    "client_clock": "Reference ID    : A9FEA97B (169.254.169.123)\nStratum         : 2\nRef time (UTC)  : Wed Oct 14 13:27:04 2026\nSystem time     : 0.000001914 seconds slow of NTP time\nLast offset     : -0.000001922 seconds\nRMS offset      : 0.000002461 seconds\nFrequency       : 1.145 ppm fast\nResidual freq   : -0.002 ppm\nSkew            : 0.098 ppm\nRoot delay      : 0.000133819 seconds\nRoot dispersion : 0.000021088 seconds\nUpdate interval : 32.3 seconds\nLeap status     : Normal\n",
+    "runtimes": {
+      "lazy": {
+        "agentRuntimeName": "casdk_v2_lazy",
+        "agentRuntimeVersion": "2",
+        "platformVersion": "V2",
+        "status": "READY",
+        "lastUpdatedAt": "2026-10-14 13:14:41.221830+00:00"
+      },
+      "eager": {
+        "agentRuntimeName": "casdk_v2_eager",
+        "agentRuntimeVersion": "2",
+        "platformVersion": "V2",
+        "status": "READY",
+        "lastUpdatedAt": "2026-10-14 13:14:12.380851+00:00"
+      }
+    },
+    "finished_iso": "2026-10-14T13:27:37Z"
+  },
+  "invocations": 60,
+  "errors": 0,
+  "groups": {
+    "eager/cold": {
+      "n": 10,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 10,
+          "p50": 25170.0,
+          "p90": 26810.0,
+          "min": 25170.0,
+          "max": 26810.0,
+          "mean": 25498.0
+        },
+        "proc_to_module": {
+          "n": 10,
+          "p50": 24.4,
+          "p90": 39.4,
+          "min": 24.4,
+          "max": 39.4,
+          "mean": 27.4
+        },
+        "sdk_import": {
+          "n": 10,
+          "p50": 642.3,
+          "p90": 811.1,
+          "min": 642.3,
+          "max": 811.1,
+          "mean": 676.1
+        },
+        "imports": {
+          "n": 10,
+          "p50": 845.5,
+          "p90": 1070.5,
+          "min": 845.5,
+          "max": 1070.5,
+          "mean": 890.5
+        },
+        "proc_to_listening": {
+          "n": 10,
+          "p50": 882.8,
+          "p90": 1126.0,
+          "min": 882.8,
+          "max": 1126.0,
+          "mean": 931.5
+        },
+        "listening_to_first_ping": {
+          "n": 10,
+          "p50": 1135.4,
+          "p90": 1135.4,
+          "min": 904.9,
+          "max": 1135.4,
+          "mean": 1089.3
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 10,
+          "p50": 895628.6,
+          "p90": 895761.2,
+          "min": 894315.4,
+          "max": 895880.8,
+          "mean": 895418.6
+        },
+        "send_to_received": {
+          "n": 10,
+          "p50": 1860.4,
+          "p90": 2171.1,
+          "min": 1732.0,
+          "max": 2231.5,
+          "mean": 1916.2
+        },
+        "client_ttfb": {
+          "n": 10,
+          "p50": 1880.0,
+          "p90": 2188.5,
+          "min": 1746.8,
+          "max": 2248.9,
+          "mean": 1933.6
+        },
+        "agent_connect": null,
+        "agent_wait": {
+          "n": 10,
+          "p50": 0.0,
+          "p90": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "query_to_cli_init": {
+          "n": 10,
+          "p50": 1470.8,
+          "p90": 2729.6,
+          "min": 1215.4,
+          "max": 2907.0,
+          "mean": 1697.2
+        },
+        "query_to_message_start": {
+          "n": 10,
+          "p50": 3640.2,
+          "p90": 5227.4,
+          "min": 3446.2,
+          "max": 5436.1,
+          "mean": 3951.2
+        },
+        "server_ttft": {
+          "n": 10,
+          "p50": 3640.6,
+          "p90": 5228.1,
+          "min": 3446.7,
+          "max": 5436.7,
+          "mean": 3951.6
+        },
+        "first_token_to_result": {
+          "n": 10,
+          "p50": 426.9,
+          "p90": 505.2,
+          "min": 316.3,
+          "max": 713.7,
+          "mean": 436.1
+        },
+        "cli_duration": {
+          "n": 10,
+          "p50": 3150.0,
+          "p90": 4152.2,
+          "min": 3027,
+          "max": 4289,
+          "mean": 3333.9
+        },
+        "server_total": {
+          "n": 10,
+          "p50": 4063.3,
+          "p90": 5845.5,
+          "min": 3872.4,
+          "max": 5919.6,
+          "mean": 4388.6
+        },
+        "client_ttft": {
+          "n": 10,
+          "p50": 5485.4,
+          "p90": 7457.1,
+          "min": 5375.9,
+          "max": 7605.4,
+          "mean": 5871.7
+        },
+        "client_total": {
+          "n": 10,
+          "p50": 5919.3,
+          "p90": 8132.2,
+          "min": 5807.0,
+          "max": 8155.2,
+          "mean": 6362.8
+        },
+        "agent_connect_outside_request": {
+          "n": 10,
+          "p50": 509.1,
+          "p90": 646.6,
+          "min": 509.1,
+          "max": 646.6,
+          "mean": 536.6
+        },
+        "frozen_gap": {
+          "n": 10,
+          "p50": 829088.3,
+          "p90": 829130.4,
+          "min": 818627.6,
+          "max": 829159.8,
+          "mean": 827014.1
+        },
+        "cache_drop_mb": {
+          "n": 10,
+          "p50": 642.2,
+          "p90": 642.8,
+          "min": 641.7,
+          "max": 642.8,
+          "mean": 642.3
+        },
+        "agent_connect_read_mb": null,
+        "agent_connect_majfault": null
+      }
+    },
+    "eager/warm": {
+      "n": 20,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 20,
+          "p50": 25170.0,
+          "p90": 26810.0,
+          "min": 25170.0,
+          "max": 26810.0,
+          "mean": 25498.0
+        },
+        "proc_to_module": {
+          "n": 20,
+          "p50": 24.4,
+          "p90": 39.4,
+          "min": 24.4,
+          "max": 39.4,
+          "mean": 27.4
+        },
+        "sdk_import": {
+          "n": 20,
+          "p50": 642.3,
+          "p90": 811.1,
+          "min": 642.3,
+          "max": 811.1,
+          "mean": 676.1
+        },
+        "imports": {
+          "n": 20,
+          "p50": 845.5,
+          "p90": 1070.5,
+          "min": 845.5,
+          "max": 1070.5,
+          "mean": 890.5
+        },
+        "proc_to_listening": {
+          "n": 20,
+          "p50": 882.8,
+          "p90": 1126.0,
+          "min": 882.8,
+          "max": 1126.0,
+          "mean": 931.5
+        },
+        "listening_to_first_ping": {
+          "n": 20,
+          "p50": 1135.4,
+          "p90": 1135.4,
+          "min": 904.9,
+          "max": 1135.4,
+          "mean": 1089.3
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 20,
+          "p50": 900628.1,
+          "p90": 901289.1,
+          "min": 899740.6,
+          "max": 901644.1,
+          "mean": 900582.1
+        },
+        "send_to_received": {
+          "n": 20,
+          "p50": 96.6,
+          "p90": 113.6,
+          "min": 71.4,
+          "max": 146.4,
+          "mean": 99.1
+        },
+        "client_ttfb": {
+          "n": 20,
+          "p50": 114.0,
+          "p90": 136.3,
+          "min": 89.4,
+          "max": 230.9,
+          "mean": 122.4
+        },
+        "agent_connect": null,
+        "agent_wait": {
+          "n": 20,
+          "p50": 0.0,
+          "p90": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "query_to_cli_init": {
+          "n": 20,
+          "p50": 8.9,
+          "p90": 41.4,
+          "min": 6.5,
+          "max": 42.3,
+          "mean": 16.5
+        },
+        "query_to_message_start": {
+          "n": 20,
+          "p50": 847.6,
+          "p90": 960.7,
+          "min": 649.9,
+          "max": 1020.0,
+          "mean": 831.5
+        },
+        "server_ttft": {
+          "n": 20,
+          "p50": 847.9,
+          "p90": 961.3,
+          "min": 650.6,
+          "max": 1020.0,
+          "mean": 832.1
+        },
+        "first_token_to_result": {
+          "n": 20,
+          "p50": 260.3,
+          "p90": 343.2,
+          "min": 198.2,
+          "max": 449.3,
+          "mean": 273.0
+        },
+        "cli_duration": {
+          "n": 20,
+          "p50": 1090.5,
+          "p90": 1236.0,
+          "min": 892,
+          "max": 1337,
+          "mean": 1102.3
+        },
+        "server_total": {
+          "n": 20,
+          "p50": 1094.1,
+          "p90": 1239.3,
+          "min": 895.5,
+          "max": 1340.8,
+          "mean": 1105.9
+        },
+        "client_ttft": {
+          "n": 20,
+          "p50": 957.7,
+          "p90": 1054.8,
+          "min": 751.7,
+          "max": 1120.4,
+          "mean": 940.9
+        },
+        "client_total": {
+          "n": 20,
+          "p50": 1206.1,
+          "p90": 1336.6,
+          "min": 1000.6,
+          "max": 1468.7,
+          "mean": 1220.4
+        },
+        "agent_connect_outside_request": {
+          "n": 20,
+          "p50": 509.1,
+          "p90": 646.6,
+          "min": 509.1,
+          "max": 646.6,
+          "mean": 536.6
+        },
+        "frozen_gap": {
+          "n": 20,
+          "p50": 829088.3,
+          "p90": 829130.4,
+          "min": 818627.6,
+          "max": 829159.8,
+          "mean": 827014.1
+        },
+        "cache_drop_mb": {
+          "n": 20,
+          "p50": 637.9,
+          "p90": 638.5,
+          "min": 636.9,
+          "max": 638.7,
+          "mean": 638.0
+        },
+        "agent_connect_read_mb": null,
+        "agent_connect_majfault": null
+      }
+    },
+    "lazy/cold": {
+      "n": 10,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 10,
+          "p50": 25830.0,
+          "p90": 25933.0,
+          "min": 25830.0,
+          "max": 26860.0,
+          "mean": 25933.0
+        },
+        "proc_to_module": {
+          "n": 10,
+          "p50": 31.3,
+          "p90": 31.3,
+          "min": 30.2,
+          "max": 31.3,
+          "mean": 31.2
+        },
+        "sdk_import": {
+          "n": 10,
+          "p50": 612.4,
+          "p90": 628.2,
+          "min": 612.4,
+          "max": 770.4,
+          "mean": 628.2
+        },
+        "imports": {
+          "n": 10,
+          "p50": 808.6,
+          "p90": 829.7,
+          "min": 808.6,
+          "max": 1019.7,
+          "mean": 829.7
+        },
+        "proc_to_listening": {
+          "n": 10,
+          "p50": 852.3,
+          "p90": 873.6,
+          "min": 852.3,
+          "max": 1065.1,
+          "mean": 873.6
+        },
+        "listening_to_first_ping": {
+          "n": 10,
+          "p50": 1187.3,
+          "p90": 1187.3,
+          "min": 963.0,
+          "max": 1187.3,
+          "mean": 1164.9
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 10,
+          "p50": 875166.3,
+          "p90": 875304.6,
+          "min": 874607.3,
+          "max": 875330.4,
+          "mean": 875127.1
+        },
+        "send_to_received": {
+          "n": 10,
+          "p50": 1931.2,
+          "p90": 2098.6,
+          "min": 1790.5,
+          "max": 2285.8,
+          "mean": 1967.2
+        },
+        "client_ttfb": {
+          "n": 10,
+          "p50": 1958.5,
+          "p90": 2292.0,
+          "min": 1819.8,
+          "max": 2321.1,
+          "mean": 2023.8
+        },
+        "agent_connect": {
+          "n": 10,
+          "p50": 2603.8,
+          "p90": 4214.9,
+          "min": 2348.1,
+          "max": 13165.7,
+          "mean": 3686.5
+        },
+        "agent_wait": {
+          "n": 10,
+          "p50": 2641.1,
+          "p90": 4216.8,
+          "min": 2349.9,
+          "max": 13168.3,
+          "mean": 3703.2
+        },
+        "query_to_cli_init": {
+          "n": 10,
+          "p50": 27.5,
+          "p90": 92.9,
+          "min": 25.1,
+          "max": 472.1,
+          "mean": 74.2
+        },
+        "query_to_message_start": {
+          "n": 10,
+          "p50": 1145.3,
+          "p90": 1288.3,
+          "min": 919.2,
+          "max": 1887.2,
+          "mean": 1193.4
+        },
+        "server_ttft": {
+          "n": 10,
+          "p50": 1146.7,
+          "p90": 1288.9,
+          "min": 919.8,
+          "max": 1887.8,
+          "mean": 1194.2
+        },
+        "first_token_to_result": {
+          "n": 10,
+          "p50": 348.3,
+          "p90": 563.0,
+          "min": 272.0,
+          "max": 1546.0,
+          "mean": 471.2
+        },
+        "cli_duration": {
+          "n": 10,
+          "p50": 1552.0,
+          "p90": 2145.4,
+          "min": 1222,
+          "max": 2671,
+          "mean": 1639.3
+        },
+        "server_total": {
+          "n": 10,
+          "p50": 4191.2,
+          "p90": 6469.3,
+          "min": 3820.1,
+          "max": 15435.4,
+          "mean": 5407.2
+        },
+        "client_ttft": {
+          "n": 10,
+          "p50": 5683.8,
+          "p90": 7231.4,
+          "min": 5602.4,
+          "max": 17359.8,
+          "mean": 6906.3
+        },
+        "client_total": {
+          "n": 10,
+          "p50": 6091.3,
+          "p90": 8313.2,
+          "min": 5875.0,
+          "max": 17725.3,
+          "mean": 7378.4
+        },
+        "agent_connect_outside_request": null,
+        "frozen_gap": {
+          "n": 10,
+          "p50": 799287.9,
+          "p90": 799328.8,
+          "min": 799047.6,
+          "max": 799338.2,
+          "mean": 799262.3
+        },
+        "cache_drop_mb": {
+          "n": 10,
+          "p50": 757.4,
+          "p90": 757.5,
+          "min": 756.7,
+          "max": 757.7,
+          "mean": 757.3
+        },
+        "agent_connect_read_mb": {
+          "n": 10,
+          "p50": 134.0,
+          "p90": 134.2,
+          "min": 133.8,
+          "max": 134.3,
+          "mean": 134.0
+        },
+        "agent_connect_majfault": {
+          "n": 10,
+          "p50": 992.0,
+          "p90": 993.4,
+          "min": 991,
+          "max": 997,
+          "mean": 992.4
+        }
+      }
+    },
+    "lazy/warm": {
+      "n": 20,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 20,
+          "p50": 25830.0,
+          "p90": 25933.0,
+          "min": 25830.0,
+          "max": 26860.0,
+          "mean": 25933.0
+        },
+        "proc_to_module": {
+          "n": 20,
+          "p50": 31.3,
+          "p90": 31.3,
+          "min": 30.2,
+          "max": 31.3,
+          "mean": 31.2
+        },
+        "sdk_import": {
+          "n": 20,
+          "p50": 612.4,
+          "p90": 628.2,
+          "min": 612.4,
+          "max": 770.4,
+          "mean": 628.2
+        },
+        "imports": {
+          "n": 20,
+          "p50": 808.6,
+          "p90": 829.7,
+          "min": 808.6,
+          "max": 1019.7,
+          "mean": 829.7
+        },
+        "proc_to_listening": {
+          "n": 20,
+          "p50": 852.3,
+          "p90": 873.6,
+          "min": 852.3,
+          "max": 1065.1,
+          "mean": 873.6
+        },
+        "listening_to_first_ping": {
+          "n": 20,
+          "p50": 1187.3,
+          "p90": 1187.3,
+          "min": 963.0,
+          "max": 1187.3,
+          "mean": 1164.9
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 20,
+          "p50": 880540.2,
+          "p90": 882739.7,
+          "min": 879228.6,
+          "max": 891435.1,
+          "mean": 881255.4
+        },
+        "send_to_received": {
+          "n": 20,
+          "p50": 103.7,
+          "p90": 110.4,
+          "min": 86.6,
+          "max": 160.3,
+          "mean": 105.1
+        },
+        "client_ttfb": {
+          "n": 20,
+          "p50": 122.5,
+          "p90": 137.2,
+          "min": 103.6,
+          "max": 176.5,
+          "mean": 124.3
+        },
+        "agent_connect": null,
+        "agent_wait": {
+          "n": 20,
+          "p50": 0.0,
+          "p90": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "query_to_cli_init": {
+          "n": 20,
+          "p50": 8.8,
+          "p90": 11.8,
+          "min": 8.0,
+          "max": 13.4,
+          "mean": 9.4
+        },
+        "query_to_message_start": {
+          "n": 20,
+          "p50": 781.3,
+          "p90": 922.3,
+          "min": 639.8,
+          "max": 1012.3,
+          "mean": 791.9
+        },
+        "server_ttft": {
+          "n": 20,
+          "p50": 781.7,
+          "p90": 923.1,
+          "min": 639.9,
+          "max": 1013.2,
+          "mean": 792.4
+        },
+        "first_token_to_result": {
+          "n": 20,
+          "p50": 321.1,
+          "p90": 392.2,
+          "min": 196.2,
+          "max": 1705.2,
+          "mean": 381.1
+        },
+        "cli_duration": {
+          "n": 20,
+          "p50": 1128.5,
+          "p90": 1293.6,
+          "min": 894,
+          "max": 2415,
+          "mean": 1169.9
+        },
+        "server_total": {
+          "n": 20,
+          "p50": 1134.6,
+          "p90": 1298.9,
+          "min": 897.1,
+          "max": 2417.8,
+          "mean": 1174.2
+        },
+        "client_ttft": {
+          "n": 20,
+          "p50": 893.6,
+          "p90": 1030.3,
+          "min": 749.1,
+          "max": 1104.8,
+          "mean": 901.1
+        },
+        "client_total": {
+          "n": 20,
+          "p50": 1238.0,
+          "p90": 1409.5,
+          "min": 997.3,
+          "max": 2526.1,
+          "mean": 1283.1
+        },
+        "agent_connect_outside_request": {
+          "n": 20,
+          "p50": 2603.8,
+          "p90": 4214.9,
+          "min": 2348.1,
+          "max": 13165.7,
+          "mean": 3686.5
+        },
+        "frozen_gap": {
+          "n": 20,
+          "p50": 799287.9,
+          "p90": 799328.8,
+          "min": 799047.6,
+          "max": 799338.2,
+          "mean": 799262.3
+        },
+        "cache_drop_mb": {
+          "n": 20,
+          "p50": 617.6,
+          "p90": 617.7,
+          "min": 616.6,
+          "max": 617.8,
+          "mean": 617.4
+        },
+        "agent_connect_read_mb": null,
+        "agent_connect_majfault": null
+      }
+    },
+    "eager/instances": {
+      "cold_sessions": 10,
+      "distinct_boot_id": 2,
+      "distinct_listening_ns": 2,
+      "distinct_agent_connect_start_ns": 2
+    },
+    "lazy/instances": {
+      "cold_sessions": 10,
+      "distinct_boot_id": 2,
+      "distinct_listening_ns": 2,
+      "distinct_agent_connect_start_ns": 10
+    }
+  }
+}

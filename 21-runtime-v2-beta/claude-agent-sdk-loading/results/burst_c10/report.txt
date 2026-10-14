@@ -1,0 +1,104 @@
+
+== eager/cold  n=10  clock-order violations=0  booted-by-request=0
+   stage                                                  n       p50       p90       min       max
+   [build] kernel boot → Python process start            10   25170.0   26810.0   25170.0   26810.0
+   [build] process start → main.py first line            10      24.4      39.4      24.4      39.4
+   [build] import claude_agent_sdk                       10     642.3     811.1     642.3     811.1
+   [build] all imports (stdlib + SDK + FastAPI)          10     845.5    1070.5     845.5    1070.5
+   [build] process start → HTTP listening                10     882.8    1126.0     882.8    1126.0
+   [build] listening → first /ping                       10    1135.4    1135.4     904.9    1135.4
+   process age when request arrived                      10  895628.6  895761.2  894315.4  895880.8
+   client send → /invocations received *                 10    1860.4    2171.1    1732.0    2231.5
+   client send → first SSE byte (accepted)               10    1880.0    2188.5    1746.8    2248.9
+   request waited for the agent                          10       0.0       0.0       0.0       0.0
+   query sent → CLI init message                         10    1470.8    2729.6    1215.4    2907.0
+   query sent → model message_start                      10    3640.2    5227.4    3446.2    5436.1
+   query sent → first text token                         10    3640.6    5228.1    3446.7    5436.7
+   first token → ResultMessage                           10     426.9     505.2     316.3     713.7
+   CLI-reported duration_ms                              10    3150.0    4152.2    3027.0    4289.0
+   request received → done event sent                    10    4063.3    5845.5    3872.4    5919.6
+   client send → first text token                        10    5485.4    7457.1    5375.9    7605.4
+   client send → stream end                              10    5919.3    8132.2    5807.0    8155.2
+   Claude CLI start done before request (not in path)    10     509.1     646.6     509.1     646.6
+   VM not running between boot and request (ms) †        10  829088.3  829130.4  818627.6  829159.8
+   page cache at boot − at request (MB)                  10     642.2     642.8     641.7     642.8
+
+== eager/warm  n=20  clock-order violations=0  booted-by-request=0
+   stage                                                  n       p50       p90       min       max
+   [build] kernel boot → Python process start            20   25170.0   26810.0   25170.0   26810.0
+   [build] process start → main.py first line            20      24.4      39.4      24.4      39.4
+   [build] import claude_agent_sdk                       20     642.3     811.1     642.3     811.1
+   [build] all imports (stdlib + SDK + FastAPI)          20     845.5    1070.5     845.5    1070.5
+   [build] process start → HTTP listening                20     882.8    1126.0     882.8    1126.0
+   [build] listening → first /ping                       20    1135.4    1135.4     904.9    1135.4
+   process age when request arrived                      20  900628.1  901289.1  899740.6  901644.1
+   client send → /invocations received *                 20      96.6     113.6      71.4     146.4
+   client send → first SSE byte (accepted)               20     114.0     136.3      89.4     230.9
+   request waited for the agent                          20       0.0       0.0       0.0       0.0
+   query sent → CLI init message                         20       8.9      41.4       6.5      42.3
+   query sent → model message_start                      20     847.6     960.7     649.9    1020.0
+   query sent → first text token                         20     847.9     961.3     650.6    1020.0
+   first token → ResultMessage                           20     260.3     343.2     198.2     449.3
+   CLI-reported duration_ms                              20    1090.5    1236.0     892.0    1337.0
+   request received → done event sent                    20    1094.1    1239.3     895.5    1340.8
+   client send → first text token                        20     957.7    1054.8     751.7    1120.4
+   client send → stream end                              20    1206.1    1336.6    1000.6    1468.7
+   Claude CLI start done before request (not in path)    20     509.1     646.6     509.1     646.6
+   VM not running between boot and request (ms) †        20  829088.3  829130.4  818627.6  829159.8
+   page cache at boot − at request (MB)                  20     637.9     638.5     636.9     638.7
+
+== lazy/cold  n=10  clock-order violations=0  booted-by-request=0
+   stage                                                  n       p50       p90       min       max
+   [build] kernel boot → Python process start            10   25830.0   25933.0   25830.0   26860.0
+   [build] process start → main.py first line            10      31.3      31.3      30.2      31.3
+   [build] import claude_agent_sdk                       10     612.4     628.2     612.4     770.4
+   [build] all imports (stdlib + SDK + FastAPI)          10     808.6     829.7     808.6    1019.7
+   [build] process start → HTTP listening                10     852.3     873.6     852.3    1065.1
+   [build] listening → first /ping                       10    1187.3    1187.3     963.0    1187.3
+   process age when request arrived                      10  875166.3  875304.6  874607.3  875330.4
+   client send → /invocations received *                 10    1931.2    2098.6    1790.5    2285.8
+   client send → first SSE byte (accepted)               10    1958.5    2292.0    1819.8    2321.1
+   Claude CLI start: ClaudeSDKClient.connect()           10    2603.8    4214.9    2348.1   13165.7
+   request waited for the agent                          10    2641.1    4216.8    2349.9   13168.3
+   query sent → CLI init message                         10      27.5      92.9      25.1     472.1
+   query sent → model message_start                      10    1145.3    1288.3     919.2    1887.2
+   query sent → first text token                         10    1146.7    1288.9     919.8    1887.8
+   first token → ResultMessage                           10     348.3     563.0     272.0    1546.0
+   CLI-reported duration_ms                              10    1552.0    2145.4    1222.0    2671.0
+   request received → done event sent                    10    4191.2    6469.3    3820.1   15435.4
+   client send → first text token                        10    5683.8    7231.4    5602.4   17359.8
+   client send → stream end                              10    6091.3    8313.2    5875.0   17725.3
+   VM not running between boot and request (ms) †        10  799287.9  799328.8  799047.6  799338.2
+   page cache at boot − at request (MB)                  10     757.4     757.5     756.7     757.7
+   page cache growth during CLI start (MB)               10     134.0     134.2     133.8     134.3
+   major page faults during CLI start                    10     992.0     993.4     991.0     997.0
+
+== lazy/warm  n=20  clock-order violations=0  booted-by-request=0
+   stage                                                  n       p50       p90       min       max
+   [build] kernel boot → Python process start            20   25830.0   25933.0   25830.0   26860.0
+   [build] process start → main.py first line            20      31.3      31.3      30.2      31.3
+   [build] import claude_agent_sdk                       20     612.4     628.2     612.4     770.4
+   [build] all imports (stdlib + SDK + FastAPI)          20     808.6     829.7     808.6    1019.7
+   [build] process start → HTTP listening                20     852.3     873.6     852.3    1065.1
+   [build] listening → first /ping                       20    1187.3    1187.3     963.0    1187.3
+   process age when request arrived                      20  880540.2  882739.7  879228.6  891435.1
+   client send → /invocations received *                 20     103.7     110.4      86.6     160.3
+   client send → first SSE byte (accepted)               20     122.5     137.2     103.6     176.5
+   request waited for the agent                          20       0.0       0.0       0.0       0.0
+   query sent → CLI init message                         20       8.8      11.8       8.0      13.4
+   query sent → model message_start                      20     781.3     922.3     639.8    1012.3
+   query sent → first text token                         20     781.7     923.1     639.9    1013.2
+   first token → ResultMessage                           20     321.1     392.2     196.2    1705.2
+   CLI-reported duration_ms                              20    1128.5    1293.6     894.0    2415.0
+   request received → done event sent                    20    1134.6    1298.9     897.1    2417.8
+   client send → first text token                        20     893.6    1030.3     749.1    1104.8
+   client send → stream end                              20    1238.0    1409.5     997.3    2526.1
+   Claude CLI start done before request (not in path)    20    2603.8    4214.9    2348.1   13165.7
+   VM not running between boot and request (ms) †        20  799287.9  799328.8  799047.6  799338.2
+   page cache at boot − at request (MB)                  20     617.6     617.7     616.6     617.8
+
+== eager/instances: {'cold_sessions': 10, 'distinct_boot_id': 2, 'distinct_listening_ns': 2, 'distinct_agent_connect_start_ns': 2}
+
+== lazy/instances: {'cold_sessions': 10, 'distinct_boot_id': 2, 'distinct_listening_ns': 2, 'distinct_agent_connect_start_ns': 10}
+
+60 invocations, 0 errors -> results/burst_c10
