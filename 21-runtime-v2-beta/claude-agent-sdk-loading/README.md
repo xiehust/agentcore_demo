@@ -30,6 +30,9 @@ Agent 用 Claude Agent SDK 0.2.166（自带 Claude Code CLI 2.1.299）+ Bedrock 
 同一会话的后续请求（复用同一 microVM 和同一 CLI 进程）两种模式一样：请求送达约 0.10 秒、TTFT 约 0.8–0.9 秒、
 端到端约 **1.2–1.3 秒**。
 
+**Lambda MicroVM 也有同样的懒加载问题**（lazy 的 CLI 启动最长 11.9–13.8 秒），但它的 `/validate` 预取能把 CLI 启动压到 1.4 秒以内；
+eager 在 MicroVM 上反而最慢。详见[Lambda MicroVM 对照](#lambda-microvm-对照2026-10-14)。
+
 ## 时间线
 
 ```text
@@ -243,6 +246,79 @@ CLI 启动分别为 23.0、28.0、13.2 秒，均为慢样本；其余并发轮�
 
 本地 8 vCPU Docker 对照：CLI `connect()` 约 1.9–2.1 秒，热请求 TTFT 约 0.75–1.3 秒。
 
+## Lambda MicroVM 对照（2026-10-14）
+
+问题：Lambda MicroVM 也是从构建期快照启动的，会不会有同样的"恢复后首次读镜像文件慢"（lazy pull）问题？
+
+**有，机制相同，但长尾比 AgentCore V2 轻，而且 `/validate` 预取可以基本消除它。**
+同一个 agent（`app/main.py` 原样复用，`lambda-microvm/hooks.py` 加上生命周期钩子），同一模型，同在 us-west-2。
+镜像基线 4 GB / 2 vCPU，与 AgentCore V2 的 2 vCPU 对齐；但 MicroVM 可以突发到 4 倍，VM 内 `os.cpu_count()` 为 8。
+三个镜像的代码完全相同，只是环境变量不同：
+
+| 变体 | `/ready` | `/validate` | Claude CLI 何时启动 |
+|---|---|---|---|
+| lazy | 服务监听即 200 | 只 ping | 会话首个请求 |
+| lazy-validated | 服务监听即 200 | 在验证 VM 上启动一次 CLI | 会话首个请求；但 Lambda 已记录这些页面，启动时预取 |
+| eager | 等 CLI 就绪才 200 | 只 ping | 构建期，进入快照 |
+
+文档说明 `/validate` 运行在"由已完成快照启动的新 MicroVM"上，Lambda 会记录它访问过的快照区域，之后启动时预取。
+实测与之一致：lazy-validated 的会话里，钩子计数只有 `ready`、`run`，CLI 是在请求里才启动的，验证时启动的那个 CLI 没有进快照。
+
+### 结果（串行 n=10，p50 / p90 / max，秒）
+
+| 阶段 | V2 lazy | MicroVM lazy | MicroVM lazy-validated | V2 eager | MicroVM eager |
+|---|---:|---:|---:|---:|---:|
+| 平台：发出 → 容器收到请求 * | 1.98 / 2.52 / 2.79 | 3.45 / 3.54 / 3.74 | 3.44 / 3.45 / 3.46 | 1.95 / 2.24 / 2.56 | 3.45 / 3.70 / 3.76 |
+| 其中 `RunMicrovm` → VM 收到 `/run` * | — | 1.63 / 2.07 / 3.96 | 1.62 / 1.89 / 2.34 | — | 1.81 / 2.08 / 2.99 |
+| 请求内 CLI 启动 | 1.71 / 30.0 / 48.0 | **1.64 / 3.18 / 11.9** | **0.70 / 1.21 / 1.40** | 0 | 0 |
+| CLI 启动读入 page cache / 主缺页 | 134 MB / 992 | 135 MB / 991 | 135 MB / 988 | — | — |
+| query → 首 token | 1.19 / 2.29 / 2.85 | 0.99 / 1.62 / 2.28 | 0.91 / 1.00 / 1.02 | 2.39 / 5.32 / 6.14 | **4.51 / 5.14 / 6.87** |
+| 客户端端到端 | 5.15 / 35.6 / 54.1 | 6.36 / 8.65 / 17.9 | **5.30 / 5.62 / 5.89** | 4.99 / 8.36 / 9.01 | 8.38 / 8.80 / 10.8 |
+| 同一会话后续请求端到端 p50 | 1.30 | 1.06 | 1.21 | 1.34 | 1.30 |
+
+MicroVM 并发 5（每种 10 个会话，分两批）：lazy 的 CLI 启动 1.09 / 1.43 / 1.59 秒，lazy-validated 0.69 / 1.11 / 1.22 秒；
+eager 首 token 3.72 / 4.43 / 4.46 秒；端到端依次为 5.71 / 6.21 / 6.52、5.41 / 5.77 / 5.93、7.46 / 8.38 / 8.55 秒。
+冒烟加两轮共 186 次调用全部成功，所有 MicroVM 都已终止。
+
+### 解读
+
+- **lazy 的懒加载与 AgentCore V2 相同。** 每次都读入约 135 MB、约 990 次主缺页。每个 MicroVM 镜像同样有两份快照，
+  两次慢启动都发生在**某份快照第一次被恢复**的时候：冒烟首个会话 13.8 秒，串行第 2 个会话（另一份快照首次使用）11.9 秒。
+  之后同一份快照恢复只要 0.6–2.2 秒。按"快照第几次被恢复"对比，两个平台的差别如下（CLI 启动，秒）：
+
+  | | 快照 A | 快照 B |
+  |---|---|---|
+  | V2 | 第 1 次 48.0，第 2 次 19.5，之后 0.9–3.2 | 第 1 次 23.0，第 2 次 28.0，第 3 次（12 分钟后）13.2 |
+  | MicroVM | 第 1 次 13.8，之后 0.7–2.2 | 第 1 次 11.9，之后 0.6–1.6 |
+
+  MicroVM 好在两点：首次恢复更快（有效读速度约 10–11 MB/s，V2 为 3–10 MB/s），并且恢复一次后就变快；
+  V2 的快照 B 用了 3 次、跨 12 分钟仍然慢。快照热了之后两者一样，p50 都约 1.6–1.7 秒。
+- **`/validate` 预取有效。** 主缺页次数一样，只是由预取的数据快速满足：CLI 启动最大 1.4 秒，两份快照各自第一次被恢复时也只有 0.62–0.72 秒。
+  构建多花约 31 秒，即验证 VM 上那一次 CLI 懒加载（lazy 镜像 140 秒，lazy-validated 171 秒）。
+- **eager 在 MicroVM 上反而最慢。** 内存快照 1074 MB，比 lazy 的 835 MB 多出约 239 MB，主要是 CLI 进程。恢复后的首次 query
+  CLI init 消息就要 1.6 秒，首 token 4.5 秒。推测是这部分内存页按需换入，而 `/validate` 只 ping、没有让 Lambda 记录它们，未验证。
+  若要试 eager + 预取，`/validate` 里需要真正跑一次 query；构建期钩子使用 build role，因此 build role 也要有 Bedrock 权限（本次未测）。
+- **平台送达比 V2 慢约 1.5 秒，主要卡在代理。** VM 在 `RunMicrovm` 后约 1.6 秒就收到 `/run`，但 60 个冷会话中 58 个的首次 HTTP 请求
+  被代理挂起后返回 502（大多约 3.0 秒，少数约 1.0 秒），重试后约 20 ms 就能送达 VM。2026-09-04 的 ping-pong 测试中，这种"慢模式"只占 32%。
+  客户端必须对首个请求做 502 重试。
+- **快照副本共享状态同样存在。** MicroVM eager 的 10 个会话只有 2 个 Claude `session_id`（对应两份快照），和 V2 eager 一样。
+- **page cache 处理不同，但不是原因。** MicroVM 恢复后 page cache 只少约 112 MB（lazy）或约 2 MB（eager），V2 会少 640–760 MB。
+  CLI 二进制在 lazy 构建时从未被读取，不管快照保不保留 page cache，它都不在缓存里。
+
+**MicroVM 上的建议：** 用 lazy + `/validate` 启动一次 CLI，让 Lambda 记住这些页面。这是三种变体里冷请求最稳的（p90 5.6 秒）。
+不要照搬 AgentCore 上的 eager 结论。
+
+### MicroVM 口径与局限
+
+- MicroVM 的 guest 时钟恢复后会有偏差：lazy 系列偏差约 0–2 ms（偶有一台 84 ms），eager 系列中点 0–47 ms，导致 eager 热请求出现 9 次时钟顺序违例（冒烟中 lazy 另有 1 次）。
+  `*` 阶段已用同一台 VM 热请求的"发出 ≤ 收到 ≤ 首字节"区间中点校正。VM 内测量的阶段（CLI 启动、首 token）不受影响。
+- `GetMicrovmImageBuild` 显示 eager 镜像构建在第 4 代 Graviton，另外两个在第 3 代，eager 与其他变体的比较混入了芯片差异。
+- 冒烟和串行测试是在镜像构建后的头 10 分钟内完成的；并发轮开始时两份快照都已被用过，没有"首次恢复"样本。
+- 上方结果表中 MicroVM lazy 的串行 p90（3.18 秒）不能直接与 V2 的 30.0 秒对比：快照 A 的首次恢复（13.8 秒）被冒烟测试用掉了，
+  不在这 10 个样本里，而 V2 的串行样本包含两份快照的首次恢复。算上冒烟样本，MicroVM 是 11 个里 2 个慢，V2 是 10 个里 4 个慢。
+  每个平台只有 2 个"首次恢复"样本，首次恢复快 2–4 倍不是稳定结论。
+- 与 V2 的对比只是同一 agent、同一天、同一区域的实测；两个平台的 vCPU 突发能力、代理、计费都不同，不能当作平台优劣的结论。
+
 ## 口径与局限
 
 - 每格 10 个冷样本、单轮、单区域、单账号，p90 只描述本次样本，不是 SLA。模型延迟随 Bedrock 负载波动。
@@ -265,6 +341,13 @@ cd 21-runtime-v2-beta/claude-agent-sdk-loading
 ../.venv/bin/python bench.py --sessions 10 --concurrency 10 --out results/<dir>
 ../.venv/bin/python bench.py --report results/serial_c1            # 离线重算汇总，不调用 AWS
 ../.venv/bin/python -B -m unittest test_stages -v                  # 离线测试
+
+cd lambda-microvm                                                  # Lambda MicroVM 对照
+../../.venv/bin/python deploy_microvm.py                           # S3、两个角色、三个镜像（约 3 分钟）
+../../.venv/bin/python bench_microvm.py --sessions 10 --out <dir>  # 结果写入 ../results/<dir>
+../../.venv/bin/python bench_microvm.py --sessions 10 --concurrency 5 --out <dir>
+../../.venv/bin/python bench_microvm.py --report --out microvm_serial_c1
+../../.venv/bin/python -B -m unittest test_bench_microvm -v
 ```
 
 `serial_c1/meta.json` 是运行后补写的（首版汇总写盘时 datetime 序列化失败，`records.jsonl` 已先落盘，未受影响），已在文件中注明。
@@ -280,6 +363,11 @@ cd 21-runtime-v2-beta/claude-agent-sdk-loading
 | `test_stages.py` | 阶段计算与 SSE 解析的离线测试 |
 | `cleanup.py` | 删除 Runtime、角色、ECR 仓库 |
 | `results/serial_c1`、`results/burst_c10` | `records.jsonl` 原始数据、`summary.json`、`report.txt` |
+| `lambda-microvm/hooks.py`、`Dockerfile` | MicroVM 入口：复用 `app/main.py`，加 `/ready`、`/validate`、`/run` 等钩子（端口 9000） |
+| `lambda-microvm/deploy_microvm.py` | S3 桶、`ClaudeSdkMicrovmBuildRole` / `ClaudeSdkMicrovmExecRole`、三个镜像，写 `microvm_deployment.json` |
+| `lambda-microvm/bench_microvm.py`、`test_bench_microvm.py` | MicroVM 测试客户端（含 502 重试与时钟偏移校正）及离线测试 |
+| `lambda-microvm/cleanup_microvm.py` | 删除镜像、角色、S3 桶 |
+| `results/microvm_smoke`、`microvm_serial_c1`、`microvm_burst_c5` | MicroVM 原始数据与汇总 |
 
 ## 资源与清理
 
@@ -289,4 +377,12 @@ IAM 角色 `ClaudeSdkV2ProbeRole`，ECR 仓库 `claude-sdk-v2-probe`。空闲 Ru
 ```bash
 ../.venv/bin/python cleanup.py          # 预览
 ../.venv/bin/python cleanup.py --yes    # 删除并确认
+```
+
+MicroVM 对照仍保留：镜像 `casdk-mvm-lazy`、`casdk-mvm-lazy-validated`、`casdk-mvm-eager`，角色
+`ClaudeSdkMicrovmBuildRole`、`ClaudeSdkMicrovmExecRole`，S3 桶 `casdk-microvm-434444145045-us-west-2`。
+所有 MicroVM 已终止，不再产生计算费用；镜像快照的存储是否计费未核实。
+
+```bash
+cd lambda-microvm && ../../.venv/bin/python cleanup_microvm.py --yes
 ```

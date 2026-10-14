@@ -1,0 +1,74 @@
+{
+  "region": "us-west-2",
+  "account": "434444145045",
+  "bucket": "casdk-microvm-434444145045-us-west-2",
+  "artifact_uri": "s3://casdk-microvm-434444145045-us-west-2/claude-sdk-v2-probe/cc252be455850c6a.zip",
+  "base_image_arn": "arn:aws:lambda:us-west-2:aws:microvm-image:al2023-1",
+  "memory_mib": 4096,
+  "model_id": "global.anthropic.claude-haiku-5-5",
+  "build_role": {
+    "name": "ClaudeSdkMicrovmBuildRole",
+    "arn": "arn:aws:iam::434444145045:role/ClaudeSdkMicrovmBuildRole"
+  },
+  "execution_role": {
+    "name": "ClaudeSdkMicrovmExecRole",
+    "arn": "arn:aws:iam::434444145045:role/ClaudeSdkMicrovmExecRole"
+  },
+  "images": {
+    "lazy": {
+      "name": "casdk-mvm-lazy",
+      "arn": "arn:aws:lambda:us-west-2:434444145045:microvm-image:casdk-mvm-lazy",
+      "version": "1.0",
+      "env": {
+        "AGENT_START": "lazy",
+        "VALIDATE_AGENT": "0"
+      },
+      "build_s": 151.1,
+      "created_at": "2026-10-14 15:09:35.663000+00:00",
+      "updated_at": "2026-10-14 15:11:55.381000+00:00",
+      "snapshot": {
+        "memorySnapshotSizeInBytes": 835444736,
+        "codeInstallSizeInBytes": 813211648,
+        "diskSnapshotSizeInBytes": 34201600
+      },
+      "chipset": "3"
+    },
+    "lazy-validated": {
+      "name": "casdk-mvm-lazy-validated",
+      "arn": "arn:aws:lambda:us-west-2:434444145045:microvm-image:casdk-mvm-lazy-validated",
+      "version": "1.0",
+      "env": {
+        "AGENT_START": "lazy",
+        "VALIDATE_AGENT": "1"
+      },
+      "build_s": 181.1,
+      "created_at": "2026-10-14 15:09:35.937000+00:00",
+      "updated_at": "2026-10-14 15:12:26.677000+00:00",
+      "snapshot": {
+        "memorySnapshotSizeInBytes": 837550080,
+        "codeInstallSizeInBytes": 812146688,
+        "diskSnapshotSizeInBytes": 34734080
+      },
+      "chipset": "3"
+    },
+    "eager": {
+      "name": "casdk-mvm-eager",
+      "arn": "arn:aws:lambda:us-west-2:434444145045:microvm-image:casdk-mvm-eager",
+      "version": "1.0",
+      "env": {
+        "AGENT_START": "eager",
+        "VALIDATE_AGENT": "0"
+      },
+      "build_s": 181.1,
+      "created_at": "2026-10-14 15:09:36.083000+00:00",
+      "updated_at": "2026-10-14 15:11:55.600000+00:00",
+      "snapshot": {
+        "memorySnapshotSizeInBytes": 1074442240,
+        "codeInstallSizeInBytes": 810549248,
+        "diskSnapshotSizeInBytes": 36864000
+      },
+      "chipset": "4"
+    }
+  },
+  "boto3": "1.43.96"
+}

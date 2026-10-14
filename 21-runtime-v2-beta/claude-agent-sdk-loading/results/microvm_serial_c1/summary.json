@@ -1,0 +1,1504 @@
+{
+  "meta": {
+    "started_iso": "2026-10-14T15:14:45Z",
+    "args": {
+      "variants": "lazy,lazy-validated,eager",
+      "sessions": 10,
+      "turns": 3,
+      "concurrency": 1,
+      "out": "microvm_serial_c1",
+      "report": false
+    },
+    "deployment": {
+      "region": "us-west-2",
+      "account": "434444145045",
+      "bucket": "casdk-microvm-434444145045-us-west-2",
+      "artifact_uri": "s3://casdk-microvm-434444145045-us-west-2/claude-sdk-v2-probe/cc252be455850c6a.zip",
+      "base_image_arn": "arn:aws:lambda:us-west-2:aws:microvm-image:al2023-1",
+      "memory_mib": 4096,
+      "model_id": "global.anthropic.claude-haiku-5-5",
+      "build_role": {
+        "name": "ClaudeSdkMicrovmBuildRole",
+        "arn": "arn:aws:iam::434444145045:role/ClaudeSdkMicrovmBuildRole"
+      },
+      "execution_role": {
+        "name": "ClaudeSdkMicrovmExecRole",
+        "arn": "arn:aws:iam::434444145045:role/ClaudeSdkMicrovmExecRole"
+      },
+      "images": {
+        "lazy": {
+          "name": "casdk-mvm-lazy",
+          "arn": "arn:aws:lambda:us-west-2:434444145045:microvm-image:casdk-mvm-lazy",
+          "version": "1.0",
+          "env": {
+            "AGENT_START": "lazy",
+            "VALIDATE_AGENT": "0"
+          },
+          "build_s": 151.1,
+          "created_at": "2026-10-14 15:09:35.663000+00:00",
+          "updated_at": "2026-10-14 15:11:55.381000+00:00",
+          "snapshot": {
+            "memorySnapshotSizeInBytes": 835444736,
+            "codeInstallSizeInBytes": 813211648,
+            "diskSnapshotSizeInBytes": 34201600
+          },
+          "chipset": "3"
+        },
+        "lazy-validated": {
+          "name": "casdk-mvm-lazy-validated",
+          "arn": "arn:aws:lambda:us-west-2:434444145045:microvm-image:casdk-mvm-lazy-validated",
+          "version": "1.0",
+          "env": {
+            "AGENT_START": "lazy",
+            "VALIDATE_AGENT": "1"
+          },
+          "build_s": 181.1,
+          "created_at": "2026-10-14 15:09:35.937000+00:00",
+          "updated_at": "2026-10-14 15:12:26.677000+00:00",
+          "snapshot": {
+            "memorySnapshotSizeInBytes": 837550080,
+            "codeInstallSizeInBytes": 812146688,
+            "diskSnapshotSizeInBytes": 34734080
+          },
+          "chipset": "3"
+        },
+        "eager": {
+          "name": "casdk-mvm-eager",
+          "arn": "arn:aws:lambda:us-west-2:434444145045:microvm-image:casdk-mvm-eager",
+          "version": "1.0",
+          "env": {
+            "AGENT_START": "eager",
+            "VALIDATE_AGENT": "0"
+          },
+          "build_s": 181.1,
+          "created_at": "2026-10-14 15:09:36.083000+00:00",
+          "updated_at": "2026-10-14 15:11:55.600000+00:00",
+          "snapshot": {
+            "memorySnapshotSizeInBytes": 1074442240,
+            "codeInstallSizeInBytes": 810549248,
+            "diskSnapshotSizeInBytes": 36864000
+          },
+          "chipset": "4"
+        }
+      },
+      "boto3": "1.43.96"
+    },
+    "client_clock": "Reference ID    : A9FEA97B (169.254.169.123)\nStratum         : 2\nRef time (UTC)  : Wed Oct 14 15:14:35 2026\nSystem time     : 0.000001557 seconds slow of NTP time\nLast offset     : -0.000001027 seconds\nRMS offset      : 0.000003279 seconds\nFrequency       : 1.158 ppm fast\nResidual freq   : +0.005 ppm\nSkew            : 0.287 ppm\nRoot delay      : 0.000138502 seconds\nRoot dispersion : 0.000040064 seconds\nUpdate interval : 16.0 seconds\nLeap status     : Normal\n",
+    "platform": "lambda-microvm",
+    "finished_iso": "2026-10-14T15:19:28Z"
+  },
+  "invocations": 90,
+  "errors": 0,
+  "groups": {
+    "eager/cold": {
+      "n": 10,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 10,
+          "p50": 18460.0,
+          "p90": 18570.0,
+          "min": 18460.0,
+          "max": 18570.0,
+          "mean": 18493.0
+        },
+        "proc_to_module": {
+          "n": 10,
+          "p50": 337.9,
+          "p90": 337.9,
+          "min": 268.3,
+          "max": 337.9,
+          "mean": 317.0
+        },
+        "sdk_import": {
+          "n": 10,
+          "p50": 1768.3,
+          "p90": 2543.7,
+          "min": 1768.3,
+          "max": 2543.7,
+          "mean": 2000.9
+        },
+        "imports": {
+          "n": 10,
+          "p50": 1852.0,
+          "p90": 2661.6,
+          "min": 1852.0,
+          "max": 2661.6,
+          "mean": 2094.9
+        },
+        "proc_to_listening": {
+          "n": 10,
+          "p50": 2214.7,
+          "p90": 2965.4,
+          "min": 2214.7,
+          "max": 2965.4,
+          "mean": 2439.9
+        },
+        "listening_to_first_ping": {
+          "n": 10,
+          "p50": 8454.4,
+          "p90": 8454.4,
+          "min": 7497.5,
+          "max": 8454.4,
+          "mean": 8167.4
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 10,
+          "p50": 434043.8,
+          "p90": 472953.4,
+          "min": 380438.7,
+          "max": 479869.6,
+          "mean": 432885.6
+        },
+        "send_to_received": {
+          "n": 10,
+          "p50": 3450.2,
+          "p90": 3745.9,
+          "min": 1481.6,
+          "max": 3794.8,
+          "mean": 3327.7
+        },
+        "client_ttfb": {
+          "n": 10,
+          "p50": 3576.2,
+          "p90": 3748.3,
+          "min": 1545.0,
+          "max": 3797.5,
+          "mean": 3404.3
+        },
+        "agent_connect": null,
+        "agent_wait": {
+          "n": 10,
+          "p50": 0.0,
+          "p90": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "query_to_cli_init": {
+          "n": 10,
+          "p50": 1566.6,
+          "p90": 2320.2,
+          "min": 1240.2,
+          "max": 2697.3,
+          "mean": 1665.3
+        },
+        "query_to_message_start": {
+          "n": 10,
+          "p50": 4506.4,
+          "p90": 5134.5,
+          "min": 3554.6,
+          "max": 6871.3,
+          "mean": 4588.7
+        },
+        "server_ttft": {
+          "n": 10,
+          "p50": 4506.9,
+          "p90": 5135.0,
+          "min": 3555.0,
+          "max": 6872.1,
+          "mean": 4589.3
+        },
+        "first_token_to_result": {
+          "n": 10,
+          "p50": 324.2,
+          "p90": 367.0,
+          "min": 11.9,
+          "max": 383.2,
+          "mean": 282.0
+        },
+        "cli_duration": {
+          "n": 10,
+          "p50": 3856.0,
+          "p90": 4458.9,
+          "min": 3107,
+          "max": 5682,
+          "mean": 3930.9
+        },
+        "server_total": {
+          "n": 10,
+          "p50": 4791.6,
+          "p90": 5270.3,
+          "min": 3789.5,
+          "max": 7153.8,
+          "mean": 4872.0
+        },
+        "client_ttft": {
+          "n": 10,
+          "p50": 8015.1,
+          "p90": 8603.5,
+          "min": 5324.0,
+          "max": 10567.1,
+          "mean": 7913.2
+        },
+        "client_total": {
+          "n": 10,
+          "p50": 8378.8,
+          "p90": 8801.0,
+          "min": 5689.3,
+          "max": 10848.3,
+          "mean": 8195.2
+        },
+        "agent_connect_outside_request": {
+          "n": 10,
+          "p50": 624.7,
+          "p90": 701.8,
+          "min": 624.7,
+          "max": 701.8,
+          "mean": 647.8
+        },
+        "frozen_gap": {
+          "n": 10,
+          "p50": 419933.0,
+          "p90": 458918.4,
+          "min": 366133.9,
+          "max": 467656.5,
+          "mean": 418913.4
+        },
+        "cache_drop_mb": {
+          "n": 10,
+          "p50": 2.0,
+          "p90": 2.7,
+          "min": 1.6,
+          "max": 2.7,
+          "mean": 2.1
+        },
+        "agent_connect_read_mb": null,
+        "agent_connect_majfault": null
+      }
+    },
+    "eager/warm": {
+      "n": 20,
+      "clock_order_violations": 4,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 20,
+          "p50": 18460.0,
+          "p90": 18570.0,
+          "min": 18460.0,
+          "max": 18570.0,
+          "mean": 18493.0
+        },
+        "proc_to_module": {
+          "n": 20,
+          "p50": 337.9,
+          "p90": 337.9,
+          "min": 268.3,
+          "max": 337.9,
+          "mean": 317.0
+        },
+        "sdk_import": {
+          "n": 20,
+          "p50": 1768.3,
+          "p90": 2543.7,
+          "min": 1768.3,
+          "max": 2543.7,
+          "mean": 2000.9
+        },
+        "imports": {
+          "n": 20,
+          "p50": 1852.0,
+          "p90": 2661.6,
+          "min": 1852.0,
+          "max": 2661.6,
+          "mean": 2094.9
+        },
+        "proc_to_listening": {
+          "n": 20,
+          "p50": 2214.7,
+          "p90": 2965.4,
+          "min": 2214.7,
+          "max": 2965.4,
+          "mean": 2439.9
+        },
+        "listening_to_first_ping": {
+          "n": 20,
+          "p50": 8454.4,
+          "p90": 8454.4,
+          "min": 7497.5,
+          "max": 8454.4,
+          "mean": 8167.4
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 20,
+          "p50": 439929.8,
+          "p90": 477934.8,
+          "min": 387662.1,
+          "max": 485414.1,
+          "mean": 438544.0
+        },
+        "send_to_received": {
+          "n": 20,
+          "p50": 32.7,
+          "p90": 130.5,
+          "min": 1.9,
+          "max": 286.1,
+          "mean": 57.6
+        },
+        "client_ttfb": {
+          "n": 20,
+          "p50": 37.0,
+          "p90": 113.6,
+          "min": 3.2,
+          "max": 614.6,
+          "mean": 78.1
+        },
+        "agent_connect": null,
+        "agent_wait": {
+          "n": 20,
+          "p50": 0.0,
+          "p90": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "query_to_cli_init": {
+          "n": 20,
+          "p50": 21.4,
+          "p90": 48.2,
+          "min": 5.0,
+          "max": 105.6,
+          "mean": 27.1
+        },
+        "query_to_message_start": {
+          "n": 20,
+          "p50": 976.8,
+          "p90": 1124.5,
+          "min": 753.0,
+          "max": 1330.4,
+          "mean": 959.9
+        },
+        "server_ttft": {
+          "n": 20,
+          "p50": 977.3,
+          "p90": 1125.1,
+          "min": 753.4,
+          "max": 1330.8,
+          "mean": 960.4
+        },
+        "first_token_to_result": {
+          "n": 20,
+          "p50": 305.7,
+          "p90": 398.4,
+          "min": 209.5,
+          "max": 483.4,
+          "mean": 320.4
+        },
+        "cli_duration": {
+          "n": 20,
+          "p50": 1261.5,
+          "p90": 1484.0,
+          "min": 985,
+          "max": 1621,
+          "mean": 1278.5
+        },
+        "server_total": {
+          "n": 20,
+          "p50": 1263.8,
+          "p90": 1486.6,
+          "min": 986.7,
+          "max": 1624.2,
+          "mean": 1281.3
+        },
+        "client_ttft": {
+          "n": 20,
+          "p50": 1014.1,
+          "p90": 1216.0,
+          "min": 758.0,
+          "max": 1597.9,
+          "mean": 1013.6
+        },
+        "client_total": {
+          "n": 20,
+          "p50": 1295.8,
+          "p90": 1631.4,
+          "min": 990.2,
+          "max": 1890.8,
+          "mean": 1345.9
+        },
+        "agent_connect_outside_request": {
+          "n": 20,
+          "p50": 624.7,
+          "p90": 701.8,
+          "min": 624.7,
+          "max": 701.8,
+          "mean": 647.8
+        },
+        "frozen_gap": {
+          "n": 20,
+          "p50": 419933.0,
+          "p90": 458918.4,
+          "min": 366133.9,
+          "max": 467656.5,
+          "mean": 418913.4
+        },
+        "cache_drop_mb": {
+          "n": 20,
+          "p50": -2.9,
+          "p90": -2.2,
+          "min": -3.8,
+          "max": -1.7,
+          "mean": -2.8
+        },
+        "agent_connect_read_mb": null,
+        "agent_connect_majfault": null
+      }
+    },
+    "lazy-validated/cold": {
+      "n": 10,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 10,
+          "p50": 18350.0,
+          "p90": 18470.0,
+          "min": 18350.0,
+          "max": 18470.0,
+          "mean": 18386.0
+        },
+        "proc_to_module": {
+          "n": 10,
+          "p50": 353.1,
+          "p90": 1880.0,
+          "min": 353.1,
+          "max": 1880.0,
+          "mean": 811.2
+        },
+        "sdk_import": {
+          "n": 10,
+          "p50": 2308.4,
+          "p90": 2417.3,
+          "min": 2308.4,
+          "max": 2417.3,
+          "mean": 2341.1
+        },
+        "imports": {
+          "n": 10,
+          "p50": 2426.8,
+          "p90": 2539.9,
+          "min": 2426.8,
+          "max": 2539.9,
+          "mean": 2460.7
+        },
+        "proc_to_listening": {
+          "n": 10,
+          "p50": 2804.9,
+          "p90": 4458.0,
+          "min": 2804.9,
+          "max": 4458.0,
+          "mean": 3300.9
+        },
+        "listening_to_first_ping": {
+          "n": 10,
+          "p50": 7622.5,
+          "p90": 7622.5,
+          "min": 6182.8,
+          "max": 7622.5,
+          "mean": 7190.6
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 10,
+          "p50": 317754.4,
+          "p90": 344896.4,
+          "min": 284814.2,
+          "max": 352233.6,
+          "mean": 318474.0
+        },
+        "send_to_received": {
+          "n": 10,
+          "p50": 3443.4,
+          "p90": 3448.7,
+          "min": 1451.2,
+          "max": 3462.3,
+          "mean": 2860.8
+        },
+        "client_ttfb": {
+          "n": 10,
+          "p50": 3455.9,
+          "p90": 3461.2,
+          "min": 1462.8,
+          "max": 3476.4,
+          "mean": 2872.4
+        },
+        "agent_connect": {
+          "n": 10,
+          "p50": 703.6,
+          "p90": 1212.3,
+          "min": 552.5,
+          "max": 1403.0,
+          "mean": 859.6
+        },
+        "agent_wait": {
+          "n": 10,
+          "p50": 704.2,
+          "p90": 1212.8,
+          "min": 553.0,
+          "max": 1403.7,
+          "mean": 860.1
+        },
+        "query_to_cli_init": {
+          "n": 10,
+          "p50": 80.8,
+          "p90": 133.0,
+          "min": 49.9,
+          "max": 205.6,
+          "mean": 98.4
+        },
+        "query_to_message_start": {
+          "n": 10,
+          "p50": 904.6,
+          "p90": 1002.8,
+          "min": 814.4,
+          "max": 1015.6,
+          "mean": 916.2
+        },
+        "server_ttft": {
+          "n": 10,
+          "p50": 905.0,
+          "p90": 1003.2,
+          "min": 814.8,
+          "max": 1016.2,
+          "mean": 916.7
+        },
+        "first_token_to_result": {
+          "n": 10,
+          "p50": 352.0,
+          "p90": 450.4,
+          "min": 254.3,
+          "max": 530.1,
+          "mean": 362.1
+        },
+        "cli_duration": {
+          "n": 10,
+          "p50": 1215.5,
+          "p90": 1381.7,
+          "min": 1031,
+          "max": 1406,
+          "mean": 1222.0
+        },
+        "server_total": {
+          "n": 10,
+          "p50": 2110.5,
+          "p90": 2579.8,
+          "min": 1767.6,
+          "max": 2644.9,
+          "mean": 2149.0
+        },
+        "client_ttft": {
+          "n": 10,
+          "p50": 4936.8,
+          "p90": 5192.8,
+          "min": 3482.8,
+          "max": 5578.5,
+          "mean": 4649.6
+        },
+        "client_total": {
+          "n": 10,
+          "p50": 5300.7,
+          "p90": 5619.0,
+          "min": 3737.6,
+          "max": 5890.0,
+          "mean": 5011.9
+        },
+        "agent_connect_outside_request": null,
+        "frozen_gap": {
+          "n": 10,
+          "p50": 305741.4,
+          "p90": 332738.1,
+          "min": 270831.9,
+          "max": 338344.9,
+          "mean": 305053.2
+        },
+        "cache_drop_mb": {
+          "n": 10,
+          "p50": 111.9,
+          "p90": 112.3,
+          "min": 111.4,
+          "max": 112.4,
+          "mean": 111.9
+        },
+        "agent_connect_read_mb": {
+          "n": 10,
+          "p50": 134.7,
+          "p90": 135.0,
+          "min": 134.4,
+          "max": 135.8,
+          "mean": 134.8
+        },
+        "agent_connect_majfault": {
+          "n": 10,
+          "p50": 988.0,
+          "p90": 989.0,
+          "min": 988,
+          "max": 989,
+          "mean": 988.4
+        }
+      }
+    },
+    "lazy-validated/warm": {
+      "n": 20,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 20,
+          "p50": 18350.0,
+          "p90": 18470.0,
+          "min": 18350.0,
+          "max": 18470.0,
+          "mean": 18386.0
+        },
+        "proc_to_module": {
+          "n": 20,
+          "p50": 353.1,
+          "p90": 1880.0,
+          "min": 353.1,
+          "max": 1880.0,
+          "mean": 811.2
+        },
+        "sdk_import": {
+          "n": 20,
+          "p50": 2308.4,
+          "p90": 2417.3,
+          "min": 2308.4,
+          "max": 2417.3,
+          "mean": 2341.1
+        },
+        "imports": {
+          "n": 20,
+          "p50": 2426.8,
+          "p90": 2539.9,
+          "min": 2426.8,
+          "max": 2539.9,
+          "mean": 2460.7
+        },
+        "proc_to_listening": {
+          "n": 20,
+          "p50": 2804.9,
+          "p90": 4458.0,
+          "min": 2804.9,
+          "max": 4458.0,
+          "mean": 3300.9
+        },
+        "listening_to_first_ping": {
+          "n": 20,
+          "p50": 7622.5,
+          "p90": 7622.5,
+          "min": 6182.8,
+          "max": 7622.5,
+          "mean": 7190.6
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 20,
+          "p50": 321073.5,
+          "p90": 348121.0,
+          "min": 286899.2,
+          "max": 355331.2,
+          "mean": 321222.9
+        },
+        "send_to_received": {
+          "n": 20,
+          "p50": 2.1,
+          "p90": 2.7,
+          "min": 1.3,
+          "max": 3.2,
+          "mean": 2.1
+        },
+        "client_ttfb": {
+          "n": 20,
+          "p50": 4.3,
+          "p90": 5.1,
+          "min": 2.4,
+          "max": 5.4,
+          "mean": 4.1
+        },
+        "agent_connect": null,
+        "agent_wait": {
+          "n": 20,
+          "p50": 0.0,
+          "p90": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "query_to_cli_init": {
+          "n": 20,
+          "p50": 5.9,
+          "p90": 7.4,
+          "min": 5.2,
+          "max": 16.1,
+          "mean": 6.5
+        },
+        "query_to_message_start": {
+          "n": 20,
+          "p50": 872.5,
+          "p90": 1001.3,
+          "min": 699.3,
+          "max": 1235.1,
+          "mean": 886.8
+        },
+        "server_ttft": {
+          "n": 20,
+          "p50": 876.3,
+          "p90": 1016.2,
+          "min": 699.7,
+          "max": 1235.4,
+          "mean": 888.4
+        },
+        "first_token_to_result": {
+          "n": 20,
+          "p50": 329.3,
+          "p90": 364.4,
+          "min": 193.8,
+          "max": 378.0,
+          "mean": 316.3
+        },
+        "cli_duration": {
+          "n": 20,
+          "p50": 1200.0,
+          "p90": 1331.1,
+          "min": 1007,
+          "max": 1543,
+          "mean": 1202.5
+        },
+        "server_total": {
+          "n": 20,
+          "p50": 1202.0,
+          "p90": 1333.5,
+          "min": 1008.6,
+          "max": 1545.0,
+          "mean": 1205.2
+        },
+        "client_ttft": {
+          "n": 20,
+          "p50": 881.0,
+          "p90": 1021.8,
+          "min": 704.0,
+          "max": 1238.7,
+          "mean": 892.7
+        },
+        "client_total": {
+          "n": 20,
+          "p50": 1206.4,
+          "p90": 1336.0,
+          "min": 1010.8,
+          "max": 1548.1,
+          "mean": 1209.2
+        },
+        "agent_connect_outside_request": {
+          "n": 20,
+          "p50": 703.6,
+          "p90": 1212.3,
+          "min": 552.5,
+          "max": 1403.0,
+          "mean": 859.6
+        },
+        "frozen_gap": {
+          "n": 20,
+          "p50": 305741.4,
+          "p90": 332738.1,
+          "min": 270831.9,
+          "max": 338344.9,
+          "mean": 305053.2
+        },
+        "cache_drop_mb": {
+          "n": 20,
+          "p50": -28.8,
+          "p90": -28.4,
+          "min": -29.4,
+          "max": -28.2,
+          "mean": -28.8
+        },
+        "agent_connect_read_mb": null,
+        "agent_connect_majfault": null
+      }
+    },
+    "lazy/cold": {
+      "n": 10,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 10,
+          "p50": 18490.0,
+          "p90": 18490.0,
+          "min": 18370.0,
+          "max": 18490.0,
+          "mean": 18478.0
+        },
+        "proc_to_module": {
+          "n": 10,
+          "p50": 341.2,
+          "p90": 341.2,
+          "min": 284.4,
+          "max": 341.2,
+          "mean": 335.5
+        },
+        "sdk_import": {
+          "n": 10,
+          "p50": 1629.3,
+          "p90": 1724.5,
+          "min": 1629.3,
+          "max": 2581.3,
+          "mean": 1724.5
+        },
+        "imports": {
+          "n": 10,
+          "p50": 1788.7,
+          "p90": 1884.4,
+          "min": 1788.7,
+          "max": 2745.6,
+          "mean": 1884.4
+        },
+        "proc_to_listening": {
+          "n": 10,
+          "p50": 2165.5,
+          "p90": 2269.5,
+          "min": 2165.5,
+          "max": 3205.6,
+          "mean": 2269.5
+        },
+        "listening_to_first_ping": {
+          "n": 10,
+          "p50": 8320.2,
+          "p90": 8320.2,
+          "min": 7229.4,
+          "max": 8320.2,
+          "mean": 8211.1
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 10,
+          "p50": 256221.4,
+          "p90": 289909.4,
+          "min": 207318.6,
+          "max": 296676.5,
+          "mean": 254982.9
+        },
+        "send_to_received": {
+          "n": 10,
+          "p50": 3451.5,
+          "p90": 3542.2,
+          "min": 1488.4,
+          "max": 3742.3,
+          "mean": 3289.9
+        },
+        "client_ttfb": {
+          "n": 10,
+          "p50": 3465.0,
+          "p90": 3631.9,
+          "min": 1502.4,
+          "max": 4517.7,
+          "mean": 3379.6
+        },
+        "agent_connect": {
+          "n": 10,
+          "p50": 1641.0,
+          "p90": 3175.4,
+          "min": 714.6,
+          "max": 11884.5,
+          "mean": 2612.9
+        },
+        "agent_wait": {
+          "n": 10,
+          "p50": 1641.6,
+          "p90": 3200.3,
+          "min": 715.3,
+          "max": 12126.4,
+          "mean": 2637.7
+        },
+        "query_to_cli_init": {
+          "n": 10,
+          "p50": 76.9,
+          "p90": 97.5,
+          "min": 19.6,
+          "max": 129.4,
+          "mean": 72.2
+        },
+        "query_to_message_start": {
+          "n": 10,
+          "p50": 988.6,
+          "p90": 1616.4,
+          "min": 797.2,
+          "max": 2271.4,
+          "mean": 1143.9
+        },
+        "server_ttft": {
+          "n": 10,
+          "p50": 989.3,
+          "p90": 1618.1,
+          "min": 797.8,
+          "max": 2281.4,
+          "mean": 1145.5
+        },
+        "first_token_to_result": {
+          "n": 10,
+          "p50": 332.3,
+          "p90": 348.6,
+          "min": 263.5,
+          "max": 395.2,
+          "mean": 323.4
+        },
+        "cli_duration": {
+          "n": 10,
+          "p50": 1258.0,
+          "p90": 1956.3,
+          "min": 1036,
+          "max": 2589,
+          "mean": 1434.2
+        },
+        "server_total": {
+          "n": 10,
+          "p50": 3035.5,
+          "p90": 5176.1,
+          "min": 1907.4,
+          "max": 14139.3,
+          "mean": 4170.8
+        },
+        "client_ttft": {
+          "n": 10,
+          "p50": 6046.7,
+          "p90": 8308.9,
+          "min": 4236.3,
+          "max": 17548.1,
+          "mean": 7138.7
+        },
+        "client_total": {
+          "n": 10,
+          "p50": 6355.8,
+          "p90": 8651.7,
+          "min": 4568.0,
+          "max": 17882.5,
+          "mean": 7462.3
+        },
+        "agent_connect_outside_request": null,
+        "frozen_gap": {
+          "n": 10,
+          "p50": 243199.8,
+          "p90": 275890.5,
+          "min": 193331.5,
+          "max": 282642.6,
+          "mean": 241166.8
+        },
+        "cache_drop_mb": {
+          "n": 10,
+          "p50": 112.8,
+          "p90": 113.1,
+          "min": 111.8,
+          "max": 113.2,
+          "mean": 112.8
+        },
+        "agent_connect_read_mb": {
+          "n": 10,
+          "p50": 135.0,
+          "p90": 135.3,
+          "min": 134.4,
+          "max": 135.5,
+          "mean": 135.0
+        },
+        "agent_connect_majfault": {
+          "n": 10,
+          "p50": 991.0,
+          "p90": 992.0,
+          "min": 989,
+          "max": 992,
+          "mean": 990.9
+        }
+      }
+    },
+    "lazy/warm": {
+      "n": 20,
+      "clock_order_violations": 0,
+      "booted_by_request": 0,
+      "stages": {
+        "send_to_kernel_boot": null,
+        "kernel_to_proc": {
+          "n": 20,
+          "p50": 18490.0,
+          "p90": 18490.0,
+          "min": 18370.0,
+          "max": 18490.0,
+          "mean": 18478.0
+        },
+        "proc_to_module": {
+          "n": 20,
+          "p50": 341.2,
+          "p90": 341.2,
+          "min": 284.4,
+          "max": 341.2,
+          "mean": 335.5
+        },
+        "sdk_import": {
+          "n": 20,
+          "p50": 1629.3,
+          "p90": 1724.5,
+          "min": 1629.3,
+          "max": 2581.3,
+          "mean": 1724.5
+        },
+        "imports": {
+          "n": 20,
+          "p50": 1788.7,
+          "p90": 1884.4,
+          "min": 1788.7,
+          "max": 2745.6,
+          "mean": 1884.4
+        },
+        "proc_to_listening": {
+          "n": 20,
+          "p50": 2165.5,
+          "p90": 2269.5,
+          "min": 2165.5,
+          "max": 3205.6,
+          "mean": 2269.5
+        },
+        "listening_to_first_ping": {
+          "n": 20,
+          "p50": 8320.2,
+          "p90": 8320.2,
+          "min": 7229.4,
+          "max": 8320.2,
+          "mean": 8211.1
+        },
+        "send_to_listening": null,
+        "container_age_at_request": {
+          "n": 20,
+          "p50": 259897.1,
+          "p90": 292837.5,
+          "min": 210062.6,
+          "max": 300763.6,
+          "mean": 259692.8
+        },
+        "send_to_received": {
+          "n": 20,
+          "p50": 2.0,
+          "p90": 2.2,
+          "min": 1.6,
+          "max": 2.7,
+          "mean": 2.0
+        },
+        "client_ttfb": {
+          "n": 20,
+          "p50": 3.7,
+          "p90": 4.2,
+          "min": 3.1,
+          "max": 4.7,
+          "mean": 3.7
+        },
+        "agent_connect": null,
+        "agent_wait": {
+          "n": 20,
+          "p50": 0.0,
+          "p90": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "query_to_cli_init": {
+          "n": 20,
+          "p50": 6.8,
+          "p90": 7.7,
+          "min": 5.2,
+          "max": 7.8,
+          "mean": 7.0
+        },
+        "query_to_message_start": {
+          "n": 20,
+          "p50": 774.2,
+          "p90": 891.7,
+          "min": 601.2,
+          "max": 2189.3,
+          "mean": 839.5
+        },
+        "server_ttft": {
+          "n": 20,
+          "p50": 774.7,
+          "p90": 892.2,
+          "min": 601.7,
+          "max": 2189.9,
+          "mean": 840.2
+        },
+        "first_token_to_result": {
+          "n": 20,
+          "p50": 311.7,
+          "p90": 352.3,
+          "min": 221.6,
+          "max": 374.5,
+          "mean": 303.5
+        },
+        "cli_duration": {
+          "n": 20,
+          "p50": 1056.0,
+          "p90": 1226.9,
+          "min": 915,
+          "max": 2471,
+          "mean": 1141.5
+        },
+        "server_total": {
+          "n": 20,
+          "p50": 1059.3,
+          "p90": 1230.4,
+          "min": 917.5,
+          "max": 2473.5,
+          "mean": 1144.3
+        },
+        "client_ttft": {
+          "n": 20,
+          "p50": 778.5,
+          "p90": 896.2,
+          "min": 605.8,
+          "max": 2193.7,
+          "mean": 844.1
+        },
+        "client_total": {
+          "n": 20,
+          "p50": 1062.7,
+          "p90": 1233.9,
+          "min": 920.9,
+          "max": 2477.4,
+          "mean": 1147.9
+        },
+        "agent_connect_outside_request": {
+          "n": 20,
+          "p50": 1641.0,
+          "p90": 3175.4,
+          "min": 714.6,
+          "max": 11884.5,
+          "mean": 2612.9
+        },
+        "frozen_gap": {
+          "n": 20,
+          "p50": 243199.8,
+          "p90": 275890.5,
+          "min": 193331.5,
+          "max": 282642.6,
+          "mean": 241166.8
+        },
+        "cache_drop_mb": {
+          "n": 20,
+          "p50": -27.9,
+          "p90": -27.6,
+          "min": -29.7,
+          "max": -27.4,
+          "mean": -28.0
+        },
+        "agent_connect_read_mb": null,
+        "agent_connect_majfault": null
+      }
+    },
+    "eager/instances": {
+      "cold_sessions": 10,
+      "distinct_boot_id": 2,
+      "distinct_listening_ns": 2,
+      "distinct_agent_connect_start_ns": 2
+    },
+    "lazy/instances": {
+      "cold_sessions": 10,
+      "distinct_boot_id": 2,
+      "distinct_listening_ns": 2,
+      "distinct_agent_connect_start_ns": 10
+    },
+    "lazy-validated/instances": {
+      "cold_sessions": 10,
+      "distinct_boot_id": 2,
+      "distinct_listening_ns": 2,
+      "distinct_agent_connect_start_ns": 10
+    }
+  },
+  "microvm": {
+    "eager": {
+      "run_api": {
+        "n": 10,
+        "p50": 110.3,
+        "p90": 123.5,
+        "min": 102.8,
+        "max": 129.5,
+        "mean": 112.5
+      },
+      "token_api": {
+        "n": 10,
+        "p50": 149.3,
+        "p90": 152.6,
+        "min": 142.5,
+        "max": 153.1,
+        "mean": 149.0
+      },
+      "send_to_run_hook": {
+        "n": 10,
+        "p50": 1835.2,
+        "p90": 2080.0,
+        "min": 1430.2,
+        "max": 2990.7,
+        "mean": 1869.6
+      },
+      "run_hook_to_received": {
+        "n": 10,
+        "p50": 1670.4,
+        "p90": 1950.4,
+        "min": 51.4,
+        "max": 2057.0,
+        "mean": 1458.1
+      },
+      "ok_attempt_send_to_received": {
+        "n": 10,
+        "p50": 20.8,
+        "p90": 313.7,
+        "min": 17.8,
+        "max": 368.3,
+        "mean": 95.4
+      },
+      "attempts": {
+        "n": 10,
+        "p50": 2.0,
+        "p90": 2.0,
+        "min": 2,
+        "max": 2,
+        "mean": 2.0
+      },
+      "failed_attempts_ms": {
+        "n": 10,
+        "p50": 3018.4,
+        "p90": 3025.0,
+        "min": 1043.8,
+        "max": 3026.8,
+        "mean": 2822.4
+      },
+      "clock_offset_mid": {
+        "n": 10,
+        "p50": 10.4,
+        "p90": 33.1,
+        "min": 0.0,
+        "max": 47.3,
+        "mean": 14.1
+      },
+      "clock_offset_width": {
+        "n": 10,
+        "p50": 17.4,
+        "p90": 38.5,
+        "min": 3.1,
+        "max": 40.2,
+        "mean": 19.3
+      },
+      "send_to_run_hook_corrected": {
+        "n": 10,
+        "p50": 1811.6,
+        "p90": 2078.8,
+        "min": 1415.4,
+        "max": 2990.6,
+        "mean": 1855.4
+      },
+      "send_to_received_corrected": {
+        "n": 10,
+        "p50": 3447.8,
+        "p90": 3700.2,
+        "min": 1466.8,
+        "max": 3763.3,
+        "mean": 3313.6
+      },
+      "failed_attempt_statuses": {
+        "502": 10
+      },
+      "errors": []
+    },
+    "lazy": {
+      "run_api": {
+        "n": 10,
+        "p50": 115.7,
+        "p90": 163.4,
+        "min": 99.1,
+        "max": 206.5,
+        "mean": 126.0
+      },
+      "token_api": {
+        "n": 10,
+        "p50": 149.2,
+        "p90": 158.1,
+        "min": 141.4,
+        "max": 167.2,
+        "mean": 150.8
+      },
+      "send_to_run_hook": {
+        "n": 10,
+        "p50": 1632.2,
+        "p90": 2067.9,
+        "min": 1448.0,
+        "max": 3961.4,
+        "mean": 1887.9
+      },
+      "run_hook_to_received": {
+        "n": 10,
+        "p50": 1780.0,
+        "p90": 1835.7,
+        "min": -219.1,
+        "max": 1878.2,
+        "mean": 1402.0
+      },
+      "ok_attempt_send_to_received": {
+        "n": 10,
+        "p50": 20.0,
+        "p90": 42.2,
+        "min": 18.4,
+        "max": 222.1,
+        "mean": 40.3
+      },
+      "attempts": {
+        "n": 10,
+        "p50": 2.0,
+        "p90": 2.0,
+        "min": 2,
+        "max": 2,
+        "mean": 2.0
+      },
+      "failed_attempts_ms": {
+        "n": 10,
+        "p50": 3021.5,
+        "p90": 3025.6,
+        "min": 1051.5,
+        "max": 3027.3,
+        "mean": 2824.0
+      },
+      "clock_offset_mid": {
+        "n": 10,
+        "p50": 0.1,
+        "p90": 0.4,
+        "min": -0.0,
+        "max": 0.6,
+        "mean": 0.1
+      },
+      "clock_offset_width": {
+        "n": 10,
+        "p50": 3.6,
+        "p90": 3.9,
+        "min": 3.1,
+        "max": 4.0,
+        "mean": 3.5
+      },
+      "send_to_run_hook_corrected": {
+        "n": 10,
+        "p50": 1632.2,
+        "p90": 2067.7,
+        "min": 1447.9,
+        "max": 3960.8,
+        "mean": 1887.7
+      },
+      "send_to_received_corrected": {
+        "n": 10,
+        "p50": 3451.6,
+        "p90": 3542.1,
+        "min": 1488.3,
+        "max": 3741.7,
+        "mean": 3289.7
+      },
+      "failed_attempt_statuses": {
+        "502": 10
+      },
+      "errors": []
+    },
+    "lazy-validated": {
+      "run_api": {
+        "n": 10,
+        "p50": 108.1,
+        "p90": 119.5,
+        "min": 95.9,
+        "max": 130.0,
+        "mean": 108.6
+      },
+      "token_api": {
+        "n": 10,
+        "p50": 150.5,
+        "p90": 161.9,
+        "min": 145.5,
+        "max": 181.6,
+        "mean": 153.1
+      },
+      "send_to_run_hook": {
+        "n": 10,
+        "p50": 1621.6,
+        "p90": 1894.0,
+        "min": 1434.3,
+        "max": 2339.1,
+        "mean": 1669.8
+      },
+      "run_hook_to_received": {
+        "n": 10,
+        "p50": 1675.3,
+        "p90": 1870.5,
+        "min": 16.9,
+        "max": 1952.2,
+        "mean": 1190.9
+      },
+      "ok_attempt_send_to_received": {
+        "n": 10,
+        "p50": 19.5,
+        "p90": 22.1,
+        "min": 17.7,
+        "max": 23.3,
+        "mean": 20.0
+      },
+      "attempts": {
+        "n": 10,
+        "p50": 2.0,
+        "p90": 2.0,
+        "min": 2,
+        "max": 2,
+        "mean": 2.0
+      },
+      "failed_attempts_ms": {
+        "n": 10,
+        "p50": 3019.4,
+        "p90": 3022.0,
+        "min": 1034.4,
+        "max": 3024.2,
+        "mean": 2430.5
+      },
+      "clock_offset_mid": {
+        "n": 10,
+        "p50": 0.0,
+        "p90": 0.2,
+        "min": -0.2,
+        "max": 0.2,
+        "mean": 0.0
+      },
+      "clock_offset_width": {
+        "n": 10,
+        "p50": 3.9,
+        "p90": 4.8,
+        "min": 2.4,
+        "max": 4.9,
+        "mean": 3.9
+      },
+      "send_to_run_hook_corrected": {
+        "n": 10,
+        "p50": 1621.4,
+        "p90": 1894.2,
+        "min": 1434.1,
+        "max": 2339.1,
+        "mean": 1669.8
+      },
+      "send_to_received_corrected": {
+        "n": 10,
+        "p50": 3443.6,
+        "p90": 3448.6,
+        "min": 1451.0,
+        "max": 3462.4,
+        "mean": 2860.7
+      },
+      "failed_attempt_statuses": {
+        "502": 10
+      },
+      "errors": []
+    }
+  }
+}
