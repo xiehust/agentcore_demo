@@ -371,18 +371,18 @@ cd lambda-microvm                                                  # Lambda Micr
 
 ## 资源与清理
 
-仍在部署：Runtime `casdk_v2_lazy-gFFK95CiPF`、`casdk_v2_eager-axDR2vBa8N`（V2，version 2），
-IAM 角色 `ClaudeSdkV2ProbeRole`，ECR 仓库 `claude-sdk-v2-probe`。空闲 Runtime 不产生会话费用，测试会话均已停止。
+2026-10-15 已全部删除，并逐项用 AWS 查询确认不存在：
+
+- AgentCore：Runtime `casdk_v2_lazy-gFFK95CiPF`、`casdk_v2_eager-axDR2vBa8N`，IAM 角色 `ClaudeSdkV2ProbeRole`，ECR 仓库 `claude-sdk-v2-probe`；
+- Lambda MicroVM：镜像 `casdk-mvm-lazy`、`casdk-mvm-lazy-validated`、`casdk-mvm-eager`，角色 `ClaudeSdkMicrovmBuildRole`、
+  `ClaudeSdkMicrovmExecRole`，S3 桶 `casdk-microvm-434444145045-us-west-2`；
+- 上述资源的 5 个 CloudWatch 日志组。原始测量数据保存在 `results/`。
+
+重新测试时按「运行」一节重新部署，测完用下面的命令清理（不带 `--yes` 为预览）：
 
 ```bash
-../.venv/bin/python cleanup.py          # 预览
-../.venv/bin/python cleanup.py --yes    # 删除并确认
-```
-
-MicroVM 对照仍保留：镜像 `casdk-mvm-lazy`、`casdk-mvm-lazy-validated`、`casdk-mvm-eager`，角色
-`ClaudeSdkMicrovmBuildRole`、`ClaudeSdkMicrovmExecRole`，S3 桶 `casdk-microvm-434444145045-us-west-2`。
-所有 MicroVM 已终止，不再产生计算费用；镜像快照的存储是否计费未核实。
-
-```bash
+../.venv/bin/python cleanup.py --yes
 cd lambda-microvm && ../../.venv/bin/python cleanup_microvm.py --yes
 ```
+
+两个脚本都不删日志组，需要时另外删除 `/aws/bedrock-agentcore/runtimes/casdk_*` 和 `/aws/lambda-microvms/casdk-mvm-*`。
