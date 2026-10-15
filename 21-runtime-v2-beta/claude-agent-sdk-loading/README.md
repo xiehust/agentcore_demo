@@ -14,7 +14,7 @@ Agent 用 Claude Agent SDK 0.2.166（自带 Claude Code CLI 2.1.299）+ Bedrock 
 | 容器在会话之前就存在 | 新会话请求到达时，进程已运行 140–900 秒；进程启动时间早于 READY |
 | 多个会话是同一个进程的副本 | eager 串行 10 个会话：boot_id、`listening_ns`、CLI 启动时间戳各只有 **1 个**取值 |
 | guest 被暂停过 | wall − monotonic 在启动与请求之间增大 68–830 秒，本地容器对照为 245 ns |
-| 快照前丢弃了 page cache | 构建时 page cache 约 981 MB，会话中只剩约 201–315 MB |
+| 快照前丢弃了 page cache | 构建时 page cache 约 959 MiB，会话中只剩约 201–315 MiB |
 | 容器 stdout 在构建期写入 | 日志流 `build-logs-<uuid>`，每个版本有 2 次完整启动（对应 2 份快照，会话会落到其中任一份） |
 
 **Claude CLI 何时启动决定了冷请求的长尾。**
