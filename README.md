@@ -1,5 +1,7 @@
 # AgentCore Demo
 
+> 🌐 Language: **English** · [简体中文](README.zh.md)
+
 A demonstration repository for showcasing agent capabilities and features.
 
 ## Overview
