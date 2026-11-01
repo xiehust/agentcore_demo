@@ -8,7 +8,7 @@ This repository contains examples and demonstrations of agent-based systems.
 
 ## Getting Started
 
-Clone the repository and explore the examples to learn more about agent capabilities.
+Clone the repository and explore the examples to learn more about agent capabilities. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to build and run a demo.
 
 ## Features
 
