@@ -1,0 +1,17 @@
+[project]
+name = "agentmem"
+version = "0.1.0"
+description = "Self-built agent memory (DynamoDB STM + OpenSearch/Bedrock-embedding LTM with AgentCore-style strategies) for regions without AgentCore Memory"
+requires-python = ">=3.11"
+dependencies = ["boto3>=1.34", "pydantic>=2", "opensearch-py>=2.4"]
+
+[project.optional-dependencies]
+strands = ["strands-agents>=1.0"]   # STM SessionRepository + strands_llm adapter
+test = ["pytest>=7"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["agentmem"]

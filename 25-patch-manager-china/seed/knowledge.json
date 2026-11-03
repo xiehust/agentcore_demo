@@ -1,0 +1,49 @@
+[
+ {
+  "signature": "disk_full",
+  "verified": true,
+  "source": "kiro-import",
+  "keywords": [
+   "no space left on device",
+   "not enough free space",
+   "errno 28",
+   "disk usage",
+   "insufficient space",
+   "precheck: root free",
+   "below threshold"
+  ],
+  "symptom": "dnf / RunPatchBaseline fails writing packages or SSM payload, or the orchestrator precheck stops the patch because root free space is below threshold; / or /var near 100%",
+  "root_cause": "root volume full (large files in /var/tmp or /tmp, dnf cache, journal)",
+  "fix": "PatchRemediate-FreeDisk, then rerun patch. If still >90% full escalate for EBS resize."
+ },
+ {
+  "signature": "repo_unreachable",
+  "verified": true,
+  "source": "kiro-import",
+  "keywords": [
+   "failed to download metadata",
+   "cannot download repomd.xml",
+   "curl error",
+   "could not resolve host",
+   "all mirrors were tried"
+  ],
+  "symptom": "dnf cannot load metadata for one repo, whole transaction aborts",
+  "root_cause": "a third-party / internal mirror repo is unreachable or misconfigured (skip_if_unavailable=False)",
+  "fix": "identify the non-Amazon repo id with run_diagnostic(repos); PatchRemediate-DisableRepo RepoId=<id>; rerun; notify repo owner"
+ },
+ {
+  "signature": "ssm_agent_offline",
+  "verified": true,
+  "source": "kiro-import",
+  "keywords": [
+   "connectionlost",
+   "undeliverable",
+   "delivery timed out",
+   "inactive",
+   "not registered"
+  ],
+  "symptom": "RunPatchBaseline never reaches the instance",
+  "root_cause": "SSM agent stopped or instance hung; nothing can be fixed through SSM",
+  "fix": "no SSM remediation possible. request_human_action restart_ssm_agent (EC2 serial console / reboot after approval)"
+ }
+]

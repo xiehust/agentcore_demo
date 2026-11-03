@@ -1,0 +1,11 @@
+{
+  "region": "cn-northwest-1",
+  "ops_profile": "ops",
+  "ops_account": "111111111111",
+  "spoke_profiles": {
+    "111111111111": "ops",
+    "222222222222": "spoke-b"
+  },
+  "global_profile": "global-bedrock",
+  "model_region": "us-west-2"
+}

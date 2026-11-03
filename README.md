@@ -51,6 +51,7 @@
 | [21-runtime-v2-beta](21-runtime-v2-beta/README.md) | Runtime V2（`platformVersion="V2"`）的可用性、冷启动、多进程并发与内存验证，包含 Claude Agent SDK 分阶段延迟子项目。 |
 | [23-runtime-memory-usage](23-runtime-memory-usage/README.md) | 对比应用 RSS、cgroup 内存与 AWS 用量遥测，验证 Runtime 内存计费口径；实测结果见 `RESULTS.md`。 |
 | [24-China-regions](24-China-regions/VALIDATION_REPORT.md) | 中国区（宁夏、北京）Code Interpreter 与 Runtime 冷启动/并发压测验证报告，子目录含各项测试代码、原始结果与证据。 |
+| [25-patch-manager-china](25-patch-manager-china/README.md) | 中国区 Patch Manager 批次 × AgentCore 自动值守实测：VPC 模式 Runtime + SourceVpce 收口、跨账号 Hub-Spoke（session tag 绑定单实例）、每台失败实例一个 session 的按实例流水线编排（Step Functions）、自建记忆独立模块 agentmem（DynamoDB STM + OpenSearch/Titan LTM，对齐 AgentCore Memory 策略，与 agent 代码解耦、可复用）、代码 + IAM 护栏、会话隔离实测；附客户方案说明 SOLUTION.zh.html 与架构设计 ARCHITECTURE.zh.html。 |
 
 ### 评估、优化与支付
 

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patch Manager × Amazon Bedrock AgentCore 中国区 · 架构设计</title>
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f6f8fa; --bg3:#eef2f6; --line:#d9dee5; --text:#1f2933; --muted:#5b6673;
+  --navy:#232f3e; --blue:#0b5cad; --blue-l:#e8f1fb; --orange:#ec7211; --orange-l:#fdf1e6;
+  --green:#1d8102; --green-l:#e9f6e6; --red:#c7271a; --red-l:#fbeaea; --violet:#6b4fbb; --violet-l:#f1edfa;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.7 -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+header.top{background:var(--navy);color:#fff;padding:28px 40px 24px}
+header.top .eyebrow{color:#ffb266;font-size:13px;letter-spacing:.08em}
+header.top h1{margin:6px 0 8px;font-size:26px;line-height:1.35;font-weight:600}
+header.top .meta{color:#c9d1db;font-size:13px}
+.layout{display:flex;align-items:flex-start}
+nav.toc{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow:auto;background:var(--bg2);border-right:1px solid var(--line);padding:20px 16px;font-size:13.5px}
+nav.toc b{display:block;color:var(--muted);font-size:12px;letter-spacing:.06em;margin-bottom:8px}
+nav.toc ol{margin:0;padding-left:20px}
+nav.toc li{margin:4px 0}
+nav.toc ol ol{padding-left:14px;font-size:12.5px}
+nav.toc a{color:var(--text)}
+main{flex:1;min-width:0;max-width:1120px;padding:12px 44px 80px}
+section{padding-top:18px;border-bottom:1px solid var(--bg3);padding-bottom:18px}
+h2{font-size:22px;color:var(--navy);margin:22px 0 10px;padding-left:12px;border-left:4px solid var(--orange)}
+h3{font-size:17px;color:var(--navy);margin:22px 0 8px}
+h4{font-size:15px;margin:16px 0 6px;color:var(--text)}
+p{margin:8px 0}
+.lead{font-size:16px;color:#2b3742}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+table{border-collapse:collapse;width:100%;margin:10px 0 14px;font-size:13.5px;background:#fff}
+th,td{border:1px solid var(--line);padding:7px 10px;vertical-align:top;text-align:left}
+th{background:var(--bg3);color:var(--navy);font-weight:600}
+tbody tr:nth-child(even) td{background:#fbfcfd}
+td.c,th.c{text-align:center}
+.tag{display:inline-block;padding:0 7px;border-radius:10px;font-size:12px;line-height:20px;font-weight:600;white-space:nowrap}
+.ok{background:var(--green-l);color:var(--green)}
+.deny{background:var(--red-l);color:var(--red)}
+.warn{background:var(--orange-l);color:#a24f05}
+.info{background:var(--blue-l);color:var(--blue)}
+.vio{background:var(--violet-l);color:var(--violet)}
+.callout{border:1px solid var(--line);border-left:4px solid var(--blue);background:var(--blue-l);padding:10px 14px;margin:12px 0;border-radius:4px}
+.callout.o{border-left-color:var(--orange);background:var(--orange-l)}
+.callout.g{border-left-color:var(--green);background:var(--green-l)}
+.callout b.t{display:block;margin-bottom:2px;color:var(--navy)}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+.card{border:1px solid var(--line);border-radius:6px;padding:12px 14px;background:#fff}
+.card h4{margin-top:0}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+.kpi div{border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:var(--bg2)}
+.kpi b{display:block;font-size:22px;color:var(--navy)}
+.kpi span{font-size:12.5px;color:var(--muted)}
+figure{margin:14px 0 18px;border:1px solid var(--line);border-radius:6px;background:#fff;padding:10px}
+figure svg{display:block;width:100%;height:auto}
+figcaption{font-size:12.5px;color:var(--muted);text-align:center;margin-top:6px}
+pre{background:#f7f8fa;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:4px;padding:10px 12px;overflow:auto;font:12.5px/1.55 var(--mono);margin:8px 0 14px;white-space:pre}
+code{font-family:var(--mono);font-size:.92em;background:var(--bg3);padding:0 4px;border-radius:3px}
+pre code{background:none;padding:0}
+.file{font:12px var(--mono);color:var(--muted);margin:14px 0 -4px}
+.cm{color:#6a737d;font-style:italic}.kw{color:#a626a4}.st{color:#2a7a2a}.fn{color:#0b5cad}.nu{color:#b35c00}
+.placeholder{border:2px dashed var(--orange);background:var(--orange-l);border-radius:6px;padding:12px 14px;margin:12px 0;color:#7a3c03}
+ul.tight li{margin:2px 0}
+.steps{counter-reset:s;list-style:none;padding-left:0}
+.steps li{counter-increment:s;position:relative;padding-left:34px;margin:8px 0}
+.steps li:before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;text-align:center;line-height:24px}
+footer{color:var(--muted);font-size:12.5px;padding:24px 44px;border-top:1px solid var(--line);background:var(--bg2)}
+@media (max-width:1000px){nav.toc{display:none}main{padding:12px 18px}.g2,.g3,.kpi{grid-template-columns:1fr}}
+@media print{
+  nav.toc{display:none} header.top{background:#fff;color:var(--navy);border-bottom:3px solid var(--orange)}
+  header.top .meta{color:var(--muted)} main{max-width:none;padding:0 8px}
+  section{page-break-inside:auto} figure,table,pre{page-break-inside:avoid}
+  pre{white-space:pre-wrap} a{color:var(--text)} body{font-size:12.5px}
+}
+/* code references (jump from a design point to the code that implements it) */
+a.cref{font-size:11.5px;color:var(--muted);white-space:nowrap}
+a.cref code{font:11px/1.5 var(--mono);color:var(--blue);background:var(--bg2);border:1px solid var(--line);padding:0 4px;border-radius:3px}
+a.cref:hover{text-decoration:none;color:var(--text)}
+a.cref:hover code{border-color:var(--blue)}
+.crefs{font-size:11.5px;color:var(--muted);margin:3px 0 8px;line-height:1.95}
+td .crefs{margin:5px 0 0}
+li .crefs{margin:2px 0 4px}
+figure .crefs{text-align:center;margin:4px 0 0}
+td a.cref{white-space:normal;overflow-wrap:anywhere}
+.file a.cref{font-size:11.5px}
+@media print{
+  a.cref,.crefs{color:var(--muted)}
+  a.cref code{background:none;border:none;padding:0;color:var(--muted)}
+  a.cref[href]:after{content:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="eyebrow">架构设计文档 · AWS 中国区（宁夏 / 北京）</div>
+  <h1>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守 · 架构设计</h1>
+  <div class="meta">面向：平台与运维工程团队 ｜ 配套文档：方案介绍与技术验证报告（SOLUTION.zh.html） ｜ 所有设计均已在 cn-northwest-1 真实环境验证</div>
+</header>
+<div class="layout">
+<nav class="toc"><b>目录</b><ol>
+<li><a href="#a1">设计目标与约束</a></li><li><a href="#a2">总体架构</a></li><li><a href="#a3">组件职责</a></li>
+<li><a href="#a4">批次编排</a></li><li><a href="#a5">Session 设计</a></li><li><a href="#a6">身份与权限</a></li>
+<li><a href="#a7">网络</a></li><li><a href="#a8">记忆</a></li><li><a href="#a9">护栏</a></li>
+<li><a href="#a10">部署与发布</a></li><li><a href="#a11">会话隔离</a></li><li><a href="#a12">可靠性与规模</a></li>
+<li><a href="#a13">已知残余风险</a></li><li><a href="#a14">生产化路线</a></li></ol></nav>
+<main>
+
+<section id="a1"><h2>1. 设计目标与约束</h2>
+<h3>1.1 目标</h3>
+<ul>
+<li><b>接手值守中的"异常处理"</b>：每批 75~100 台的补丁由 Patch Manager 执行；对失败、挂起、离线、预检不通过的实例自动诊断，能安全修复的就修复并以真实重跑验证，其余生成审批单交给值班人员。</li>
+<li><b>单台不阻塞整批</b>：任何一台实例的补丁挂起、诊断卡死或 API 异常，只影响它自己。</li>
+<li><b>最小权限与内网</b>：一个诊断会话只能接触一台实例、只能执行预先审核的 SSM 文档、只能在运维 VPC 内使用凭证；不提供任何公网入口。</li>
+<li><b>可接管、可审计、可学习</b>：值班人员能在同一会话中接手；所有动作留痕；每次诊断沉淀为可复用的知识与经验。</li>
+</ul>
+<h3>1.2 中国区能力边界与对应设计</h3>
+<table><thead><tr><th>能力</th><th class="c">宁夏 / 北京</th><th>设计选择</th></tr></thead><tbody>
+<tr><td>AgentCore Runtime（VPC 模式、IAM 入站、异步任务、生命周期、StopRuntimeSession）</td><td class="c"><span class="tag ok">可用</span></td><td>诊断 Agent 的执行环境</td></tr>
+<tr><td>AgentCore Identity（API Key 凭证提供方 / Token Vault）</td><td class="c"><span class="tag ok">可用</span></td><td>托管模型 API Key，运行时按 workload token 取用<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L79"><code>agent/app.py#L79</code> model_api_key()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/00_bedrock_key.py#L47"><code>infra/00_bedrock_key.py#L47</code> create_api_key_credential_provider</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L70"><code>infra/02_iam.py#L70</code> ModelApiKey</a></div></td></tr>
+<tr><td>AgentCore Memory</td><td class="c"><span class="tag deny">不可用</span></td><td>STM：DynamoDB；LTM：OpenSearch 托管域 + 向量，按 AgentCore Memory 策略结构自建（§8）<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/memory.py#L10"><code>agentmem/agentmem/memory.py#L10</code> Memory</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L12"><code>agentmem/agentmem/stm.py#L12</code> DynamoDBSessionRepository</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L8"><code>agentmem/agentmem/store.py#L8</code> mapping()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L247"><code>agentmem/agentmem/strategies.py#L247</code> process_session()</a></div></td></tr>
+<tr><td>AgentCore Policy / Bedrock Guardrails</td><td class="c"><span class="tag deny">不可用</span></td><td>代码钩子 + IAM + 人工审批的 6 层护栏（§9）<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L61"><code>agent/guardrails.py#L61</code> PatchGuardrails</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L82-L108"><code>agent/guardrails.py#L82-L108</code> before_tool()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L162"><code>infra/02_iam.py#L162</code> DenyIfNotViaOpsVpce</a></div></td></tr>
+<tr><td>AgentCore Evaluations</td><td class="c"><span class="tag deny">不可用</span></td><td>以批次报告、审计记录和故障注入回归作为质量手段<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L442"><code>orchestrator/handler.py#L442</code> report()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L73"><code>agent/state.py#L73</code> audit()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/scenarios/inject_faults.py#L91"><code>scenarios/inject_faults.py#L91</code> SCRIPTS</a></div></td></tr>
+<tr><td>Amazon Bedrock（推理、向量）</td><td class="c"><span class="tag deny">不可用</span></td><td>经 NAT 调用全球区 Bedrock；API Key 由全球区账号的专用 IAM 用户签发。测试使用全球区 Bedrock 上的 Kimi K3 和 Titan Text Embeddings V2，生产以实际选用的模型为准<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/00_bedrock_key.py#L26"><code>infra/00_bedrock_key.py#L26</code> policy</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L92"><code>agent/app.py#L92</code> make_model()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/embeddings.py#L34"><code>agentmem/agentmem/embeddings.py#L34</code> Bearer</a></div></td></tr>
+<tr><td>Amazon Cognito</td><td class="c"><span class="tag deny">宁夏不可用</span></td><td>人员身份：IAM Identity Center → permission set 角色 → SigV4<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L468"><code>orchestrator/handler.py#L468</code> portal_chat()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L102"><code>infra/02_iam.py#L102</code> ONCALL_ROLE</a></div></td></tr>
+<tr><td>OpenSearch Serverless</td><td class="c"><span class="tag deny">不可用</span></td><td>OpenSearch Service 托管域，VPC 访问<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/08_opensearch.py#L42"><code>infra/08_opensearch.py#L42</code> VPCOptions</a></div></td></tr>
+<tr><td>Systems Manager、Step Functions、Lambda、DynamoDB、各接口终端节点</td><td class="c"><span class="tag ok">可用</span></td><td>编排与执行；STS / EC2 终端节点服务名前缀为 <code>cn.com.amazonaws</code>，EC2 信任主体为 <code>ec2.amazonaws.com.cn</code><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L15"><code>infra/01_network.py#L15</code> INTERFACE_SVCS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L17"><code>infra/01_network.py#L17</code> cn.com.amazonaws</a></div></td></tr>
+</tbody></table>
+<h3>1.3 核心设计原则</h3>
+<div class="grid g3">
+<div class="card"><h4>确定性交给托管服务</h4><p class="small">批量下发、速率控制、错误阈值都是 Patch Manager 原生能力；编排状态全部落在 DynamoDB，Lambda 无状态。</p></div>
+<div class="card"><h4>不确定性限定在单台</h4><p class="small">Agent 只处理一台失败实例，会话、凭证、配额、记忆上下文都以这一台为边界。</p></div>
+<div class="card"><h4>约束落在模型之外</h4><p class="small">每条安全约束都由代码钩子、IAM 或人工流程强制执行，不依赖模型遵守提示词。</p></div>
+</div>
+</section>
+
+<section id="a2"><h2>2. 总体架构</h2>
+<figure>
+<svg viewBox="0 0 1160 690" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="13">
+<defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0b5cad"/></marker>
+  <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ec7211"/></marker>
+  <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d8102"/></marker>
+</defs>
+<!-- China region -->
+<rect x="10" y="10" width="880" height="670" rx="8" fill="#f9fafb" stroke="#232f3e" stroke-width="1.5"/>
+<text x="24" y="32" font-weight="600" fill="#232f3e">AWS 中国区（宁夏 cn-northwest-1）</text>
+<!-- Ops account -->
+<rect x="26" y="44" width="574" height="624" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="5 3"/>
+<text x="40" y="64" font-weight="600" fill="#232f3e">运维中心账号</text>
+<!-- managed services row -->
+<rect x="44" y="76" width="160" height="52" rx="5" fill="#f1edfa" stroke="#6b4fbb"/>
+<text x="124" y="98" text-anchor="middle" font-weight="600">Step Functions</text><text x="124" y="116" text-anchor="middle" font-size="11.5" fill="#5b6673">批次编排 · 30s 心跳</text>
+<rect x="216" y="76" width="176" height="52" rx="5" fill="#f1edfa" stroke="#6b4fbb"/>
+<text x="304" y="98" text-anchor="middle" font-weight="600">DynamoDB</text><text x="304" y="116" text-anchor="middle" font-size="11.5" fill="#5b6673">批次状态 · 审计 · 审批 · STM</text>
+<rect x="404" y="76" width="180" height="52" rx="5" fill="#f1edfa" stroke="#6b4fbb"/>
+<text x="494" y="98" text-anchor="middle" font-weight="600">AgentCore Identity</text><text x="494" y="116" text-anchor="middle" font-size="11.5" fill="#5b6673">Token Vault（模型 API Key）</text>
+<!-- VPC -->
+<rect x="40" y="146" width="546" height="508" rx="6" fill="#f3f8fd" stroke="#0b5cad"/>
+<text x="54" y="166" font-weight="600" fill="#0b5cad">运维 VPC · 私有子网（双 AZ）· 无任何入站</text>
+<rect x="58" y="180" width="196" height="64" rx="5" fill="#fff" stroke="#0b5cad"/>
+<text x="156" y="205" text-anchor="middle" font-weight="600">编排 Lambda（VPC）</text><text x="156" y="224" text-anchor="middle" font-size="11.5" fill="#5b6673">预检 · 派发 · 超时 · 报告</text>
+<rect x="276" y="180" width="292" height="136" rx="5" fill="#fff" stroke="#ec7211" stroke-width="1.5"/>
+<text x="422" y="202" text-anchor="middle" font-weight="600">AgentCore Runtime（VPC 模式）</text>
+<rect x="290" y="214" width="84" height="54" rx="4" fill="#fdf1e6" stroke="#ec7211"/><text x="332" y="236" text-anchor="middle" font-size="11.5">microVM</text><text x="332" y="254" text-anchor="middle" font-size="11">批次-实例 A</text>
+<rect x="380" y="214" width="84" height="54" rx="4" fill="#fdf1e6" stroke="#ec7211"/><text x="422" y="236" text-anchor="middle" font-size="11.5">microVM</text><text x="422" y="254" text-anchor="middle" font-size="11">批次-实例 B</text>
+<rect x="470" y="214" width="84" height="54" rx="4" fill="#fdf1e6" stroke="#ec7211"/><text x="512" y="236" text-anchor="middle" font-size="11.5">microVM</text><text x="512" y="254" text-anchor="middle" font-size="11">…</text>
+<text x="422" y="290" text-anchor="middle" font-size="11.5" fill="#5b6673">每台失败实例一个会话 · 护栏钩子 · 自建记忆</text>
+<text x="422" y="306" text-anchor="middle" font-size="11.5" fill="#5b6673">ENI 安全组：只出站 443</text>
+<!-- VPCE row -->
+<rect x="58" y="340" width="510" height="96" rx="5" fill="#fff" stroke="#8a96a3"/>
+<text x="70" y="360" font-weight="600" fill="#232f3e">VPC 终端节点（Private DNS）</text>
+<g font-size="12">
+<rect x="70" y="372" width="118" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="129" y="390" text-anchor="middle">bedrock-agentcore</text>
+<rect x="196" y="372" width="56" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="224" y="390" text-anchor="middle">sts</text>
+<rect x="260" y="372" width="56" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="288" y="390" text-anchor="middle">ssm</text>
+<rect x="324" y="372" width="56" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="352" y="390" text-anchor="middle">ec2</text>
+<rect x="388" y="372" width="56" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="416" y="390" text-anchor="middle">logs</text>
+<rect x="70" y="404" width="120" height="24" rx="12" fill="#e9f6e6" stroke="#1d8102"/><text x="130" y="421" text-anchor="middle">dynamodb（网关）</text>
+<rect x="198" y="404" width="96" height="24" rx="12" fill="#e9f6e6" stroke="#1d8102"/><text x="246" y="421" text-anchor="middle">s3（网关）</text>
+</g>
+<text x="452" y="390" font-size="11" fill="#5b6673">接口：仅接受</text><text x="452" y="406" font-size="11" fill="#5b6673">VPC 网段 443</text>
+<!-- OpenSearch + NAT -->
+<rect x="58" y="458" width="250" height="70" rx="5" fill="#fff" stroke="#6b4fbb" stroke-width="1.5"/>
+<text x="183" y="482" text-anchor="middle" font-weight="600">OpenSearch 域（VPC 访问）</text><text x="183" y="500" text-anchor="middle" font-size="11.5" fill="#5b6673">长期记忆 LTM · kNN + BM25</text><text x="183" y="516" text-anchor="middle" font-size="11.5" fill="#5b6673">仅接受 Runtime 安全组 · 仅 Runtime 角色</text>
+<rect x="326" y="458" width="242" height="70" rx="5" fill="#fff" stroke="#c7271a"/>
+<text x="447" y="482" text-anchor="middle" font-weight="600">NAT 网关（仅出站）</text><text x="447" y="500" text-anchor="middle" font-size="11.5" fill="#5b6673">唯一用途：调用全球区模型</text><text x="447" y="516" text-anchor="middle" font-size="11.5" fill="#5b6673">生产建议：代理 + 域名允许列表</text>
+<rect x="58" y="548" width="510" height="92" rx="5" fill="#fbfcfd" stroke="#d9dee5"/>
+<text x="70" y="570" font-weight="600" font-size="12.5" fill="#232f3e">边界要点</text>
+<text x="70" y="590" font-size="12">① Runtime 资源策略：不经本 VPC 的 bedrock-agentcore 终端节点，一律拒绝</text>
+<text x="70" y="608" font-size="12">② 业务账号 Spoke 角色：只能经本 VPC 的 STS 终端节点 AssumeRole，凭证也只能经 VPCE 使用</text>
+<text x="70" y="626" font-size="12">③ 没有监听端口、没有公网入口；OpenSearch 无公网 endpoint</text>
+<!-- business accounts -->
+<rect x="616" y="44" width="262" height="300" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="5 3"/>
+<text x="630" y="64" font-weight="600" fill="#232f3e">业务账号 A</text>
+<rect x="634" y="78" width="226" height="56" rx="5" fill="#fdf1e6" stroke="#ec7211"/><text x="747" y="100" text-anchor="middle" font-weight="600">Spoke 角色</text><text x="747" y="118" text-anchor="middle" font-size="11.5" fill="#5b6673">只读 + 允许列表 SSM 文档</text>
+<rect x="634" y="150" width="226" height="118" rx="5" fill="#fff" stroke="#8a96a3"/><text x="747" y="170" text-anchor="middle" font-weight="600">业务 VPC（无需与运维 VPC 互通）</text>
+<rect x="648" y="182" width="96" height="40" rx="4" fill="#f6f8fa" stroke="#8a96a3"/><text x="696" y="200" text-anchor="middle" font-size="11.5">EC2</text><text x="696" y="214" text-anchor="middle" font-size="11">SSM Agent</text>
+<rect x="752" y="182" width="96" height="40" rx="4" fill="#f6f8fa" stroke="#8a96a3"/><text x="800" y="200" text-anchor="middle" font-size="11.5">EC2</text><text x="800" y="214" text-anchor="middle" font-size="11">SSM Agent</text>
+<text x="747" y="246" text-anchor="middle" font-size="11.5" fill="#5b6673">Agent 主动出站连接 SSM 服务</text>
+<text x="747" y="262" text-anchor="middle" font-size="11.5" fill="#5b6673">（与现有 Patch Manager 相同）</text>
+<rect x="634" y="282" width="226" height="48" rx="5" fill="#e8f1fb" stroke="#0b5cad"/><text x="747" y="302" text-anchor="middle" font-weight="600" font-size="12.5">Systems Manager（区域服务）</text><text x="747" y="320" text-anchor="middle" font-size="11.5" fill="#5b6673">SendCommand / Patch Manager</text>
+<rect x="616" y="358" width="262" height="96" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="5 3"/>
+<text x="630" y="378" font-weight="600" fill="#232f3e">业务账号 B … N</text>
+<text x="630" y="400" font-size="12" fill="#5b6673">结构与 A 相同：每个账号部署一份</text>
+<text x="630" y="418" font-size="12" fill="#5b6673">Spoke 角色 + 允许列表 SSM 文档</text>
+<text x="630" y="436" font-size="12" fill="#5b6673">运维账号以标签发现目标实例</text>
+<!-- engineer -->
+<rect x="616" y="474" width="262" height="110" rx="6" fill="#fff" stroke="#1d8102"/>
+<text x="747" y="496" text-anchor="middle" font-weight="600">值班工程师</text>
+<text x="747" y="516" text-anchor="middle" font-size="12">IAM Identity Center 登录</text>
+<text x="747" y="534" text-anchor="middle" font-size="12">→ permission set 角色（SigV4）</text>
+<text x="747" y="552" text-anchor="middle" font-size="12">→ 运维门户（VPC 内）</text>
+<text x="747" y="570" text-anchor="middle" font-size="12">→ 同一会话接管，runtimeUserId=本人</text>
+<!-- global -->
+<rect x="904" y="10" width="246" height="250" rx="8" fill="#fbfcfd" stroke="#232f3e" stroke-width="1.5"/>
+<text x="918" y="32" font-weight="600" fill="#232f3e">AWS 全球区（us-west-2）</text>
+<rect x="922" y="48" width="210" height="58" rx="5" fill="#fff" stroke="#ec7211"/><text x="1027" y="72" text-anchor="middle" font-weight="600">Bedrock：Kimi K3</text><text x="1027" y="90" text-anchor="middle" font-size="11.5" fill="#5b6673">诊断推理 · 记忆提取</text>
+<rect x="922" y="118" width="210" height="58" rx="5" fill="#fff" stroke="#6b4fbb"/><text x="1027" y="142" text-anchor="middle" font-weight="600">Bedrock：Titan Embed V2</text><text x="1027" y="160" text-anchor="middle" font-size="11.5" fill="#5b6673">长期记忆向量化</text>
+<text x="1027" y="200" text-anchor="middle" font-size="11.5" fill="#5b6673">专用 IAM 用户签发的 API Key</text>
+<text x="1027" y="218" text-anchor="middle" font-size="11.5" fill="#5b6673">权限仅限上述两个模型</text>
+<text x="1027" y="236" text-anchor="middle" font-size="11.5" fill="#5b6673">30 天轮换</text>
+<!-- arrows -->
+<path d="M124,128 L124,162 L156,162 L156,178" fill="none" stroke="#6b4fbb" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="130" y="150" font-size="11" fill="#6b4fbb">①</text>
+<path d="M156,244 L156,330 L129,330 L129,370" fill="none" stroke="#0b5cad" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="162" y="300" font-size="11" fill="#0b5cad">② Invoke（SigV4）</text>
+<path d="M150,372 C190,350 250,330 300,316" fill="none" stroke="#0b5cad" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M224,372 C260,345 300,330 330,318" fill="none" stroke="#ec7211" stroke-width="1.4" stroke-dasharray="4 3"/>
+<path d="M500,316 L500,330 L600,330 L600,106 L632,106" fill="none" stroke="#ec7211" stroke-width="1.6" marker-end="url(#ao)"/>
+<text x="606" y="230" font-size="11" fill="#ec7211" transform="rotate(-90 606 230)">③ AssumeRole（经 STS VPCE）</text>
+<path d="M747,134 L747,148" fill="none" stroke="#ec7211" stroke-width="1.4" marker-end="url(#ao)"/>
+<path d="M800,222 L800,280" fill="none" stroke="#5b6673" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ar)" transform="rotate(180 800 251)"/>
+<path d="M330,316 L330,334 L192,334 L192,456" fill="none" stroke="#6b4fbb" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="198" y="450" font-size="11" fill="#6b4fbb">④ 记忆</text>
+<path d="M540,316 L540,456" fill="none" stroke="#c7271a" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M568,492 L590,492 L590,670 L895,670 L895,90 L920,90" fill="none" stroke="#c7271a" stroke-width="1.6" marker-end="url(#ao)"/>
+<text x="900" y="420" font-size="11" fill="#c7271a" transform="rotate(-90 900 420)">⑤ HTTPS 443（经 NAT）</text>
+<path d="M616,560 L590,560" fill="none" stroke="#1d8102" stroke-width="1.6" stroke-dasharray="5 3"/>
+<path d="M590,560 L590,640 L50,640 L50,385 L68,385" fill="none" stroke="#1d8102" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#ag)"/>
+<text x="56" y="560" font-size="11" fill="#1d8102" transform="rotate(-90 56 560)">⑥ 接管（经 VPCE）</text>
+</svg>
+<figcaption>图 1 总体架构：运维中心账号承载编排、Runtime、记忆与终端节点；业务账号只部署 Spoke 角色与 SSM 文档</figcaption>
+</figure>
+<p>数据流：① Step Functions 每 30 秒驱动一次编排 Lambda；② Lambda 经 bedrock-agentcore 终端节点为每台失败实例调用一个 Runtime 会话；③ Runtime 经 STS 终端节点进入业务账号 Spoke 角色，以 SSM 对单台实例执行允许列表文档；④ 状态与 STM 写 DynamoDB，LTM 读写 OpenSearch；⑤ 经 NAT 调用全球区模型；⑥ 值班人员经 Identity Center 与 VPC 内门户接管同一会话。</p><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L26"><code>orchestrator/statemachine.json#L26</code> Tick</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L420"><code>orchestrator/handler.py#L420</code> invoke_runtime()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L35"><code>agent/tools.py#L35</code> spoke()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L54"><code>agent/tools.py#L54</code> run_document()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L12"><code>agentmem/agentmem/stm.py#L12</code> DynamoDBSessionRepository</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L71"><code>agentmem/agentmem/ltm.py#L71</code> recall()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L92"><code>agent/app.py#L92</code> make_model()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L468"><code>orchestrator/handler.py#L468</code> portal_chat()</a></div>
+</section>
+
+<section id="a3"><h2>3. 组件职责</h2>
+<table><thead><tr><th style="width:18%">组件</th><th>职责</th><th style="width:30%">关键配置</th></tr></thead><tbody>
+<tr><td>Systems Manager Patch Manager</td><td>按波次执行 <code>AWS-RunPatchBaseline</code>（Install / NoReboot）；SSM Agent 主动出站接收命令<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L192"><code>orchestrator/handler.py#L192</code> send_patch()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L218"><code>orchestrator/handler.py#L218</code> AWS-RunPatchBaseline</a></div></td><td>MaxConcurrency / MaxErrors；补丁基线与 PatchGroup 标签</td></tr>
+<tr><td>Step Functions</td><td>批次生命周期：Init → Waves（canary → main）→ Drain → Report；30 秒心跳；Catch 兜底<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L6"><code>orchestrator/statemachine.json#L6</code> Init</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L13"><code>orchestrator/statemachine.json#L13</code> Waves</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L45"><code>orchestrator/statemachine.json#L45</code> Drain</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L3"><code>orchestrator/statemachine.json#L3</code> TimeoutSeconds</a></div></td><td>标准工作流；状态机总超时 8 小时；batchTimeout 由 Lambda 判定</td></tr>
+<tr><td>编排 Lambda（VPC 内）</td><td>发现实例、预检、下发、Tick（轮询 / 截止 / 派发 / 超时 / 未认领重排）、Halt、Abort、Report、接管代理、记忆管理代理<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L562"><code>orchestrator/handler.py#L562</code> ACTIONS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L566"><code>orchestrator/handler.py#L566</code> lambda_handler()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L101"><code>orchestrator/handler.py#L101</code> POOL</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/07_orchestrator.py#L41"><code>infra/07_orchestrator.py#L41</code> create_function</a></div></td><td>Python 3.12；单函数按 <code>action</code> 分派；线程池并发 16</td></tr>
+<tr><td>AgentCore Runtime</td><td>运行诊断 Agent（Strands Agents）：召回记忆、调用工具、护栏钩子、报告结果、后台记忆提取；接管对话<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L302"><code>agent/app.py#L302</code> invoke()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L98"><code>agent/app.py#L98</code> build_agent()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L54"><code>infra/06_runtime.py#L54</code> networkConfiguration</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L58"><code>infra/06_runtime.py#L58</code> lifecycleConfiguration</a></div></td><td>VPC 模式、IAM 入站、HTTP 协议、空闲 600 秒 / 最长 7200 秒</td></tr>
+<tr><td>AgentCore Identity Token Vault</td><td>保存全球区模型 API Key；Runtime 用 workload token 读取<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L79"><code>agent/app.py#L79</code> model_api_key()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L70"><code>infra/02_iam.py#L70</code> ModelApiKey</a></div></td><td>API Key 凭证提供方；Runtime 执行角色只可读该提供方</td></tr>
+<tr><td>DynamoDB · 批次表</td><td>实例状态机、计数器与熔断、审计、审批、批次报告<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L38"><code>agent/state.py#L38</code> claim_for_diagnosis()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L50"><code>agent/state.py#L50</code> bump_counter()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L73"><code>agent/state.py#L73</code> audit()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L78"><code>agent/state.py#L78</code> request_approval()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L442"><code>orchestrator/handler.py#L442</code> report()</a></div></td><td>按需计费；条件写保证派发与认领的幂等</td></tr>
+<tr><td>DynamoDB · 记忆表</td><td>STM（Strands SessionRepository）、记忆管理任务状态<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L12"><code>agentmem/agentmem/stm.py#L12</code> DynamoDBSessionRepository</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L18"><code>agentmem/agentmem/config.py#L18</code> stm_ttl_days</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/05_dynamodb.py#L28"><code>infra/05_dynamodb.py#L28</code> update_time_to_live</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L159"><code>agent/app.py#L159</code> _job_put()</a></div></td><td>TTL 30 天</td></tr>
+<tr><td>OpenSearch Service</td><td>LTM：知识库、诊断片段、反思；kNN + BM25<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L8"><code>agentmem/agentmem/store.py#L8</code> mapping()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L82"><code>agentmem/agentmem/store.py#L82</code> knn()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L89"><code>agentmem/agentmem/store.py#L89</code> bm25()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/08_opensearch.py#L42"><code>infra/08_opensearch.py#L42</code> VPCOptions</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/08_opensearch.py#L44"><code>infra/08_opensearch.py#L44</code> EncryptionAtRestOptions</a></div></td><td>VPC 访问；HNSW（lucene）余弦；静态加密、节点间 TLS、仅 HTTPS</td></tr>
+<tr><td>全球区 Bedrock</td><td>推理与向量化<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L92"><code>agent/app.py#L92</code> make_model()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/embeddings.py#L38"><code>agentmem/agentmem/embeddings.py#L38</code> __call__()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/00_bedrock_key.py#L26"><code>infra/00_bedrock_key.py#L26</code> policy</a></div></td><td>专用 IAM 用户签发的 API Key，权限只限所用模型，定期轮换</td></tr>
+</tbody></table>
+<h3>3.1 数据模型（DynamoDB）</h3>
+<table><thead><tr><th>表</th><th>pk</th><th>sk</th><th>内容</th></tr></thead><tbody>
+<tr><td rowspan="5">批次表</td><td><code>{batchId}</code></td><td><code>INST#{instanceId}</code></td><td>account、wave、status、session_id、patch_command_id、failed_at / inprogress_at / dispatched_at / diag_started_at、dispatch_attempts、recall、tool_calls、root_cause、summary …<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L132"><code>orchestrator/handler.py#L132</code> INST#</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L22"><code>agent/state.py#L22</code> get_instance()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L26"><code>agent/state.py#L26</code> update_instance()</a></div></td></tr>
+<tr><td><code>{batchId}</code></td><td><code>COUNTERS</code></td><td>全批修复次数与上限、halted 熔断标志、批次截止时间<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L134"><code>orchestrator/handler.py#L134</code> COUNTERS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L61"><code>agent/state.py#L61</code> bump_batch_remediations()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L411"><code>orchestrator/handler.py#L411</code> halt()</a></div></td></tr>
+<tr><td><code>{batchId}</code></td><td><code>AUDIT#…</code></td><td>每次工具调用、护栏拦截、人工接管</td></tr>
+<tr><td><code>{batchId}</code><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L73"><code>agent/state.py#L73</code> audit()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L110"><code>agent/guardrails.py#L110</code> after_tool()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L76-L80"><code>agent/guardrails.py#L76-L80</code> _deny()</a></div></td><td><code>APPROVAL#…</code></td><td>审批单（动作、理由、证据、状态）<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L78"><code>agent/state.py#L78</code> request_approval()</a></div></td></tr>
+<tr><td><code>{batchId}</code></td><td><code>REPORT</code></td><td>批次报告（含失败 → 派发延迟）<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L442"><code>orchestrator/handler.py#L442</code> report()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L451"><code>orchestrator/handler.py#L451</code> failed_to_dispatch_s</a></div></td></tr>
+<tr><td rowspan="2">记忆表</td><td><code>SESSION#{sessionId}</code></td><td><code>SESSION</code> / <code>AGENT#…</code> / <code>MSG#{agent}#{id:06d}</code></td><td>STM，TTL 30 天<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L18"><code>agentmem/agentmem/stm.py#L18</code> SESSION#</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L43"><code>agentmem/agentmem/stm.py#L43</code> create_message()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L18"><code>agentmem/agentmem/config.py#L18</code> stm_ttl_days</a></div></td></tr>
+<tr><td><code>ADMIN</code></td><td><code>{job}</code></td><td>记忆导入等异步管理任务的状态（不同调用可能落在不同 microVM）<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L159"><code>agent/app.py#L159</code> _job_put()</a></div></td></tr>
+</tbody></table>
+<h3>3.2 实例状态机</h3>
+<figure>
+<svg viewBox="0 0 1100 300" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="st1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<g text-anchor="middle">
+<rect x="20" y="120" width="110" height="40" rx="20" fill="#f6f8fa" stroke="#8a96a3"/><text x="75" y="145">PENDING</text>
+<rect x="200" y="40" width="160" height="40" rx="6" fill="#fbeaea" stroke="#c7271a"/><text x="280" y="65">UNDELIVERABLE</text>
+<rect x="200" y="96" width="160" height="40" rx="6" fill="#fbeaea" stroke="#c7271a"/><text x="280" y="121">PRECHECK_FAILED</text>
+<rect x="200" y="160" width="160" height="40" rx="6" fill="#e8f1fb" stroke="#0b5cad"/><text x="280" y="185">PATCHING</text>
+<rect x="200" y="236" width="160" height="40" rx="6" fill="#f6f8fa" stroke="#8a96a3"/><text x="280" y="261">SKIPPED_HALTED</text>
+<rect x="430" y="140" width="150" height="40" rx="6" fill="#fbeaea" stroke="#c7271a"/><text x="505" y="165">PATCH_FAILED</text>
+<rect x="430" y="196" width="150" height="40" rx="6" fill="#fbeaea" stroke="#c7271a"/><text x="505" y="221">PATCH_TIMEOUT</text>
+<rect x="430" y="252" width="150" height="40" rx="20" fill="#e9f6e6" stroke="#1d8102"/><text x="505" y="277">PATCH_OK</text>
+<rect x="640" y="80" width="150" height="56" rx="6" fill="#fff" stroke="#ec7211" stroke-dasharray="5 3"/><text x="715" y="104">排队（可诊断）</text><text x="715" y="122" font-size="11" fill="#5b6673">按 failed_at 先后</text>
+<rect x="850" y="80" width="140" height="56" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="920" y="104">DIAGNOSING</text><text x="920" y="122" font-size="11" fill="#5b6673">Runtime 条件写认领</text>
+<rect x="1010" y="40" width="80" height="40" rx="20" fill="#e9f6e6" stroke="#1d8102"/><text x="1050" y="65">FIXED</text>
+<rect x="990" y="160" width="100" height="40" rx="20" fill="#fdf1e6" stroke="#a24f05"/><text x="1040" y="185">NEEDS_HUMAN</text>
+</g>
+<g stroke="#232f3e" stroke-width="1.3" fill="none">
+<path d="M130,132 L198,62" marker-end="url(#st1)"/><path d="M130,138 L198,116" marker-end="url(#st1)"/>
+<path d="M130,146 L198,178" marker-end="url(#st1)"/><path d="M110,160 L198,252" marker-end="url(#st1)"/>
+<path d="M360,175 L428,162" marker-end="url(#st1)"/><path d="M360,185 L428,214" marker-end="url(#st1)"/><path d="M360,192 L428,268" marker-end="url(#st1)"/>
+<path d="M360,60 L638,96" marker-end="url(#st1)"/><path d="M360,116 L638,108" marker-end="url(#st1)"/>
+<path d="M580,158 L638,124" marker-end="url(#st1)"/><path d="M580,212 L640,132" marker-end="url(#st1)"/>
+<path d="M790,104 L848,104" marker-end="url(#st1)"/>
+<path d="M990,96 L1028,80" marker-end="url(#st1)"/><path d="M960,136 L1010,158" marker-end="url(#st1)"/>
+<path d="M880,80 C860,30 760,30 735,78" stroke-dasharray="4 3" marker-end="url(#st1)"/>
+</g>
+<text x="765" y="34" font-size="11" fill="#5b6673">dispatchGrace 内未认领 → 重排（≤3 次）</text>
+<text x="150" y="98" font-size="11" fill="#5b6673">预检</text>
+<text x="80" y="210" font-size="11" fill="#5b6673">canary 熔断</text>
+<text x="850" y="226" font-size="11" fill="#5b6673">agentTimeout / 3 次未认领 /</text>
+<text x="850" y="242" font-size="11" fill="#5b6673">连续 5 次 API 错误 / Abort</text>
+<path d="M940,212 L1000,196" stroke="#a24f05" stroke-width="1.1" fill="none" stroke-dasharray="3 3"/>
+</svg>
+<figcaption>图 2 实例状态：四类可诊断状态进入按失败时间排序的队列，由 Runtime 条件写认领为 DIAGNOSING</figcaption><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L15"><code>agent/state.py#L15</code> DIAGNOSABLE</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L38"><code>agent/state.py#L38</code> claim_for_diagnosis()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L231"><code>orchestrator/handler.py#L231</code> _poll_one()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L364"><code>orchestrator/handler.py#L364</code> failed_at</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L316"><code>orchestrator/handler.py#L316</code> _reap_stale_dispatch()</a></div>
+</figure>
+</section>
+
+<section id="a4"><h2>4. 批次编排</h2>
+<figure>
+<svg viewBox="0 0 1100 545" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="13">
+<defs><marker id="f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker>
+<marker id="f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c7271a"/></marker></defs>
+<rect x="20" y="40" width="110" height="50" rx="25" fill="#232f3e"/><text x="75" y="70" text-anchor="middle" fill="#fff" font-weight="600">Init</text>
+<text x="75" y="110" text-anchor="middle" font-size="11.5" fill="#5b6673">按标签跨账号</text><text x="75" y="126" text-anchor="middle" font-size="11.5" fill="#5b6673">发现实例</text>
+<rect x="160" y="20" width="560" height="270" rx="8" fill="#f3f8fd" stroke="#0b5cad" stroke-dasharray="6 3"/>
+<text x="175" y="40" font-weight="600" fill="#0b5cad">Waves Map（MaxConcurrency=1）：canary → main</text>
+<rect x="180" y="56" width="180" height="84" rx="6" fill="#fff" stroke="#0b5cad"/>
+<text x="270" y="78" text-anchor="middle" font-weight="600">SendPatch</text>
+<text x="270" y="98" text-anchor="middle" font-size="11.5">预检①：PingStatus</text>
+<text x="270" y="114" text-anchor="middle" font-size="11.5">预检②：根盘余量</text>
+<text x="270" y="130" text-anchor="middle" font-size="11.5">RunPatchBaseline（≤50 台/命令）</text>
+<rect x="392" y="74" width="80" height="44" rx="22" fill="#fff" stroke="#8a96a3"/><text x="432" y="101" text-anchor="middle">Wait 30s</text>
+<rect x="504" y="56" width="196" height="84" rx="6" fill="#fdf1e6" stroke="#ec7211" stroke-width="1.5"/>
+<text x="602" y="78" text-anchor="middle" font-weight="600">Tick（本波次）</text>
+<text x="602" y="98" text-anchor="middle" font-size="11.5">轮询 · 单台截止取消</text>
+<text x="602" y="114" text-anchor="middle" font-size="11.5">Agent 超时停止</text>
+<text x="602" y="130" text-anchor="middle" font-size="11.5">失败即派发（≤maxAgents）</text>
+<polygon points="602,168 662,198 602,228 542,198" fill="#fff" stroke="#232f3e"/><text x="602" y="203" text-anchor="middle" font-size="12">波次完成?</text>
+<polygon points="400,168 470,198 400,228 330,198" fill="#fff" stroke="#232f3e"/><text x="400" y="203" text-anchor="middle" font-size="12">CanaryGate</text>
+<rect x="190" y="232" width="110" height="40" rx="6" fill="#fbeaea" stroke="#c7271a"/><text x="245" y="257" text-anchor="middle" font-size="12">Halt：置熔断</text>
+<rect x="420" y="246" width="120" height="34" rx="17" fill="#e9f6e6" stroke="#1d8102"/><text x="480" y="268" text-anchor="middle" font-size="12">下一波次</text>
+<path d="M130,65 L178,85" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M360,96 L390,96" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M472,96 L502,96" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M602,140 L602,166" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M662,198 L700,198 L700,150 L432,150 L432,120" fill="none" stroke="#232f3e" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#f1)"/>
+<text x="668" y="190" font-size="11">否</text>
+<path d="M542,198 L472,198" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/><text x="506" y="190" font-size="11">是</text>
+<path d="M330,198 L245,198 L245,230" fill="none" stroke="#c7271a" stroke-width="1.5" marker-end="url(#f2)"/><text x="262" y="190" font-size="11" fill="#c7271a">canary 有失败</text>
+<path d="M400,228 L400,262 L418,262" fill="none" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<!-- after waves -->
+<rect x="760" y="56" width="80" height="44" rx="22" fill="#fff" stroke="#8a96a3"/><text x="800" y="83" text-anchor="middle">Wait 30s</text>
+<rect x="870" y="46" width="210" height="64" rx="6" fill="#fdf1e6" stroke="#ec7211" stroke-width="1.5"/><text x="975" y="72" text-anchor="middle" font-weight="600">Drain = Tick（全批）</text><text x="975" y="92" text-anchor="middle" font-size="11.5">等待排队与诊断全部结束</text>
+<polygon points="975,140 1035,170 975,200 915,170" fill="#fff" stroke="#232f3e"/><text x="975" y="175" text-anchor="middle" font-size="12">已排空?</text>
+<rect x="915" y="232" width="120" height="44" rx="6" fill="#f1edfa" stroke="#6b4fbb"/><text x="975" y="259" text-anchor="middle" font-weight="600">Report</text>
+<polygon points="975,300 1035,330 975,360 915,330" fill="#fff" stroke="#232f3e"/><text x="975" y="335" text-anchor="middle" font-size="12">熔断?</text>
+<rect x="760" y="390" width="160" height="40" rx="20" fill="#fbeaea" stroke="#c7271a"/><text x="840" y="415" text-anchor="middle" font-size="12">Fail：CanaryCircuitBreaker</text>
+<rect x="960" y="390" width="110" height="40" rx="20" fill="#e9f6e6" stroke="#1d8102"/><text x="1015" y="415" text-anchor="middle" font-size="12">Done</text>
+<path d="M720,80 L758,80" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M840,78 L868,78" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M975,110 L975,138" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M915,170 L800,170 L800,102" fill="none" stroke="#232f3e" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#f1)"/><text x="860" y="162" font-size="11">否</text>
+<path d="M975,200 L975,230" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/><text x="982" y="220" font-size="11">是</text>
+<path d="M975,276 L975,298" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M915,330 L840,330 L840,388" fill="none" stroke="#c7271a" stroke-width="1.5" marker-end="url(#f2)"/><text x="870" y="322" font-size="11" fill="#c7271a">是</text>
+<path d="M1015,350 L1015,388" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/><text x="1022" y="374" font-size="11">否</text>
+<!-- legend -->
+<rect x="20" y="318" width="700" height="150" rx="6" fill="#fbfcfd" stroke="#d9dee5"/>
+<text x="34" y="340" font-weight="600" fill="#232f3e">单台不阻塞整批的四层兜底</text>
+<text x="34" y="362" font-size="12">① 预检：SSM 不在线 → UNDELIVERABLE；根盘余量不足（默认 &lt;15% 或 &lt;500MB）→ PRECHECK_FAILED</text>
+<text x="34" y="380" font-size="12">　　两种情况都不下发补丁，直接进入诊断</text>
+<text x="34" y="402" font-size="12">② 单台截止：运行超过 patchTimeout（从首次 InProgress 起算）或排队超过 waveHardTimeout → 只取消这一台</text>
+<text x="34" y="424" font-size="12">③ Agent 超时：先写 NEEDS_HUMAN 再 StopRuntimeSession；派发后 dispatchGrace 内未认领 → 重排，3 次后转人工</text>
+<text x="34" y="446" font-size="12">④ canary 熔断：canary 有失败 → 置熔断标志，后续波次不再下发；已在诊断的实例照常完成，最后以 Fail 结束</text>
+<path d="M245,272 L245,294 L480,294 L480,282" fill="none" stroke="#232f3e" stroke-width="1.3" marker-end="url(#f1)"/>
+<rect x="20" y="478" width="1060" height="56" rx="6" fill="#fbeaea" stroke="#c7271a" stroke-dasharray="5 3"/>
+<text x="34" y="497" font-size="12" font-weight="600" fill="#c7271a">兜底 Abort</text>
+<text x="110" y="497" font-size="12">Init / Waves / Drain 任一步出错（Catch）或超过 batchTimeout → Abort：非终态实例转 NEEDS_HUMAN、停止 Agent、取消挂起命令</text>
+<text x="110" y="517" font-size="12">→ Report → Fail（BatchAborted）。单台实例连续 5 次处理出错只转人工，不影响批次其他实例</text>
+</svg>
+<figcaption>图 3 批次状态机</figcaption><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L6"><code>orchestrator/statemachine.json#L6</code> Init</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L13"><code>orchestrator/statemachine.json#L13</code> Waves</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L26"><code>orchestrator/statemachine.json#L26</code> Tick</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L35"><code>orchestrator/statemachine.json#L35</code> CanaryGate</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L45"><code>orchestrator/statemachine.json#L45</code> Drain</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L59"><code>orchestrator/statemachine.json#L59</code> Report</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L66"><code>orchestrator/statemachine.json#L66</code> Abort</a></div>
+</figure>
+<h3>4.1 Tick：每 30 秒一次的心跳</h3>
+<ol class="steps">
+<li><b>轮询补丁中的实例</b>：首次观察到 InProgress 时记录 <code>inprogress_at</code>；运行超过 <code>patchTimeout</code>，或从下发起超过 <code>waveHardTimeout</code> 仍未开始，<b>只对这一台</b> CancelCommand 并标 PATCH_TIMEOUT。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L231"><code>orchestrator/handler.py#L231</code> _poll_one()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L246"><code>orchestrator/handler.py#L246</code> inprogress_at</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L247"><code>orchestrator/handler.py#L247</code> patch_timeout</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L251"><code>orchestrator/handler.py#L251</code> wave_hard_deadline</a></div></li>
+<li><b>超时与未认领检查</b>：诊断超过 <code>agentTimeout</code> 的实例先写 NEEDS_HUMAN、再 StopRuntimeSession；已派发但在 <code>dispatchGrace</code> 内未被 Runtime 认领的实例释放回队列，第 3 次仍未认领则转人工。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L258"><code>orchestrator/handler.py#L258</code> _check_agent()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L316"><code>orchestrator/handler.py#L316</code> _reap_stale_dispatch()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L270"><code>orchestrator/handler.py#L270</code> _release_dispatch()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L35"><code>orchestrator/handler.py#L35</code> MAX_DISPATCH</a></div></li>
+<li><b>派发</b>：可诊断状态的实例按 <code>failed_at</code> 先后排队；空闲槽位 = <code>maxAgents</code> − 进行中；派发前先条件写 <code>dispatched_at</code>（<code>attribute_not_exists</code>），重叠的 Tick 也不会重复调用。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L364"><code>orchestrator/handler.py#L364</code> failed_at</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L365"><code>orchestrator/handler.py#L365</code> maxAgents</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L293"><code>orchestrator/handler.py#L293</code> _dispatch()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L298"><code>orchestrator/handler.py#L298</code> attribute_not_exists</a></div></li>
+<li><b>异常隔离</b>：每台实例的处理独立捕获异常，连续 5 次出错转人工；Tick 本身不因单台失败而失败。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L322"><code>orchestrator/handler.py#L322</code> _safe()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L34"><code>orchestrator/handler.py#L34</code> MAX_HOST_ERRORS</a></div></li>
+</ol>
+<h3>4.2 预检（下发补丁之前）</h3>
+<ul>
+<li><b>SSM 在线</b>：DescribeInstanceInformation（分页）；非 Online → UNDELIVERABLE，不下发补丁，直接进入诊断。离线实例若照常下发，命令会一直 Pending 直到截止时间。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L182"><code>orchestrator/handler.py#L182</code> ping_statuses()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L206"><code>orchestrator/handler.py#L206</code> UNDELIVERABLE</a></div></li>
+<li><b>根盘余量</b>：以编排会话对在线实例执行 <code>PatchDiagnose-Collect Check=disk</code>，解析机器可读行 <code>ROOT_FREE_PCT / ROOT_FREE_MB</code>；低于阈值或命令本身失败 → PRECHECK_FAILED。根盘 100% 时 SSM Agent 无法执行任何文档，所以磁盘余量必须在补丁之前检查。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L154"><code>orchestrator/handler.py#L154</code> disk_precheck()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L172"><code>orchestrator/handler.py#L172</code> ROOT_FREE_PCT</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L34"><code>infra/03_ssm_docs.py#L34</code> ROOT_FREE_PCT</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L212"><code>orchestrator/handler.py#L212</code> PRECHECK_FAILED</a></div></li>
+</ul>
+<h3>4.3 熔断与兜底</h3>
+<ul>
+<li><b>canary 熔断</b>：canary 波次有失败 → 批次置 halted；后续波次的实例标 SKIPPED_HALTED、不下发；已在诊断的实例照常完成；最终以 CanaryCircuitBreaker 结束。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L35"><code>orchestrator/statemachine.json#L35</code> CanaryGate</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L411"><code>orchestrator/handler.py#L411</code> halt()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L195"><code>orchestrator/handler.py#L195</code> halted</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L64"><code>orchestrator/statemachine.json#L64</code> CanaryCircuitBreaker</a></div></li>
+<li><b>Abort</b>：Init / Waves / Drain 任一步出错（Catch），或超过 <code>batchTimeout</code> → Abort：非终态实例转 NEEDS_HUMAN、停止仍在运行的会话、取消挂起命令 → Report → Fail（BatchAborted）。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L66"><code>orchestrator/statemachine.json#L66</code> Abort</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L383"><code>orchestrator/handler.py#L383</code> abort()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L375"><code>orchestrator/handler.py#L375</code> batch_deadline</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L78"><code>orchestrator/statemachine.json#L78</code> Aborted</a></div></li>
+</ul>
+<h3>4.4 参数</h3>
+<table><thead><tr><th>参数</th><th>默认</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>patchTimeout</code></td><td>600 秒</td><td>单台补丁运行上限，从首次 InProgress 起算<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L108"><code>orchestrator/handler.py#L108</code> KNOBS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L247"><code>orchestrator/handler.py#L247</code> patch_timeout</a></div></td></tr>
+<tr><td><code>waveHardTimeout</code></td><td>3 × patchTimeout</td><td>从下发起算的硬上限，覆盖 Patch Manager 中的排队时间<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L128"><code>orchestrator/handler.py#L128</code> waveHardTimeout</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L226"><code>orchestrator/handler.py#L226</code> wave_hard_deadline</a></div></td></tr>
+<tr><td><code>agentTimeout</code></td><td>2400 秒</td><td>单台诊断上限<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L258"><code>orchestrator/handler.py#L258</code> _check_agent()</a></div></td></tr>
+<tr><td><code>maxAgents</code></td><td>10</td><td>全批同时诊断的会话数上限；建议 10~20<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L365"><code>orchestrator/handler.py#L365</code> maxAgents</a></div></td></tr>
+<tr><td><code>dispatchGrace</code></td><td>180 秒</td><td>派发后等待 Runtime 认领的时间，超时重排，最多 3 次<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L316"><code>orchestrator/handler.py#L316</code> _reap_stale_dispatch()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L35"><code>orchestrator/handler.py#L35</code> MAX_DISPATCH</a></div></td></tr>
+<tr><td><code>minFreePct</code> / <code>minFreeMB</code></td><td>15% / 500 MB</td><td>根盘余量预检阈值<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L154"><code>orchestrator/handler.py#L154</code> disk_precheck()</a></div></td></tr>
+<tr><td><code>batchTimeout</code></td><td>14400 秒</td><td>整批上限，超时进入 Abort<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L135"><code>orchestrator/handler.py#L135</code> batch_deadline</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L375"><code>orchestrator/handler.py#L375</code> batch_deadline</a></div></td></tr>
+<tr><td><code>remediationLimit</code></td><td>按实例数</td><td>全批修复次数上限（批次级熔断）<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L136"><code>orchestrator/handler.py#L136</code> remediation_limit</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L61"><code>agent/state.py#L61</code> bump_batch_remediations()</a></div></td></tr>
+<tr><td>命令分片</td><td>≤ 50 台 / 命令</td><td>SendCommand 的 InstanceIds 上限<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L33"><code>orchestrator/handler.py#L33</code> SSM_MAX_IDS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L56"><code>orchestrator/handler.py#L56</code> chunks()</a></div></td></tr>
+<tr><td>新建会话退避</td><td>指数 + 抖动，最多 6 次</td><td>应对会话创建限流<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L436"><code>orchestrator/handler.py#L436</code> random</a></div></td></tr>
+</tbody></table>
+</section>
+
+<section id="a5"><h2>5. Session 设计</h2>
+<ul>
+<li><b>单实例单会话</b>：<code>runtimeSessionId = {batchId}-{instanceId}</code>（不足 33 字符右侧补齐）。批量执行不在 Agent 中，因此不受单会话 8 小时上限约束；诊断上下文只包含这一台实例。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L91"><code>orchestrator/handler.py#L91</code> session_id()</a></div></li>
+<li><b>异步任务</b>：入口校验归属并条件写认领后立即返回 <code>accepted</code>；诊断在后台线程执行，期间 <code>add_async_task</code> 使 <code>/ping</code> 返回 HealthyBusy，会话不会被空闲回收；结束时 <code>complete_async_task</code>。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L218"><code>agent/app.py#L218</code> load_ctx()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L38"><code>agent/state.py#L38</code> claim_for_diagnosis()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L327"><code>agent/app.py#L327</code> add_async_task</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L215"><code>agent/app.py#L215</code> complete_async_task</a></div></li>
+<li><b>生命周期</b>：空闲 600 秒、最长 7200 秒。单台诊断通常为分钟级，用完即释放 microVM。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L58"><code>infra/06_runtime.py#L58</code> lifecycleConfiguration</a></div></li>
+<li><b>workload token</b>：SigV4 调用必须带 <code>runtimeUserId</code>，容器才能拿到 workload token 并从 Token Vault 取 API Key。编排层固定使用 <code>runtimeUserId=patch-orchestrator</code>，因此调用方需要 <code>InvokeAgentRuntimeForUser</code> 权限，资源策略同时放行该 action。Runtime 自动创建的 workload identity 由服务管理，调用方不能为其换取 token。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L428"><code>orchestrator/handler.py#L428</code> runtimeUserId</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L94"><code>infra/02_iam.py#L94</code> InvokeAgent</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L84"><code>infra/06_runtime.py#L84</code> AllowOpsInvokers</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L84"><code>agent/app.py#L84</code> get_workload_access_token</a></div></li>
+<li><b>API Key 获取时机</b>：workload token 只存在于请求上下文中，因此在请求线程内取 API Key，再交给后台线程使用。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L321"><code>agent/app.py#L321</code> model_api_key</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L79"><code>agent/app.py#L79</code> model_api_key()</a></div></li>
+<li><b>人工接管</b>：门户以值班人员的 permission set 角色、同一 <code>runtimeSessionId</code>、<code>runtimeUserId=操作人</code> 调用 <code>mode=chat</code>；Runtime 从 DynamoDB 恢复完整对话（与 microVM 是否存活无关）。<code>runtimeUserId</code> 不会以 HTTP 头传入容器，审计所需的操作人由门户放进请求负载。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L468"><code>orchestrator/handler.py#L468</code> portal_chat()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L331"><code>agent/app.py#L331</code> mode == "chat"</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L336"><code>agent/app.py#L336</code> human_takeover</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L110"><code>agent/app.py#L110</code> RepositorySessionManager</a></div></li>
+</ul>
+<figure>
+<svg viewBox="0 0 1100 560" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="s1m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker>
+<marker id="s2m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a96a3"/></marker></defs>
+<g font-weight="600" text-anchor="middle">
+<rect x="20" y="14" width="150" height="40" rx="5" fill="#f1edfa" stroke="#6b4fbb"/><text x="95" y="39">编排 Lambda</text>
+<rect x="210" y="14" width="170" height="40" rx="5" fill="#fdf1e6" stroke="#ec7211"/><text x="295" y="39">Runtime（microVM）</text>
+<rect x="420" y="14" width="150" height="40" rx="5" fill="#fff" stroke="#ec7211"/><text x="495" y="39">Agent + 护栏</text>
+<rect x="610" y="14" width="150" height="40" rx="5" fill="#e8f1fb" stroke="#0b5cad"/><text x="685" y="39">业务账号 SSM</text>
+<rect x="800" y="14" width="140" height="40" rx="5" fill="#f1edfa" stroke="#6b4fbb"/><text x="870" y="39">DynamoDB / OpenSearch</text>
+<rect x="970" y="14" width="115" height="40" rx="5" fill="#fff" stroke="#c7271a"/><text x="1027" y="39">全球区模型</text>
+</g>
+<g stroke="#c5ccd5" stroke-dasharray="4 4"><line x1="95" y1="54" x2="95" y2="545"/><line x1="295" y1="54" x2="295" y2="545"/><line x1="495" y1="54" x2="495" y2="545"/><line x1="685" y1="54" x2="685" y2="545"/><line x1="870" y1="54" x2="870" y2="545"/><line x1="1027" y1="54" x2="1027" y2="545"/></g>
+<g stroke="#232f3e" stroke-width="1.4" fill="none">
+<path d="M95,80 L293,80" marker-end="url(#s1m)"/>
+<path d="M295,104 L868,104" marker-end="url(#s1m)"/>
+<path d="M295,130 L97,130" marker-end="url(#s2m)" stroke="#8a96a3" stroke-dasharray="5 3"/>
+<path d="M295,156 L1025,156" marker-end="url(#s1m)"/>
+<path d="M295,182 L868,182" marker-end="url(#s1m)"/>
+<path d="M295,208 L493,208" marker-end="url(#s1m)"/>
+<path d="M495,236 L1025,236" marker-end="url(#s1m)"/>
+<path d="M495,262 L683,262" marker-end="url(#s1m)"/>
+<path d="M495,288 L683,288" marker-end="url(#s1m)"/>
+<path d="M495,314 L683,314" marker-end="url(#s1m)"/>
+<path d="M495,340 L683,340" marker-end="url(#s1m)"/>
+<path d="M495,370 L868,370" marker-end="url(#s1m)"/>
+<path d="M295,400 L1025,400" marker-end="url(#s1m)"/>
+<path d="M295,426 L868,426" marker-end="url(#s1m)"/>
+<path d="M95,460 L868,460" marker-end="url(#s1m)"/>
+<path d="M95,500 L293,500" marker-end="url(#s1m)" stroke="#c7271a"/>
+</g>
+<g>
+<text x="105" y="74">InvokeAgentRuntime（session=批次-实例, mode=diagnose）</text>
+<text x="305" y="98">校验实例归属本会话 · 条件写认领 DIAGNOSING</text>
+<text x="105" y="124" fill="#5b6673">立即返回 accepted；add_async_task → /ping 报 HealthyBusy</text>
+<text x="305" y="150">报错文本向量化（Titan Embed V2；API Key 用 workload token 从 Token Vault 获取）</text>
+<text x="305" y="176">召回：kNN + 关键短语 → 知识库 / 反思 / 本机历史片段</text>
+<text x="305" y="202">构建 Agent（系统提示含召回结果）</text>
+<text x="505" y="230">推理循环（Kimi K3）</text>
+<text x="505" y="256">AssumeRole（TargetInstance 标签）· 读补丁输出</text>
+<text x="505" y="282">PatchDiagnose-Collect（只读、参数为枚举）</text>
+<text x="505" y="308">PatchRemediate-*（≤2 次，原子计数）</text>
+<text x="505" y="334">rerun_patch：重跑补丁（≤1 次）</text>
+<text x="505" y="364">report_result：FIXED 必须有真实重跑 Success · 每次工具调用写审计</text>
+<text x="305" y="394">记忆提取 → 合并 / 反思生成（后台，不影响结果）</text>
+<text x="305" y="420">写入 EPISODE / REFLECTION / KB；complete_async_task</text>
+<text x="105" y="454">每 30 秒 Tick：读状态 FIXED / NEEDS_HUMAN → 结束；释放并发槽位给排队实例</text>
+<text x="105" y="494" fill="#c7271a">超过 agentTimeout：先写 NEEDS_HUMAN（护栏据此拦截后续动作）→ StopRuntimeSession</text>
+<text x="105" y="530" fill="#5b6673" font-size="12">NEEDS_HUMAN 时：生成 APPROVAL# 审批单 → 值班人员经 Identity Center 用同一会话接管（§5）</text>
+</g>
+</svg>
+<figcaption>图 4 单实例诊断时序</figcaption><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L302"><code>agent/app.py#L302</code> invoke()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L180"><code>agent/app.py#L180</code> run_diagnosis()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L98"><code>agent/app.py#L98</code> build_agent()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L163"><code>agent/tools.py#L163</code> report_result()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L119"><code>agent/app.py#L119</code> extract_and_store()</a></div>
+</figure>
+</section>
+
+<section id="a6"><h2>6. 身份与权限</h2>
+<figure>
+<svg viewBox="0 0 1100 300" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="13">
+<defs><marker id="b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<rect x="10" y="40" width="180" height="200" rx="6" fill="#f6f8fa" stroke="#8a96a3"/>
+<text x="100" y="64" text-anchor="middle" font-weight="600">调用方</text>
+<rect x="24" y="80" width="152" height="50" rx="4" fill="#fff" stroke="#6b4fbb"/><text x="100" y="101" text-anchor="middle" font-size="12">编排 Lambda 角色</text><text x="100" y="119" text-anchor="middle" font-size="11" fill="#5b6673">runtimeUserId=编排</text>
+<rect x="24" y="144" width="152" height="50" rx="4" fill="#fff" stroke="#1d8102"/><text x="100" y="165" text-anchor="middle" font-size="12">值班 permission set</text><text x="100" y="183" text-anchor="middle" font-size="11" fill="#5b6673">runtimeUserId=本人</text>
+<text x="100" y="222" text-anchor="middle" font-size="11.5" fill="#5b6673">SigV4 · 必须在运维 VPC 内</text>
+<rect x="230" y="40" width="210" height="200" rx="6" fill="#fdf1e6" stroke="#ec7211"/>
+<text x="335" y="64" text-anchor="middle" font-weight="600">闸门 1：Runtime 资源策略</text>
+<text x="245" y="92" font-size="12">Allow：上述两个角色</text>
+<text x="245" y="112" font-size="12">　InvokeAgentRuntime</text>
+<text x="245" y="132" font-size="12">　InvokeAgentRuntimeForUser</text>
+<text x="245" y="156" font-size="12" fill="#c7271a">Deny Principal:*</text>
+<text x="245" y="174" font-size="12" fill="#c7271a">　bedrock-agentcore:*（全部）</text>
+<text x="245" y="192" font-size="12" fill="#c7271a">　当 aws:SourceVpce ≠</text>
+<text x="245" y="210" font-size="12" fill="#c7271a">　运维 bedrock-agentcore VPCE</text>
+<text x="245" y="230" font-size="11" fill="#5b6673">Runtime 与 DEFAULT endpoint 都配置</text>
+<rect x="480" y="40" width="250" height="200" rx="6" fill="#e8f1fb" stroke="#0b5cad"/>
+<text x="605" y="64" text-anchor="middle" font-weight="600">闸门 2：Spoke 信任策略</text>
+<text x="495" y="92" font-size="12">Principal：Runtime 执行角色</text>
+<text x="495" y="112" font-size="12">sts:ExternalId = 约定值</text>
+<text x="495" y="132" font-size="12">aws:SourceVpce = 运维 STS VPCE</text>
+<text x="495" y="152" font-size="12">必须带会话标签</text>
+<text x="495" y="172" font-size="12">　TargetInstance = i-*</text>
+<text x="495" y="192" font-size="12">　标签键仅限 TargetInstance/BatchId</text>
+<text x="495" y="220" font-size="11" fill="#5b6673">TagSession 单独一条语句（无 ExternalId 上下文）</text>
+<rect x="770" y="40" width="320" height="200" rx="6" fill="#e9f6e6" stroke="#1d8102"/>
+<text x="930" y="64" text-anchor="middle" font-weight="600">闸门 3：Spoke 权限策略</text>
+<text x="785" y="92" font-size="12">读：DescribeInstanceInformation 等</text>
+<text x="785" y="112" font-size="12">写：SendCommand 仅限</text>
+<text x="785" y="132" font-size="12">　AWS-RunPatchBaseline / PatchDiagnose-*</text>
+<text x="785" y="152" font-size="12">　/ PatchRemediate-*（允许列表）</text>
+<text x="785" y="172" font-size="12">且实例 = ${aws:PrincipalTag/TargetInstance}</text>
+<text x="785" y="192" font-size="12" fill="#c7271a">Deny *：不经运维 VPCE（ssm/ec2/sts）</text>
+<text x="785" y="220" font-size="11" fill="#5b6673">无 Reboot/Stop/CancelCommand，无 RunShellScript</text>
+<path d="M190,140 L228,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
+<path d="M440,140 L478,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
+<path d="M730,140 L768,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
+<text x="550" y="275" text-anchor="middle" font-size="12.5" fill="#232f3e">结果：一个诊断会话拿到的凭证，只能在运维 VPC 内、只能对"它负责的那一台实例"、只能执行预先审核的文档</text>
+</svg>
+<figcaption>图 5 三道闸门：Runtime 资源策略 → Spoke 信任策略 → Spoke 权限策略</figcaption><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L88"><code>infra/06_runtime.py#L88</code> DenyOutsideOpsVpce</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L128"><code>infra/02_iam.py#L128</code> AgentAssume</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L148"><code>infra/02_iam.py#L148</code> AgentPinnedInstance</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L162"><code>infra/02_iam.py#L162</code> DenyIfNotViaOpsVpce</a></div>
+</figure>
+<h3>6.1 角色</h3>
+<table><thead><tr><th>角色</th><th>所在账号</th><th>权限要点</th></tr></thead><tbody>
+<tr><td>PatchOrchestratorLambdaRole</td><td>运维中心</td><td>批次表读写；AssumeRole 进入各 Spoke（不带 TargetInstance 标签）；InvokeAgentRuntime / InvokeAgentRuntimeForUser / StopRuntimeSession<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L87"><code>infra/02_iam.py#L87</code> ORCH_ROLE</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L94"><code>infra/02_iam.py#L94</code> InvokeAgent</a></div></td></tr>
+<tr><td>PatchAgentRuntimeRole</td><td>运维中心</td><td>ECR 拉取、日志；只读指定 API Key 提供方；批次表与记忆表读写；AssumeRole + TagSession 进入 Spoke；OpenSearch <code>es:ESHttp*</code><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L57"><code>infra/02_iam.py#L57</code> RUNTIME_ROLE</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L70"><code>infra/02_iam.py#L70</code> ModelApiKey</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L78"><code>infra/02_iam.py#L78</code> StateAndMemory</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L81"><code>infra/02_iam.py#L81</code> IntoSpokes</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L83"><code>infra/02_iam.py#L83</code> LtmOpenSearch</a></div></td></tr>
+<tr><td>PatchOnCallRole（permission set）</td><td>运维中心</td><td>InvokeAgentRuntime / InvokeAgentRuntimeForUser；批次表只读<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L102"><code>infra/02_iam.py#L102</code> ONCALL_ROLE</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L104"><code>infra/02_iam.py#L104</code> TakeOverSession</a></div></td></tr>
+<tr><td>PatchAgentSpokeRole</td><td>每个业务账号</td><td>只读 SSM / EC2；SendCommand 仅限允许列表文档；CancelCommand 仅编排会话；不经运维 VPCE 一律拒绝<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L117"><code>infra/02_iam.py#L117</code> spoke_roles()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L139"><code>infra/02_iam.py#L139</code> Diagnose</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L143"><code>infra/02_iam.py#L143</code> AllowedDocsOnly</a></div></td></tr>
+</tbody></table>
+<h3>6.2 设计要点</h3>
+<ul>
+<li><b>Runtime 资源策略</b>：Allow 编排角色与值班角色调用两个 Invoke action；对 <code>Principal:*</code> 的 <code>bedrock-agentcore:*</code> 在 <code>aws:SourceVpce</code> 不等于运维 bedrock-agentcore 终端节点时 Deny。Runtime 与 DEFAULT endpoint 两处都要设置。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L84"><code>infra/06_runtime.py#L84</code> AllowOpsInvokers</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L88"><code>infra/06_runtime.py#L88</code> DenyOutsideOpsVpce</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L82-L91"><code>infra/06_runtime.py#L82-L91</code> runtime-endpoint/DEFAULT</a></div></li>
+<li><b>Spoke 信任策略</b>：AssumeRole 要求 ExternalId、<code>aws:SourceVpce</code> = 运维 STS 终端节点、请求标签 <code>TargetInstance=i-*</code> 且标签键只能是 TargetInstance / BatchId。<b>TagSession 必须单独一条语句</b>：鉴权 <code>sts:TagSession</code> 时请求上下文里没有 <code>sts:ExternalId</code>，带 ExternalId 条件的语句永远不会匹配。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L128"><code>infra/02_iam.py#L128</code> AgentAssume</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L131"><code>infra/02_iam.py#L131</code> AgentTagSession</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L133"><code>infra/02_iam.py#L133</code> Orchestrator</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L123"><code>infra/02_iam.py#L123</code> sts:ExternalId</a></div></li>
+<li><b>单实例绑定</b>：Agent 会话的 SendCommand 资源为 <code>instance/${aws:PrincipalTag/TargetInstance}</code>（另要求 PatchGroup 资源标签）；编排会话以 <code>Null aws:PrincipalTag/TargetInstance = true</code> 区分，可作用于整个补丁组。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L148"><code>infra/02_iam.py#L148</code> AgentPinnedInstance</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L152"><code>infra/02_iam.py#L152</code> OrchestratorTaggedInstances</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L41"><code>agent/tools.py#L41</code> TargetInstance</a></div></li>
+<li><b>CancelCommand</b> 只支持 <code>*</code> 资源，因此只授予编排会话；Agent 会话不能取消任何命令。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L158"><code>infra/02_iam.py#L158</code> OrchestratorCancelOnly</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L66"><code>agent/tools.py#L66</code> CancelCommand</a></div></li>
+<li><b>凭证不可外带</b>：Spoke 权限策略对不经运维 ssm / ec2 / sts 终端节点的调用一律 Deny，并以 <code>BoolIfExists aws:ViaAWSService=false</code> 保留服务间调用。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L162"><code>infra/02_iam.py#L162</code> DenyIfNotViaOpsVpce</a></div></li>
+<li><b>跨组织</b>：业务账号不在同一 Organization 时，信任策略显式列出运维账号角色 ARN；同一组织内可叠加组织条件。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/common/config.py#L66"><code>common/config.py#L66</code> role_arn()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L128"><code>infra/02_iam.py#L128</code> AgentAssume</a></div></li>
+<li><b>人员</b>：IAM Identity Center（可对接企业 IdP）→ permission set 角色 → VPC 内门户以该角色 SigV4 调用。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L468"><code>orchestrator/handler.py#L468</code> portal_chat()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L102"><code>infra/02_iam.py#L102</code> ONCALL_ROLE</a></div></li>
+</ul>
+<div class="file">infra/02_iam.py · Spoke 信任策略（占位符替代账号与终端节点 ID） · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L127-L134"><code>infra/02_iam.py#L127-L134</code> trust</a></div>
+<pre><code>[
+  { "Sid": "AgentAssume", "Effect": "Allow", "Action": "sts:AssumeRole",
+    "Principal": { "AWS": "arn:aws-cn:iam::&lt;OPS_ACCOUNT&gt;:role/PatchAgentRuntimeRole" },
+    "Condition": { "StringEquals": { "sts:ExternalId": "&lt;EXTERNAL_ID&gt;", "aws:SourceVpce": "&lt;OPS_STS_VPCE&gt;" },
+                   "StringLike": { "aws:RequestTag/TargetInstance": "i-*" },
+                   "ForAllValues:StringEquals": { "aws:TagKeys": [ "TargetInstance", "BatchId" ] } } },
+  { "Sid": "AgentTagSession", "Effect": "Allow", "Action": "sts:TagSession",
+    "Principal": { "AWS": "arn:aws-cn:iam::&lt;OPS_ACCOUNT&gt;:role/PatchAgentRuntimeRole" },
+    "Condition": { "StringEquals": { "aws:SourceVpce": "&lt;OPS_STS_VPCE&gt;" },
+                   "StringLike": { "aws:RequestTag/TargetInstance": "i-*" },
+                   "ForAllValues:StringEquals": { "aws:TagKeys": [ "TargetInstance", "BatchId" ] } } },
+  { "Sid": "Orchestrator", "Effect": "Allow", "Action": "sts:AssumeRole",
+    "Principal": { "AWS": "arn:aws-cn:iam::&lt;OPS_ACCOUNT&gt;:role/PatchOrchestratorLambdaRole" },
+    "Condition": { "StringEquals": { "sts:ExternalId": "&lt;EXTERNAL_ID&gt;", "aws:SourceVpce": "&lt;OPS_STS_VPCE&gt;" } } }
+]</code></pre>
+<div class="file">infra/02_iam.py · Spoke 权限策略（节选） · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L135-L165"><code>infra/02_iam.py#L135-L165</code> perms</a></div>
+<pre><code>[
+  { "Sid": "AllowedDocsOnly", "Effect": "Allow", "Action": "ssm:SendCommand",
+    "Resource": [ "arn:aws-cn:ssm:&lt;REGION&gt;::document/AWS-RunPatchBaseline",
+                  "arn:aws-cn:ssm:&lt;REGION&gt;:&lt;ACCOUNT&gt;:document/PatchDiagnose-Collect",
+                  "arn:aws-cn:ssm:&lt;REGION&gt;:&lt;ACCOUNT&gt;:document/PatchRemediate-*" ] },
+  { "Sid": "AgentPinnedInstance", "Effect": "Allow", "Action": "ssm:SendCommand",
+    "Resource": "arn:aws-cn:ec2:&lt;REGION&gt;:&lt;ACCOUNT&gt;:instance/${aws:PrincipalTag/TargetInstance}",
+    "Condition": { "StringEquals": { "ssm:resourceTag/PatchGroup": "&lt;PATCH_GROUP&gt;" } } },
+  { "Sid": "OrchestratorTaggedInstances", "Effect": "Allow", "Action": "ssm:SendCommand",
+    "Resource": "arn:aws-cn:ec2:&lt;REGION&gt;:&lt;ACCOUNT&gt;:instance/*",
+    "Condition": { "StringEquals": { "ssm:resourceTag/PatchGroup": "&lt;PATCH_GROUP&gt;" },
+                   "Null": { "aws:PrincipalTag/TargetInstance": "true" } } },
+  { "Sid": "OrchestratorCancelOnly", "Effect": "Allow", "Action": "ssm:CancelCommand", "Resource": "*",
+    "Condition": { "Null": { "aws:PrincipalTag/TargetInstance": "true" } } },
+  { "Sid": "DenyIfNotViaOpsVpce", "Effect": "Deny", "Action": "*", "Resource": "*",
+    "Condition": { "StringNotEquals": { "aws:SourceVpce": [ "&lt;SSM_VPCE&gt;", "&lt;EC2_VPCE&gt;", "&lt;STS_VPCE&gt;" ] },
+                   "BoolIfExists": { "aws:ViaAWSService": "false" } } }
+]</code></pre>
+</section>
+
+<section id="a7"><h2>7. 网络</h2>
+<table><thead><tr><th>对象</th><th>设计</th></tr></thead><tbody>
+<tr><td>运维 VPC</td><td>双 AZ 私有子网承载 Runtime ENI、Lambda ENI、OpenSearch；一个公有子网仅放 NAT 网关<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L14"><code>infra/01_network.py#L14</code> AZ_IDS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L51"><code>infra/01_network.py#L51</code> create_subnet</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L47"><code>infra/01_network.py#L47</code> create_subnet</a></div></td></tr>
+<tr><td>接口终端节点（Private DNS）</td><td><code>bedrock-agentcore</code>、<code>sts</code>、<code>ssm</code>、<code>ec2</code>、<code>logs</code>；安全组只接受 VPC 网段 443。STS / EC2 服务名为 <code>cn.com.amazonaws.&lt;region&gt;.sts / .ec2</code><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L15"><code>infra/01_network.py#L15</code> INTERFACE_SVCS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L85"><code>infra/01_network.py#L85</code> PrivateDnsEnabled</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L77"><code>infra/01_network.py#L77</code> authorize_security_group_ingress</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L17"><code>infra/01_network.py#L17</code> cn.com.amazonaws</a></div></td></tr>
+<tr><td>网关终端节点</td><td><code>dynamodb</code>、<code>s3</code><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L22"><code>infra/01_network.py#L22</code> GATEWAY_SVCS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L89"><code>infra/01_network.py#L89</code> Gateway</a></div></td></tr>
+<tr><td>Runtime / Lambda 安全组</td><td>无入站；出站仅 443<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L70"><code>infra/01_network.py#L70</code> agent_sg</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L73"><code>infra/01_network.py#L73</code> authorize_security_group_egress</a></div></td></tr>
+<tr><td>OpenSearch 安全组</td><td>只接受来自 Runtime / Lambda 安全组的 443；域无公网 endpoint，从 VPC 外 DNS 解析为私网地址<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/08_opensearch.py#L26"><code>infra/08_opensearch.py#L26</code> opensearch-sg</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/08_opensearch.py#L31"><code>infra/08_opensearch.py#L31</code> UserIdGroupPairs</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/08_opensearch.py#L42"><code>infra/08_opensearch.py#L42</code> VPCOptions</a></div></td></tr>
+<tr><td>NAT 网关</td><td><b>唯一用途</b>是调用全球区模型（bedrock-runtime）；生产建议改用出口代理并配置域名允许列表，或使用 VPC 内模型以去掉 NAT<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L59"><code>infra/01_network.py#L59</code> create_nat_gateway</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L65"><code>infra/01_network.py#L65</code> NatGatewayId</a></div></td></tr>
+<tr><td>业务 VPC</td><td>无需与运维 VPC 互通；实例上的 SSM Agent 主动出站连接区域 SSM 服务</td></tr>
+<tr><td>Runtime 端口</td><td>容器内 0.0.0.0:8080 是 Runtime 的服务契约，不发布任何端口；唯一入口是带资源策略的 Runtime API<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/Dockerfile#L12"><code>agent/Dockerfile#L12</code> EXPOSE 8080</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L56"><code>infra/06_runtime.py#L56</code> protocolConfiguration</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L88"><code>infra/06_runtime.py#L88</code> DenyOutsideOpsVpce</a></div></td></tr>
+</tbody></table>
+</section>
+
+<section id="a8"><h2>8. 记忆</h2>
+<figure>
+<svg viewBox="0 0 1100 430" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<text x="20" y="24" font-weight="600" fill="#232f3e" font-size="13.5">写入（诊断结束后，后台异步）</text>
+<rect x="20" y="40" width="150" height="70" rx="6" fill="#f1edfa" stroke="#6b4fbb"/><text x="95" y="66" text-anchor="middle" font-weight="600">STM 对话</text><text x="95" y="86" text-anchor="middle" font-size="11.5">工具调用与结果</text><text x="95" y="102" text-anchor="middle" font-size="11.5">+ 最终报告</text>
+<rect x="200" y="40" width="190" height="70" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="295" y="64" text-anchor="middle" font-weight="600">① 提取（LLM）</text><text x="295" y="84" text-anchor="middle" font-size="11.5">Episode + 知识候选</text><text x="295" y="100" text-anchor="middle" font-size="11.5">signature 受控词表</text>
+<rect x="430" y="20" width="190" height="56" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="525" y="44" text-anchor="middle" font-weight="600">EPISODE</text><text x="525" y="62" text-anchor="middle" font-size="11.5">写入 + 向量化</text>
+<rect x="660" y="20" width="230" height="56" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="775" y="42" text-anchor="middle" font-weight="600">② 反思生成（LLM）</text><text x="775" y="60" text-anchor="middle" font-size="11.5">相关片段 + 已有反思 → add / update</text>
+<rect x="920" y="20" width="160" height="56" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="1000" y="44" text-anchor="middle" font-weight="600">REFLECTION</text><text x="1000" y="62" text-anchor="middle" font-size="11.5">confidence 0.1~1.0</text>
+<rect x="430" y="100" width="190" height="56" rx="6" fill="#e9f6e6" stroke="#1d8102"/><text x="525" y="122" text-anchor="middle" font-weight="600">质量门（代码）</text><text x="525" y="140" text-anchor="middle" font-size="11.5">仅 FIXED · 关键词过滤</text>
+<rect x="660" y="100" width="230" height="56" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="775" y="122" text-anchor="middle" font-weight="600">③ 合并（LLM）</text><text x="775" y="140" text-anchor="middle" font-size="11.5">相关 KB → Add / Update / Skip</text>
+<rect x="920" y="100" width="160" height="56" rx="6" fill="#e9f6e6" stroke="#1d8102"/><text x="1000" y="120" text-anchor="middle" font-weight="600">硬规则 → KB</text><text x="1000" y="138" text-anchor="middle" font-size="11">verified 只出 proposal</text><text x="1000" y="152" text-anchor="middle" font-size="11">新条目 verified=false</text>
+<path d="M170,75 L198,75" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M390,62 L428,48" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M390,88 L428,124" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M620,48 L658,48" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M890,48 L918,48" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M620,128 L658,128" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M890,128 L918,128" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<line x1="20" y1="190" x2="1080" y2="190" stroke="#d9dee5"/>
+<text x="20" y="218" font-weight="600" fill="#232f3e" font-size="13.5">召回：诊断开始时（在 Agent 第一次推理之前）</text>
+<rect x="20" y="236" width="160" height="66" rx="6" fill="#e8f1fb" stroke="#0b5cad"/><text x="100" y="262" text-anchor="middle" font-weight="600">真实报错文本</text><text x="100" y="282" text-anchor="middle" font-size="11.5">补丁状态 + 插件输出</text>
+<rect x="210" y="236" width="160" height="66" rx="6" fill="#fff" stroke="#0b5cad"/><text x="290" y="262" text-anchor="middle" font-weight="600">信号摘要</text><text x="290" y="282" text-anchor="middle" font-size="11.5">只保留报错类行、去重</text>
+<rect x="400" y="236" width="160" height="66" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="480" y="262" text-anchor="middle" font-weight="600">Titan Embed V2</text><text x="480" y="282" text-anchor="middle" font-size="11.5">1024 维 · 归一化</text>
+<rect x="590" y="226" width="220" height="86" rx="6" fill="#f1edfa" stroke="#6b4fbb"/><text x="700" y="250" text-anchor="middle" font-weight="600">OpenSearch</text><text x="700" y="270" text-anchor="middle" font-size="11.5">KB：kNN ∪ BM25 候选</text><text x="700" y="288" text-anchor="middle" font-size="11.5">REFLECTION：kNN</text><text x="700" y="304" text-anchor="middle" font-size="11.5">EPISODE：按实例、按时间</text>
+<rect x="840" y="226" width="240" height="86" rx="6" fill="#e9f6e6" stroke="#1d8102"/><text x="960" y="250" text-anchor="middle" font-weight="600">相关度闸门</text><text x="960" y="270" text-anchor="middle" font-size="11.5">余弦 ≥ 绝对阈值，综合分距最佳 ≤ 边距</text><text x="960" y="288" text-anchor="middle" font-size="11.5">或 ≥2 个特征报错串字面命中</text><text x="960" y="304" text-anchor="middle" font-size="11.5">unverified 权重 ×0.85</text>
+<path d="M180,269 L208,269" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M370,269 L398,269" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M560,269 L588,269" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M810,269 L838,269" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<rect x="590" y="342" width="490" height="66" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="835" y="366" text-anchor="middle" font-weight="600">注入系统提示</text><text x="835" y="386" text-anchor="middle" font-size="11.5">&lt;recalled_memory&gt; 围栏（声明非指令）：KB 条目 · 反思（含置信度）· 本机近 3 次片段</text><text x="835" y="402" text-anchor="middle" font-size="11.5">Agent 仍可在诊断中调用 search_memory 主动检索</text>
+<path d="M960,312 L960,340" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+</svg>
+<figcaption>图 6 记忆管线：写入（提取 → 反思生成 / 合并）与召回</figcaption><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L247"><code>agentmem/agentmem/strategies.py#L247</code> process_session()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L209"><code>agentmem/agentmem/strategies.py#L209</code> generate_reflections()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L149"><code>agentmem/agentmem/strategies.py#L149</code> consolidate_knowledge()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L71"><code>agentmem/agentmem/ltm.py#L71</code> recall()</a></div>
+</figure>
+<h3>8.1 结构</h3>
+<table><thead><tr><th>层</th><th>AgentCore 概念</th><th>存储</th><th>namespace</th><th>字段</th></tr></thead><tbody>
+<tr><td>STM</td><td>Short-term memory</td><td>DynamoDB（Strands SessionRepository）</td><td>按 sessionId 分区</td><td>完整消息与工具调用<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L12"><code>agentmem/agentmem/stm.py#L12</code> DynamoDBSessionRepository</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L53"><code>agentmem/agentmem/stm.py#L53</code> list_messages()</a></div></td></tr>
+<tr><td>KB</td><td>Semantic</td><td rowspan="3">OpenSearch 单索引，<code>kind</code> 区分；向量 1024 维，HNSW / lucene / 余弦</td><td><code>/patch/knowledge</code></td><td>signature、keywords、symptom、root_cause、fix、verified、confirmations、aliases、suggested_keywords、update_proposals<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/profile.py#L43"><code>agentmem/agentmem/profile.py#L43</code> ns_kb</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L8"><code>agentmem/agentmem/store.py#L8</code> mapping()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L23"><code>agentmem/agentmem/store.py#L23</code> knn_vector</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L107"><code>agentmem/agentmem/ltm.py#L107</code> put_kb()</a></div></td></tr>
+<tr><td>EPISODE</td><td>Episodic（片段）</td><td><code>/patch/episodes/{instanceId}</code></td><td>situation、intent、assessment、justification、reflection、status、signature<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/profile.py#L50"><code>agentmem/agentmem/profile.py#L50</code> ns_episode()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L117"><code>agentmem/agentmem/ltm.py#L117</code> put_episode()</a></div></td></tr>
+<tr><td>REFLECTION</td><td>Episodic（反思）</td><td><code>/patch/reflections</code></td><td>title、use_cases、hints、confidence、source_episodes<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/profile.py#L47"><code>agentmem/agentmem/profile.py#L47</code> ns_reflection</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L123"><code>agentmem/agentmem/ltm.py#L123</code> put_reflection()</a></div></td></tr>
+</tbody></table>
+<h3>8.2 写入策略（诊断结束后，后台执行）</h3>
+<ol class="steps">
+<li><b>提取</b>：一次 LLM 调用从 STM 记录与最终报告中得到 Episode 五要素与一个知识候选。signature 必须取自现有词表，或写成 <code>new:&lt;名称&gt;</code>。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L247"><code>agentmem/agentmem/strategies.py#L247</code> process_session()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L76"><code>agentmem/agentmem/strategies.py#L76</code> EXTRACTION_PROMPT</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L91"><code>agentmem/agentmem/ltm.py#L91</code> kb_catalog()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L87"><code>agentmem/agentmem/stm.py#L87</code> transcript()</a></div></li>
+<li><b>反思生成</b>：取相关片段（余弦 ≥ 0.45）与已有反思，LLM 输出 add / update 与置信度；update 的 id 必须是提供给模型的现有条目；与已有反思余弦 ≥ 0.85 的新增视为同一条。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L209"><code>agentmem/agentmem/strategies.py#L209</code> generate_reflections()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L114"><code>agentmem/agentmem/strategies.py#L114</code> REFLECTION_PROMPT</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L28"><code>agentmem/agentmem/config.py#L28</code> related_gate</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L225"><code>agentmem/agentmem/strategies.py#L225</code> r.operator</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L232"><code>agentmem/agentmem/strategies.py#L232</code> refl_dup_gate</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L30"><code>agentmem/agentmem/config.py#L30</code> refl_dup_gate</a></div></li>
+<li><b>合并（仅 FIXED）</b>：过滤关键词 → 取相关 KB（余弦 ≥ 0.45，且始终包含模型选中的词表条目）→ LLM 选择 AddMemory / UpdateMemory / SkipMemory → 代码执行硬规则。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L149"><code>agentmem/agentmem/strategies.py#L149</code> consolidate_knowledge()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L98"><code>agentmem/agentmem/strategies.py#L98</code> CONSOLIDATION_PROMPT</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L156"><code>agentmem/agentmem/strategies.py#L156</code> get_kb</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L261"><code>agentmem/agentmem/strategies.py#L261</code> learn_statuses</a></div></li>
+</ol>
+<h3>8.3 写入硬规则（代码强制）</h3>
+<ul>
+<li>KB 只从 FIXED 会话学习；FIXED 本身由护栏保证有真实的重跑成功。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L261"><code>agentmem/agentmem/strategies.py#L261</code> learn_statuses</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L167"><code>agent/tools.py#L167</code> last_rerun_status</a></div></li>
+<li>verified 条目永不被改写：Update 只追加 <code>update_proposals</code>（最多 5 条）与 <code>suggested_keywords</code>，由人工审核。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L190"><code>agentmem/agentmem/strategies.py#L190</code> human gate</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L192"><code>agentmem/agentmem/strategies.py#L192</code> update_proposals</a></div></li>
+<li>关键词必须字面出现在补丁输出类工具（<code>get_patch_output</code>、<code>rerun_patch</code>、<code>get_instance_overview</code>）的结果中；排除通用 runner 文本、退出码、包名、状态词和诊断文档的固定输出；最多 8 个。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/memory_profile.py#L21"><code>agent/memory_profile.py#L21</code> evidence_tools</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L100"><code>agentmem/agentmem/stm.py#L100</code> evidence()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/records.py#L39"><code>agentmem/agentmem/records.py#L39</code> filter_keywords()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/profile.py#L10"><code>agentmem/agentmem/profile.py#L10</code> BASE_GENERIC</a></div></li>
+<li>新增 signature 不覆盖已有条目；所有文本字段写入前剔除指令性文本。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L201"><code>agentmem/agentmem/strategies.py#L201</code> get_kb</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/records.py#L67"><code>agentmem/agentmem/records.py#L67</code> clean()</a></div></li>
+</ul>
+<h3>8.4 召回算法</h3>
+<ol class="steps">
+<li>查询文本 = 补丁状态 + PingStatus + RunPatchBaseline 插件输出；先做"信号摘要"，只保留含失败信号的行并去重。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L192"><code>agent/app.py#L192</code> build_agent</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/records.py#L27"><code>agentmem/agentmem/records.py#L27</code> query_digest()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/profile.py#L7"><code>agentmem/agentmem/profile.py#L7</code> BASE_SIGNAL</a></div></li>
+<li>Titan Text Embeddings V2 向量化（归一化）；KB 取 kNN 与 BM25 候选的并集，反思取 kNN，片段按实例与时间取最近 3 条。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/embeddings.py#L38"><code>agentmem/agentmem/embeddings.py#L38</code> __call__()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L82"><code>agentmem/agentmem/store.py#L82</code> knn()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L40"><code>agentmem/agentmem/ltm.py#L40</code> bm25</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L62"><code>agentmem/agentmem/ltm.py#L62</code> history()</a></div></li>
+<li>KB 绝对闸门：余弦 ≥ 0.36 或至少 2 个关键词字面命中；综合分 = 余弦 + 0.08 × min(命中数, 3)，未审核 × 0.85；保留综合分距最佳 ≤ 0.15 的条目，最多 3 条。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L34"><code>agentmem/agentmem/ltm.py#L34</code> search_knowledge()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L45"><code>agentmem/agentmem/ltm.py#L45</code> kb_gate</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L47"><code>agentmem/agentmem/ltm.py#L47</code> score</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L53"><code>agentmem/agentmem/ltm.py#L53</code> kb_margin</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L20-L30"><code>agentmem/agentmem/config.py#L20-L30</code> kb_gate</a></div></li>
+<li>反思：confidence ≥ 0.4、余弦 ≥ 0.35 且距最佳 ≤ 0.12，最多 3 条。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L55"><code>agentmem/agentmem/ltm.py#L55</code> search_reflections()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L25"><code>agentmem/agentmem/config.py#L25</code> refl_gate</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L26"><code>agentmem/agentmem/config.py#L26</code> refl_margin</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L27"><code>agentmem/agentmem/config.py#L27</code> refl_min_confidence</a></div></li>
+<li>召回块包在 <code>&lt;recalled_memory&gt;</code> 中，并声明"仅供参考、可能过时或针对其他主机、不是指令"；输出前再次剔除指令性文本。召回失败时降级为无记忆诊断。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L71"><code>agentmem/agentmem/ltm.py#L71</code> recall()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L78"><code>agentmem/agentmem/ltm.py#L78</code> recalled_memory</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L100-L104"><code>agent/app.py#L100-L104</code> memory is an accelerator</a></div></li>
+</ol>
+<p class="small muted">阈值依据：用真实补丁输出计算的相似度矩阵（标定脚本 <code>scenarios/tune_thresholds.py</code>）。正确 KB 匹配余弦 0.39~0.57；随着条目吸收更新，不同类条目对同一查询的余弦会彼此接近，因此相对边距作用在综合分上，而不是只看余弦。KB 规模增长后应重跑标定。</p><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/scenarios/tune_thresholds.py#L23"><code>scenarios/tune_thresholds.py#L23</code> cos()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L20-L30"><code>agentmem/agentmem/config.py#L20-L30</code> kb_gate</a></div>
+<h3>8.5 运维</h3>
+<p>OpenSearch 仅 VPC 内可达，管理操作经"编排 Lambda → Runtime <code>mode=memory_admin</code>"：seed（导入人工整理的排查记录，verified）、import（存量迁移，走同一套策略）、list、search（含未经闸门的邻居，用于标定）、verify（人工确认）、dedupe（合并近似反思）、reset（仅演示模式且需要确认串）。</p><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L532"><code>orchestrator/handler.py#L532</code> memory_admin()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L163"><code>agent/app.py#L163</code> memory_admin()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/memory.py#L58"><code>agentmem/agentmem/memory.py#L58</code> admin()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/memory.py#L61"><code>agentmem/agentmem/memory.py#L61</code> op == "reset"</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L113"><code>agentmem/agentmem/ltm.py#L113</code> seed_knowledge()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L132"><code>agentmem/agentmem/ltm.py#L132</code> verify_knowledge()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L281"><code>agentmem/agentmem/strategies.py#L281</code> dedupe_reflections()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/scenarios/seed_memory.py#L25"><code>scenarios/seed_memory.py#L25</code> admin()</a></div>
+<h3>8.6 模块边界：agentmem 库</h3>
+<figure>
+<svg viewBox="0 0 1100 300" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="amb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<rect x="20" y="30" width="380" height="244" rx="8" fill="#fdf1e6" stroke="#ec7211"/>
+<text x="210" y="54" text-anchor="middle" font-weight="600" font-size="13.5">agent/（补丁值守 Agent）</text>
+<rect x="36" y="66" width="348" height="56" rx="6" fill="#fff" stroke="#ec7211"/><text x="210" y="86" text-anchor="middle" font-weight="600">memory_profile.py：PATCH_PROFILE</text><text x="210" y="104" text-anchor="middle" font-size="11.5">措辞 · 信号 / 样板 / 注入规则 · 只从 FIXED 学</text>
+<rect x="36" y="132" width="348" height="72" rx="6" fill="#fff" stroke="#ec7211"/><text x="210" y="154" text-anchor="middle" font-weight="600">app.py：MEM = Memory(config, PATCH_PROFILE)</text><text x="210" y="174" text-anchor="middle" font-size="11.5">MEM.recall · MEM.search · MEM.session_repository</text><text x="210" y="192" text-anchor="middle" font-size="11.5">MEM.process_session · MEM.admin</text>
+<rect x="36" y="214" width="348" height="48" rx="6" fill="#fff" stroke="#ec7211"/><text x="210" y="234" text-anchor="middle" font-weight="600">tools.py：memory_search 由 build_tools 注入</text><text x="210" y="252" text-anchor="middle" font-size="11.5">工具代码不 import 记忆库</text>
+<path d="M400,150 L468,150" stroke="#232f3e" stroke-width="1.5" marker-end="url(#amb)"/>
+<text x="434" y="140" text-anchor="middle" font-size="11.5" fill="#5b6673">单向</text><text x="434" y="170" text-anchor="middle" font-size="11.5" fill="#5b6673">依赖</text>
+<rect x="470" y="30" width="610" height="244" rx="8" fill="#f1edfa" stroke="#6b4fbb"/>
+<text x="775" y="54" text-anchor="middle" font-weight="600" font-size="13.5">agentmem/（独立包 · 不 import Agent 代码）</text>
+<rect x="486" y="66" width="578" height="40" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="775" y="91" text-anchor="middle" font-weight="600">memory.py：Memory 门面（MemoryConfig + Profile → 存储、向量、LTM、STM、策略）</text>
+<rect x="486" y="116" width="186" height="52" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="579" y="136" text-anchor="middle" font-weight="600">LongTermMemory</text><text x="579" y="154" text-anchor="middle" font-size="11.5">ltm.py · 召回 / 写入</text>
+<rect x="682" y="116" width="186" height="52" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="775" y="136" text-anchor="middle" font-weight="600">MemoryStrategies</text><text x="775" y="154" text-anchor="middle" font-size="11.5">strategies.py · 提取 / 合并 / 反思</text>
+<rect x="878" y="116" width="186" height="52" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="971" y="136" text-anchor="middle" font-weight="600">ShortTermMemory</text><text x="971" y="154" text-anchor="middle" font-size="11.5">stm.py · DynamoDB 会话</text>
+<rect x="486" y="178" width="578" height="30" rx="6" fill="#fbfcfd" stroke="#d9dee5"/><text x="775" y="198" text-anchor="middle" font-size="11.5">records.py 纯函数 · config.py 阈值 / from_env · profile.py 中性默认 · embeddings.py · store.py</text>
+<rect x="486" y="218" width="186" height="46" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="4 3"/><text x="579" y="238" text-anchor="middle" font-weight="600">store：Store 协议</text><text x="579" y="256" text-anchor="middle" font-size="11">OpenSearchStore / InMemoryStore</text>
+<rect x="682" y="218" width="186" height="46" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="4 3"/><text x="775" y="238" text-anchor="middle" font-weight="600">embedder：text → 向量</text><text x="775" y="256" text-anchor="middle" font-size="11">BedrockEmbedder / HashEmbedder</text>
+<rect x="878" y="218" width="186" height="46" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="4 3"/><text x="971" y="238" text-anchor="middle" font-weight="600">llm：结构化输出调用</text><text x="971" y="256" text-anchor="middle" font-size="11">strands_llm / 脚本化 LLM</text>
+<text x="20" y="294" font-size="11.5" fill="#5b6673">虚线框为可注入的依赖（生产实现 / 离线测试替身）；只有 stm.py 与 llm.py 依赖 strands-agents；17 个单元测试不需要 OpenSearch、Bedrock 或网络</text>
+</svg>
+<figcaption>图 6-1 记忆模块边界：Agent 只提供领域 Profile 与环境配置，依赖方向单向</figcaption><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/memory.py#L10"><code>agentmem/agentmem/memory.py#L10</code> Memory</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/memory.py#L11"><code>agentmem/agentmem/memory.py#L11</code> __init__()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L19"><code>agentmem/agentmem/ltm.py#L19</code> LongTermMemory</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L143"><code>agentmem/agentmem/strategies.py#L143</code> MemoryStrategies</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L75"><code>agentmem/agentmem/stm.py#L75</code> ShortTermMemory</a></div>
+</figure>
+<ul>
+<li><b>依赖单向</b>：记忆实现为独立 Python 包 <code>agentmem/</code>，从不 import Agent 代码。Agent 一侧只有 <code>agent/memory_profile.py</code>（<code>PATCH_PROFILE</code>）；<code>agent/app.py</code> 在模块级构建 <code>MEM = Memory(MemoryConfig.from_env(), PATCH_PROFILE, api_key_fn=…)</code>，<code>search_memory</code> 工具由 <code>build_tools(…, memory_search=MEM.search)</code> 注入。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/__init__.py#L18"><code>agentmem/agentmem/__init__.py#L18</code> __all__</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/memory_profile.py#L6"><code>agent/memory_profile.py#L6</code> PATCH_PROFILE</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L47"><code>agent/app.py#L47</code> MEM</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L109"><code>agent/app.py#L109</code> MEM.search</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L76"><code>agent/tools.py#L76</code> memory_search</a></div></li>
+<li><b>领域差异只在 Profile</b>：提示词措辞、失败信号词与通用样板、指令性文本规则（直接复用护栏的 <code>_INJECTION</code>）、可学习的结果状态（<code>FIXED</code>）、关键词证据工具、namespace 根 <code>/patch</code>。基础设施与全部阈值在 <code>MemoryConfig</code>，从环境变量读取。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/profile.py#L19"><code>agentmem/agentmem/profile.py#L19</code> Profile</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/memory_profile.py#L28"><code>agent/memory_profile.py#L28</code> _INJECTION</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/memory_profile.py#L19"><code>agent/memory_profile.py#L19</code> learn_statuses</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/memory_profile.py#L21"><code>agent/memory_profile.py#L21</code> evidence_tools</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L7"><code>agentmem/agentmem/config.py#L7</code> MemoryConfig</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/config.py#L38"><code>agentmem/agentmem/config.py#L38</code> from_env()</a></div></li>
+<li><b>可注入、可离线测试</b>：存储（<code>Store</code> 协议）、向量（任意 text → 向量的可调用对象）、LLM（<code>llm(system, prompt, schema)</code>）都由调用方注入；只有 <code>stm.py</code> 与 <code>llm.py</code> 依赖 strands-agents。<code>agentmem.testing</code> 的内存存储与确定性向量让 17 个单元测试无需 OpenSearch、Bedrock 或网络。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L32"><code>agentmem/agentmem/store.py#L32</code> Store</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/embeddings.py#L15"><code>agentmem/agentmem/embeddings.py#L15</code> BedrockEmbedder</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L27"><code>agentmem/agentmem/strategies.py#L27</code> StructuredLLM</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/llm.py#L5"><code>agentmem/agentmem/llm.py#L5</code> strands_llm()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/testing.py#L21"><code>agentmem/agentmem/testing.py#L21</code> InMemoryStore</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/testing.py#L7"><code>agentmem/agentmem/testing.py#L7</code> HashEmbedder</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/tests/conftest.py#L9"><code>agentmem/tests/conftest.py#L9</code> ScriptedLLM</a></div></li>
+<li><b>数据兼容</b>：同一 OpenSearch 索引与文档 ID（<code>KB#{signature}</code>、<code>EPISODE#{sessionId}</code>、<code>REFLECTION#{id}</code>）；<code>query_digest</code> / <code>filter_keywords</code> 与批次 1~6 运行时的实现逐条比对 0 处不一致，Runtime 版本 13 / 14 直接读取已有记忆。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L107"><code>agentmem/agentmem/ltm.py#L107</code> put_kb()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L117"><code>agentmem/agentmem/ltm.py#L117</code> put_episode()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L123"><code>agentmem/agentmem/ltm.py#L123</code> put_reflection()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/records.py#L27"><code>agentmem/agentmem/records.py#L27</code> query_digest()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/records.py#L39"><code>agentmem/agentmem/records.py#L39</code> filter_keywords()</a></div></li>
+<li><b>复用</b>：其他 Agent 写自己的 Profile（措辞、规则、学习状态、证据工具），配独立索引或 namespace 根，即可复用同一套召回、策略与硬规则。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/pyproject.toml#L2"><code>agentmem/pyproject.toml#L2</code> agentmem</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/pyproject.toml#L9"><code>agentmem/pyproject.toml#L9</code> strands</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/profile.py#L19"><code>agentmem/agentmem/profile.py#L19</code> Profile</a></div></li>
+</ul>
+<p><b>端到端验证（批次 7，Runtime 版本 13）</b>：执行 SUCCEEDED。disk-full 预检拦截 → FIXED，会后流水线完整走通：片段写入；KB 合并选择 UpdateMemory，因 <code>disk_full</code> 为 verified 条目只排入 proposal；关键词落地剔除 4 个不在补丁输出中的字符串。ssm-offline → NEEDS_HUMAN：片段写入，已有 reflection 更新（confidence 0.9），按 <code>learn_statuses</code> 规则不写 KB。本轮 rpm-lock / repo-broken 注入的故障未生效、补丁直接成功，这两条路径未在本批次复测。 版本 14 仅把 <code>agent_id</code> 与 admin 任务表改为取自 Profile / <code>MemoryConfig</code>（行为不变），部署后召回结果与访问控制复测与版本 13 一致。</p>
+</section>
+
+<section id="a9"><h2>9. 护栏</h2>
+<table><thead><tr><th style="width:12%">层</th><th>设计</th></tr></thead><tbody>
+<tr><td>1 输入</td><td>命令输出与主机上报字符串（PlatformName、AgentVersion 等）一律视为不可信：脱敏访问密钥 / 密码 / 私钥，剔除指令性文本行，包在 <code>&lt;untrusted_command_output&gt;</code> 中<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L45"><code>agent/guardrails.py#L45</code> sanitize()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L22"><code>agent/guardrails.py#L22</code> _SECRETS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L27"><code>agent/guardrails.py#L27</code> _INJECTION</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L58"><code>agent/guardrails.py#L58</code> untrusted_command_output</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L94"><code>agent/tools.py#L94</code> strip_injection</a></div></td></tr>
+<tr><td>2 工具</td><td>固定工具集，工具不接受实例参数；文档允许列表在代码中二次校验，RepoId 正则校验；每台修复 ≤ 2、重跑 ≤ 1（DynamoDB 原子计数）；全批修复上限熔断；单会话工具调用预算 30，对所有工具生效，另设 request_human_action ≤ 3、search_memory ≤ 5、report_result ≤ 3；离线实例不下发命令<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L76"><code>agent/tools.py#L76</code> build_tools()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L82-L108"><code>agent/guardrails.py#L82-L108</code> before_tool()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L99"><code>agent/guardrails.py#L99</code> REMEDIATE_DOCS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L101"><code>agent/guardrails.py#L101</code> fullmatch</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L50"><code>agent/state.py#L50</code> bump_counter()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L61"><code>agent/state.py#L61</code> bump_batch_remediations()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L20"><code>agent/guardrails.py#L20</code> PER_TOOL_LIMITS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L90"><code>agent/guardrails.py#L90</code> MAX_TOOL_CALLS</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L78"><code>agent/tools.py#L78</code> offline_guard()</a></div></td></tr>
+<tr><td>3 结果校验</td><td><code>report_result(FIXED)</code> 仅在代码观察到本会话 <code>rerun_patch</code> 返回 Success 时接受；报告后会话对自动化关闭；实例已终态时拒绝任何工具调用<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L167"><code>agent/tools.py#L167</code> last_rerun_status</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L86"><code>agent/guardrails.py#L86</code> reported</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L95"><code>agent/guardrails.py#L95</code> TERMINAL</a></div></td></tr>
+<tr><td>4 IAM</td><td>会话标签绑定单实例；无重启、停机、取消命令、RunShellScript；只能经运维 VPCE 使用<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L41"><code>agent/tools.py#L41</code> TargetInstance</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L148"><code>infra/02_iam.py#L148</code> AgentPinnedInstance</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L143"><code>infra/02_iam.py#L143</code> AllowedDocsOnly</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L162"><code>infra/02_iam.py#L162</code> DenyIfNotViaOpsVpce</a></div></td></tr>
+<tr><td>5 记忆</td><td>写入去注入；召回围栏与非指令声明；KB 关键词必须有补丁输出证据；verified 知识只能由人修改<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/records.py#L67"><code>agentmem/agentmem/records.py#L67</code> clean()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/ltm.py#L78"><code>agentmem/agentmem/ltm.py#L78</code> recalled_memory</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/records.py#L39"><code>agentmem/agentmem/records.py#L39</code> filter_keywords()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/strategies.py#L190"><code>agentmem/agentmem/strategies.py#L190</code> human gate</a></div></td></tr>
+<tr><td>6 人工</td><td>重启、回滚、改基线只能生成 <code>APPROVAL#</code> 审批单；审批后由独立角色的 SSM Automation 执行<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L155"><code>agent/tools.py#L155</code> request_human_action()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L78"><code>agent/state.py#L78</code> request_approval()</a></div></td></tr>
+<tr><td>审计</td><td>每次工具调用、护栏拦截、人工接管写 <code>AUDIT#</code><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L110"><code>agent/guardrails.py#L110</code> after_tool()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L76-L80"><code>agent/guardrails.py#L76-L80</code> _deny()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/state.py#L73"><code>agent/state.py#L73</code> audit()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L336"><code>agent/app.py#L336</code> human_takeover</a></div></td></tr>
+</tbody></table>
+<p><b>结果语义</b>：重跑成功即报 FIXED；若从诊断片段历史判断为反复出现的故障，另提永久修复的审批单，状态仍为 FIXED。</p><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L50-L68"><code>agent/app.py#L50-L68</code> SYSTEM_PROMPT</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L155"><code>agent/tools.py#L155</code> request_human_action()</a></div>
+<h3>9.1 Agent 可执行的 SSM 文档</h3>
+<table><thead><tr><th>文档</th><th>行为</th><th>约束</th></tr></thead><tbody>
+<tr><td>PatchDiagnose-Collect</td><td>只读诊断：disk / repos / package_locks / dnf_log / ssm_agent / all；disk 段输出机器可读的根盘余量<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L28"><code>infra/03_ssm_docs.py#L28</code> DIAG</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L111"><code>infra/03_ssm_docs.py#L111</code> allowedValues</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L117"><code>agent/tools.py#L117</code> run_diagnostic()</a></div></td><td>参数为枚举</td></tr>
+<tr><td>PatchRemediate-FreeDisk</td><td>清理 dnf 缓存、journal、临时目录中的大文件<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L58"><code>infra/03_ssm_docs.py#L58</code> FREE_DISK</a></div></td><td>只清理固定目录</td></tr>
+<tr><td>PatchRemediate-DisableRepo</td><td>禁用一个非 Amazon repo<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L68"><code>infra/03_ssm_docs.py#L68</code> DISABLE_REPO</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L71"><code>infra/03_ssm_docs.py#L71</code> REFUSED</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L114"><code>infra/03_ssm_docs.py#L114</code> allowedPattern</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L101"><code>agent/guardrails.py#L101</code> fullmatch</a></div></td><td>RepoId 正则校验；核心 repo 拒绝</td></tr>
+<tr><td>PatchRemediate-ReleaseRpmLock</td><td>终止非包管理进程的 rpm 锁持有者与长时间等待者<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L86"><code>infra/03_ssm_docs.py#L86</code> RELEASE_LOCK</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L90"><code>infra/03_ssm_docs.py#L90</code> SKIP holder</a></div></td><td>跳过 dnf / rpm / yum 进程</td></tr>
+<tr><td>AWS-RunPatchBaseline</td><td>补丁与重跑</td><td>代码固定 Install / NoReboot，工具不暴露参数<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L141"><code>agent/tools.py#L141</code> NoReboot</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L218"><code>orchestrator/handler.py#L218</code> AWS-RunPatchBaseline</a></div></td></tr>
+</tbody></table>
+</section>
+
+<section id="a10"><h2>10. 部署与发布</h2>
+<figure>
+<svg viewBox="0 0 1100 200" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="q6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<rect x="10" y="40" width="160" height="80" rx="6" fill="#f6f8fa" stroke="#8a96a3"/><text x="90" y="66" text-anchor="middle" font-weight="600">代码仓库</text><text x="90" y="86" text-anchor="middle" font-size="11.5">agent/ + agentmem/</text><text x="90" y="104" text-anchor="middle" font-size="11.5">合并即触发</text>
+<rect x="200" y="40" width="180" height="80" rx="6" fill="#fff" stroke="#0b5cad"/><text x="290" y="66" text-anchor="middle" font-weight="600">构建</text><text x="290" y="86" text-anchor="middle" font-size="11.5">docker build</text><text x="290" y="104" text-anchor="middle" font-size="11.5">--platform linux/arm64</text>
+<rect x="410" y="40" width="190" height="80" rx="6" fill="#e8f1fb" stroke="#0b5cad"/><text x="505" y="66" text-anchor="middle" font-weight="600">中国区 ECR</text><text x="505" y="86" text-anchor="middle" font-size="11.5">推送扫描 · 时间戳 tag</text><text x="505" y="104" text-anchor="middle" font-size="11.5">不可变使用</text>
+<rect x="630" y="40" width="200" height="80" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="730" y="66" text-anchor="middle" font-weight="600">update_agent_runtime</text><text x="730" y="86" text-anchor="middle" font-size="11.5">生成不可变版本 vN</text><text x="730" y="104" text-anchor="middle" font-size="11.5">等待 READY</text>
+<rect x="860" y="22" width="230" height="56" rx="6" fill="#fff" stroke="#1d8102"/><text x="975" y="44" text-anchor="middle" font-weight="600">冒烟：selftest / probe / isolation</text><text x="975" y="62" text-anchor="middle" font-size="11.5">权限反向用例 + 模型连通</text>
+<rect x="860" y="94" width="230" height="56" rx="6" fill="#e9f6e6" stroke="#1d8102"/><text x="975" y="116" text-anchor="middle" font-weight="600">切换命名 endpoint</text><text x="975" y="134" text-anchor="middle" font-size="11.5">灰度 / 回滚 = 指回上一版本</text>
+<path d="M170,80 L198,80" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<path d="M380,80 L408,80" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<path d="M600,80 L628,80" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<path d="M830,66 L858,52" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<path d="M975,78 L975,92" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<text x="505" y="150" text-anchor="middle" font-size="11.5" fill="#5b6673">镜像由 Runtime 服务以执行角色的 ECR 权限拉取，不经过客户 VPC</text>
+<text x="10" y="186" font-size="11.5" fill="#5b6673">建议用 CodeBuild / CodePipeline 串起：构建 → ECR → update_agent_runtime → 冒烟 → 切命名 endpoint；本次验证用脚本 infra/06_runtime.py 完成同样步骤</text>
+</svg>
+<figcaption>图 7 发布流水线</figcaption><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L21"><code>infra/06_runtime.py#L21</code> build_and_push()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L62"><code>infra/06_runtime.py#L62</code> update_agent_runtime</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L71"><code>infra/06_runtime.py#L71</code> READY</a></div>
+</figure>
+<ul>
+<li><b>镜像</b>：<code>docker build --platform linux/arm64</code>，构建上下文为项目根目录（<code>-f agent/Dockerfile .</code>，根目录 <code>.dockerignore</code> 只放行 <code>agent/</code> 与 <code>agentmem/</code>，不含测试），<code>agentmem</code> 在镜像中以普通包安装；python:3.12-slim；非 root；监听 8080（<code>/invocations</code>、<code>/ping</code>）；依赖版本固定。生产建议把基础镜像同步到中国区 ECR。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/Dockerfile#L2-L13"><code>agent/Dockerfile#L2-L13</code> FROM</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/Dockerfile#L11"><code>agent/Dockerfile#L11</code> USER agent</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L35"><code>infra/06_runtime.py#L35</code> linux/arm64</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L18"><code>infra/06_runtime.py#L18</code> ROOT</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/Dockerfile#L8"><code>agent/Dockerfile#L8</code> pip install</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/.dockerignore#L3"><code>.dockerignore#L3</code></a></div></li>
+<li><b>仓库</b>：同账号中国区 ECR，scanOnPush；时间戳 tag，不覆盖。镜像由 Runtime 服务以执行角色的 ECR 权限拉取，不经过客户 VPC。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L24"><code>infra/06_runtime.py#L24</code> scanOnPush</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L33"><code>infra/06_runtime.py#L33</code> time.strftime</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L36"><code>infra/06_runtime.py#L36</code> push</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L62"><code>infra/02_iam.py#L62</code> Ecr</a></div></li>
+<li><b>版本与 endpoint</b>：每次 <code>update_agent_runtime</code> 生成不可变版本，DEFAULT endpoint 跟随最新版本；生产流量走固定到版本的命名 endpoint，灰度与回滚通过切换 endpoint 指向完成。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L62"><code>infra/06_runtime.py#L62</code> update_agent_runtime</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L65"><code>infra/06_runtime.py#L65</code> create_agent_runtime</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L52"><code>infra/06_runtime.py#L52</code> containerConfiguration</a></div></li>
+<li><b>配置</b>：非敏感配置走环境变量；密钥不进镜像也不进环境变量（运行时 <code>env_has_aws_keys=false</code>）。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L45"><code>infra/06_runtime.py#L45</code> env</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L59"><code>infra/06_runtime.py#L59</code> environmentVariables</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L295"><code>agent/app.py#L295</code> env_has_aws_keys</a></div></li>
+<li><b>发布顺序</b>：创建或更新 Runtime → 等待 READY → 挂资源策略 → 先验证 VPC 外调用被拒，再验证 VPC 内调用成功 → 冒烟（selftest / probe / isolation）→ 切命名 endpoint。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L71"><code>infra/06_runtime.py#L71</code> READY</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/06_runtime.py#L91"><code>infra/06_runtime.py#L91</code> put_resource_policy</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/scenarios/verify_access.py#L19"><code>scenarios/verify_access.py#L19</code> outside()</a></div></li>
+<li><b>账号配置</b>：账号 ID 与本地 profile 放在 <code>common/accounts.json</code>（由 <code>common/accounts.example.json</code> 复制，不入库），代码与文档中不出现账号或资源 ID。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/common/config.py#L9"><code>common/config.py#L9</code> _ACCOUNTS_FILE</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/common/accounts.example.json#L5"><code>common/accounts.example.json#L5</code> spoke_profiles</a></div></li>
+<li><b>其他资源</b>：Lambda 以 zip 部署（架构只在创建时指定）；状态机由 JSON 模板生成；SSM 文档部署到每个业务账号；全部基础设施脚本幂等，清理脚本默认只预览。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/07_orchestrator.py#L41"><code>infra/07_orchestrator.py#L41</code> create_function</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/07_orchestrator.py#L53"><code>infra/07_orchestrator.py#L53</code> statemachine.json</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/03_ssm_docs.py#L119"><code>infra/03_ssm_docs.py#L119</code> main()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/99_cleanup.py#L536"><code>infra/99_cleanup.py#L536</code> --yes</a></div></li>
+</ul>
+</section>
+
+<section id="a11"><h2>11. 会话隔离</h2>
+<figure>
+<svg viewBox="0 0 1100 200" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<rect x="10" y="20" width="1080" height="170" rx="8" fill="#fbfcfd" stroke="#d9dee5"/>
+<rect x="30" y="40" width="200" height="130" rx="6" fill="#fdf1e6" stroke="#ec7211" stroke-width="1.5"/>
+<text x="130" y="64" text-anchor="middle" font-weight="600">平台：独立 microVM</text>
+<text x="130" y="90" text-anchor="middle" font-size="12">独立 CPU / 内存 / 文件系统</text>
+<text x="130" y="112" text-anchor="middle" font-size="12">会话间不共享状态</text>
+<text x="130" y="134" text-anchor="middle" font-size="12">结束即销毁</text>
+<rect x="250" y="40" width="200" height="130" rx="6" fill="#fff" stroke="#0b5cad"/>
+<text x="350" y="64" text-anchor="middle" font-weight="600">① 会话粒度</text>
+<text x="350" y="90" text-anchor="middle" font-size="12">session = 批次 + 实例</text>
+<text x="350" y="112" text-anchor="middle" font-size="12">一台实例一个会话</text>
+<text x="350" y="134" text-anchor="middle" font-size="12">上下文不混用</text>
+<rect x="470" y="40" width="200" height="130" rx="6" fill="#fff" stroke="#0b5cad"/>
+<text x="570" y="64" text-anchor="middle" font-weight="600">② 运行时归属校验</text>
+<text x="570" y="90" text-anchor="middle" font-size="12">load_ctx 查 DynamoDB</text>
+<text x="570" y="112" text-anchor="middle" font-size="12">实例必须分配给本会话</text>
+<text x="570" y="134" text-anchor="middle" font-size="12">payload 参数不被信任</text>
+<text x="570" y="156" text-anchor="middle" font-size="12">每次工具调用前再校验</text>
+<rect x="690" y="40" width="190" height="130" rx="6" fill="#fff" stroke="#1d8102"/>
+<text x="785" y="64" text-anchor="middle" font-weight="600">③ IAM 凭证绑定</text>
+<text x="785" y="90" text-anchor="middle" font-size="12">会话标签 TargetInstance</text>
+<text x="785" y="112" text-anchor="middle" font-size="12">Spoke 凭证只对这一台</text>
+<text x="785" y="134" text-anchor="middle" font-size="12">只能经运维 VPCE 使用</text>
+<rect x="900" y="40" width="170" height="130" rx="6" fill="#fff" stroke="#6b4fbb"/>
+<text x="985" y="64" text-anchor="middle" font-weight="600">④ 记忆与身份</text>
+<text x="985" y="90" text-anchor="middle" font-size="12">STM 按 sessionId 分区</text>
+<text x="985" y="112" text-anchor="middle" font-size="12">接管：同一 sessionId</text>
+<text x="985" y="134" text-anchor="middle" font-size="12">+ runtimeUserId=操作人</text>
+<text x="985" y="156" text-anchor="middle" font-size="12">workload token 按用户签发</text>
+</svg>
+<figcaption>图 8 会话隔离</figcaption><div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L91"><code>orchestrator/handler.py#L91</code> session_id()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L218"><code>agent/app.py#L218</code> load_ctx()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L41"><code>agent/tools.py#L41</code> TargetInstance</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L12"><code>agentmem/agentmem/stm.py#L12</code> DynamoDBSessionRepository</a></div>
+</figure>
+<ul>
+<li><b>平台</b>：每个 runtimeSessionId 一个 microVM（独立 CPU、内存、文件系统），结束后销毁。实测中 A / B 两个会话的文件与内存互不可见，StopRuntimeSession 后再调用得到全新 microVM。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L538"><code>orchestrator/handler.py#L538</code> isolation_test()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L282"><code>agent/app.py#L282</code> isolation_probe()</a></div></li>
+<li><b>注意</b>：microVM 从同一个已初始化的快照启动，各 microVM 的 <code>boot_id</code> 与进程启动时间一致，不能用它们区分 microVM；隔离性以"状态不串"验证。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L292"><code>agent/app.py#L292</code> boot_id</a></div></li>
+<li><b>方案层 4 层</b>：会话粒度为批次 + 实例；<code>load_ctx</code> 以 DynamoDB 校验实例分配给本会话、不信任 payload，护栏在每次工具调用前再校验；IAM 会话标签绑定单实例；STM 按 sessionId 分区，接管时 workload token 按操作人签发。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L91"><code>orchestrator/handler.py#L91</code> session_id()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L218"><code>agent/app.py#L218</code> load_ctx()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L93"><code>agent/guardrails.py#L93</code> session_id</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L41"><code>agent/tools.py#L41</code> TargetInstance</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/stm.py#L18"><code>agentmem/agentmem/stm.py#L18</code> SESSION#</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L478"><code>orchestrator/handler.py#L478</code> user_id</a></div></li>
+<li><b>停止语义</b>：StopRuntimeSession 之后 microVM 终止需要数秒，期间仍可能产生写入；因此编排层先把实例写成终态，再停止会话，由护栏的"实例已终态"检查拦截后续动作。<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L258"><code>orchestrator/handler.py#L258</code> _check_agent()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L383"><code>orchestrator/handler.py#L383</code> abort()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/guardrails.py#L95"><code>agent/guardrails.py#L95</code> TERMINAL</a></div></li>
+</ul>
+</section>
+
+<section id="a12"><h2>12. 可靠性与规模</h2>
+<table><thead><tr><th style="width:22%">关注点</th><th>设计</th></tr></thead><tbody>
+<tr><td>大批量下发</td><td>按 ≤ 50 台一个命令分片；实例发现与 PingStatus 查询分页<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L216"><code>orchestrator/handler.py#L216</code> chunks</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L116"><code>orchestrator/handler.py#L116</code> describe_instances</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L182"><code>orchestrator/handler.py#L182</code> ping_statuses()</a></div></td></tr>
+<tr><td>挂起与排队</td><td>单台截止从首次 InProgress 起算；waveHardTimeout 覆盖排队时间；只取消超时的那一台<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L246"><code>orchestrator/handler.py#L246</code> inprogress_at</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L251"><code>orchestrator/handler.py#L251</code> wave_hard_deadline</a></div></td></tr>
+<tr><td>派发可靠性</td><td>条件写占位保证幂等；dispatchGrace 未认领重排，3 次后转人工<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L298"><code>orchestrator/handler.py#L298</code> attribute_not_exists</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L316"><code>orchestrator/handler.py#L316</code> _reap_stale_dispatch()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L270"><code>orchestrator/handler.py#L270</code> _release_dispatch()</a></div></td></tr>
+<tr><td>单台故障隔离</td><td>每台独立异常捕获，连续 5 次出错转人工；Tick 不失败<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L322"><code>orchestrator/handler.py#L322</code> _safe()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L34"><code>orchestrator/handler.py#L34</code> MAX_HOST_ERRORS</a></div></td></tr>
+<tr><td>批次兜底</td><td>Catch → Abort；batchTimeout；状态机总超时 8 小时<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L66"><code>orchestrator/statemachine.json#L66</code> Abort</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L375"><code>orchestrator/handler.py#L375</code> batch_deadline</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/statemachine.json#L3"><code>orchestrator/statemachine.json#L3</code> TimeoutSeconds</a></div></td></tr>
+<tr><td>会话创建限流</td><td>指数退避 + 抖动，最多 6 次；maxAgents 控制并发。实测新建会话 100 个 / 50 并发全部成功、零重试，P50 约 1.7 秒<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L420"><code>orchestrator/handler.py#L420</code> invoke_runtime()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L436"><code>orchestrator/handler.py#L436</code> random</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L482"><code>orchestrator/handler.py#L482</code> selftest()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/scenarios/session_burst.py#L13"><code>scenarios/session_burst.py#L13</code> selftest</a></div></td></tr>
+<tr><td>模型调用</td><td>Bedrock 客户端自适应重试（最多 8 次）、读超时 300 秒；记忆提取失败不影响诊断结果<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L92"><code>agent/app.py#L92</code> make_model()</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L207"><code>agent/app.py#L207</code> memory must never fail the diagnosis</a></div></td></tr>
+<tr><td>记忆可用性</td><td>召回失败降级为无记忆诊断；写入在后台，失败仅记录<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L100-L104"><code>agent/app.py#L100-L104</code> memory is an accelerator</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L207"><code>agent/app.py#L207</code> memory must never fail the diagnosis</a></div></td></tr>
+<tr><td>报告完整性</td><td>Report 等待每个 Agent 写完指标与记忆提取结果后再生成（最多 300 秒）<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L348"><code>orchestrator/handler.py#L348</code> POSTPROC_GRACE</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L442"><code>orchestrator/handler.py#L442</code> report()</a></div></td></tr>
+<tr><td>配额</td><td>按账号评估 Runtime 并发会话、会话创建速率、SSM SendCommand 速率与 Bedrock 吞吐；按 75~100 台、失败率 5%~10% 估算，同时诊断约 5~10 个会话</td></tr>
+</tbody></table>
+</section>
+
+<section id="a13"><h2>13. 已知残余风险</h2>
+<table><thead><tr><th style="width:28%">风险</th><th>原因</th><th>缓解</th></tr></thead><tbody>
+<tr><td>Agent 会话可读取同账号其他实例的命令输出</td><td><code>ListCommandInvocations</code> / <code>GetCommandInvocation</code> 只支持 <code>*</code> 资源<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L136"><code>infra/02_iam.py#L136</code> ListCommandInvocations</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/02_iam.py#L139"><code>infra/02_iam.py#L139</code> Diagnose</a></div></td><td>按敏感度拆分业务账号；诊断文档输出已脱敏；必要时由编排层代读，只交付本实例输出</td></tr>
+<tr><td>IAM 无法约束 SSM 文档参数</td><td>RebootOption 等参数只能由代码固定<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/tools.py#L141"><code>agent/tools.py#L141</code> NoReboot</a></div></td><td>使用固定参数的包装文档，并从允许列表中去掉直接调用 AWS-RunPatchBaseline</td></tr>
+<tr><td>OpenSearch 单节点、零副本、未开启 FGAC</td><td>同账号具有 <code>es:*</code> 的管理员身份也可访问<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/08_opensearch.py#L40"><code>infra/08_opensearch.py#L40</code> ClusterConfig</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/store.py#L10"><code>agentmem/agentmem/store.py#L10</code> number_of_replicas</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/08_opensearch.py#L34"><code>infra/08_opensearch.py#L34</code> policy</a></div></td><td>3 AZ + 专用主节点 + 自动快照；开启 FGAC，只映射 Runtime 角色</td></tr>
+<tr><td>接管操作人身份由门户提供</td><td>runtimeUserId 不进入容器，操作人由请求负载携带<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L335"><code>agent/app.py#L335</code> operator</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agent/app.py#L337"><code>agent/app.py#L337</code> runtime-user-id</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/orchestrator/handler.py#L468"><code>orchestrator/handler.py#L468</code> portal_chat()</a></div></td><td>门户从 Identity Center 会话取身份，并以该身份的角色调用</td></tr>
+<tr><td>模型出公网</td><td>中国区无 Bedrock<div class="crefs">代码：<a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/infra/01_network.py#L59"><code>infra/01_network.py#L59</code> create_nat_gateway</a> · <a class="cref" href="https://github.com/xiehust/agentcore_demo/blob/main/25-patch-manager-china/agentmem/agentmem/embeddings.py#L15"><code>agentmem/agentmem/embeddings.py#L15</code> BedrockEmbedder</a></div></td><td>出口代理 + 域名允许列表，或 VPC 内模型</td></tr>
+</tbody></table>
+</section>
+
+<section id="a14"><h2>14. 生产化路线</h2>
+<ol class="steps">
+<li><b>模型与合规</b>：完成数据出境与模型评估，确定推理与向量模型；优先 VPC 内模型以去掉 NAT。</li>
+<li><b>身份与门户</b>：Identity Center 对接企业 IdP，按值班组分配 permission set；VPC 内门户实现审批与接管。</li>
+<li><b>审批执行</b>：审批通过后由独立角色的 SSM Automation 执行高危动作。</li>
+<li><b>双区</b>：北京与宁夏各部署一套运维 VPC、终端节点与 Runtime；Spoke 策略中的 <code>aws:SourceVpce</code> 列出两区终端节点。</li>
+<li><b>扩大自愈范围</b>：把现有自动化脚本沉淀为参数受限的 SSM 文档，逐个加入允许列表，并为每类故障建立注入回归用例。</li>
+<li><b>记忆治理</b>：KB 人工确认流程、proposal 定期复核、规模增长后重跑阈值标定；AgentCore Memory 在中国区可用后按 namespace 迁移。</li>
+<li><b>可观测性</b>：失败率、自动修复率、失败 → 派发延迟、诊断耗时、护栏拦截、召回命中率的 CloudWatch 指标与告警。</li>
+<li><b>发布</b>：CodeBuild / CodePipeline 流水线 + 命名 endpoint 灰度。</li>
+</ol>
+</section>
+</main></div>
+<footer>本文描述的设计均已在 AWS 中国区（宁夏）真实环境验证；验证数据见配套的方案介绍与技术验证报告。中国区服务可用性以 AWS 官方公告为准。</footer>
+</body>
+</html>

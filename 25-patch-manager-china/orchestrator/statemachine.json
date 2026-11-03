@@ -1,0 +1,80 @@
+{
+  "Comment": "Patch batch: Patch Manager patches each wave with one SendCommand per <=50 hosts; every 30 s a tick dispatches one AgentCore session per newly failed host (pipelined, <= maxAgents at once). Any error or the batch timeout goes to Abort (all non-terminal hosts -> NEEDS_HUMAN, agents stopped) and still writes the REPORT.",
+  "TimeoutSeconds": 28800,
+  "StartAt": "Init",
+  "States": {
+    "Init": {
+      "Type": "Task", "Resource": "${LAMBDA}",
+      "Parameters": {"action": "init", "in.$": "$"},
+      "Retry": [{"ErrorEquals": ["Lambda.TooManyRequestsException", "Lambda.ServiceException"], "IntervalSeconds": 5, "MaxAttempts": 3, "BackoffRate": 2}],
+      "Catch": [{"ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "Abort"}],
+      "ResultPath": "$.init", "Next": "Waves"
+    },
+    "Waves": {
+      "Type": "Map", "ItemsPath": "$.init.waves", "MaxConcurrency": 1, "ResultPath": null,
+      "Comment": "canary first, then main; a failed canary sets HALTED so the main wave is skipped (agents still diagnose the canary)",
+      "Catch": [{"ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "Abort"}],
+      "Iterator": {
+        "StartAt": "SendPatch",
+        "States": {
+          "SendPatch": {"Type": "Task", "Resource": "${LAMBDA}",
+                        "Parameters": {"action": "send_patch", "in.$": "$"},
+                        "Retry": [{"ErrorEquals": ["States.TaskFailed", "Lambda.TooManyRequestsException"], "IntervalSeconds": 10,
+                                   "MaxAttempts": 2, "BackoffRate": 2, "JitterStrategy": "FULL"}],
+                        "Next": "WaitTick"},
+          "WaitTick": {"Type": "Wait", "Seconds": 30, "Next": "Tick"},
+          "Tick": {"Type": "Task", "Resource": "${LAMBDA}",
+                   "Parameters": {"action": "tick", "in.$": "$"},
+                   "Retry": [{"ErrorEquals": ["States.TaskFailed", "Lambda.TooManyRequestsException"], "IntervalSeconds": 5,
+                              "MaxAttempts": 3, "BackoffRate": 2, "JitterStrategy": "FULL"}],
+                   "Next": "WaveDone?"},
+          "WaveDone?": {"Type": "Choice", "Choices": [
+                          {"Variable": "$.batchTimedOut", "BooleanEquals": true, "Next": "WaveBatchTimeout"},
+                          {"Variable": "$.waveDone", "BooleanEquals": true, "Next": "CanaryGate"}], "Default": "WaitTick"},
+          "WaveBatchTimeout": {"Type": "Fail", "Error": "BatchTimeout", "Cause": "batchTimeout reached while a wave was still patching"},
+          "CanaryGate": {"Type": "Choice", "Choices": [{"And": [{"Variable": "$.isCanary", "BooleanEquals": true},
+                         {"Variable": "$.failureRate", "NumericGreaterThan": 0}], "Next": "Halt"}], "Default": "WaveOK"},
+          "Halt": {"Type": "Task", "Resource": "${LAMBDA}",
+                   "Parameters": {"action": "halt", "batchId.$": "$.batchId", "failureRate.$": "$.failureRate"}, "Next": "WaveOK"},
+          "WaveOK": {"Type": "Succeed"}
+        }
+      },
+      "Next": "WaitDrain"
+    },
+    "WaitDrain": {"Type": "Wait", "Seconds": 30, "Next": "Drain"},
+    "Drain": {
+      "Type": "Task", "Resource": "${LAMBDA}",
+      "Comment": "no more patching: keep dispatching queued hosts, re-queueing unclaimed dispatches and timing out stuck agents until every host is terminal",
+      "Parameters": {"action": "tick", "in.$": "$.init"},
+      "Retry": [{"ErrorEquals": ["States.TaskFailed", "Lambda.TooManyRequestsException"], "IntervalSeconds": 5,
+                 "MaxAttempts": 3, "BackoffRate": 2, "JitterStrategy": "FULL"}],
+      "Catch": [{"ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "Abort"}],
+      "ResultPath": "$.drain", "Next": "Drained?"
+    },
+    "Drained?": {"Type": "Choice", "Choices": [
+                   {"Variable": "$.drain.drained", "BooleanEquals": true, "Next": "Report"},
+                   {"Variable": "$.drain.batchTimedOut", "BooleanEquals": true, "Next": "DrainTimeout"}], "Default": "WaitDrain"},
+    "DrainTimeout": {"Type": "Pass", "Result": {"Error": "BatchTimeout", "Cause": "batchTimeout reached while agents were still diagnosing"},
+                     "ResultPath": "$.error", "Next": "Abort"},
+    "Report": {"Type": "Task", "Resource": "${LAMBDA}", "Parameters": {"action": "report", "batchId.$": "$.init.batchId"},
+               "Retry": [{"ErrorEquals": ["States.TaskFailed"], "IntervalSeconds": 5, "MaxAttempts": 3, "BackoffRate": 2}],
+               "ResultPath": "$.report", "Next": "Halted?"},
+    "Halted?": {"Type": "Choice", "Choices": [{"Variable": "$.report.halted", "BooleanEquals": true, "Next": "CanaryCircuitBreaker"}],
+                "Default": "Done"},
+    "CanaryCircuitBreaker": {"Type": "Fail", "Error": "CanaryCircuitBreaker", "Cause": "canary wave failed; main wave skipped, see REPORT item"},
+    "Done": {"Type": "Pass", "OutputPath": "$.report", "End": true},
+    "Abort": {
+      "Type": "Task", "Resource": "${LAMBDA}",
+      "Comment": "fail-safe: every non-terminal host -> NEEDS_HUMAN, running agents stopped, pending patch invocations cancelled",
+      "Parameters": {"action": "abort", "batchId.$": "$.batchId", "error.$": "$.error"},
+      "Retry": [{"ErrorEquals": ["States.ALL"], "IntervalSeconds": 5, "MaxAttempts": 3, "BackoffRate": 2}],
+      "Catch": [{"ErrorEquals": ["States.ALL"], "ResultPath": "$.abortError", "Next": "AbortReport"}],
+      "ResultPath": "$.abort", "Next": "AbortReport"
+    },
+    "AbortReport": {"Type": "Task", "Resource": "${LAMBDA}", "Parameters": {"action": "report", "batchId.$": "$.batchId"},
+                    "Retry": [{"ErrorEquals": ["States.ALL"], "IntervalSeconds": 5, "MaxAttempts": 3, "BackoffRate": 2}],
+                    "Catch": [{"ErrorEquals": ["States.ALL"], "ResultPath": "$.reportError", "Next": "Aborted"}],
+                    "ResultPath": "$.report", "Next": "Aborted"},
+    "Aborted": {"Type": "Fail", "Error": "BatchAborted", "Cause": "see REPORT item (aborted=true, abort_reason)"}
+  }
+}
