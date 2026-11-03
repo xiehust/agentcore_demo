@@ -11,4 +11,8 @@ for file in README.md CHANGELOG.md docs/FAQ.md; do
     fi
 done
 
+if [ "$status" -eq 0 ]; then
+    printf 'all docs present\n'
+fi
+
 exit "$status"
