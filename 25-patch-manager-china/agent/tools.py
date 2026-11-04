@@ -15,8 +15,17 @@ PARTITION = "aws-cn" if REGION.startswith("cn-") else "aws"
 SPOKE_ROLE = os.environ.get("SPOKE_ROLE", "PatchAgentSpokeRole")
 EXTERNAL_ID = os.environ.get("EXTERNAL_ID", "patchdemo-agent-dev")
 DIAG_DOC = "PatchDiagnose-Collect"
-REMEDIATE_DOCS = ("PatchRemediate-FreeDisk", "PatchRemediate-DisableRepo", "PatchRemediate-ReleaseRpmLock")
-RERUN_TIMEOUT = int(os.environ.get("RERUN_TIMEOUT", "600"))
+# Per-platform allowlists (code-level, enforced again by the guardrail). FreeDisk / Diagnose carry one step per platform.
+REMEDIATE_DOCS = {
+    "linux": ("PatchRemediate-FreeDisk", "PatchRemediate-DisableRepo", "PatchRemediate-ReleaseRpmLock"),
+    "windows": ("PatchRemediate-FreeDisk", "PatchRemediate-StartUpdateServices"),
+}
+RERUN_TIMEOUT = {"linux": int(os.environ.get("RERUN_TIMEOUT", "600")),
+                 "windows": int(os.environ.get("RERUN_TIMEOUT_WINDOWS", "3000"))}  # Windows cumulative updates take 20-40 min
+
+
+def remediate_docs(platform: str) -> tuple:
+    return REMEDIATE_DOCS.get(platform, ())
 
 
 @dataclass
@@ -29,6 +38,7 @@ class InstanceCtx:
     patch_status: str
     name: str = ""
     mode: str = "diagnose"
+    platform: str = "linux"  # "linux" | "windows", recorded by the orchestrator from EC2 at batch init
     _spoke: boto3.Session | None = None
     _spoke_exp: float = 0
 
@@ -45,13 +55,20 @@ class InstanceCtx:
         return self._spoke
 
 
+def _ran(p: dict) -> bool:
+    """False for the step of the other platform: SSM reports it as Skipped, or as Success with this message."""
+    return p.get("Status") != "Skipped" and not str(p.get("Output", "")).startswith("Step execution skipped")
+
+
 def ping_status(ctx: InstanceCtx) -> dict:
     info = ctx.spoke().client("ssm").describe_instance_information(
         Filters=[{"Key": "InstanceIds", "Values": [ctx.instance_id]}])["InstanceInformationList"]
     return info[0] if info else {"PingStatus": "NotRegistered"}
 
 
-def run_document(ctx: InstanceCtx, document: str, params: dict, timeout: int = 180, plugin: str | None = "run") -> dict:
+def run_document(ctx: InstanceCtx, document: str, params: dict, timeout: int = 180) -> dict:
+    """Send one allowlisted document to the bound instance and wait. Output of the steps that ran (the step of the
+    other platform is Skipped by its precondition and dropped)."""
     ssm = ctx.spoke().client("ssm")
     cmd = ssm.send_command(InstanceIds=[ctx.instance_id], DocumentName=document, Parameters=params, TimeoutSeconds=60,
                            Comment=f"patch-agent {ctx.batch_id}")["Command"]["CommandId"]
@@ -68,8 +85,8 @@ def run_document(ctx: InstanceCtx, document: str, params: dict, timeout: int = 1
         status = "TimedOutByAgent"
         inv = ssm.list_command_invocations(CommandId=cmd, InstanceId=ctx.instance_id, Details=True)["CommandInvocations"]
     plugins = inv[0].get("CommandPlugins", []) if inv else []
-    out = "\n".join(f"--- {p['Name']} ({p.get('Status')}) ---\n{p.get('Output', '')}" for p in plugins
-                    if plugin is None or p["Name"] == plugin or len(plugins) == 1)
+    ran = [p for p in plugins if _ran(p)] or plugins
+    out = "\n".join(f"--- {p['Name']} ({p.get('Status')}) ---\n{p.get('Output', '')}" for p in ran)
     return {"command_id": cmd, "status": status, "output": out[-6000:]}
 
 
@@ -109,23 +126,17 @@ def build_tools(ctx: InstanceCtx, guard, memory_search=None) -> list:
             return "invocation not found"
         parts = [f"status={inv[0]['Status']} detail={inv[0].get('StatusDetails')}"]
         for p in inv[0].get("CommandPlugins", []):
-            if p.get("Output") or p.get("Status") not in ("Skipped",):
+            if _ran(p):
                 parts.append(f"--- {p['Name']} ({p.get('Status')}, rc={p.get('ResponseCode')}) ---\n{p.get('Output', '')[-3500:]}")
         return sanitize("\n".join(parts), guard.flags)
 
-    @tool
-    def run_diagnostic(check: Literal["disk", "repos", "package_locks", "dnf_log", "ssm_agent", "all"]) -> str:
-        """Run the read-only PatchDiagnose-Collect document. check selects the section."""
+    def _diagnose(check: str) -> str:
         if (msg := offline_guard()):
             return msg
         r = run_document(ctx, DIAG_DOC, {"Check": [check]})
         return sanitize(f"status={r['status']}\n{r['output']}", guard.flags)
 
-    @tool
-    def run_remediation(document: Literal["PatchRemediate-FreeDisk", "PatchRemediate-DisableRepo", "PatchRemediate-ReleaseRpmLock"],
-                        repo_id: str = "") -> str:
-        """Run ONE allowlisted remediation document. repo_id is required only for PatchRemediate-DisableRepo
-        (the [section] id of the broken repo). Max 2 remediations per instance."""
+    def _remediate(document: str, repo_id: str = "") -> str:
         if (msg := offline_guard()):
             return msg
         params = {"RepoId": [repo_id]} if document == "PatchRemediate-DisableRepo" else {}
@@ -133,13 +144,45 @@ def build_tools(ctx: InstanceCtx, guard, memory_search=None) -> list:
         state.audit(ctx.batch_id, ctx.instance_id, "remediation", document=document, repo_id=repo_id, status=r["status"])
         return sanitize(f"status={r['status']}\n{r['output']}", guard.flags)
 
+    if ctx.platform == "windows":
+        @tool
+        def run_diagnostic(check: Literal["disk", "update_services", "pending_reboot", "update_source", "patch_log", "ssm_agent", "all"]) -> str:
+            """Run the read-only PatchDiagnose-Collect document (Windows step). check selects the section:
+            disk (C: free space, large temp files, SoftwareDistribution size), update_services (wuauserv/bits/cryptsvc/
+            TrustedInstaller/msiserver state and start mode, installer processes), pending_reboot (CBS / WU reboot flags),
+            update_source (WSUS policy and TCP reachability of the update source), patch_log (Patch Manager log tail and
+            WindowsUpdateClient error events), ssm_agent."""
+            return _diagnose(check)
+
+        @tool
+        def run_remediation(document: Literal["PatchRemediate-FreeDisk", "PatchRemediate-StartUpdateServices"]) -> str:
+            """Run ONE allowlisted Windows remediation document. Max 2 remediations per instance.
+            PatchRemediate-FreeDisk: delete >500MB files under C:\\Windows\\Temp and C:\\Temp, temp files older than 7 days,
+            and the SoftwareDistribution\\Download cache.
+            PatchRemediate-StartUpdateServices: set wuauserv / bits / cryptsvc / TrustedInstaller (Windows Modules Installer)
+            from Disabled to Manual and start them.
+            There is NO remediation for the update source (WSUS / proxy policy): that is a human decision."""
+            return _remediate(document)
+    else:
+        @tool
+        def run_diagnostic(check: Literal["disk", "repos", "package_locks", "dnf_log", "ssm_agent", "all"]) -> str:
+            """Run the read-only PatchDiagnose-Collect document. check selects the section."""
+            return _diagnose(check)
+
+        @tool
+        def run_remediation(document: Literal["PatchRemediate-FreeDisk", "PatchRemediate-DisableRepo", "PatchRemediate-ReleaseRpmLock"],
+                            repo_id: str = "") -> str:
+            """Run ONE allowlisted remediation document. repo_id is required only for PatchRemediate-DisableRepo
+            (the [section] id of the broken repo). Max 2 remediations per instance."""
+            return _remediate(document, repo_id)
+
     @tool
     def rerun_patch() -> str:
         """Re-run AWS-RunPatchBaseline (Install, NoReboot) on this instance only and wait for the result. Max 1 per instance."""
         if (msg := offline_guard()):
             return msg
         r = run_document(ctx, "AWS-RunPatchBaseline", {"Operation": ["Install"], "RebootOption": ["NoReboot"]},
-                         timeout=RERUN_TIMEOUT, plugin="PatchLinux")
+                         timeout=RERUN_TIMEOUT.get(ctx.platform, RERUN_TIMEOUT["linux"]))
         guard.last_rerun_status = r["status"]
         state.update_instance(ctx.batch_id, ctx.instance_id, rerun_command_id=r["command_id"], rerun_status=r["status"])
         return sanitize(f"rerun status={r['status']}\n{r['output'][-3000:]}", guard.flags)
@@ -162,7 +205,8 @@ def build_tools(ctx: InstanceCtx, guard, memory_search=None) -> list:
     @tool
     def report_result(status: Literal["FIXED", "NEEDS_HUMAN"], signature: str, root_cause: str, summary: str, actions_taken: str) -> str:
         """Final report, call exactly once at the end.
-        signature: short snake_case failure class, e.g. disk_full, repo_unreachable, rpm_lock_held, ssm_agent_offline.
+        signature: short snake_case failure class, e.g. disk_full, repo_unreachable, rpm_lock_held, ssm_agent_offline,
+        wsus_unreachable, windows_modules_installer_disabled.
         FIXED is only accepted after a successful rerun_patch."""
         if status == "FIXED" and guard.last_rerun_status != "Success":
             return (f"REJECTED: FIXED requires a successful rerun_patch in this session (observed: {guard.last_rerun_status}). "

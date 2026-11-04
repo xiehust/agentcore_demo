@@ -257,6 +257,35 @@ MEM.process_session(strands_llm(lambda: BedrockModel(model_id=EXTRACT_MODEL_ID))
 
 未修（生产建议）：`portal_chat` 的操作人由调用方填写（demo 中 Lambda 代表门户；生产门户应从 Identity Center 身份取）；OpenSearch 单节点零副本（生产 3 AZ）；`ListCommandInvocations` 只能 `*`（§3.2 残余风险）。
 
+## 9A. Windows 实例支持
+
+编排、权限、Runtime、会话隔离、记忆与"必须真实重跑成功才算 FIXED"全部复用，只在平台相关的部分分支：
+
+| 环节 | Linux | Windows |
+|---|---|---|
+| 平台识别 | 批次 init 从 EC2 `Platform` 字段写入 `platform`，Agent 据此选择工具集与提示词 | 同左 |
+| 诊断文档 `PatchDiagnose-Collect` | `aws:runShellScript` step：disk / repos / package_locks / dnf_log / ssm_agent | `aws:runPowerShellScript` step：disk(C:) / update_services / pending_reboot / update_source(WSUS 策略 + TCP 连通) / patch_log(Patch Manager 日志错误行 + WindowsUpdateClient 事件) / ssm_agent |
+| 修复文档 | FreeDisk、DisableRepo、ReleaseRpmLock | FreeDisk（Windows step：Temp 大文件、7 天前临时文件、SoftwareDistribution\Download）、StartUpdateServices（wuauserv / bits / cryptsvc / TrustedInstaller：Disabled → Manual 并启动） |
+| 预检 | 根盘 `/` 余量 | C: 余量（同一文档同一输出格式） |
+| 重跑 | `AWS-RunPatchBaseline` Install/NoReboot，读 PatchLinux 插件 | 同一文档，读 PatchWindows 插件；超时 3000 秒 |
+| 超时 | patchTimeout 600 / agentTimeout 2400 | patchTimeoutWindows 3600 / agentTimeoutWindows 5400（累积更新安装 20 ~ 40 分钟） |
+
+同一个文档名对应两个平台的 step，SSM 按 `platformType` 只执行匹配的那个，因此 IAM 允许列表不变（`PatchRemediate-*`）；代码层的允许列表按平台区分，Linux 文档不会下发到 Windows，反之亦然。更新源（WSUS / 代理策略）没有自动修复，属于人工决策。
+
+**实测（批次 win2，cn-northwest-1）**：Windows Server 2022 2026.08.12 AMI（落后约 3 个月，确保有真实待装更新）
+
+| 实例 | 注入故障 | 结果 | 说明 |
+|---|---|---|---|
+| pd-win-svc-disabled | Windows Modules Installer（TrustedInstaller）被禁用 | FIXED，10 次工具调用 / 469 秒 | 补丁 Install 失败 HRESULT 0x80240022 → 诊断确认 TrustedInstaller Disabled → StartUpdateServices → 重跑装上 2026-10 累积更新 |
+| pd-win-disk-full | C: 只剩 300 MB | FIXED，8 次 / 1559 秒 | 预检拦截 → FreeDisk 删除 9.4 GB 转储文件 → 重跑装上 2026-10 OS 与 .NET 累积更新（耗时主要在安装）；另附永久清理审批单 |
+| pd-win-wsus-broken | GPO 指向已下线的 WSUS | NEEDS_HUMAN，6 次 / 147 秒 | 扫描失败 HRESULT 0x80240438 → 确认 WUServer 不可解析 → 生成更新源审批单 |
+
+重跑使用 NoReboot，Windows 实例补丁状态为 InstalledPendingReboot，重启由审批或维护窗口执行（Agent 无重启权限）。
+
+实测中的两条发现：
+- 禁用 wuauserv **不是**有效故障：AWS-RunPatchBaseline 会自行把它改为 Manual 并启动（已验证），提示词据此告诉 Agent 不要把它当根因。
+- Windows PowerShell 5.1 中对**不存在的目录**执行 `Get-ChildItem -Recurse` 会在整个盘符下按名称搜索（约 55 秒），曾导致预检超时；所有临时目录先 `Test-Path` 再枚举，C: 检查降到约 5 秒。
+
 ## 10. 代码目录
 
 ```
@@ -264,8 +293,9 @@ common/config.py            账号、名称、模型、索引名等统一配置
 infra/00_bedrock_key.py     全球区 IAM user(只允许 Kimi K3 + Titan Embed V2) + 30 天 Bedrock API key → AgentCore Identity token vault
 infra/01_network.py         运维 VPC / 私有子网 / NAT / 5 个 interface VPCE + 2 个 gateway VPCE
 infra/02_iam.py             Hub 角色 + 各账号 Spoke 角色(session tag 绑单实例) + 目标机 instance profile
-infra/03_ssm_docs.py        allowlist SSM 文档：PatchDiagnose-Collect、PatchRemediate-{FreeDisk,DisableRepo,ReleaseRpmLock}
-infra/04_targets.py         5 台 t4g.micro AL2023 目标机(两个账号)
+infra/03_ssm_docs.py        allowlist SSM 文档：PatchDiagnose-Collect、PatchRemediate-FreeDisk（均含 Linux + Windows 两个 step）、
+                            PatchRemediate-{DisableRepo,ReleaseRpmLock}（Linux）、PatchRemediate-StartUpdateServices（Windows）
+infra/04_targets.py         5 台 t4g.micro AL2023 + 3 台 t3.medium Windows Server 2022 目标机(两个账号)
 infra/05_dynamodb.py        patchdemo-batch(状态/审计/审批)、patchdemo-memory(STM)
 infra/06_runtime.py         arm64 镜像(构建上下文 = 项目根目录) → ECR → Runtime(VPC, IAM) → 资源策略(SourceVpce, bedrock-agentcore:*)
 infra/07_orchestrator.py    VPC Lambda + Step Functions
@@ -306,7 +336,7 @@ for s in 01_network 02_iam 03_ssm_docs 04_targets 05_dynamodb 08_opensearch 00_b
 .venv/bin/python scenarios/verify_access.py global.moonshotai.kimi-k3   # 先确认公网调用被拒、VPC 内调用成功
 .venv/bin/python scenarios/seed_memory.py --reset                         # 建索引 + 导入 seed/knowledge.json
 .venv/bin/python scenarios/inject_faults.py
-.venv/bin/python scenarios/run_batch.py b1 --patch-timeout 420
+.venv/bin/python scenarios/run_batch.py b1 --patch-timeout 420   # Windows 主机用 --patch-timeout-windows（默认 3600）
 .venv/bin/python scenarios/seed_memory.py --list
 BATCH=<batchId> .venv/bin/python scenarios/takeover.py pd-ssm-offline "说明排查过程和恢复步骤"
 .venv/bin/python scenarios/session_burst.py 40 20

@@ -105,7 +105,9 @@ def counters(batch_id):
     return table.get_item(Key={"pk": batch_id, "sk": "COUNTERS"}).get("Item", {})
 
 
-KNOBS = {"patchTimeout": 600, "agentTimeout": 2400, "maxAgents": 10, "minFreePct": 15, "minFreeMB": 500,
+# *Windows knobs: a Windows cumulative update (scan + install, and the agent's rerun) is much slower than dnf;
+# every host is timed by its own platform.
+KNOBS = {"patchTimeout": 600, "patchTimeoutWindows": 3600, "agentTimeout": 2400, "agentTimeoutWindows": 5400, "maxAgents": 10, "minFreePct": 15, "minFreeMB": 500,
          "waveHardTimeout": 0, "dispatchGrace": 180, "batchTimeout": 14400}
 
 
@@ -123,7 +125,9 @@ def init(ev):
                     if wave not in ("canary", "main"):  # an unknown wave would never be sent and never drain
                         warnings.append(f"{i['InstanceId']}: PatchWave={wave!r} unknown, treated as main")
                         wave = "main"
-                    found.append({"account": acct, "instance_id": i["InstanceId"], "name": t.get("Name", ""), "wave": wave})
+                    found.append({"account": acct, "instance_id": i["InstanceId"], "name": t.get("Name", ""), "wave": wave,
+                                  # EC2 sets Platform only for Windows; the agent picks its tool set from this
+                                  "platform": "windows" if i.get("Platform") == "windows" else "linux"})
     knobs = {**KNOBS, **{k: int(ev[k]) for k in KNOBS if ev.get(k) not in (None, "")}}
     if not knobs["waveHardTimeout"]:
         knobs["waveHardTimeout"] = 3 * knobs["patchTimeout"]
@@ -196,8 +200,10 @@ def send_patch(ev):
         for i in todo:
             upd(batch_id, i["instance_id"], status="SKIPPED_HALTED", patch_status="canary circuit breaker; not patched")
         return {**ev, "sent": 0, "halted": True}
-    sent, patch_timeout = 0, int(ev.get("patchTimeout", 600))
-    hard = int(ev.get("waveHardTimeout") or 3 * patch_timeout)
+    sent = 0
+    timeout_of = {"linux": int(ev.get("patchTimeout", 600)), "windows": int(ev.get("patchTimeoutWindows", 1800))}
+    hard = int(ev.get("waveHardTimeout") or 3 * timeout_of["linux"])
+    platform = {i["instance_id"]: i.get("platform", "linux") for i in todo}
     for acct in {i["account"] for i in todo}:
         ids = [i["instance_id"] for i in todo if i["account"] == acct]
         # Precheck 1: an offline SSM agent would sit in Pending until the wave deadline.
@@ -206,7 +212,8 @@ def send_patch(ev):
             upd(batch_id, iid, status="UNDELIVERABLE", patch_status=f"precheck: PingStatus={ping.get(iid, 'NotRegistered')}, not sent",
                 failed_at=now())
         ids = [x for x in ids if ping.get(x) == "Online"]
-        # Precheck 2: root-disk headroom (dnf needs space; at 100% SSM itself cannot run).
+        # Precheck 2: root-disk headroom, / on Linux and C: on Windows (the package manager / Windows Update needs space;
+        # at 100% SSM itself cannot run). Same document, the platform's step answers.
         if ids:
             for iid, reason in disk_precheck(acct, ids, int(ev.get("minFreePct", 15)), int(ev.get("minFreeMB", 500))).items():
                 upd(batch_id, iid, status="PRECHECK_FAILED", patch_status=reason, failed_at=now())
@@ -222,8 +229,9 @@ def send_patch(ev):
             for iid in part:
                 # per-host clock starts when the host is first seen InProgress (queued hosts are not penalised);
                 # wave_hard_deadline bounds hosts that never leave Pending
-                upd(batch_id, iid, status="PATCHING", patch_command_id=cmd, patch_started_at=t, patch_timeout=patch_timeout,
-                    wave_hard_deadline=t + hard)
+                pt = timeout_of.get(platform[iid], timeout_of["linux"])
+                upd(batch_id, iid, status="PATCHING", patch_command_id=cmd, patch_started_at=t, patch_timeout=pt,
+                    wave_hard_deadline=t + max(hard, pt))
             sent += len(part)
     return {**ev, "sent": sent, "halted": False}
 
@@ -256,7 +264,8 @@ def _poll_one(ev, i):
 
 
 def _check_agent(ev, i):
-    if now() - int(i.get("diag_started_at", i.get("dispatched_at", now()))) <= int(ev.get("agentTimeout", 2400)):
+    limit = int(ev.get("agentTimeoutWindows", 5400)) if i.get("platform") == "windows" else int(ev.get("agentTimeout", 2400))
+    if now() - int(i.get("diag_started_at", i.get("dispatched_at", now()))) <= limit:
         return
     # terminal state FIRST: the guardrail's terminal-status check blocks any tool call the agent still makes while
     # its microVM is shutting down; then stop the session (only if we won the conditional write)

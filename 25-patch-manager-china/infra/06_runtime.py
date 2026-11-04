@@ -44,7 +44,7 @@ def main():
     uri = build_and_push()
     env = {"MODEL_ID": MODEL_ID, "EXTRACT_MODEL_ID": EXTRACT_MODEL_ID, "MODEL_REGION": MODEL_REGION,
            "API_KEY_PROVIDER": API_KEY_PROVIDER, "BATCH_TABLE": BATCH_TABLE, "MEMORY_TABLE": MEMORY_TABLE,
-           "SPOKE_ROLE": SPOKE_ROLE, "EXTERNAL_ID": EXTERNAL_ID, "AWS_REGION": REGION, "RERUN_TIMEOUT": "600", "ENABLE_PROBE": "1",
+           "SPOKE_ROLE": SPOKE_ROLE, "EXTERNAL_ID": EXTERNAL_ID, "AWS_REGION": REGION, "RERUN_TIMEOUT": "600", "RERUN_TIMEOUT_WINDOWS": "3000", "ENABLE_PROBE": "1",
            "OS_ENDPOINT": st["os_endpoint"], "OS_INDEX": OS_INDEX, "EMBED_MODEL_ID": EMBED_MODEL_ID, "EMBED_DIM": str(EMBED_DIM)}
     if st.get("workload_identity"):  # SigV4 calls without runtimeUserId carry no workload token -> agent fetches its own
         env["WORKLOAD_NAME"] = st["workload_identity"].rsplit("/", 1)[-1]
