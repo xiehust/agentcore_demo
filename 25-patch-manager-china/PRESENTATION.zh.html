@@ -1,0 +1,638 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案 · 方案介绍</title><style>
+:root{--bg:#ffffff;--bg2:#f6f8fa;--bg3:#eef2f6;--line:#d9dee5;--text:#1f2933;--muted:#5b6673;--navy:#232f3e;
+--blue:#0b5cad;--blue-l:#e8f1fb;--orange:#ec7211;--orange-l:#fdf1e6;--green:#1d8102;--green-l:#e9f6e6;--red:#c7271a;--red-l:#fbeaea;
+--mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#e9edf2;overflow:hidden}
+body{font:20px/1.55 -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;color:var(--text)}
+#deck{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--bg);box-shadow:0 6px 30px rgba(35,47,62,.18);display:none;flex-direction:column;padding:34px 52px 40px;overflow:hidden}
+.slide.active{display:flex}
+.slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(var(--orange),var(--blue))}
+.sec{color:var(--orange);font-size:13px;letter-spacing:.08em;font-weight:600}
+.slide>h2{margin:2px 0 14px;font-size:28px;line-height:1.3;color:var(--navy);font-weight:650}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px}
+.foot{position:absolute;left:52px;right:52px;bottom:12px;display:flex;justify-content:space-between;font-size:12px;color:#8a95a3}
+.cover-slide{background:linear-gradient(135deg,#ffffff 0%,#f3f7fc 55%,#fdf1e6 100%);justify-content:center}
+.cover{padding:0 40px}
+.cover .eyebrow{color:var(--orange);font-weight:600;letter-spacing:.08em;font-size:16px}
+.cover h1{font-size:52px;color:var(--navy);margin:18px 0 6px;line-height:1.2}
+.cover h2{font-size:36px;color:var(--blue);margin:0 0 28px;font-weight:600}
+.cover .tags span{display:inline-block;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 16px;margin:0 10px 10px 0;font-size:16px;color:var(--navy)}
+.cover .meta{margin-top:26px;color:var(--muted);font-size:16px}
+.cover.end{text-align:center}.cover.end h1{font-size:56px}
+.agenda{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px;margin-top:10px}
+.agenda div{display:flex;align-items:center;gap:18px;border-bottom:1px solid var(--line);padding:16px 0;font-size:23px}
+.agenda b{color:var(--orange);font-size:30px;width:50px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.card h3{margin:0 0 8px;font-size:22px;color:var(--navy)}
+.card h4{margin:0 0 6px;font-size:18px;color:var(--blue)}
+.card ul,.card ol{margin:0;padding-left:20px}.card li{margin:4px 0}
+.card.accent,.card.orange{background:var(--orange-l);border-color:#f6c99e}
+.card.blue{background:var(--blue-l);border-color:#bcd6f2}
+.card.green{background:var(--green-l);border-color:#bfe0b5}
+.pill{display:inline-block;background:var(--blue);color:#fff;border-radius:999px;font-size:12px;padding:2px 10px;margin-bottom:6px}
+.pill.o{background:var(--orange)}
+.small{font-size:16.5px;line-height:1.5}
+.small .card{padding:10px 14px}
+.lead{margin:0;font-size:19px;color:var(--muted)}
+.muted{color:var(--muted);font-size:15px}
+.quote{border-left:4px solid var(--orange);background:var(--orange-l);padding:16px 20px;border-radius:0 10px 10px 0;font-size:19px;line-height:1.65}
+.howto{font-size:15.5px;color:#334;margin:2px 0 10px;padding:8px 12px;border-left:4px solid var(--orange,#ec7211);background:#fff8f0;border-radius:4px}
+.lg{display:inline-block;padding:0 6px;border-radius:3px;border:1px solid}.lg.b{background:#e8f0fb;border-color:#5b8fd6}.lg.g{background:#f3f5f8;border-color:#a9b2bf}.lg.o{background:#fdf0e3;border-color:#ec9a4c}.dot{color:#1d8102}
+.note{background:var(--blue-l);border:1px solid #bcd6f2;border-radius:8px;padding:10px 14px;font-size:16.5px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{background:var(--navy);color:#fff;border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:40px;color:#ffb266;line-height:1.2}
+.kpi span{font-size:15.5px;color:#d5dbe3;line-height:1.45}
+table{width:100%;border-collapse:collapse;font-size:17.5px;background:#fff}
+th{background:var(--navy);color:#fff;text-align:left;font-weight:600;padding:8px 12px}
+td{border-bottom:1px solid var(--line);padding:8px 12px;vertical-align:top}
+tr:nth-child(even) td{background:var(--bg2)}
+table.compact td,table.compact th{padding:7px 10px;font-size:16.5px}
+table.dense td,table.dense th{padding:5px 9px;font-size:15px;line-height:1.45}
+code{font-family:var(--mono);font-size:.86em;background:var(--bg3);border-radius:4px;padding:1px 5px}
+pre{margin:0;background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:14px;line-height:1.5;overflow:hidden}
+pre code{background:none;padding:0;font-size:inherit;white-space:pre}
+.codecols{grid-template-columns:1fr 1fr;gap:12px}.codecols>div{min-width:0}.codecols pre{font-size:12.6px;padding:10px 12px}
+.ctitle{font-size:13px;color:var(--muted);margin-bottom:4px;font-family:var(--mono)}
+.ok,.no,.warn{font-weight:600;white-space:nowrap}.ok{color:var(--green)}.no{color:var(--red)}.warn{color:var(--orange)}
+.fig{display:flex;justify-content:center;align-items:center;min-height:0}
+.fig svg{width:100%;height:100%;display:block}
+.cap{font-size:15px;color:var(--muted);text-align:center;line-height:1.5}
+.flow{display:flex;align-items:stretch;gap:8px;margin-top:6px}
+.flow div{flex:1;background:#fff;border:1px solid var(--blue);border-radius:8px;padding:14px 10px;text-align:center;font-weight:600;color:var(--navy);font-size:17px}
+.flow small{display:block;font-weight:400;color:var(--muted);font-size:14px}
+.flow i{align-self:center;color:var(--orange);font-style:normal;font-size:22px}
+.layers{display:flex;flex-direction:column;gap:7px}
+.layers div{display:flex;gap:14px;align-items:baseline;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:11px 16px;font-size:17px}
+.layers b{flex:0 0 110px;color:var(--blue)}
+.layers div:nth-child(3) b,.layers div:nth-child(4) b{color:var(--orange)}
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;font-size:17px;line-height:1.55}
+.tree{display:flex;flex-direction:column;gap:6px;font-size:16px;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:8px 14px}
+.tree b{color:var(--blue);margin-right:6px;font-family:var(--mono)}
+#bar{position:fixed;left:0;top:0;height:4px;background:var(--orange);transition:width .2s}
+#nav{position:fixed;right:16px;bottom:40px;display:flex;gap:6px;align-items:center;opacity:.15;transition:opacity .2s}#nav:hover{opacity:1}#num{display:none}
+#nav button{border:1px solid var(--line);background:#fff;border-radius:6px;width:34px;height:30px;cursor:pointer;color:var(--navy);font-size:15px}
+#nav button:hover{background:var(--blue-l)}
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{overflow:visible;background:#fff;height:auto}
+  #deck{position:static;transform:none!important;width:1280px;height:auto}
+  .slide{position:relative;display:flex!important;width:1280px;height:720px;box-shadow:none;page-break-after:always;break-after:page}
+  #bar,#nav{display:none}
+}
+</style></head><body><div id="bar"></div><div id="deck"><section class="slide cover-slide" data-i="1"><div class="body">
+<div class="cover">
+  <div class="eyebrow">技术方案介绍 · AWS 中国区（宁夏 / 北京）</div>
+  <h1>Patch Manager × Amazon Bedrock AgentCore</h1>
+  <h2>补丁批次智能值守方案</h2>
+  <div class="tags"><span>AgentCore Runtime</span><span>跨账号 Hub-Spoke</span><span>自建记忆 agentmem</span></div>
+  <div class="meta">验证区域 cn-northwest-1 · 两个 AWS 账号 · 所有结论均基于真实环境实测</div>
+</div></div></section><section class="slide " data-i="2"><h2>目录</h2><div class="body">
+<div class="agenda">
+  <div><b>01</b><span>背景、目标与一句话方案</span></div>
+  <div><b>02</b><span>技术分工</span></div>
+  <div><b>03</b><span>总体架构</span></div>
+  <div><b>04</b><span>Q1 跨账号权限与网络</span></div>
+  <div><b>05</b><span>Q2 Session 设计与批次编排</span></div>
+  <div><b>06</b><span>Q3 自建记忆（agentmem）</span></div>
+  <div><b>07</b><span>Q5 关键代码 · Q6 ECR 部署</span></div>
+  <div><b>08</b><span>Q7 会话隔离</span></div>
+</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>2 / 24</span></div></section><section class="slide " data-i="3"><div class="sec">01 背景</div><h2>背景与目标</h2><div class="body">
+<div class="cols2">
+  <div class="card">
+    <h3>现状</h3>
+    <ul>
+      <li>某用户使用 Systems Manager Patch Manager + 自动化脚本 + Kiro 辅助排查执行补丁批次</li>
+      <li>每批 <b>75 ~ 100 台</b>，通常 5% ~ 10% 的实例出现异常</li>
+      <li>异常实例依赖<b>人工值守</b>：逐台登录、查日志、修复、重跑</li>
+    </ul>
+  </div>
+  <div class="card accent">
+    <h3>目标</h3>
+    <ul>
+      <li>在 AWS 中国区用 Amazon Bedrock AgentCore 接手"<b>异常实例的诊断与修复</b>"</li>
+      <li>能修就修，修完必须真实重跑成功；修不了就生成审批单交给人</li>
+      <li>逐项回答某用户提出的 <b>Q1 ~ Q7</b>：跨账号与网络、Session、记忆、护栏、关键代码、ECR 部署、会话隔离</li>
+    </ul>
+  </div>
+</div>
+<div class="quote"><b>一句话方案</b>　批量补丁仍由 Patch Manager 执行（波次、速率、错误阈值沿用原生能力）；Step Functions 每 30 秒检查一次批次进度，哪台实例一失败，就立即为它单独开一个 AgentCore Runtime 会话。Agent 只能使用预先审核的 SSM 文档，凭证被 IAM 绑定到这一台实例；修复必须真实重跑补丁成功才算数，否则生成审批单，值班人员可在同一会话里接着处理。</div>
+</div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>3 / 24</span></div></section><section class="slide " data-i="4"><div class="sec">01 背景</div><h2>验证结论速览</h2><div class="body">
+<div class="kpis">
+  <div class="kpi"><b>2</b><span>AWS 账号<br>运维中心 + 业务账号，跨账号执行</span></div>
+  <div class="kpi"><b>4</b><span>类真实故障<br>repo 不可达 + 提示注入、rpm 锁、磁盘满、SSM Agent 离线</span></div>
+  <div class="kpi"><b>14 / 14</b><span>权限与网络<br>正反向用例全部符合预期</span></div>
+  <div class="kpi"><b>100 × 50</b><span>新建 Session × 并发<br>全部成功、零重试</span></div>
+</div>
+<table class="compact"><thead><tr><th>客户问题</th><th>结论</th></tr></thead><tbody><tr><td>Q1 跨账号 / 网络</td><td>VPC 模式 + IAM SigV4 入站，资源策略只放行运维 VPC 终端节点；Hub-Spoke AssumeRole，无需打通业务 VPC</td></tr><tr><td>Q2 Session 与编排</td><td>批量交给 Patch Manager；<b>每台失败实例一个会话</b>，Step Functions 失败即派发，不受 8 小时上限约束</td></tr><tr><td>Q3 自建记忆</td><td>DynamoDB STM + OpenSearch LTM，对齐 AgentCore Memory 策略结构；独立模块 agentmem</td></tr><tr><td>Q5 / Q6</td><td>完整可运行 Demo；linux/arm64 镜像推送中国区 ECR，版本不可变，共发布 14 个版本</td></tr><tr><td>Q7 会话隔离</td><td>平台 microVM 隔离 + 会话粒度、归属校验、IAM 会话标签、STM 分区 4 层</td></tr></tbody></table></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>4 / 24</span></div></section><section class="slide " data-i="5"><div class="sec">02 技术概览</div><h2>分工：确定性的交给 Patch Manager，不确定的交给 Agent</h2><div class="body">
+<div class="cols2">
+  <div class="card blue">
+    <div class="pill">确定性</div>
+    <h3>Patch Manager + Step Functions</h3>
+    <ul>
+      <li>按 PatchGroup 标签跨账号发现实例，canary / main 分波次</li>
+      <li>AWS-RunPatchBaseline（Install / NoReboot），MaxConcurrency、MaxErrors 速率控制</li>
+      <li>执行前预检、单台截止时间、波次熔断、并发上限</li>
+      <li>全部状态写入 DynamoDB，任一实例可单独重驱</li>
+    </ul>
+  </div>
+  <div class="card orange">
+    <div class="pill o">不确定性</div>
+    <h3>AgentCore Runtime 上的诊断 Agent</h3>
+    <ul>
+      <li>只处理失败的那一小部分实例（通常 5% ~ 10%）</li>
+      <li>读事实 → 只读诊断 → 允许列表内修复 → 重跑验证 → 报告</li>
+      <li>修不了：生成审批单，交给值班人员在同一会话里接手</li>
+      <li>从每次诊断中学习，下一次同类故障更快</li>
+    </ul>
+  </div>
+</div>
+<div class="note">Agent 不承担批量执行，因此批次时长与 Runtime 会话 8 小时上限无关；单台诊断通常 2 ~ 7 分钟。</div>
+</div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>5 / 24</span></div></section><section class="slide wide" data-i="6"><div class="sec">03 总体架构</div><h2>总体架构</h2><div class="body"><div class="fig" style="height:535px"><svg viewBox="0 0 1160 690" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="13">
+<defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0b5cad"/></marker>
+  <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ec7211"/></marker>
+  <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d8102"/></marker>
+</defs>
+<!-- China region -->
+<rect x="10" y="10" width="880" height="670" rx="8" fill="#f9fafb" stroke="#232f3e" stroke-width="1.5"/>
+<text x="24" y="32" font-weight="600" fill="#232f3e">AWS 中国区（宁夏 cn-northwest-1）</text>
+<!-- Ops account -->
+<rect x="26" y="44" width="574" height="624" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="5 3"/>
+<text x="40" y="64" font-weight="600" fill="#232f3e">运维中心账号</text>
+<!-- managed services row -->
+<rect x="44" y="76" width="160" height="52" rx="5" fill="#f1edfa" stroke="#6b4fbb"/>
+<text x="124" y="98" text-anchor="middle" font-weight="600">Step Functions</text><text x="124" y="116" text-anchor="middle" font-size="11.5" fill="#5b6673">批次编排 · 30s 心跳</text>
+<rect x="216" y="76" width="176" height="52" rx="5" fill="#f1edfa" stroke="#6b4fbb"/>
+<text x="304" y="98" text-anchor="middle" font-weight="600">DynamoDB</text><text x="304" y="116" text-anchor="middle" font-size="11.5" fill="#5b6673">批次状态 · 审计 · 审批 · STM</text>
+<rect x="404" y="76" width="180" height="52" rx="5" fill="#f1edfa" stroke="#6b4fbb"/>
+<text x="494" y="98" text-anchor="middle" font-weight="600">AgentCore Identity</text><text x="494" y="116" text-anchor="middle" font-size="11.5" fill="#5b6673">Token Vault（模型 API Key）</text>
+<!-- VPC -->
+<rect x="40" y="146" width="546" height="508" rx="6" fill="#f3f8fd" stroke="#0b5cad"/>
+<text x="54" y="166" font-weight="600" fill="#0b5cad">运维 VPC · 私有子网（双 AZ）· 无任何入站</text>
+<rect x="58" y="180" width="196" height="64" rx="5" fill="#fff" stroke="#0b5cad"/>
+<text x="156" y="205" text-anchor="middle" font-weight="600">编排 Lambda（VPC）</text><text x="156" y="224" text-anchor="middle" font-size="11.5" fill="#5b6673">预检 · 派发 · 超时 · 报告</text>
+<rect x="276" y="180" width="292" height="136" rx="5" fill="#fff" stroke="#ec7211" stroke-width="1.5"/>
+<text x="422" y="202" text-anchor="middle" font-weight="600">AgentCore Runtime（VPC 模式）</text>
+<rect x="290" y="214" width="84" height="54" rx="4" fill="#fdf1e6" stroke="#ec7211"/><text x="332" y="236" text-anchor="middle" font-size="11.5">microVM</text><text x="332" y="254" text-anchor="middle" font-size="11">批次-实例 A</text>
+<rect x="380" y="214" width="84" height="54" rx="4" fill="#fdf1e6" stroke="#ec7211"/><text x="422" y="236" text-anchor="middle" font-size="11.5">microVM</text><text x="422" y="254" text-anchor="middle" font-size="11">批次-实例 B</text>
+<rect x="470" y="214" width="84" height="54" rx="4" fill="#fdf1e6" stroke="#ec7211"/><text x="512" y="236" text-anchor="middle" font-size="11.5">microVM</text><text x="512" y="254" text-anchor="middle" font-size="11">…</text>
+<text x="422" y="290" text-anchor="middle" font-size="11.5" fill="#5b6673">每台失败实例一个会话 · 护栏钩子 · 自建记忆</text>
+<text x="422" y="306" text-anchor="middle" font-size="11.5" fill="#5b6673">ENI 安全组：只出站 443</text>
+<!-- VPCE row -->
+<rect x="58" y="340" width="510" height="96" rx="5" fill="#fff" stroke="#8a96a3"/>
+<text x="70" y="360" font-weight="600" fill="#232f3e">VPC 终端节点（Private DNS）</text>
+<g font-size="12">
+<rect x="70" y="372" width="118" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="129" y="390" text-anchor="middle">bedrock-agentcore</text>
+<rect x="196" y="372" width="56" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="224" y="390" text-anchor="middle">sts</text>
+<rect x="260" y="372" width="56" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="288" y="390" text-anchor="middle">ssm</text>
+<rect x="324" y="372" width="56" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="352" y="390" text-anchor="middle">ec2</text>
+<rect x="388" y="372" width="56" height="26" rx="13" fill="#e8f1fb" stroke="#0b5cad"/><text x="416" y="390" text-anchor="middle">logs</text>
+<rect x="70" y="404" width="120" height="24" rx="12" fill="#e9f6e6" stroke="#1d8102"/><text x="130" y="421" text-anchor="middle">dynamodb（网关）</text>
+<rect x="198" y="404" width="96" height="24" rx="12" fill="#e9f6e6" stroke="#1d8102"/><text x="246" y="421" text-anchor="middle">s3（网关）</text>
+</g>
+<text x="452" y="390" font-size="11" fill="#5b6673">接口：仅接受</text><text x="452" y="406" font-size="11" fill="#5b6673">VPC 网段 443</text>
+<!-- OpenSearch + NAT -->
+<rect x="58" y="458" width="250" height="70" rx="5" fill="#fff" stroke="#6b4fbb" stroke-width="1.5"/>
+<text x="183" y="482" text-anchor="middle" font-weight="600">OpenSearch 域（VPC 访问）</text><text x="183" y="500" text-anchor="middle" font-size="11.5" fill="#5b6673">长期记忆 LTM · kNN + BM25</text><text x="183" y="516" text-anchor="middle" font-size="11.5" fill="#5b6673">仅接受 Runtime 安全组 · 仅 Runtime 角色</text>
+<rect x="326" y="458" width="242" height="70" rx="5" fill="#fff" stroke="#c7271a"/>
+<text x="447" y="482" text-anchor="middle" font-weight="600">NAT 网关（仅出站）</text><text x="447" y="500" text-anchor="middle" font-size="11.5" fill="#5b6673">唯一用途：调用全球区模型</text><text x="447" y="516" text-anchor="middle" font-size="11.5" fill="#5b6673">可加出口代理 + 域名允许列表</text>
+<rect x="58" y="548" width="510" height="92" rx="5" fill="#fbfcfd" stroke="#d9dee5"/>
+<text x="70" y="570" font-weight="600" font-size="12.5" fill="#232f3e">边界要点</text>
+<text x="70" y="590" font-size="12">① Runtime 资源策略：不经本 VPC 的 bedrock-agentcore 终端节点，一律拒绝</text>
+<text x="70" y="608" font-size="12">② 业务账号 Spoke 角色：只能经本 VPC 的 STS 终端节点 AssumeRole，凭证也只能经 VPCE 使用</text>
+<text x="70" y="626" font-size="12">③ 没有监听端口、没有公网入口；OpenSearch 无公网 endpoint</text>
+<!-- business accounts -->
+<rect x="616" y="44" width="262" height="300" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="5 3"/>
+<text x="630" y="64" font-weight="600" fill="#232f3e">业务账号 A</text>
+<rect x="634" y="78" width="226" height="56" rx="5" fill="#fdf1e6" stroke="#ec7211"/><text x="747" y="100" text-anchor="middle" font-weight="600">Spoke 角色</text><text x="747" y="118" text-anchor="middle" font-size="11.5" fill="#5b6673">只读 + 允许列表 SSM 文档</text>
+<rect x="634" y="150" width="226" height="118" rx="5" fill="#fff" stroke="#8a96a3"/><text x="747" y="170" text-anchor="middle" font-weight="600">业务 VPC（无需与运维 VPC 互通）</text>
+<rect x="648" y="182" width="96" height="40" rx="4" fill="#f6f8fa" stroke="#8a96a3"/><text x="696" y="200" text-anchor="middle" font-size="11.5">EC2</text><text x="696" y="214" text-anchor="middle" font-size="11">SSM Agent</text>
+<rect x="752" y="182" width="96" height="40" rx="4" fill="#f6f8fa" stroke="#8a96a3"/><text x="800" y="200" text-anchor="middle" font-size="11.5">EC2</text><text x="800" y="214" text-anchor="middle" font-size="11">SSM Agent</text>
+<text x="747" y="246" text-anchor="middle" font-size="11.5" fill="#5b6673">Agent 主动出站连接 SSM 服务</text>
+<text x="747" y="262" text-anchor="middle" font-size="11.5" fill="#5b6673">（与现有 Patch Manager 相同）</text>
+<rect x="634" y="282" width="226" height="48" rx="5" fill="#e8f1fb" stroke="#0b5cad"/><text x="747" y="302" text-anchor="middle" font-weight="600" font-size="12.5">Systems Manager（区域服务）</text><text x="747" y="320" text-anchor="middle" font-size="11.5" fill="#5b6673">SendCommand / Patch Manager</text>
+<rect x="616" y="358" width="262" height="96" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="5 3"/>
+<text x="630" y="378" font-weight="600" fill="#232f3e">业务账号 B … N</text>
+<text x="630" y="400" font-size="12" fill="#5b6673">结构与 A 相同：每个账号部署一份</text>
+<text x="630" y="418" font-size="12" fill="#5b6673">Spoke 角色 + 允许列表 SSM 文档</text>
+<text x="630" y="436" font-size="12" fill="#5b6673">运维账号以标签发现目标实例</text>
+<!-- engineer -->
+<rect x="616" y="474" width="262" height="110" rx="6" fill="#fff" stroke="#1d8102"/>
+<text x="747" y="496" text-anchor="middle" font-weight="600">值班工程师</text>
+<text x="747" y="516" text-anchor="middle" font-size="12">IAM Identity Center 登录</text>
+<text x="747" y="534" text-anchor="middle" font-size="12">→ permission set 角色（SigV4）</text>
+<text x="747" y="552" text-anchor="middle" font-size="12">→ 运维门户（VPC 内）</text>
+<text x="747" y="570" text-anchor="middle" font-size="12">→ 同一会话接管，runtimeUserId=本人</text>
+<!-- global -->
+<rect x="904" y="10" width="246" height="250" rx="8" fill="#fbfcfd" stroke="#232f3e" stroke-width="1.5"/>
+<text x="918" y="32" font-weight="600" fill="#232f3e">AWS 全球区（us-west-2）</text>
+<rect x="922" y="48" width="210" height="58" rx="5" fill="#fff" stroke="#ec7211"/><text x="1027" y="72" text-anchor="middle" font-weight="600">Bedrock：Kimi K3</text><text x="1027" y="90" text-anchor="middle" font-size="11.5" fill="#5b6673">诊断推理 · 记忆提取</text>
+<rect x="922" y="118" width="210" height="58" rx="5" fill="#fff" stroke="#6b4fbb"/><text x="1027" y="142" text-anchor="middle" font-weight="600">Bedrock：Titan Embed V2</text><text x="1027" y="160" text-anchor="middle" font-size="11.5" fill="#5b6673">长期记忆向量化</text>
+<text x="1027" y="200" text-anchor="middle" font-size="11.5" fill="#5b6673">专用 IAM 用户签发的 API Key</text>
+<text x="1027" y="218" text-anchor="middle" font-size="11.5" fill="#5b6673">权限仅限上述两个模型</text>
+<text x="1027" y="236" text-anchor="middle" font-size="11.5" fill="#5b6673">30 天轮换</text>
+<!-- arrows -->
+<path d="M124,128 L124,162 L156,162 L156,178" fill="none" stroke="#6b4fbb" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="130" y="150" font-size="11" fill="#6b4fbb">①</text>
+<path d="M156,244 L156,330 L129,330 L129,370" fill="none" stroke="#0b5cad" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="162" y="300" font-size="11" fill="#0b5cad">② Invoke（SigV4）</text>
+<path d="M150,372 C190,350 250,330 300,316" fill="none" stroke="#0b5cad" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M224,372 C260,345 300,330 330,318" fill="none" stroke="#ec7211" stroke-width="1.4" stroke-dasharray="4 3"/>
+<path d="M500,316 L500,330 L600,330 L600,106 L632,106" fill="none" stroke="#ec7211" stroke-width="1.6" marker-end="url(#ao)"/>
+<text x="606" y="230" font-size="11" fill="#ec7211" transform="rotate(-90 606 230)">③ AssumeRole（经 STS VPCE）</text>
+<path d="M747,134 L747,148" fill="none" stroke="#ec7211" stroke-width="1.4" marker-end="url(#ao)"/>
+<path d="M800,222 L800,280" fill="none" stroke="#5b6673" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ar)" transform="rotate(180 800 251)"/>
+<path d="M330,316 L330,334 L192,334 L192,456" fill="none" stroke="#6b4fbb" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="198" y="450" font-size="11" fill="#6b4fbb">④ 记忆</text>
+<path d="M540,316 L540,456" fill="none" stroke="#c7271a" stroke-width="1.4" marker-end="url(#ar)"/>
+<path d="M568,492 L590,492 L590,670 L895,670 L895,90 L920,90" fill="none" stroke="#c7271a" stroke-width="1.6" marker-end="url(#ao)"/>
+<text x="900" y="420" font-size="11" fill="#c7271a" transform="rotate(-90 900 420)">⑤ HTTPS 443（经 NAT）</text>
+<path d="M616,560 L590,560" fill="none" stroke="#1d8102" stroke-width="1.6" stroke-dasharray="5 3"/>
+<path d="M590,560 L590,640 L50,640 L50,385 L68,385" fill="none" stroke="#1d8102" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#ag)"/>
+<text x="56" y="560" font-size="11" fill="#1d8102" transform="rotate(-90 56 560)">⑥ 接管（经 VPCE）</text>
+</svg></div>
+<div class="cap">① Step Functions 驱动编排 Lambda　② 经 bedrock-agentcore 终端节点调用 Runtime，每台失败实例一个会话　③ 经 STS 终端节点进入业务账号 Spoke 角色，SSM 执行允许列表文档　④ DynamoDB（状态、STM）与 OpenSearch（LTM）　⑤ 经 NAT 调用全球区模型　⑥ 值班工程师经 Identity Center 接管同一会话</div>
+</div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>6 / 24</span></div></section><section class="slide " data-i="7"><div class="sec">03 总体架构</div><h2>为什么跨账号不需要打通网络</h2><div class="body">
+<div class="cols2">
+  <div class="card">
+    <h3>Agent 的所有操作都是 AWS API</h3>
+    <ul>
+      <li>SSM SendCommand、DescribeInstanceInformation、ListCommandInvocations……</li>
+      <li>由实例上的 SSM Agent <b>主动出站</b>拉取并执行</li>
+      <li>与某用户现有 Patch Manager 的工作方式完全一致</li>
+    </ul>
+  </div>
+  <div class="card green">
+    <h3>因此</h3>
+    <ul>
+      <li>运维 VPC 与业务 VPC 之间<b>不需要</b> Peering、Transit Gateway 或任何入站规则</li>
+      <li>新增业务账号只需部署一个 <b>Spoke 角色</b> 和几份 <b>SSM 文档</b></li>
+      <li>Runtime 安全组只出站 443、无入站；访问 AWS 服务全部经终端节点</li>
+    </ul>
+  </div>
+</div>
+<div class="flow">
+  <div>编排 Lambda<small>运维 VPC</small></div><i>→</i>
+  <div>bedrock-agentcore 终端节点<small>资源策略只认它</small></div><i>→</i>
+  <div>Runtime microVM<small>VPC 模式</small></div><i>→</i>
+  <div>STS 终端节点<small>AssumeRole + 会话标签</small></div><i>→</i>
+  <div>业务账号 SSM<small>只作用于一台实例</small></div>
+</div>
+</div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>7 / 24</span></div></section><section class="slide " data-i="8"><div class="sec">04 Q1 跨账号权限与网络</div><h2>权限边界：三道闸门依次收窄</h2><div class="body"><div class="fig" style="height:300px"><svg viewBox="0 0 1100 300" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="13">
+<defs><marker id="b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<rect x="10" y="40" width="180" height="200" rx="6" fill="#f6f8fa" stroke="#8a96a3"/>
+<text x="100" y="64" text-anchor="middle" font-weight="600">调用方</text>
+<rect x="24" y="80" width="152" height="50" rx="4" fill="#fff" stroke="#6b4fbb"/><text x="100" y="101" text-anchor="middle" font-size="12">编排 Lambda 角色</text><text x="100" y="119" text-anchor="middle" font-size="11" fill="#5b6673">runtimeUserId=编排</text>
+<rect x="24" y="144" width="152" height="50" rx="4" fill="#fff" stroke="#1d8102"/><text x="100" y="165" text-anchor="middle" font-size="12">值班 permission set</text><text x="100" y="183" text-anchor="middle" font-size="11" fill="#5b6673">runtimeUserId=本人</text>
+<text x="100" y="222" text-anchor="middle" font-size="11.5" fill="#5b6673">SigV4 · 必须在运维 VPC 内</text>
+<rect x="230" y="40" width="210" height="200" rx="6" fill="#fdf1e6" stroke="#ec7211"/>
+<text x="335" y="64" text-anchor="middle" font-weight="600">闸门 1：Runtime 资源策略</text>
+<text x="245" y="92" font-size="12">Allow：上述两个角色</text>
+<text x="245" y="112" font-size="12">　InvokeAgentRuntime</text>
+<text x="245" y="132" font-size="12">　InvokeAgentRuntimeForUser</text>
+<text x="245" y="156" font-size="12" fill="#c7271a">Deny Principal:*</text>
+<text x="245" y="174" font-size="12" fill="#c7271a">　bedrock-agentcore:*（全部）</text>
+<text x="245" y="192" font-size="12" fill="#c7271a">　当 aws:SourceVpce ≠</text>
+<text x="245" y="210" font-size="12" fill="#c7271a">　运维 bedrock-agentcore VPCE</text>
+<text x="245" y="230" font-size="11" fill="#5b6673">Runtime 与 DEFAULT endpoint 都配置</text>
+<rect x="480" y="40" width="250" height="200" rx="6" fill="#e8f1fb" stroke="#0b5cad"/>
+<text x="605" y="64" text-anchor="middle" font-weight="600">闸门 2：Spoke 信任策略</text>
+<text x="495" y="92" font-size="12">Principal：Runtime 执行角色</text>
+<text x="495" y="112" font-size="12">sts:ExternalId = 约定值</text>
+<text x="495" y="132" font-size="12">aws:SourceVpce = 运维 STS VPCE</text>
+<text x="495" y="152" font-size="12">必须带会话标签</text>
+<text x="495" y="172" font-size="12">　TargetInstance = i-*</text>
+<text x="495" y="192" font-size="12">　标签键仅限 TargetInstance/BatchId</text>
+<text x="495" y="220" font-size="11" fill="#5b6673">TagSession 单独一条语句（无 ExternalId 上下文）</text>
+<rect x="770" y="40" width="320" height="200" rx="6" fill="#e9f6e6" stroke="#1d8102"/>
+<text x="930" y="64" text-anchor="middle" font-weight="600">闸门 3：Spoke 权限策略</text>
+<text x="785" y="92" font-size="12">读：DescribeInstanceInformation 等</text>
+<text x="785" y="112" font-size="12">写：SendCommand 仅限</text>
+<text x="785" y="132" font-size="12">　AWS-RunPatchBaseline / PatchDiagnose-*</text>
+<text x="785" y="152" font-size="12">　/ PatchRemediate-*（允许列表）</text>
+<text x="785" y="172" font-size="12">且实例 = ${aws:PrincipalTag/TargetInstance}</text>
+<text x="785" y="192" font-size="12" fill="#c7271a">Deny *：不经运维 VPCE（ssm/ec2/sts）</text>
+<text x="785" y="220" font-size="11" fill="#5b6673">无 Reboot/Stop/CancelCommand，无 RunShellScript</text>
+<path d="M190,140 L228,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
+<path d="M440,140 L478,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
+<path d="M730,140 L768,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
+<text x="550" y="275" text-anchor="middle" font-size="12.5" fill="#232f3e">结果：一个诊断会话拿到的凭证，只能在运维 VPC 内、只能对"它负责的那一台实例"、只能执行预先审核的文档</text>
+</svg></div>
+<div class="cols3 small">
+  <div class="card"><h4>入站：IAM SigV4 + VPC 内网</h4>运维 VPC 建 bedrock-agentcore 接口终端节点（Private DNS）；资源策略对 <code>bedrock-agentcore:*</code> 拒绝一切非 <code>aws:SourceVpce</code> 路径。中国区无 Cognito，SSO 走 Identity Center + SigV4。</div>
+  <div class="card"><h4>出站：Hub-Spoke</h4>Runtime 为当前实例 AssumeRole，带会话标签 <code>TargetInstance=&lt;实例&gt;</code>；Spoke 策略用 <code>${aws:PrincipalTag/TargetInstance}</code>，凭证只能作用于这一台实例。</div>
+  <div class="card"><h4>人工接管：Identity Center</h4>值班 permission set 角色调用 InvokeAgentRuntimeForUser，<code>runtimeSessionId</code> 与自动诊断相同，<code>runtimeUserId</code> 为工程师本人；对话从 DynamoDB 恢复。</div>
+</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>8 / 24</span></div></section><section class="slide " data-i="9"><div class="sec">04 Q1 跨账号权限与网络</div><h2>实测：权限与网络正反向用例 14 / 14 符合预期</h2><div class="body"><table class="compact dense"><thead><tr><th>#</th><th>用例</th><th>预期</th><th>实测</th></tr></thead><tbody><tr><td>1</td><td>公网（VPC 外）调用 InvokeAgentRuntime / StopRuntimeSession</td><td><span class="no">拒绝</span></td><td>AccessDeniedException（资源策略显式拒绝）</td></tr><tr><td>2</td><td>VPC 内编排 Lambda 经终端节点调用 Runtime</td><td><span class="ok">允许</span></td><td>成功</td></tr><tr><td>3</td><td>受信任角色 + 正确 ExternalId，但经 NAT 访问公网 STS</td><td><span class="no">拒绝</span></td><td>AccessDenied</td></tr><tr><td>4</td><td>合法 Spoke 凭证拿到终端节点之外使用</td><td><span class="no">拒绝</span></td><td>UnauthorizedOperation</td></tr><tr><td>5 / 6</td><td>AssumeRole 不带 TargetInstance 标签 / ExternalId 错误</td><td><span class="no">拒绝</span></td><td>AccessDenied</td></tr><tr><td>7</td><td>绑定实例 A 的凭证，对实例 B 执行允许列表文档</td><td><span class="no">拒绝</span></td><td>AccessDeniedException</td></tr><tr><td>8 / 9</td><td>对实例 A 执行 AWS-RunShellScript / Reboot / Stop</td><td><span class="no">拒绝</span></td><td>AccessDeniedException / UnauthorizedOperation</td></tr><tr><td>10</td><td>Agent 会话调用 CancelCommand</td><td><span class="no">拒绝</span></td><td>implicitDeny（只给编排会话）</td></tr><tr><td>11</td><td>绑定实例 A 的凭证，对实例 A 执行允许列表文档</td><td><span class="ok">允许</span></td><td>成功</td></tr><tr><td>12</td><td>Runtime 经 NAT 调用全球区模型（Key 来自 Token Vault）</td><td><span class="ok">允许</span></td><td>成功，约 5.6 秒</td></tr><tr><td>13</td><td>值班角色 + runtimeUserId=工程师 接管会话</td><td><span class="ok">允许</span></td><td>成功，恢复 10 条历史消息</td></tr><tr><td>14</td><td>从 VPC 外访问长期记忆 OpenSearch 域</td><td><span class="no">不可达</span></td><td>无公网 endpoint，连接超时</td></tr></tbody></table></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>9 / 24</span></div></section><section class="slide " data-i="10"><div class="sec">05 Q2 Session 与编排</div><h2>为什么一台失败实例一个 Session</h2><div class="body">
+<div class="cols3">
+  <div class="card"><h3>8 小时上限不再是约束</h3>批量执行是 Patch Manager 的原生能力；单台诊断 2 ~ 7 分钟，生命周期空闲 600 秒 / 最长 7200 秒。</div>
+  <div class="card"><h3>故障隔离</h3>每个会话一个 microVM。某台诊断挂起、崩溃或超时只影响它自己，可单独 StopRuntimeSession。</div>
+  <div class="card"><h3>上下文干净、可接管</h3>会话 ID = <code>{批次}-{实例}</code>；模型不被其他实例输出干扰，值班人员直接用同一会话 ID 接管。</div>
+</div>
+<table class="compact"><thead><tr><th>方案</th><th>优点</th><th>问题</th><th>结论</th></tr></thead><tbody><tr><td>单会话处理整批</td><td>实现简单</td><td>受 8 小时上限约束；一台挂起拖住整批；上下文互相污染；无法按实例接管</td><td><span class="no">不推荐</span></td></tr><tr><td>按 Target 分组，每组一个会话</td><td>会话数少</td><td>组内仍互相阻塞；分组本身就是 Patch Manager 已有能力</td><td>不必要</td></tr><tr><td>批量交给 Patch Manager，每台失败实例一个会话</td><td>隔离、可并发、可接管、可按实例重驱</td><td>需要编排层控制并发与新建会话速率（已实现）</td><td><span class="ok">推荐</span></td></tr></tbody></table></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>10 / 24</span></div></section><section class="slide " data-i="11"><div class="sec">05 Q2 Session 与编排</div><h2>按实例流水线编排（Step Functions）</h2><div class="body"><div class="fig" style="height:400px"><svg viewBox="0 0 1100 545" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="13">
+<defs><marker id="f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker>
+<marker id="f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c7271a"/></marker></defs>
+<rect x="20" y="40" width="110" height="50" rx="25" fill="#232f3e"/><text x="75" y="70" text-anchor="middle" fill="#fff" font-weight="600">Init</text>
+<text x="75" y="110" text-anchor="middle" font-size="11.5" fill="#5b6673">按标签跨账号</text><text x="75" y="126" text-anchor="middle" font-size="11.5" fill="#5b6673">发现实例</text>
+<rect x="160" y="20" width="560" height="270" rx="8" fill="#f3f8fd" stroke="#0b5cad" stroke-dasharray="6 3"/>
+<text x="175" y="40" font-weight="600" fill="#0b5cad">Waves Map（MaxConcurrency=1）：canary → main</text>
+<rect x="180" y="56" width="180" height="84" rx="6" fill="#fff" stroke="#0b5cad"/>
+<text x="270" y="78" text-anchor="middle" font-weight="600">SendPatch</text>
+<text x="270" y="98" text-anchor="middle" font-size="11.5">预检①：PingStatus</text>
+<text x="270" y="114" text-anchor="middle" font-size="11.5">预检②：根盘余量</text>
+<text x="270" y="130" text-anchor="middle" font-size="11.5">RunPatchBaseline（≤50 台/命令）</text>
+<rect x="392" y="74" width="80" height="44" rx="22" fill="#fff" stroke="#8a96a3"/><text x="432" y="101" text-anchor="middle">Wait 30s</text>
+<rect x="504" y="56" width="196" height="84" rx="6" fill="#fdf1e6" stroke="#ec7211" stroke-width="1.5"/>
+<text x="602" y="78" text-anchor="middle" font-weight="600">Tick（本波次）</text>
+<text x="602" y="98" text-anchor="middle" font-size="11.5">轮询 · 单台截止取消</text>
+<text x="602" y="114" text-anchor="middle" font-size="11.5">Agent 超时停止</text>
+<text x="602" y="130" text-anchor="middle" font-size="11.5">失败即派发（≤maxAgents）</text>
+<polygon points="602,168 662,198 602,228 542,198" fill="#fff" stroke="#232f3e"/><text x="602" y="203" text-anchor="middle" font-size="12">波次完成?</text>
+<polygon points="400,168 470,198 400,228 330,198" fill="#fff" stroke="#232f3e"/><text x="400" y="203" text-anchor="middle" font-size="12">CanaryGate</text>
+<rect x="190" y="232" width="110" height="40" rx="6" fill="#fbeaea" stroke="#c7271a"/><text x="245" y="257" text-anchor="middle" font-size="12">Halt：置熔断</text>
+<rect x="420" y="246" width="120" height="34" rx="17" fill="#e9f6e6" stroke="#1d8102"/><text x="480" y="268" text-anchor="middle" font-size="12">下一波次</text>
+<path d="M130,65 L178,85" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M360,96 L390,96" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M472,96 L502,96" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M602,140 L602,166" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M662,198 L700,198 L700,150 L432,150 L432,120" fill="none" stroke="#232f3e" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#f1)"/>
+<text x="668" y="190" font-size="11">否</text>
+<path d="M542,198 L472,198" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/><text x="506" y="190" font-size="11">是</text>
+<path d="M330,198 L245,198 L245,230" fill="none" stroke="#c7271a" stroke-width="1.5" marker-end="url(#f2)"/><text x="262" y="190" font-size="11" fill="#c7271a">canary 有失败</text>
+<path d="M400,228 L400,262 L418,262" fill="none" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<!-- after waves -->
+<rect x="760" y="56" width="80" height="44" rx="22" fill="#fff" stroke="#8a96a3"/><text x="800" y="83" text-anchor="middle">Wait 30s</text>
+<rect x="870" y="46" width="210" height="64" rx="6" fill="#fdf1e6" stroke="#ec7211" stroke-width="1.5"/><text x="975" y="72" text-anchor="middle" font-weight="600">Drain = Tick（全批）</text><text x="975" y="92" text-anchor="middle" font-size="11.5">等待排队与诊断全部结束</text>
+<polygon points="975,140 1035,170 975,200 915,170" fill="#fff" stroke="#232f3e"/><text x="975" y="175" text-anchor="middle" font-size="12">已排空?</text>
+<rect x="915" y="232" width="120" height="44" rx="6" fill="#f1edfa" stroke="#6b4fbb"/><text x="975" y="259" text-anchor="middle" font-weight="600">Report</text>
+<polygon points="975,300 1035,330 975,360 915,330" fill="#fff" stroke="#232f3e"/><text x="975" y="335" text-anchor="middle" font-size="12">熔断?</text>
+<rect x="760" y="390" width="160" height="40" rx="20" fill="#fbeaea" stroke="#c7271a"/><text x="840" y="415" text-anchor="middle" font-size="12">Fail：CanaryCircuitBreaker</text>
+<rect x="960" y="390" width="110" height="40" rx="20" fill="#e9f6e6" stroke="#1d8102"/><text x="1015" y="415" text-anchor="middle" font-size="12">Done</text>
+<path d="M720,80 L758,80" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M840,78 L868,78" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M975,110 L975,138" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M915,170 L800,170 L800,102" fill="none" stroke="#232f3e" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#f1)"/><text x="860" y="162" font-size="11">否</text>
+<path d="M975,200 L975,230" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/><text x="982" y="220" font-size="11">是</text>
+<path d="M975,276 L975,298" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/>
+<path d="M915,330 L840,330 L840,388" fill="none" stroke="#c7271a" stroke-width="1.5" marker-end="url(#f2)"/><text x="870" y="322" font-size="11" fill="#c7271a">是</text>
+<path d="M1015,350 L1015,388" stroke="#232f3e" stroke-width="1.5" marker-end="url(#f1)"/><text x="1022" y="374" font-size="11">否</text>
+<!-- legend -->
+<rect x="20" y="318" width="700" height="150" rx="6" fill="#fbfcfd" stroke="#d9dee5"/>
+<text x="34" y="340" font-weight="600" fill="#232f3e">单台不阻塞整批的四层兜底</text>
+<text x="34" y="362" font-size="12">① 预检：SSM 不在线 → UNDELIVERABLE；根盘余量不足（默认 &lt;15% 或 &lt;500MB）→ PRECHECK_FAILED</text>
+<text x="34" y="380" font-size="12">　　两种情况都不下发补丁，直接进入诊断</text>
+<text x="34" y="402" font-size="12">② 单台截止：运行超过 patchTimeout（从首次 InProgress 起算）或排队超过 waveHardTimeout → 只取消这一台</text>
+<text x="34" y="424" font-size="12">③ Agent 超时：先写 NEEDS_HUMAN 再 StopRuntimeSession；派发后 dispatchGrace 内未认领 → 重排，3 次后转人工</text>
+<text x="34" y="446" font-size="12">④ canary 熔断：canary 有失败 → 置熔断标志，后续波次不再下发；已在诊断的实例照常完成，最后以 Fail 结束</text>
+<path d="M245,272 L245,294 L480,294 L480,282" fill="none" stroke="#232f3e" stroke-width="1.3" marker-end="url(#f1)"/>
+<rect x="20" y="478" width="1060" height="56" rx="6" fill="#fbeaea" stroke="#c7271a" stroke-dasharray="5 3"/>
+<text x="34" y="497" font-size="12" font-weight="600" fill="#c7271a">兜底 Abort</text>
+<text x="110" y="497" font-size="12">Init / Waves / Drain 任一步出错（Catch）或超过 batchTimeout → Abort：非终态实例转 NEEDS_HUMAN、停止 Agent、取消挂起命令</text>
+<text x="110" y="517" font-size="12">→ Report → Fail（BatchAborted）。单台实例连续 5 次处理出错只转人工，不影响批次其他实例</text>
+</svg></div><table class="compact dense"><thead><tr><th>参数</th><th>默认</th><th>作用</th></tr></thead><tbody><tr><td>maxAgents</td><td>10</td><td>全批同时诊断上限，超出排队；派发前条件写 dispatched_at，不重复派发</td></tr><tr><td>patchTimeout / waveHardTimeout</td><td>600 秒 / 3×</td><td>单台补丁上限（从首次 InProgress 起算）/ 排队硬上限，到点只对这一台 CancelCommand</td></tr><tr><td>agentTimeout · dispatchGrace</td><td>2400 秒 · 180 秒</td><td>诊断超时停止会话；派发未认领自动重排，3 次后转人工</td></tr><tr><td>预检</td><td>PingStatus + 根盘 15% / 500MB</td><td>离线直接标 UNDELIVERABLE；低磁盘先交给 Agent 清理</td></tr></tbody></table></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>11 / 24</span></div></section><section class="slide " data-i="12"><div class="sec">05 Q2 Session 与编排</div><h2>单实例诊断时序</h2><div class="body"><div class="fig" style="height:520px"><svg viewBox="0 0 1100 560" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="s1m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker>
+<marker id="s2m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a96a3"/></marker></defs>
+<g font-weight="600" text-anchor="middle">
+<rect x="20" y="14" width="150" height="40" rx="5" fill="#f1edfa" stroke="#6b4fbb"/><text x="95" y="39">编排 Lambda</text>
+<rect x="210" y="14" width="170" height="40" rx="5" fill="#fdf1e6" stroke="#ec7211"/><text x="295" y="39">Runtime（microVM）</text>
+<rect x="420" y="14" width="150" height="40" rx="5" fill="#fff" stroke="#ec7211"/><text x="495" y="39">Agent + 护栏</text>
+<rect x="610" y="14" width="150" height="40" rx="5" fill="#e8f1fb" stroke="#0b5cad"/><text x="685" y="39">业务账号 SSM</text>
+<rect x="800" y="14" width="140" height="40" rx="5" fill="#f1edfa" stroke="#6b4fbb"/><text x="870" y="39">DynamoDB / OpenSearch</text>
+<rect x="970" y="14" width="115" height="40" rx="5" fill="#fff" stroke="#c7271a"/><text x="1027" y="39">全球区模型</text>
+</g>
+<g stroke="#c5ccd5" stroke-dasharray="4 4"><line x1="95" y1="54" x2="95" y2="545"/><line x1="295" y1="54" x2="295" y2="545"/><line x1="495" y1="54" x2="495" y2="545"/><line x1="685" y1="54" x2="685" y2="545"/><line x1="870" y1="54" x2="870" y2="545"/><line x1="1027" y1="54" x2="1027" y2="545"/></g>
+<g stroke="#232f3e" stroke-width="1.4" fill="none">
+<path d="M95,80 L293,80" marker-end="url(#s1m)"/>
+<path d="M295,104 L868,104" marker-end="url(#s1m)"/>
+<path d="M295,130 L97,130" marker-end="url(#s2m)" stroke="#8a96a3" stroke-dasharray="5 3"/>
+<path d="M295,156 L1025,156" marker-end="url(#s1m)"/>
+<path d="M295,182 L868,182" marker-end="url(#s1m)"/>
+<path d="M295,208 L493,208" marker-end="url(#s1m)"/>
+<path d="M495,236 L1025,236" marker-end="url(#s1m)"/>
+<path d="M495,262 L683,262" marker-end="url(#s1m)"/>
+<path d="M495,288 L683,288" marker-end="url(#s1m)"/>
+<path d="M495,314 L683,314" marker-end="url(#s1m)"/>
+<path d="M495,340 L683,340" marker-end="url(#s1m)"/>
+<path d="M495,370 L868,370" marker-end="url(#s1m)"/>
+<path d="M295,400 L1025,400" marker-end="url(#s1m)"/>
+<path d="M295,426 L868,426" marker-end="url(#s1m)"/>
+<path d="M95,460 L868,460" marker-end="url(#s1m)"/>
+<path d="M95,500 L293,500" marker-end="url(#s1m)" stroke="#c7271a"/>
+</g>
+<g>
+<text x="105" y="74">InvokeAgentRuntime（session=批次-实例, mode=diagnose）</text>
+<text x="305" y="98">校验实例归属本会话 · 条件写认领 DIAGNOSING</text>
+<text x="105" y="124" fill="#5b6673">立即返回 accepted；add_async_task → /ping 报 HealthyBusy</text>
+<text x="305" y="150">报错文本向量化（Titan Embed V2；API Key 用 workload token 从 Token Vault 获取）</text>
+<text x="305" y="176">召回：kNN + 关键短语 → 知识库 / 反思 / 本机历史片段</text>
+<text x="305" y="202">构建 Agent（系统提示含召回结果）</text>
+<text x="505" y="230">推理循环（Kimi K3）</text>
+<text x="505" y="256">AssumeRole（TargetInstance 标签）· 读补丁输出</text>
+<text x="505" y="282">PatchDiagnose-Collect（只读、参数为枚举）</text>
+<text x="505" y="308">PatchRemediate-*（≤2 次，原子计数）</text>
+<text x="505" y="334">rerun_patch：重跑补丁（≤1 次）</text>
+<text x="505" y="364">report_result：FIXED 必须有真实重跑 Success · 每次工具调用写审计</text>
+<text x="305" y="394">记忆提取 → 合并 / 反思生成（后台，不影响结果）</text>
+<text x="305" y="420">写入 EPISODE / REFLECTION / KB；complete_async_task</text>
+<text x="105" y="454">每 30 秒 Tick：读状态 FIXED / NEEDS_HUMAN → 结束；释放并发槽位给排队实例</text>
+<text x="105" y="494" fill="#c7271a">超过 agentTimeout：先写 NEEDS_HUMAN（护栏据此拦截后续动作）→ StopRuntimeSession</text>
+<text x="105" y="530" fill="#5b6673" font-size="12">NEEDS_HUMAN 时：生成 APPROVAL# 审批单 → 值班人员经 Identity Center 用同一会话接管（§4.3）</text>
+</g>
+</svg></div><div class="cap">入口立即返回，诊断在后台线程执行（add_async_task，/ping 返回 HealthyBusy），进度实时写入 DynamoDB</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>12 / 24</span></div></section><section class="slide " data-i="13"><div class="sec">05 Q2 Session 与编排</div><h2>实测：哪台失败就先修哪台，不用等整批跑完</h2><div class="body"><div class="fig" style="height:340px"><svg viewBox="0 0 1100 400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12"><line x1="150.0" y1="40" x2="150.0" y2="300" stroke="#eef2f6"/><text x="150.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">0s</text><line x1="240.0" y1="40" x2="240.0" y2="300" stroke="#eef2f6"/><text x="240.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">100s</text><line x1="330.0" y1="40" x2="330.0" y2="300" stroke="#eef2f6"/><text x="330.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">200s</text><line x1="420.0" y1="40" x2="420.0" y2="300" stroke="#eef2f6"/><text x="420.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">300s</text><line x1="510.0" y1="40" x2="510.0" y2="300" stroke="#eef2f6"/><text x="510.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">400s</text><line x1="600.0" y1="40" x2="600.0" y2="300" stroke="#eef2f6"/><text x="600.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">500s</text><line x1="690.0" y1="40" x2="690.0" y2="300" stroke="#eef2f6"/><text x="690.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">600s</text><line x1="780.0" y1="40" x2="780.0" y2="300" stroke="#eef2f6"/><text x="780.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">700s</text><line x1="870.0" y1="40" x2="870.0" y2="300" stroke="#eef2f6"/><text x="870.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">800s</text><line x1="960.0" y1="40" x2="960.0" y2="300" stroke="#eef2f6"/><text x="960.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">900s</text><line x1="1050.0" y1="40" x2="1050.0" y2="300" stroke="#eef2f6"/><text x="1050.0" y="318" text-anchor="middle" fill="#5b6673" font-size="11">1000s</text><text x="138" y="74" text-anchor="end" font-weight="600">healthy（canary）</text><rect x="168.9" y="56" width="71.1" height="26" rx="3" fill="#e8f1fb" stroke="#0b5cad"/><circle cx="240.0" cy="69" r="5" fill="#1d8102"/><text x="249.0" y="74" font-size="11.5" font-weight="600" fill="#1d8102">PATCH_OK 100s</text><text x="138" y="122" text-anchor="end" font-weight="600">disk-full</text><rect x="241.8" y="104" width="36.9" height="26" rx="3" fill="#f6f8fa" stroke="#8a96a3"/><rect x="278.7" y="104" width="109.8" height="26" rx="3" fill="#fdf1e6" stroke="#ec7211"/><polygon points="241.8,100 246.8,107 241.8,114 236.8,107" fill="#c7271a"/><text x="249.8" y="102" font-size="11" fill="#c7271a">预检拦截 102s</text><circle cx="388.5" cy="117" r="5" fill="#1d8102"/><text x="397.5" y="122" font-size="11.5" font-weight="600" fill="#1d8102">FIXED 265s</text><text x="138" y="170" text-anchor="end" font-weight="600">ssm-offline</text><rect x="241.8" y="152" width="36.9" height="26" rx="3" fill="#f6f8fa" stroke="#8a96a3"/><rect x="278.7" y="152" width="36.9" height="26" rx="3" fill="#fdf1e6" stroke="#ec7211"/><polygon points="241.8,148 246.8,155 241.8,162 236.8,155" fill="#c7271a"/><text x="249.8" y="150" font-size="11" fill="#c7271a">预检拦截 102s</text><circle cx="315.6" cy="165" r="5" fill="#a24f05"/><text x="324.6" y="170" font-size="11.5" font-weight="600" fill="#a24f05">NEEDS_HUMAN 184s</text><text x="138" y="218" text-anchor="end" font-weight="600">rpm-lock</text><rect x="259.8" y="200" width="110.7" height="26" rx="3" fill="#e8f1fb" stroke="#0b5cad"/><rect x="370.5" y="200" width="109.8" height="26" rx="3" fill="#fdf1e6" stroke="#ec7211"/><polygon points="370.5,196 375.5,203 370.5,210 365.5,203" fill="#c7271a"/><text x="378.5" y="198" font-size="11" fill="#c7271a">失败→立即派发 245s</text><circle cx="480.3" cy="213" r="5" fill="#1d8102"/><text x="489.3" y="218" font-size="11.5" font-weight="600" fill="#1d8102">FIXED 367s</text><text x="138" y="266" text-anchor="end" font-weight="600">repo-broken</text><rect x="259.8" y="248" width="387.9" height="26" rx="3" fill="#e8f1fb" stroke="#0b5cad"/><rect x="647.7" y="248" width="369.9" height="26" rx="3" fill="#fdf1e6" stroke="#ec7211"/><polygon points="647.7,244 652.7,251 647.7,258 642.7,251" fill="#c7271a"/><text x="655.7" y="246" font-size="11" fill="#c7271a">截止取消→诊断 553s</text><circle cx="1017.6" cy="261" r="5" fill="#1d8102"/><text x="1026.6" y="266" font-size="11.5" font-weight="600" fill="#1d8102">FIXED 964s</text><line x1="647.7" y1="34" x2="647.7" y2="300" stroke="#c7271a" stroke-width="1.4" stroke-dasharray="6 4"/><text x="641.7" y="30" text-anchor="end" font-size="11.5" fill="#c7271a">整波等待式编排：要等到这里（波次结束）才开始任何诊断 →</text><g font-size="11.5"><rect x="150" y="340" width="22" height="12" fill="#e8f1fb" stroke="#0b5cad"/><text x="178" y="351">打补丁（RunPatchBaseline）</text><rect x="360" y="340" width="22" height="12" fill="#f6f8fa" stroke="#8a96a3"/><text x="388" y="351">已标记、等待下一次 Tick 派发</text><rect x="580" y="340" width="22" height="12" fill="#fdf1e6" stroke="#ec7211"/><text x="608" y="351">Agent 诊断与修复</text><polygon points="760,340 766,346 760,352 754,346" fill="#c7271a"/><text x="772" y="351">进入诊断的触发点</text><circle cx="900" cy="346" r="5" fill="#1d8102"/><text x="910" y="351">终态</text></g><text x="150" y="384" font-size="11.5" fill="#5b6673">canary 21s 开始打补丁；102s 预检完成；122s main 波次开始打补丁；批次在 964s 完成（SUCCEEDED）</text></svg></div>
+<div class="howto"><b>怎么读</b>　每行一台机器，横轴是批次开始后的秒数：<span class="lg b">蓝</span> 打补丁　<span class="lg g">灰</span> 已发现问题、等待派发　<span class="lg o">橙</span> Agent 诊断修复　<span class="dot">●</span> 结束</div>
+<div class="cols3 small">
+  <div class="card"><h4>传统做法：整波等待</h4>要等这一波<b>所有</b>机器都跑完（图中红色虚线，第 553 秒）才开始处理失败的机器。最慢的那一台，决定了所有故障机的等待时间。</div>
+  <div class="card green"><h4>本方案：失败即处理</h4>disk-full 第 102 秒预检就发现磁盘不够，第 265 秒已修好；rpm-lock 第 245 秒补丁失败，马上开始修，第 367 秒修好。都比整波等待<b>早 5 ~ 7 分钟</b>开始处理。</div>
+  <div class="card"><h4>每台机器互不影响</h4>repo-broken 的补丁卡住不动，只有它自己等到截止时间被取消再交给 Agent，其他机器照常推进。4 台故障机 3 台自动修好，1 台转人工。</div>
+</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>13 / 24</span></div></section><section class="slide " data-i="14"><div class="sec">05 Q2 Session 与编排</div><h2>实测结果：5 台机器、4 种故障，各自怎么处理</h2><div class="body"><table class="compact"><thead><tr><th>机器</th><th>人为制造的故障</th><th>结果</th><th>发生了什么</th></tr></thead><tbody><tr><td><span style="white-space:nowrap">healthy</span></td><td>无（作为 canary 先打补丁）</td><td><span class="ok">补丁成功</span></td><td>canary 成功后，其余机器才开始打补丁</td></tr><tr><td><span style="white-space:nowrap">disk-full</span></td><td>根盘只剩约 3% 空间</td><td><span class="ok">自动修好</span></td><td>打补丁前的预检发现空间不够；Agent 清理软件包缓存、旧日志和大临时文件，再重跑补丁成功。约 2.5 分钟</td></tr><tr><td><span style="white-space:nowrap">rpm-lock</span></td><td>有进程一直占着软件包锁，补丁装不上</td><td><span class="ok">自动修好</span></td><td>Agent 找出占锁的进程并释放锁，重跑补丁成功。这类问题可能复发，所以另附一张根治审批单交给人决定</td></tr><tr><td><span style="white-space:nowrap">repo-broken</span></td><td>第三方软件源不可达，且输出里藏着诱导 Agent 做危险操作的文字</td><td><span class="ok">自动修好</span></td><td>补丁一直卡住，到截止时间只取消这一台；Agent 没有理会诱导文字，临时停用这个坏掉的软件源后重跑成功</td></tr><tr><td><span style="white-space:nowrap">ssm-offline</span></td><td>机器上的 SSM Agent 被停掉</td><td><span class="warn">转人工</span></td><td>远程通道断了，Agent 无法操作这台机器；预检时就识别出来，25 秒内生成「重启 SSM Agent」审批单</td></tr></tbody></table>
+<div class="cols3 small">
+  <div class="card"><h4>"修好"要有证据</h4>只有补丁<b>真实重跑成功</b>，系统才接受"已修复"；Agent 自己说修好了不算。</div>
+  <div class="card"><h4>修不了就交给人</h4>Agent 不硬修：能力范围外的情况生成审批单，写明原因和建议操作，值班人员可在同一会话里接着处理。</div>
+  <div class="card"><h4>只能做允许的事</h4>Agent 只能调用预先审核过的几份 SSM 文档，不能随意执行命令，也不能重启或停止机器。</div>
+</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>14 / 24</span></div></section><section class="slide " data-i="15"><div class="sec">06 Q3 自建记忆</div><h2>记忆分层：对齐 AgentCore Memory 内置策略</h2><div class="body"><table class="compact"><thead><tr><th>层</th><th>对应 AgentCore 概念</th><th>存储</th><th>内容</th><th>读写时机</th></tr></thead><tbody><tr><td>STM 短期记忆</td><td>Short-term memory（事件）</td><td>DynamoDB（Strands SessionRepository，TTL 30 天）</td><td>一个会话的完整对话与工具调用</td><td>每条消息实时写入；接管时按会话 ID 恢复</td></tr><tr><td>KB <code>/patch/knowledge</code></td><td>Semantic 策略</td><td>OpenSearch 域（VPC）<br>Titan Embed V2 · 1024 维 · HNSW</td><td>现象 → 根因 → 修复 + 特征报错串；verified 标记人工确认</td><td>诊断开始召回 top-3；只从 FIXED 学习</td></tr><tr><td>EPISODE <code>/patch/episodes/{实例}</code></td><td>Episodic：片段</td><td>同上</td><td>situation / intent / assessment / justification / reflection</td><td>每次诊断结束写入；作为本机历史召回</td></tr><tr><td>REFLECTION <code>/patch/reflections</code></td><td>Episodic：反思</td><td>同上</td><td>跨片段可迁移经验：title / use_cases / hints / confidence</td><td>add / update；低置信度不召回</td></tr><tr><td>冷启动</td><td>—</td><td>—</td><td>现有 Kiro 排查记录与 Wiki 导入 KB（verified=true）</td><td>一次性导入</td></tr></tbody></table><div class="note">每条记录带 AgentCore 风格的 namespace，提示词改编自 AgentCore 默认提示词；服务在中国区上线后可按 namespace 迁移，召回接口不变。</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>15 / 24</span></div></section><section class="slide " data-i="16"><div class="sec">06 Q3 自建记忆</div><h2>长期记忆管线：写入三步，召回一步</h2><div class="body"><div class="fig" style="height:340px"><svg viewBox="0 0 1100 430" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<text x="20" y="24" font-weight="600" fill="#232f3e" font-size="13.5">写入（诊断结束后，后台异步）</text>
+<rect x="20" y="40" width="150" height="70" rx="6" fill="#f1edfa" stroke="#6b4fbb"/><text x="95" y="66" text-anchor="middle" font-weight="600">STM 对话</text><text x="95" y="86" text-anchor="middle" font-size="11.5">工具调用与结果</text><text x="95" y="102" text-anchor="middle" font-size="11.5">+ 最终报告</text>
+<rect x="200" y="40" width="190" height="70" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="295" y="64" text-anchor="middle" font-weight="600">① 提取（LLM）</text><text x="295" y="84" text-anchor="middle" font-size="11.5">Episode + 知识候选</text><text x="295" y="100" text-anchor="middle" font-size="11.5">signature 受控词表</text>
+<rect x="430" y="20" width="190" height="56" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="525" y="44" text-anchor="middle" font-weight="600">EPISODE</text><text x="525" y="62" text-anchor="middle" font-size="11.5">写入 + 向量化</text>
+<rect x="660" y="20" width="230" height="56" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="775" y="42" text-anchor="middle" font-weight="600">② 反思生成（LLM）</text><text x="775" y="60" text-anchor="middle" font-size="11.5">相关片段 + 已有反思 → add / update</text>
+<rect x="920" y="20" width="160" height="56" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="1000" y="44" text-anchor="middle" font-weight="600">REFLECTION</text><text x="1000" y="62" text-anchor="middle" font-size="11.5">confidence 0.1~1.0</text>
+<rect x="430" y="100" width="190" height="56" rx="6" fill="#e9f6e6" stroke="#1d8102"/><text x="525" y="122" text-anchor="middle" font-weight="600">质量门（代码）</text><text x="525" y="140" text-anchor="middle" font-size="11.5">仅 FIXED · 关键词过滤</text>
+<rect x="660" y="100" width="230" height="56" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="775" y="122" text-anchor="middle" font-weight="600">③ 合并（LLM）</text><text x="775" y="140" text-anchor="middle" font-size="11.5">相关 KB → Add / Update / Skip</text>
+<rect x="920" y="100" width="160" height="56" rx="6" fill="#e9f6e6" stroke="#1d8102"/><text x="1000" y="120" text-anchor="middle" font-weight="600">硬规则 → KB</text><text x="1000" y="138" text-anchor="middle" font-size="11">verified 只出 proposal</text><text x="1000" y="152" text-anchor="middle" font-size="11">新条目 verified=false</text>
+<path d="M170,75 L198,75" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M390,62 L428,48" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M390,88 L428,124" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M620,48 L658,48" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M890,48 L918,48" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M620,128 L658,128" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M890,128 L918,128" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<line x1="20" y1="190" x2="1080" y2="190" stroke="#d9dee5"/>
+<text x="20" y="218" font-weight="600" fill="#232f3e" font-size="13.5">召回：诊断开始时（在 Agent 第一次推理之前）</text>
+<rect x="20" y="236" width="160" height="66" rx="6" fill="#e8f1fb" stroke="#0b5cad"/><text x="100" y="262" text-anchor="middle" font-weight="600">真实报错文本</text><text x="100" y="282" text-anchor="middle" font-size="11.5">补丁状态 + 插件输出</text>
+<rect x="210" y="236" width="160" height="66" rx="6" fill="#fff" stroke="#0b5cad"/><text x="290" y="262" text-anchor="middle" font-weight="600">信号摘要</text><text x="290" y="282" text-anchor="middle" font-size="11.5">只保留报错类行、去重</text>
+<rect x="400" y="236" width="160" height="66" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="480" y="262" text-anchor="middle" font-weight="600">Titan Embed V2</text><text x="480" y="282" text-anchor="middle" font-size="11.5">1024 维 · 归一化</text>
+<rect x="590" y="226" width="220" height="86" rx="6" fill="#f1edfa" stroke="#6b4fbb"/><text x="700" y="250" text-anchor="middle" font-weight="600">OpenSearch</text><text x="700" y="270" text-anchor="middle" font-size="11.5">KB：kNN ∪ BM25 候选</text><text x="700" y="288" text-anchor="middle" font-size="11.5">REFLECTION：kNN</text><text x="700" y="304" text-anchor="middle" font-size="11.5">EPISODE：按实例、按时间</text>
+<rect x="840" y="226" width="240" height="86" rx="6" fill="#e9f6e6" stroke="#1d8102"/><text x="960" y="250" text-anchor="middle" font-weight="600">相关度闸门</text><text x="960" y="270" text-anchor="middle" font-size="11.5">余弦 ≥ 绝对阈值，综合分距最佳 ≤ 边距</text><text x="960" y="288" text-anchor="middle" font-size="11.5">或 ≥2 个特征报错串字面命中</text><text x="960" y="304" text-anchor="middle" font-size="11.5">unverified 权重 ×0.85</text>
+<path d="M180,269 L208,269" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M370,269 L398,269" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M560,269 L588,269" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<path d="M810,269 L838,269" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+<rect x="590" y="342" width="490" height="66" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="835" y="366" text-anchor="middle" font-weight="600">注入系统提示</text><text x="835" y="386" text-anchor="middle" font-size="11.5">&lt;recalled_memory&gt; 围栏（声明非指令）：KB 条目 · 反思（含置信度）· 本机近 3 次片段</text><text x="835" y="402" text-anchor="middle" font-size="11.5">Agent 仍可在诊断中调用 search_memory 主动检索</text>
+<path d="M960,312 L960,340" stroke="#232f3e" stroke-width="1.5" marker-end="url(#m1)"/>
+</svg></div>
+<div class="cols3 small">
+  <div class="card"><h4>信号摘要 + 双路候选</h4>查询用真实报错，只保留含 error / fail / lock / space / repomd 等特征的行；KB 同时取 kNN（语义）与 BM25（字面）候选。</div>
+  <div class="card"><h4>两道闸门</h4>绝对闸门：余弦 ≥ 0.36 或 ≥ 2 个特征串字面命中；再在综合分（余弦 + 短语加分 + 未审核 ×0.85）上应用相对边距 0.15。</div>
+  <div class="card"><h4>召回内容不是指令</h4>整体包在 <code>&lt;recalled_memory&gt;</code> 中并声明"仅供参考"；读写两侧剔除指令性文本；记忆服务不可用时降级为无记忆诊断。</div>
+</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>16 / 24</span></div></section><section class="slide " data-i="17"><div class="sec">06 Q3 自建记忆</div><h2>写入质量门：LLM 做判断，代码守底线</h2><div class="body"><table class=""><thead><tr><th>步骤</th><th>LLM 负责</th><th>代码强制（LLM 无法绕过）</th></tr></thead><tbody><tr><td>① 提取</td><td>生成 Episode 五要素与知识候选；signature 从现有词表选或写成 new:&lt;名称&gt;</td><td>命令输出视为不可信数据；不含实例 ID、主机名、PID 等个体信息</td></tr><tr><td>② 反思生成</td><td>对照相关片段与已有反思选择 add / update，更新置信度</td><td>update 的 id 必须是本次提供的条目，否则按新增；与已有反思余弦 ≥ 0.85 的新增按合并处理；置信度裁剪到 0.1 ~ 1.0</td></tr><tr><td>③ 合并（仅 FIXED）</td><td>对照相关 KB 选择 AddMemory / UpdateMemory / SkipMemory</td><td>只有真实重跑成功才进 KB；关键词必须<b>字面出现</b>在补丁输出类工具结果中并排除通用样板；verified 条目永不被改写，只进入 proposal 等人工确认；新增 signature 不覆盖已有条目</td></tr></tbody></table>
+<div class="cols2 small">
+  <div class="card"><h4>阈值来自实测标定</h4>KB 正确匹配余弦 0.39 ~ 0.57、错误匹配 ≤ 0.505 → KB 阈值 0.36 + 综合分边距 0.15；反思正确 0.36 ~ 0.62、错误 ≤ 0.27 → 阈值 0.35。标定脚本可随时重跑。</div>
+  <div class="card"><h4>学习效果</h4>批次 2 学到 rpm_lock_held，批次 3 直接召回、工具调用 7 → 6；重复 signature 自动合并；通用关键词（如 PatchLinux (Failed, rc=1)）被剔除，消除了误召回。</div>
+</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>17 / 24</span></div></section><section class="slide " data-i="18"><div class="sec">06 Q3 自建记忆</div><h2>模块边界：可复用的 agentmem 库</h2><div class="body"><div class="fig" style="height:290px"><svg viewBox="0 0 1100 300" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="smb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<rect x="20" y="30" width="380" height="244" rx="8" fill="#fdf1e6" stroke="#ec7211"/>
+<text x="210" y="54" text-anchor="middle" font-weight="600" font-size="13.5">agent/（补丁值守 Agent）</text>
+<rect x="36" y="66" width="348" height="56" rx="6" fill="#fff" stroke="#ec7211"/><text x="210" y="86" text-anchor="middle" font-weight="600">memory_profile.py：PATCH_PROFILE</text><text x="210" y="104" text-anchor="middle" font-size="11.5">措辞 · 信号 / 样板 / 注入规则 · 只从 FIXED 学</text>
+<rect x="36" y="132" width="348" height="72" rx="6" fill="#fff" stroke="#ec7211"/><text x="210" y="154" text-anchor="middle" font-weight="600">app.py：MEM = Memory(config, PATCH_PROFILE)</text><text x="210" y="174" text-anchor="middle" font-size="11.5">MEM.recall · MEM.search · MEM.session_repository</text><text x="210" y="192" text-anchor="middle" font-size="11.5">MEM.process_session · MEM.admin</text>
+<rect x="36" y="214" width="348" height="48" rx="6" fill="#fff" stroke="#ec7211"/><text x="210" y="234" text-anchor="middle" font-weight="600">tools.py：memory_search 由 build_tools 注入</text><text x="210" y="252" text-anchor="middle" font-size="11.5">工具代码不 import 记忆库</text>
+<path d="M400,150 L468,150" stroke="#232f3e" stroke-width="1.5" marker-end="url(#smb)"/>
+<text x="434" y="140" text-anchor="middle" font-size="11.5" fill="#5b6673">单向</text><text x="434" y="170" text-anchor="middle" font-size="11.5" fill="#5b6673">依赖</text>
+<rect x="470" y="30" width="610" height="244" rx="8" fill="#f1edfa" stroke="#6b4fbb"/>
+<text x="775" y="54" text-anchor="middle" font-weight="600" font-size="13.5">agentmem/（独立包 · 不 import Agent 代码）</text>
+<rect x="486" y="66" width="578" height="40" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="775" y="91" text-anchor="middle" font-weight="600">memory.py：Memory 门面（MemoryConfig + Profile → 存储、向量、LTM、STM、策略）</text>
+<rect x="486" y="116" width="186" height="52" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="579" y="136" text-anchor="middle" font-weight="600">LongTermMemory</text><text x="579" y="154" text-anchor="middle" font-size="11.5">ltm.py · 召回 / 写入</text>
+<rect x="682" y="116" width="186" height="52" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="775" y="136" text-anchor="middle" font-weight="600">MemoryStrategies</text><text x="775" y="154" text-anchor="middle" font-size="11.5">strategies.py · 提取 / 合并 / 反思</text>
+<rect x="878" y="116" width="186" height="52" rx="6" fill="#fff" stroke="#6b4fbb"/><text x="971" y="136" text-anchor="middle" font-weight="600">ShortTermMemory</text><text x="971" y="154" text-anchor="middle" font-size="11.5">stm.py · DynamoDB 会话</text>
+<rect x="486" y="178" width="578" height="30" rx="6" fill="#fbfcfd" stroke="#d9dee5"/><text x="775" y="198" text-anchor="middle" font-size="11.5">records.py 纯函数 · config.py 阈值 / from_env · profile.py 中性默认 · embeddings.py · store.py</text>
+<rect x="486" y="218" width="186" height="46" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="4 3"/><text x="579" y="238" text-anchor="middle" font-weight="600">store：Store 协议</text><text x="579" y="256" text-anchor="middle" font-size="11">OpenSearchStore / InMemoryStore</text>
+<rect x="682" y="218" width="186" height="46" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="4 3"/><text x="775" y="238" text-anchor="middle" font-weight="600">embedder：text → 向量</text><text x="775" y="256" text-anchor="middle" font-size="11">BedrockEmbedder / HashEmbedder</text>
+<rect x="878" y="218" width="186" height="46" rx="6" fill="#fff" stroke="#8a96a3" stroke-dasharray="4 3"/><text x="971" y="238" text-anchor="middle" font-weight="600">llm：结构化输出调用</text><text x="971" y="256" text-anchor="middle" font-size="11">strands_llm / 脚本化 LLM</text>
+<text x="20" y="294" font-size="11.5" fill="#5b6673">虚线框为可注入的依赖（默认实现 / 离线测试替身）；只有 stm.py 与 llm.py 依赖 strands-agents；17 个单元测试不需要 OpenSearch、Bedrock 或网络</text>
+</svg></div><table class="compact dense"><thead><tr><th>约定</th><th>做法</th></tr></thead><tbody><tr><td>领域差异只在 Profile</td><td>提示词措辞、失败信号词与样板、指令性文本规则、可学习的结果状态 ("FIXED",)、关键词证据工具、namespace 根 /patch</td></tr><tr><td>依赖可注入</td><td>Store 协议（默认 OpenSearchStore）、Embedder（BedrockEmbedder，SigV4 或 API Key）、LLM <code>llm(system, prompt, schema)</code>；只有 stm.py 与 llm.py 依赖 strands-agents</td></tr><tr><td>离线测试 · 数据兼容</td><td>内存存储 + 确定性向量 + 脚本化 LLM，17 个单元测试无需网络；同一索引与文档 ID，Runtime 直接读取已积累的记忆</td></tr></tbody></table></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>18 / 24</span></div></section><section class="slide " data-i="19"><div class="sec">06 Q3 自建记忆</div><h2>其他 Agent 复用 agentmem</h2><div class="body">
+<div class="cols2">
+<pre><code>from agentmem import Memory, MemoryConfig, Profile
+from agentmem.llm import strands_llm
+
+PROFILE = Profile(
+    name=&quot;db&quot;, agent_id=&quot;db-agent&quot;, subject_noun=&quot;cluster&quot;,
+    domain=&quot;a database on-call system&quot;,
+    success_criterion=&quot;the health check passed after the fix&quot;,
+    learn_statuses=(&quot;RESOLVED&quot;,),
+    evidence_tools=(&quot;get_slow_log&quot;, &quot;run_health_check&quot;),
+)
+MEM = Memory(MemoryConfig.from_env(), PROFILE)
+
+block, meta = MEM.recall(subject, query)        # 诊断开始
+agent = Agent(..., session_manager=RepositorySessionManager(
+    session_id=sid, session_repository=MEM.session_repository))
+MEM.process_session(strands_llm(model_fn), session_id=sid,
+    subject=subject, batch_id=bid, result=result)  # 诊断结束</code></pre>
+  <div class="card">
+    <h3>接入只需三步</h3>
+    <ol>
+      <li><b>定义 Profile</b>：领域措辞、成功判据、可学习状态、证据工具</li>
+      <li><b>MemoryConfig.from_env()</b>：OpenSearch、索引、STM 表、阈值走环境变量</li>
+      <li><b>接线</b>：开始时 <code>recall</code>，过程中 <code>session_repository</code>，结束后 <code>process_session</code></li>
+    </ol>
+    <p class="muted">维护操作（seed / list / search / verify / dedupe_reflections / refilter_keywords / reset）统一走 <code>MEM.admin()</code>；reset 需要调用方显式开启并提供确认串。</p>
+  </div>
+</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>19 / 24</span></div></section><section class="slide " data-i="20"><div class="sec">07 Q5 关键代码</div><h2>关键代码：凭证绑定到单台实例 · FIXED 必须真实重跑成功</h2><div class="body">
+<div class="cols2 codecols">
+<div><div class="ctitle">agent/tools.py · spoke()</div><pre><code>c = boto3.client(&quot;sts&quot;, region_name=REGION).assume_role(
+    RoleArn=f&quot;arn:{PARTITION}:iam::{self.account}:role/{SPOKE_ROLE}&quot;,
+    ExternalId=EXTERNAL_ID,
+    RoleSessionName=f&quot;agent-{self.instance_id}&quot;[:64],
+    DurationSeconds=3600,
+    Tags=[{&quot;Key&quot;: &quot;TargetInstance&quot;, &quot;Value&quot;: self.instance_id},
+          {&quot;Key&quot;: &quot;BatchId&quot;, &quot;Value&quot;: self.batch_id}])[&quot;Credentials&quot;]
+# Spoke 策略：Resource = instance/${aws:PrincipalTag/TargetInstance}</code></pre></div>
+<div><div class="ctitle">agent/tools.py · report_result()</div><pre><code>def report_result(status: Literal[&quot;FIXED&quot;, &quot;NEEDS_HUMAN&quot;], ...):
+    &quot;&quot;&quot;FIXED is only accepted after a successful rerun_patch.&quot;&quot;&quot;
+    if status == &quot;FIXED&quot; and guard.last_rerun_status != &quot;Success&quot;:
+        return (&quot;REJECTED: FIXED requires a successful rerun_patch &quot;
+                &quot;in this session. Rerun the patch or report NEEDS_HUMAN.&quot;)
+    guard.reported = True
+    state.update_instance(ctx.batch_id, ctx.instance_id,
+                          status=status, signature=signature, ...)
+    return f&quot;recorded {status}&quot;</code></pre></div>
+</div>
+<div class="tree">
+  <div><b>infra/</b>00 模型 Key → Token Vault · 01 网络 · 02 Hub/Spoke 角色 · 03 SSM 文档 · 04 目标机 · 05 DynamoDB · 06 Runtime · 07 编排 · 08 OpenSearch · 99 清理</div>
+  <div><b>agent/</b>app.py（入口）· tools.py（8 个工具）· guardrails.py · memory_profile.py · state.py · Dockerfile</div>
+  <div><b>agentmem/</b>独立记忆库 + 17 个离线单元测试　<b>orchestrator/</b>handler.py · statemachine.json　<b>scenarios/</b>故障注入 · 跑批 · 权限验证 · 接管 · 突发</div>
+</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>20 / 24</span></div></section><section class="slide " data-i="21"><div class="sec">07 Q6 ECR 部署</div><h2>ECR 部署：镜像不可变、版本不可变</h2><div class="body"><div class="fig" style="height:210px"><svg viewBox="0 0 1100 200" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<defs><marker id="q6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
+<rect x="10" y="40" width="160" height="80" rx="6" fill="#f6f8fa" stroke="#8a96a3"/><text x="90" y="66" text-anchor="middle" font-weight="600">代码仓库</text><text x="90" y="86" text-anchor="middle" font-size="11.5">agent/ + Dockerfile</text><text x="90" y="104" text-anchor="middle" font-size="11.5">合并即触发</text>
+<rect x="200" y="40" width="180" height="80" rx="6" fill="#fff" stroke="#0b5cad"/><text x="290" y="66" text-anchor="middle" font-weight="600">构建</text><text x="290" y="86" text-anchor="middle" font-size="11.5">docker build</text><text x="290" y="104" text-anchor="middle" font-size="11.5">--platform linux/arm64</text>
+<rect x="410" y="40" width="190" height="80" rx="6" fill="#e8f1fb" stroke="#0b5cad"/><text x="505" y="66" text-anchor="middle" font-weight="600">中国区 ECR</text><text x="505" y="86" text-anchor="middle" font-size="11.5">推送扫描 · 时间戳 tag</text><text x="505" y="104" text-anchor="middle" font-size="11.5">不可变使用</text>
+<rect x="630" y="40" width="200" height="80" rx="6" fill="#fdf1e6" stroke="#ec7211"/><text x="730" y="66" text-anchor="middle" font-weight="600">update_agent_runtime</text><text x="730" y="86" text-anchor="middle" font-size="11.5">生成不可变版本 vN</text><text x="730" y="104" text-anchor="middle" font-size="11.5">等待 READY</text>
+<rect x="860" y="22" width="230" height="56" rx="6" fill="#fff" stroke="#1d8102"/><text x="975" y="44" text-anchor="middle" font-weight="600">冒烟：selftest / probe / isolation</text><text x="975" y="62" text-anchor="middle" font-size="11.5">权限反向用例 + 模型连通</text>
+<rect x="860" y="94" width="230" height="56" rx="6" fill="#e9f6e6" stroke="#1d8102"/><text x="975" y="116" text-anchor="middle" font-weight="600">切换命名 endpoint</text><text x="975" y="134" text-anchor="middle" font-size="11.5">灰度 / 回滚 = 指回上一版本</text>
+<path d="M170,80 L198,80" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<path d="M380,80 L408,80" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<path d="M600,80 L628,80" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<path d="M830,66 L858,52" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<path d="M975,78 L975,92" stroke="#232f3e" stroke-width="1.5" marker-end="url(#q6)"/>
+<text x="505" y="150" text-anchor="middle" font-size="11.5" fill="#5b6673">镜像由 Runtime 服务以执行角色的 ECR 权限拉取，不经过客户 VPC</text>
+<text x="10" y="186" font-size="11.5" fill="#5b6673">建议用 CodeBuild / CodePipeline 串起：构建 → ECR → update_agent_runtime → 冒烟 → 切命名 endpoint；本次验证用脚本 infra/06_runtime.py 完成同样步骤</text>
+</svg></div><table class="compact dense"><thead><tr><th>环节</th><th>做法</th></tr></thead><tbody><tr><td>构建</td><td><code>docker build --platform linux/arm64 -f agent/Dockerfile .</code>；python:3.12-slim，非 root，监听 8080，提供 /invocations 与 /ping；镜像约 95 MB</td></tr><tr><td>镜像仓库</td><td>同账号中国区 ECR，开启 scanOnPush；tag 用时间戳，不覆盖已有 tag</td></tr><tr><td>发布</td><td>update_agent_runtime 每次生成一个不可变版本，DEFAULT endpoint 跟随最新；本次共发布 14 个版本，全部 READY</td></tr><tr><td>灰度与回滚</td><td>命名 endpoint 固定版本，验证后再切；回滚即把 endpoint 指回上一版本</td></tr><tr><td>运行方式</td><td>VPC 模式（私有子网，只出站 443）、HTTP 协议、IAM 入站；空闲 600 秒 / 最长 7200 秒；长任务用 add_async_task</td></tr><tr><td>配置与密钥</td><td>非敏感配置走环境变量；模型 API Key 运行时用 workload token 从 Token Vault 获取，不进镜像也不进环境变量</td></tr></tbody></table></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>21 / 24</span></div></section><section class="slide " data-i="22"><div class="sec">08 Q7 会话隔离</div><h2>会话隔离：平台 microVM + 本方案 4 层约束</h2><div class="body"><div class="fig" style="height:200px"><svg viewBox="0 0 1100 200" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12.5">
+<rect x="10" y="20" width="1080" height="170" rx="8" fill="#fbfcfd" stroke="#d9dee5"/>
+<rect x="30" y="40" width="200" height="130" rx="6" fill="#fdf1e6" stroke="#ec7211" stroke-width="1.5"/>
+<text x="130" y="64" text-anchor="middle" font-weight="600">平台：独立 microVM</text>
+<text x="130" y="90" text-anchor="middle" font-size="12">独立 CPU / 内存 / 文件系统</text>
+<text x="130" y="112" text-anchor="middle" font-size="12">会话间不共享状态</text>
+<text x="130" y="134" text-anchor="middle" font-size="12">结束即销毁</text>
+<rect x="250" y="40" width="200" height="130" rx="6" fill="#fff" stroke="#0b5cad"/>
+<text x="350" y="64" text-anchor="middle" font-weight="600">① 会话粒度</text>
+<text x="350" y="90" text-anchor="middle" font-size="12">session = 批次 + 实例</text>
+<text x="350" y="112" text-anchor="middle" font-size="12">一台实例一个会话</text>
+<text x="350" y="134" text-anchor="middle" font-size="12">上下文不混用</text>
+<rect x="470" y="40" width="200" height="130" rx="6" fill="#fff" stroke="#0b5cad"/>
+<text x="570" y="64" text-anchor="middle" font-weight="600">② 运行时归属校验</text>
+<text x="570" y="90" text-anchor="middle" font-size="12">load_ctx 查 DynamoDB</text>
+<text x="570" y="112" text-anchor="middle" font-size="12">实例必须分配给本会话</text>
+<text x="570" y="134" text-anchor="middle" font-size="12">payload 参数不被信任</text>
+<text x="570" y="156" text-anchor="middle" font-size="12">每次工具调用前再校验</text>
+<rect x="690" y="40" width="190" height="130" rx="6" fill="#fff" stroke="#1d8102"/>
+<text x="785" y="64" text-anchor="middle" font-weight="600">③ IAM 凭证绑定</text>
+<text x="785" y="90" text-anchor="middle" font-size="12">会话标签 TargetInstance</text>
+<text x="785" y="112" text-anchor="middle" font-size="12">Spoke 凭证只对这一台</text>
+<text x="785" y="134" text-anchor="middle" font-size="12">只能经运维 VPCE 使用</text>
+<rect x="900" y="40" width="170" height="130" rx="6" fill="#fff" stroke="#6b4fbb"/>
+<text x="985" y="64" text-anchor="middle" font-weight="600">④ 记忆与身份</text>
+<text x="985" y="90" text-anchor="middle" font-size="12">STM 按 sessionId 分区</text>
+<text x="985" y="112" text-anchor="middle" font-size="12">接管：同一 sessionId</text>
+<text x="985" y="134" text-anchor="middle" font-size="12">+ runtimeUserId=操作人</text>
+<text x="985" y="156" text-anchor="middle" font-size="12">workload token 按用户签发</text>
+</svg></div>
+<div class="cols2">
+<table class="compact dense"><thead><tr><th>层</th><th>实现</th></tr></thead><tbody><tr><td>平台 microVM</td><td>每个 runtimeSessionId 一个 microVM，独立 CPU / 内存 / 文件系统，结束即销毁</td></tr><tr><td>① 会话粒度</td><td>runtimeSessionId = {批次}-{实例}，由编排层生成</td></tr><tr><td>② 归属校验</td><td>入口从 DynamoDB 校验实例确实分配给该会话；护栏每次工具调用前再查一次</td></tr><tr><td>③ IAM</td><td>Spoke 凭证只允许 instance/${aws:PrincipalTag/TargetInstance}</td></tr><tr><td>④ 记忆与身份</td><td>STM 主键 SESSION#{sessionId}；接管时 workload token 按操作人签发</td></tr></tbody></table><table class="compact dense"><thead><tr><th>隔离专项实测</th><th>文件标记</th><th>内存数据</th></tr></thead><tbody><tr><td>A1 会话 A 写入 secret-A</td><td>无</td><td>secret-A</td></tr><tr><td>A2 会话 A 再次调用</td><td>A 的标记</td><td>secret-A</td></tr><tr><td>B1 会话 B</td><td>无</td><td>只有 secret-B</td></tr><tr><td>A3 StopRuntimeSession(A) 后再调 A</td><td>无</td><td>空（全新 microVM）</td></tr></tbody></table>
+</div>
+<div class="note">容器环境变量中没有任何 AWS 访问密钥（env_has_aws_keys=false）；microVM 被替换后，对话仍可从 DynamoDB 按会话 ID 恢复。</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>22 / 24</span></div></section><section class="slide " data-i="23"><div class="sec">附录</div><h2>验证环境资源清单</h2><div class="body"><table class=""><thead><tr><th>资源</th><th>规格 / 配置</th><th>说明</th></tr></thead><tbody><tr><td>目标实例</td><td>5 × t4g.micro，Amazon Linux 2023（arm64），IMDSv2</td><td>两个账号；1 台健康 canary + 4 台注入真实故障</td></tr><tr><td>运维 VPC</td><td>2 个私有子网 + 1 个公有子网（NAT）</td><td>5 个接口终端节点 + 2 个网关终端节点</td></tr><tr><td>AgentCore Runtime</td><td>arm64 容器镜像（ECR），VPC 模式，IAM 入站</td><td>按会话计费，只在失败实例诊断时产生</td></tr><tr><td>OpenSearch Service</td><td>2.19，1 × m7g.medium.search，10 GB gp3，VPC 访问，加密 + TLS</td><td>验证用最小规格</td></tr><tr><td>DynamoDB</td><td>2 张按需表（批次状态 / 记忆 STM），TTL</td><td>—</td></tr><tr><td>Step Functions + Lambda</td><td>标准工作流；Python 3.12 Lambda（VPC 内）</td><td>—</td></tr><tr><td>全球区模型</td><td>Kimi K3（推理）、Titan Text Embeddings V2（向量）</td><td>按调用计费；可替换为实际选用的模型</td></tr></tbody></table><div class="note">详细设计见 ARCHITECTURE.zh.html，完整验证报告与代码位置见 SOLUTION.zh.html。</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>23 / 24</span></div></section><section class="slide cover-slide" data-i="24"><div class="body">
+<div class="cover end">
+  <h1>谢谢</h1>
+  <h2>确定性的交给 Patch Manager，不确定的交给 Agent</h2>
+  <div class="meta">Patch Manager × Amazon Bedrock AgentCore · 补丁批次智能值守方案</div>
+</div></div></section></div><div id="nav"><button id="prev" title="上一页 ←">‹</button><span id="num"></span><button id="next" title="下一页 →">›</button></div><script>
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+const deck=document.getElementById('deck'),bar=document.getElementById('bar'),num=document.getElementById('num');
+function fit(){const s=Math.min(innerWidth/1280,innerHeight/720)*0.96;deck.style.transform=`translate(-50%,-50%) scale(${s})`}
+function show(i){cur=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+  bar.style.width=((cur+1)/slides.length*100)+'%';num.textContent=(cur+1)+' / '+slides.length;history.replaceState(null,'','#'+(cur+1))}
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' ','ArrowDown','Enter'].includes(e.key)){e.preventDefault();show(cur+1)}
+  else if(['ArrowLeft','PageUp','ArrowUp','Backspace'].includes(e.key)){e.preventDefault();show(cur-1)}
+  else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+  else if(e.key==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
+document.getElementById('prev').onclick=()=>show(cur-1);document.getElementById('next').onclick=()=>show(cur+1);
+fit();show((parseInt(location.hash.slice(1))||1)-1);
+if(location.search.includes('check')){const bad=[];slides.forEach((s,k)=>{show(k);const b=s.querySelector('.body');
+  const r=s.getBoundingClientRect(),sc=parseFloat(deck.style.transform.match(/scale\(([^)]+)/)[1]);
+  const over=b.scrollHeight-b.clientHeight;let wide=0;b.querySelectorAll('*').forEach(e=>{const q=e.getBoundingClientRect();if(q.right>r.right-30*sc+1)wide++});
+  if(over>2||wide)bad.push(`${k+1}:h+${over},w${wide}`)});document.body.setAttribute('data-check',bad.join(' ')||'OK');show(0)}
+</script></body></html>
