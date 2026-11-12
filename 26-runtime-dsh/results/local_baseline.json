@@ -1,0 +1,1583 @@
+{
+  "host": {
+    "machine": "aarch64",
+    "cpus": 8,
+    "mem_gb": 61.7,
+    "kernel": "6.12.113-138.209.amzn2023.aarch64",
+    "docker": "25.0.18",
+    "cpu_part": "0xd40",
+    "loadavg_start": [
+      2.21,
+      2.59,
+      2.87
+    ],
+    "loadavg_end": [
+      2.94,
+      2.78,
+      2.92
+    ]
+  },
+  "image": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-dsh-coldstart:dsh-0.2.2-rc.1",
+  "image_size_bytes": 1105337345,
+  "region": "us-east-1",
+  "model_id": "deepseek.v3.2",
+  "dsh_version": "0.2.2-rc.1",
+  "variant": "dsh_v2",
+  "dsh_prewarm": "0",
+  "prewarm_wait_s": null,
+  "tested_at": "2026-11-12T09:17:02.428565+00:00",
+  "rounds": 10,
+  "page_cache": "warm",
+  "records": [
+    {
+      "round": 1,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 490.8,
+      "client_total_ms": 2.5,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474936.076069,
+        "request_ts": 1794474936.172,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474936.173
+      }
+    },
+    {
+      "round": 1,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.1,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474936.076069,
+        "request_ts": 1794474936.174,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474936.174
+      }
+    },
+    {
+      "round": 1,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 437.1,
+      "client_total_ms": 4949.6,
+      "dsh_boot_ms": 3693.0,
+      "first_text_ms": 4832.0,
+      "dsh_total_ms": 4947.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474937.0216742,
+        "request_ts": 1794474937.097,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474937.097,
+          "first_output_ts": 1794474940.79,
+          "first_text_ts": 1794474941.929,
+          "exit_ts": 1794474942.044,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474942.044
+      }
+    },
+    {
+      "round": 1,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3148.0,
+      "dsh_boot_ms": 2088.0,
+      "first_text_ms": 3034.0,
+      "dsh_total_ms": 3146.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474937.0216742,
+        "request_ts": 1794474942.046,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474942.046,
+          "first_output_ts": 1794474944.134,
+          "first_text_ts": 1794474945.08,
+          "exit_ts": 1794474945.192,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474945.192
+      }
+    },
+    {
+      "round": 2,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 433.6,
+      "client_total_ms": 2.4,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474946.121707,
+        "request_ts": 1794474946.196,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474946.197
+      }
+    },
+    {
+      "round": 2,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 0.9,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474946.121707,
+        "request_ts": 1794474946.198,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474946.198
+      }
+    },
+    {
+      "round": 2,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 451.7,
+      "client_total_ms": 3432.7,
+      "dsh_boot_ms": 2164.0,
+      "first_text_ms": 3313.0,
+      "dsh_total_ms": 3430.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474947.072648,
+        "request_ts": 1794474947.147,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474947.148,
+          "first_output_ts": 1794474949.312,
+          "first_text_ts": 1794474950.461,
+          "exit_ts": 1794474950.578,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474950.578
+      }
+    },
+    {
+      "round": 2,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3169.7,
+      "dsh_boot_ms": 2104.0,
+      "first_text_ms": 3051.0,
+      "dsh_total_ms": 3167.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474947.072648,
+        "request_ts": 1794474950.579,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474950.58,
+          "first_output_ts": 1794474952.684,
+          "first_text_ts": 1794474953.631,
+          "exit_ts": 1794474953.747,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474953.748
+      }
+    },
+    {
+      "round": 3,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 417.6,
+      "client_total_ms": 2.5,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474954.6023002,
+        "request_ts": 1794474954.677,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474954.678
+      }
+    },
+    {
+      "round": 3,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.0,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474954.6023002,
+        "request_ts": 1794474954.679,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474954.679
+      }
+    },
+    {
+      "round": 3,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 426.8,
+      "client_total_ms": 3373.3,
+      "dsh_boot_ms": 2186.0,
+      "first_text_ms": 3257.0,
+      "dsh_total_ms": 3370.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474955.498355,
+        "request_ts": 1794474955.566,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474955.567,
+          "first_output_ts": 1794474957.753,
+          "first_text_ts": 1794474958.824,
+          "exit_ts": 1794474958.937,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474958.937
+      }
+    },
+    {
+      "round": 3,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3157.0,
+      "dsh_boot_ms": 2106.0,
+      "first_text_ms": 3039.0,
+      "dsh_total_ms": 3155.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474955.498355,
+        "request_ts": 1794474958.939,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474958.939,
+          "first_output_ts": 1794474961.045,
+          "first_text_ts": 1794474961.978,
+          "exit_ts": 1794474962.094,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474962.094
+      }
+    },
+    {
+      "round": 4,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 418.1,
+      "client_total_ms": 2.7,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474962.932125,
+        "request_ts": 1794474963.009,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474963.01
+      }
+    },
+    {
+      "round": 4,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.1,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474962.932125,
+        "request_ts": 1794474963.011,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474963.011
+      }
+    },
+    {
+      "round": 4,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 416.3,
+      "client_total_ms": 3317.7,
+      "dsh_boot_ms": 2181.0,
+      "first_text_ms": 3203.0,
+      "dsh_total_ms": 3315.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474963.8521202,
+        "request_ts": 1794474963.926,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474963.927,
+          "first_output_ts": 1794474966.108,
+          "first_text_ts": 1794474967.13,
+          "exit_ts": 1794474967.242,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474967.242
+      }
+    },
+    {
+      "round": 4,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3577.5,
+      "dsh_boot_ms": 2065.0,
+      "first_text_ms": 3459.0,
+      "dsh_total_ms": 3575.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474963.8521202,
+        "request_ts": 1794474967.243,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474967.244,
+          "first_output_ts": 1794474969.309,
+          "first_text_ts": 1794474970.703,
+          "exit_ts": 1794474970.819,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474970.819
+      }
+    },
+    {
+      "round": 5,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 416.0,
+      "client_total_ms": 2.5,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474971.652145,
+        "request_ts": 1794474971.725,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474971.726
+      }
+    },
+    {
+      "round": 5,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.2,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474971.652145,
+        "request_ts": 1794474971.727,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474971.727
+      }
+    },
+    {
+      "round": 5,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 447.7,
+      "client_total_ms": 3217.0,
+      "dsh_boot_ms": 2151.0,
+      "first_text_ms": 3096.0,
+      "dsh_total_ms": 3214.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474972.562402,
+        "request_ts": 1794474972.636,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474972.637,
+          "first_output_ts": 1794474974.788,
+          "first_text_ts": 1794474975.733,
+          "exit_ts": 1794474975.851,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474975.851
+      }
+    },
+    {
+      "round": 5,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3208.8,
+      "dsh_boot_ms": 2066.0,
+      "first_text_ms": 3090.0,
+      "dsh_total_ms": 3207.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474972.562402,
+        "request_ts": 1794474975.853,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474975.853,
+          "first_output_ts": 1794474977.919,
+          "first_text_ts": 1794474978.943,
+          "exit_ts": 1794474979.06,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474979.06
+      }
+    },
+    {
+      "round": 6,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 364.5,
+      "client_total_ms": 2.4,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474980.022551,
+        "request_ts": 1794474980.083,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474980.084
+      }
+    },
+    {
+      "round": 6,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.0,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474980.022551,
+        "request_ts": 1794474980.085,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474980.085
+      }
+    },
+    {
+      "round": 6,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 461.4,
+      "client_total_ms": 3359.7,
+      "dsh_boot_ms": 2206.0,
+      "first_text_ms": 3241.0,
+      "dsh_total_ms": 3357.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474981.012408,
+        "request_ts": 1794474981.088,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474981.088,
+          "first_output_ts": 1794474983.294,
+          "first_text_ts": 1794474984.329,
+          "exit_ts": 1794474984.445,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474984.445
+      }
+    },
+    {
+      "round": 6,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3297.6,
+      "dsh_boot_ms": 2143.0,
+      "first_text_ms": 3182.0,
+      "dsh_total_ms": 3296.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474981.012408,
+        "request_ts": 1794474984.447,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474984.447,
+          "first_output_ts": 1794474986.59,
+          "first_text_ts": 1794474987.629,
+          "exit_ts": 1794474987.743,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474987.743
+      }
+    },
+    {
+      "round": 7,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 466.7,
+      "client_total_ms": 2.5,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474988.782279,
+        "request_ts": 1794474988.864,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474988.864
+      }
+    },
+    {
+      "round": 7,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.0,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474988.782279,
+        "request_ts": 1794474988.865,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474988.865
+      }
+    },
+    {
+      "round": 7,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 398.6,
+      "client_total_ms": 3126.1,
+      "dsh_boot_ms": 2150.0,
+      "first_text_ms": 3010.0,
+      "dsh_total_ms": 3123.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474989.682521,
+        "request_ts": 1794474989.757,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474989.758,
+          "first_output_ts": 1794474991.908,
+          "first_text_ts": 1794474992.768,
+          "exit_ts": 1794474992.881,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474992.881
+      }
+    },
+    {
+      "round": 7,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3194.1,
+      "dsh_boot_ms": 2095.0,
+      "first_text_ms": 3084.0,
+      "dsh_total_ms": 3192.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474989.682521,
+        "request_ts": 1794474992.883,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474992.883,
+          "first_output_ts": 1794474994.978,
+          "first_text_ts": 1794474995.967,
+          "exit_ts": 1794474996.075,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794474996.075
+      }
+    },
+    {
+      "round": 8,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 415.5,
+      "client_total_ms": 2.6,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474996.9422781,
+        "request_ts": 1794474997.016,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474997.017
+      }
+    },
+    {
+      "round": 8,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.0,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794474996.9422781,
+        "request_ts": 1794474997.018,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794474997.018
+      }
+    },
+    {
+      "round": 8,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 420.4,
+      "client_total_ms": 3270.0,
+      "dsh_boot_ms": 2121.0,
+      "first_text_ms": 3156.0,
+      "dsh_total_ms": 3267.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474997.842083,
+        "request_ts": 1794474997.903,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794474997.904,
+          "first_output_ts": 1794475000.025,
+          "first_text_ts": 1794475001.06,
+          "exit_ts": 1794475001.171,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794475001.171
+      }
+    },
+    {
+      "round": 8,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3448.3,
+      "dsh_boot_ms": 2068.0,
+      "first_text_ms": 3331.0,
+      "dsh_total_ms": 3446.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794474997.842083,
+        "request_ts": 1794475001.173,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794475001.173,
+          "first_output_ts": 1794475003.241,
+          "first_text_ts": 1794475004.504,
+          "exit_ts": 1794475004.619,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794475004.619
+      }
+    },
+    {
+      "round": 9,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 427.3,
+      "client_total_ms": 2.5,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794475005.482775,
+        "request_ts": 1794475005.557,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794475005.557
+      }
+    },
+    {
+      "round": 9,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.1,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794475005.482775,
+        "request_ts": 1794475005.559,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794475005.559
+      }
+    },
+    {
+      "round": 9,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 429.5,
+      "client_total_ms": 3207.0,
+      "dsh_boot_ms": 2110.0,
+      "first_text_ms": 3084.0,
+      "dsh_total_ms": 3204.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794475006.353975,
+        "request_ts": 1794475006.428,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794475006.429,
+          "first_output_ts": 1794475008.539,
+          "first_text_ts": 1794475009.513,
+          "exit_ts": 1794475009.633,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794475009.633
+      }
+    },
+    {
+      "round": 9,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3858.9,
+      "dsh_boot_ms": 2131.0,
+      "first_text_ms": 3736.0,
+      "dsh_total_ms": 3857.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794475006.353975,
+        "request_ts": 1794475009.634,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794475009.635,
+          "first_output_ts": 1794475011.766,
+          "first_text_ts": 1794475013.371,
+          "exit_ts": 1794475013.492,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794475013.492
+      }
+    },
+    {
+      "round": 10,
+      "sequence": "ping",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 395.3,
+      "client_total_ms": 2.5,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794475014.293103,
+        "request_ts": 1794475014.367,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794475014.368
+      }
+    },
+    {
+      "round": 10,
+      "sequence": "ping",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 1.1,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794475014.293103,
+        "request_ts": 1794475014.369,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794475014.369
+      }
+    },
+    {
+      "round": 10,
+      "sequence": "agent",
+      "phase": "cold",
+      "ok": true,
+      "container_start_ms": 408.3,
+      "client_total_ms": 3206.8,
+      "dsh_boot_ms": 2088.0,
+      "first_text_ms": 3089.0,
+      "dsh_total_ms": 3204.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794475015.16205,
+        "request_ts": 1794475015.237,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794475015.237,
+          "first_output_ts": 1794475017.325,
+          "first_text_ts": 1794475018.326,
+          "exit_ts": 1794475018.441,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794475018.441
+      }
+    },
+    {
+      "round": 10,
+      "sequence": "agent",
+      "phase": "warm",
+      "ok": true,
+      "container_start_ms": null,
+      "client_total_ms": 3412.9,
+      "dsh_boot_ms": 2080.0,
+      "first_text_ms": 3298.0,
+      "dsh_total_ms": 3411.0,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794475015.16205,
+        "request_ts": 1794475018.443,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794475018.443,
+          "first_output_ts": 1794475020.523,
+          "first_text_ts": 1794475021.741,
+          "exit_ts": 1794475021.854,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "env:AWS_ACCESS_KEY_ID"
+        },
+        "response_ts": 1794475021.854
+      }
+    }
+  ],
+  "summary": {
+    "ping.cold.container_start_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 364.5,
+      "p50": 417.6,
+      "p90": 466.7,
+      "max": 490.8,
+      "mean": 424.5
+    },
+    "ping.cold.client_total_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 2.4,
+      "p50": 2.5,
+      "p90": 2.6,
+      "max": 2.7,
+      "mean": 2.5
+    },
+    "ping.warm.client_total_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 0.9,
+      "p50": 1.0,
+      "p90": 1.1,
+      "max": 1.2,
+      "mean": 1.1
+    },
+    "agent.cold.container_start_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 398.6,
+      "p50": 426.8,
+      "p90": 451.7,
+      "max": 461.4,
+      "mean": 429.8
+    },
+    "agent.cold.client_total_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 3126.1,
+      "p50": 3270.0,
+      "p90": 3432.7,
+      "max": 4949.6,
+      "mean": 3446.0
+    },
+    "agent.cold.dsh_boot_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 2088.0,
+      "p50": 2151.0,
+      "p90": 2206.0,
+      "max": 3693.0,
+      "mean": 2305.0
+    },
+    "agent.cold.first_text_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 3010.0,
+      "p50": 3156.0,
+      "p90": 3313.0,
+      "max": 4832.0,
+      "mean": 3328.1
+    },
+    "agent.cold.dsh_total_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 3123.0,
+      "p50": 3267.0,
+      "p90": 3430.0,
+      "max": 4947.0,
+      "mean": 3443.1
+    },
+    "agent.warm.client_total_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 3148.0,
+      "p50": 3208.8,
+      "p90": 3577.5,
+      "max": 3858.9,
+      "mean": 3347.3
+    },
+    "agent.warm.dsh_boot_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 2065.0,
+      "p50": 2088.0,
+      "p90": 2131.0,
+      "max": 2143.0,
+      "mean": 2094.6
+    },
+    "agent.warm.first_text_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 3034.0,
+      "p50": 3090.0,
+      "p90": 3459.0,
+      "max": 3736.0,
+      "mean": 3230.4
+    },
+    "agent.warm.dsh_total_ms": {
+      "n": 10,
+      "failures": 0,
+      "min": 3146.0,
+      "p50": 3207.0,
+      "p90": 3575.0,
+      "max": 3857.0,
+      "mean": 3345.2
+    }
+  }
+}

@@ -1,0 +1,512 @@
+{
+  "meta": {
+    "mode": "smoke",
+    "region": "us-east-1",
+    "runtimes": [
+      "dsh",
+      "dsh_prewarm"
+    ],
+    "sequences": [
+      "ping",
+      "agent"
+    ],
+    "prompt": "Reply with exactly: pong",
+    "model_id": "deepseek.v3.2",
+    "dsh_version": "0.2.2-rc.1",
+    "read_timeout_seconds": 300,
+    "started_iso": "2026-11-12T04:46:15.979511+00:00",
+    "finished_iso": "2026-11-12T04:46:46.399799+00:00"
+  },
+  "requests": [
+    {
+      "runtime": "dsh",
+      "sequence": "ping",
+      "concurrency": 1,
+      "round": 1,
+      "probe_idx": 0,
+      "session_id": "a0111435430f4b2d8ab7af420a060a568fb98829",
+      "payload": {
+        "mode": "ping"
+      },
+      "phase": "cold",
+      "attempted": true,
+      "send_iso": "2026-11-12T04:46:15.979581+00:00",
+      "send_epoch": 1794458775.979581,
+      "headers_ms": 15715.2,
+      "total_ms": 15715.3,
+      "status_code": 200,
+      "request_id": "f8795f03-8164-41a1-ae33-d93eeb8bf5f8",
+      "error_type": null,
+      "error_msg": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794458789.8105109,
+        "request_ts": 1794458791.637,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794458791.638
+      },
+      "body_text": null,
+      "ok": true,
+      "invocation_seq": 1,
+      "uptime_at_request_ms": 1826.5,
+      "server_handling_ms": 1.0,
+      "outside_handler_ms": 15714.3,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "platform_overhead_ms": null,
+      "boot_kind": "real_boot",
+      "anomalies": []
+    },
+    {
+      "runtime": "dsh",
+      "sequence": "ping",
+      "concurrency": 1,
+      "round": 1,
+      "probe_idx": 0,
+      "session_id": "a0111435430f4b2d8ab7af420a060a568fb98829",
+      "payload": {
+        "mode": "ping"
+      },
+      "phase": "warm",
+      "attempted": true,
+      "send_iso": "2026-11-12T04:46:31.694938+00:00",
+      "send_epoch": 1794458791.694938,
+      "headers_ms": 174.3,
+      "total_ms": 174.4,
+      "status_code": 200,
+      "request_id": "548bff5d-4443-45ba-87b2-8a4acaafc71f",
+      "error_type": null,
+      "error_msg": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794458789.8105109,
+        "request_ts": 1794458791.819,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "response_ts": 1794458791.819
+      },
+      "body_text": null,
+      "ok": true,
+      "invocation_seq": 2,
+      "uptime_at_request_ms": 2008.5,
+      "server_handling_ms": 0.0,
+      "outside_handler_ms": 174.4,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "platform_overhead_ms": null,
+      "boot_kind": "real_boot",
+      "anomalies": []
+    },
+    {
+      "runtime": "dsh",
+      "sequence": "agent",
+      "concurrency": 1,
+      "round": 1,
+      "probe_idx": 0,
+      "session_id": "cd750ccd03e8439193ac5c2a1883325ff8b9699d",
+      "payload": {
+        "mode": "agent",
+        "prompt": "Reply with exactly: pong"
+      },
+      "phase": "cold",
+      "attempted": true,
+      "send_iso": "2026-11-12T04:46:32.074831+00:00",
+      "send_epoch": 1794458792.0748305,
+      "headers_ms": 3490.6,
+      "total_ms": 3490.8,
+      "status_code": 200,
+      "request_id": "a4c91f03-087a-481b-9e0a-ab234cc82de0",
+      "error_type": null,
+      "error_msg": null,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794458766.80257,
+        "request_ts": 1794458792.559,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794458792.596,
+          "first_output_ts": 1794458794.535,
+          "first_text_ts": 1794458795.439,
+          "exit_ts": 1794458795.514,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "sdk-default-chain"
+        },
+        "response_ts": 1794458795.514
+      },
+      "body_text": null,
+      "ok": true,
+      "invocation_seq": 1,
+      "uptime_at_request_ms": 25756.4,
+      "server_handling_ms": 2955.0,
+      "outside_handler_ms": 535.8,
+      "dsh_boot_ms": 1939.0,
+      "first_text_ms": 2843.0,
+      "dsh_total_ms": 2918.0,
+      "platform_overhead_ms": 572.8,
+      "boot_kind": "warm_pool",
+      "anomalies": []
+    },
+    {
+      "runtime": "dsh",
+      "sequence": "agent",
+      "concurrency": 1,
+      "round": 1,
+      "probe_idx": 0,
+      "session_id": "cd750ccd03e8439193ac5c2a1883325ff8b9699d",
+      "payload": {
+        "mode": "agent",
+        "prompt": "Reply with exactly: pong"
+      },
+      "phase": "warm",
+      "attempted": true,
+      "send_iso": "2026-11-12T04:46:35.565830+00:00",
+      "send_epoch": 1794458795.56583,
+      "headers_ms": 2842.8,
+      "total_ms": 2843.0,
+      "status_code": 200,
+      "request_id": "62500af0-b92c-41c3-a9d1-14ecd2a1fd38",
+      "error_type": null,
+      "error_msg": null,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794458766.80257,
+        "request_ts": 1794458795.681,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": false,
+          "start_ts": null,
+          "end_ts": null,
+          "exit_code": null
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794458795.682,
+          "first_output_ts": 1794458797.703,
+          "first_text_ts": 1794458798.275,
+          "exit_ts": 1794458798.351,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "sdk-default-chain"
+        },
+        "response_ts": 1794458798.351
+      },
+      "body_text": null,
+      "ok": true,
+      "invocation_seq": 2,
+      "uptime_at_request_ms": 28878.4,
+      "server_handling_ms": 2670.0,
+      "outside_handler_ms": 173.0,
+      "dsh_boot_ms": 2021.0,
+      "first_text_ms": 2593.0,
+      "dsh_total_ms": 2669.0,
+      "platform_overhead_ms": 174.0,
+      "boot_kind": "warm_pool",
+      "anomalies": []
+    },
+    {
+      "runtime": "dsh_prewarm",
+      "sequence": "ping",
+      "concurrency": 1,
+      "round": 1,
+      "probe_idx": 0,
+      "session_id": "d4424ea9453f414496af9c1d9ec4cea9a073df0a",
+      "payload": {
+        "mode": "ping"
+      },
+      "phase": "cold",
+      "attempted": true,
+      "send_iso": "2026-11-12T04:46:38.612323+00:00",
+      "send_epoch": 1794458798.6123226,
+      "headers_ms": 487.0,
+      "total_ms": 487.1,
+      "status_code": 200,
+      "request_id": "4bc2c7d1-e37f-48c3-bd12-b23f302e3ab9",
+      "error_type": null,
+      "error_msg": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794458771.21452,
+        "request_ts": 1794458799.041,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": true,
+          "start_ts": 1794458771.269,
+          "end_ts": 1794458773.103,
+          "exit_code": 0
+        },
+        "response_ts": 1794458799.042
+      },
+      "body_text": null,
+      "ok": true,
+      "invocation_seq": 1,
+      "uptime_at_request_ms": 27826.5,
+      "server_handling_ms": 1.0,
+      "outside_handler_ms": 486.1,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "platform_overhead_ms": null,
+      "boot_kind": "warm_pool",
+      "anomalies": []
+    },
+    {
+      "runtime": "dsh_prewarm",
+      "sequence": "ping",
+      "concurrency": 1,
+      "round": 1,
+      "probe_idx": 0,
+      "session_id": "d4424ea9453f414496af9c1d9ec4cea9a073df0a",
+      "payload": {
+        "mode": "ping"
+      },
+      "phase": "warm",
+      "attempted": true,
+      "send_iso": "2026-11-12T04:46:39.099499+00:00",
+      "send_epoch": 1794458799.099499,
+      "headers_ms": 158.8,
+      "total_ms": 158.9,
+      "status_code": 200,
+      "request_id": "a9008a41-9fc8-4ff0-83f3-ae7cec774e87",
+      "error_type": null,
+      "error_msg": null,
+      "server": {
+        "mode": "ping",
+        "proc_start_ts": 1794458771.21452,
+        "request_ts": 1794458799.207,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": true,
+          "start_ts": 1794458771.269,
+          "end_ts": 1794458773.103,
+          "exit_code": 0
+        },
+        "response_ts": 1794458799.208
+      },
+      "body_text": null,
+      "ok": true,
+      "invocation_seq": 2,
+      "uptime_at_request_ms": 27992.5,
+      "server_handling_ms": 1.0,
+      "outside_handler_ms": 157.9,
+      "dsh_boot_ms": null,
+      "first_text_ms": null,
+      "dsh_total_ms": null,
+      "platform_overhead_ms": null,
+      "boot_kind": "warm_pool",
+      "anomalies": []
+    },
+    {
+      "runtime": "dsh_prewarm",
+      "sequence": "agent",
+      "concurrency": 1,
+      "round": 1,
+      "probe_idx": 0,
+      "session_id": "c2a5e48e2c5f4f79840c916f2bb0df277510bbf5",
+      "payload": {
+        "mode": "agent",
+        "prompt": "Reply with exactly: pong"
+      },
+      "phase": "cold",
+      "attempted": true,
+      "send_iso": "2026-11-12T04:46:39.461521+00:00",
+      "send_epoch": 1794458799.461521,
+      "headers_ms": 3667.6,
+      "total_ms": 3667.8,
+      "status_code": 200,
+      "request_id": "98a04012-efbe-499e-8ca0-c877875316f4",
+      "error_type": null,
+      "error_msg": null,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794458771.110258,
+        "request_ts": 1794458799.918,
+        "invocation_seq": 1,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": true,
+          "start_ts": 1794458771.171,
+          "end_ts": 1794458773.037,
+          "exit_code": 0
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794458799.96,
+          "first_output_ts": 1794458801.937,
+          "first_text_ts": 1794458802.997,
+          "exit_ts": 1794458803.077,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "sdk-default-chain"
+        },
+        "response_ts": 1794458803.077
+      },
+      "body_text": null,
+      "ok": true,
+      "invocation_seq": 1,
+      "uptime_at_request_ms": 28807.7,
+      "server_handling_ms": 3159.0,
+      "outside_handler_ms": 508.8,
+      "dsh_boot_ms": 1977.0,
+      "first_text_ms": 3037.0,
+      "dsh_total_ms": 3117.0,
+      "platform_overhead_ms": 550.8,
+      "boot_kind": "warm_pool",
+      "anomalies": []
+    },
+    {
+      "runtime": "dsh_prewarm",
+      "sequence": "agent",
+      "concurrency": 1,
+      "round": 1,
+      "probe_idx": 0,
+      "session_id": "c2a5e48e2c5f4f79840c916f2bb0df277510bbf5",
+      "payload": {
+        "mode": "agent",
+        "prompt": "Reply with exactly: pong"
+      },
+      "phase": "warm",
+      "attempted": true,
+      "send_iso": "2026-11-12T04:46:43.129360+00:00",
+      "send_epoch": 1794458803.1293597,
+      "headers_ms": 3050.4,
+      "total_ms": 3050.5,
+      "status_code": 200,
+      "request_id": "f9a19fc5-a07d-4925-b847-4e4c03e8e57a",
+      "error_type": null,
+      "error_msg": null,
+      "server": {
+        "mode": "agent",
+        "proc_start_ts": 1794458771.110258,
+        "request_ts": 1794458803.247,
+        "invocation_seq": 2,
+        "image_tag": "dsh-0.2.2-rc.1",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "prewarm": {
+          "enabled": true,
+          "start_ts": 1794458771.171,
+          "end_ts": 1794458773.037,
+          "exit_code": 0
+        },
+        "agent": {
+          "ok": true,
+          "exit_code": 0,
+          "spawn_ts": 1794458803.247,
+          "first_output_ts": 1794458805.328,
+          "first_text_ts": 1794458806.054,
+          "exit_ts": 1794458806.13,
+          "model": "deepseek.v3.2",
+          "output": "pong",
+          "error": null,
+          "usage": {
+            "inputTokens": 5550,
+            "outputTokens": 3,
+            "totalTokens": 5553
+          },
+          "stop_reason": "completed",
+          "cred_source": "sdk-default-chain"
+        },
+        "response_ts": 1794458806.13
+      },
+      "body_text": null,
+      "ok": true,
+      "invocation_seq": 2,
+      "uptime_at_request_ms": 32136.7,
+      "server_handling_ms": 2883.0,
+      "outside_handler_ms": 167.5,
+      "dsh_boot_ms": 2081.0,
+      "first_text_ms": 2807.0,
+      "dsh_total_ms": 2883.0,
+      "platform_overhead_ms": 167.5,
+      "boot_kind": "warm_pool",
+      "anomalies": []
+    }
+  ],
+  "sessions": [
+    {
+      "session_id": "a0111435430f4b2d8ab7af420a060a568fb98829",
+      "stopped": true,
+      "stop_error": null
+    },
+    {
+      "session_id": "cd750ccd03e8439193ac5c2a1883325ff8b9699d",
+      "stopped": true,
+      "stop_error": null
+    },
+    {
+      "session_id": "d4424ea9453f414496af9c1d9ec4cea9a073df0a",
+      "stopped": true,
+      "stop_error": null
+    },
+    {
+      "session_id": "c2a5e48e2c5f4f79840c916f2bb0df277510bbf5",
+      "stopped": true,
+      "stop_error": null
+    }
+  ]
+}
