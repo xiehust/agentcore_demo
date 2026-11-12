@@ -48,7 +48,8 @@ SFN_NAME = f"{PREFIX}-batch"
 
 PATCH_GROUP = PREFIX
 DIAG_DOC = "PatchDiagnose-Collect"
-REMEDIATE_DOCS = ["PatchRemediate-FreeDisk", "PatchRemediate-DisableRepo", "PatchRemediate-ReleaseRpmLock"]
+REMEDIATE_DOCS = ["PatchRemediate-FreeDisk", "PatchRemediate-DisableRepo", "PatchRemediate-ReleaseRpmLock",
+                  "PatchRemediate-StartUpdateServices"]
 
 TAGS = [{"Key": "Project", "Value": PREFIX}]
 

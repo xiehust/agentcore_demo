@@ -4,7 +4,7 @@ Reads .state.json["targets"] and, per target "fault", breaks the instance using
 AWS-RunShellScript with the profile's admin credentials (this simulates the environment
 breaking; it is NOT the agent's code path). Idempotent: re-running only re-creates what is missing.
 
-  .venv/bin/python scenarios/inject_faults.py [--only disk_full|repo_broken|rpm_lock|ssm_offline]
+  .venv/bin/python scenarios/inject_faults.py [--only disk_full|repo_broken|rpm_lock|ssm_offline|win_wsus_broken|win_svc_disabled|win_disk_full]
 """
 import argparse
 import sys
@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from botocore.exceptions import ClientError  # noqa: E402
 from common.config import REGION, SPOKE_PROFILES, load_state, session  # noqa: E402
 
-ORDER = ["disk_full", "repo_broken", "rpm_lock", "ssm_offline"]
+ORDER = ["disk_full", "repo_broken", "rpm_lock", "ssm_offline", "win_wsus_broken", "win_svc_disabled", "win_disk_full"]
 
 DISK_FULL = r'''
 # Leave ~300 MB free on / : low enough to trip the orchestrator's disk-headroom precheck (and to break a
@@ -88,13 +88,51 @@ nohup bash -c "sleep 5; systemctl stop amazon-ssm-agent" >/dev/null 2>&1 &
 echo "scheduled amazon-ssm-agent stop in 5s"
 '''
 
-SCRIPTS = {"disk_full": DISK_FULL, "repo_broken": REPO_BROKEN, "rpm_lock": RPM_LOCK, "ssm_offline": SSM_OFFLINE}
+# --- Windows Server (AWS-RunPowerShellScript)
+# Note: a disabled wuauserv is NOT a failure mode -- AWS-RunPatchBaseline sets it to Manual and starts it itself (verified).
+WIN_WSUS_BROKEN = r'''
+# GPO still points Windows Update at a decommissioned corporate WSUS -> WUA search fails with 0x80240438
+$k = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'
+New-Item $k -Force | Out-Null; New-Item "$k\AU" -Force | Out-Null
+Set-ItemProperty $k WUServer 'http://wsus.corp.invalid:8530'
+Set-ItemProperty $k WUStatusServer 'http://wsus.corp.invalid:8530'
+Set-ItemProperty "$k\AU" UseWUServer 1 -Type DWord
+Restart-Service wuauserv -Force -ErrorAction SilentlyContinue
+"--- verify: WUServer=$((Get-ItemProperty $k).WUServer) UseWUServer=$((Get-ItemProperty "$k\AU").UseWUServer)"
+'''
+
+WIN_SVC_DISABLED = r'''
+# a hardening baseline disabled Windows Modules Installer: updates are found and downloaded but cannot be installed
+Stop-Service TrustedInstaller -Force -ErrorAction SilentlyContinue
+Set-Service TrustedInstaller -StartupType Disabled
+Get-CimInstance Win32_Service -Filter "Name='TrustedInstaller'" | ForEach-Object { "--- verify: TrustedInstaller state=$($_.State) start=$($_.StartMode)" }
+'''
+
+WIN_DISK_FULL = r'''
+# leave ~300 MB free on C: (below the precheck threshold, too little for Windows Update to download)
+$f = 'C:\Windows\Temp\app-dump.img'
+$cur = 0; if (Test-Path $f) { $cur = (Get-Item $f).Length }
+$free = (Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'").FreeSpace
+$size = $free + $cur - 300MB
+if ($size -le 0) { '[skip] free space already below target' }
+elseif ($cur -ne $size) {
+  Remove-Item $f -Force -ErrorAction SilentlyContinue
+  "[create] fsutil file createnew $f $size (was $cur)"
+  fsutil file createnew $f $size | Out-Null
+} else { "[skip] $f already sized" }
+$d = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'"
+'--- verify: C: free={0:N0} MB' -f ($d.FreeSpace / 1MB)
+'''
+
+SCRIPTS = {"disk_full": DISK_FULL, "repo_broken": REPO_BROKEN, "rpm_lock": RPM_LOCK, "ssm_offline": SSM_OFFLINE,
+           "win_wsus_broken": WIN_WSUS_BROKEN, "win_svc_disabled": WIN_SVC_DISABLED, "win_disk_full": WIN_DISK_FULL}
+WINDOWS_FAULTS = {"win_wsus_broken", "win_svc_disabled", "win_disk_full"}
 
 
-def run(ssm, iid, script, timeout=180):
+def run(ssm, iid, script, timeout=180, windows=False):
     for attempt in range(6):
         try:
-            cid = ssm.send_command(InstanceIds=[iid], DocumentName="AWS-RunShellScript",
+            cid = ssm.send_command(InstanceIds=[iid], DocumentName="AWS-RunPowerShellScript" if windows else "AWS-RunShellScript",
                                    Parameters={"commands": [script]}, TimeoutSeconds=120,
                                    Comment="demo fault injection")["Command"]["CommandId"]
             break
@@ -138,7 +176,7 @@ def main():
                 if ps != "Online":
                     print(f"[skip] PingStatus already {ps}")
                     continue
-            inv = run(ssm, iid, SCRIPTS[fault])
+            inv = run(ssm, iid, SCRIPTS[fault], windows=fault in WINDOWS_FAULTS)
             print(f"status={inv['Status']} rc={inv['ResponseCode']}")
             print(inv["StandardOutputContent"].rstrip())
             if inv["StandardErrorContent"].strip():

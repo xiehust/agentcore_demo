@@ -42,6 +42,18 @@ body{font:20px/1.55 -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft Ya
 .quote{border-left:4px solid var(--orange);background:var(--orange-l);padding:16px 20px;border-radius:0 10px 10px 0;font-size:19px;line-height:1.65}
 .howto{font-size:15.5px;color:#334;margin:2px 0 10px;padding:8px 12px;border-left:4px solid var(--orange,#ec7211);background:#fff8f0;border-radius:4px}
 .lg{display:inline-block;padding:0 6px;border-radius:3px;border:1px solid}.lg.b{background:#e8f0fb;border-color:#5b8fd6}.lg.g{background:#f3f5f8;border-color:#a9b2bf}.lg.o{background:#fdf0e3;border-color:#ec9a4c}.dot{color:#1d8102}
+.gates{display:grid;grid-template-columns:1fr 28px 1.15fr 28px 1.15fr 28px 1.15fr;align-items:stretch;margin:34px 0 34px;min-height:300px}
+.gates>i{align-self:center;text-align:center;font-style:normal;font-size:26px;color:#8a96a6}
+.gate{border:1.5px solid #c9d2de;border-radius:10px;padding:20px 20px;background:#f7f9fc;font-size:19px;line-height:1.6}
+.gate .gn{font-size:13px;font-weight:700;letter-spacing:.06em;color:#fff;background:#0b5cad;display:inline-block;padding:1px 10px;border-radius:10px;margin-bottom:6px}
+.gate .gq{font-size:22px;font-weight:700;color:#232f3e;margin-bottom:8px}
+.gate p{margin:0 0 14px;min-height:150px}.gate small{display:block;color:#6b7785;font-size:13.5px;border-top:1px dashed #c9d2de;padding-top:6px}
+.gate ul{list-style:none;padding:0;margin:0}.gate li{background:#fff;border:1px solid #d5dce6;border-radius:8px;padding:8px 10px;margin-bottom:10px;font-weight:600}
+.gate li small{border:0;padding:0;font-weight:400}
+.gate.g1{background:#fdf3e8;border-color:#f0b47a}.gate.g1 .gn{background:#ec7211}
+.gate.g2{background:#eaf2fb;border-color:#9cc0e8}
+.gate.g3{background:#ecf6ea;border-color:#9fd197}.gate.g3 .gn{background:#1d8102}
+.gres{font-size:20px;text-align:center;padding:16px 18px;border-radius:8px;background:#232f3e;color:#fff;margin-bottom:14px}.gres b{color:#ffb366}
 .note{background:var(--blue-l);border:1px solid #bcd6f2;border-radius:8px;padding:10px 14px;font-size:16.5px}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .kpi{background:var(--navy);color:#fff;border-radius:12px;padding:14px 16px}
@@ -283,51 +295,19 @@ pre code{background:none;padding:0;font-size:inherit;white-space:pre}
   <div>STS 终端节点<small>AssumeRole + 会话标签</small></div><i>→</i>
   <div>业务账号 SSM<small>只作用于一台实例</small></div>
 </div>
-</div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>7 / 24</span></div></section><section class="slide " data-i="8"><div class="sec">04 Q1 跨账号权限与网络</div><h2>权限边界：三道闸门依次收窄</h2><div class="body"><div class="fig" style="height:300px"><svg viewBox="0 0 1100 300" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-size="13">
-<defs><marker id="b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker></defs>
-<rect x="10" y="40" width="180" height="200" rx="6" fill="#f6f8fa" stroke="#8a96a3"/>
-<text x="100" y="64" text-anchor="middle" font-weight="600">调用方</text>
-<rect x="24" y="80" width="152" height="50" rx="4" fill="#fff" stroke="#6b4fbb"/><text x="100" y="101" text-anchor="middle" font-size="12">编排 Lambda 角色</text><text x="100" y="119" text-anchor="middle" font-size="11" fill="#5b6673">runtimeUserId=编排</text>
-<rect x="24" y="144" width="152" height="50" rx="4" fill="#fff" stroke="#1d8102"/><text x="100" y="165" text-anchor="middle" font-size="12">值班 permission set</text><text x="100" y="183" text-anchor="middle" font-size="11" fill="#5b6673">runtimeUserId=本人</text>
-<text x="100" y="222" text-anchor="middle" font-size="11.5" fill="#5b6673">SigV4 · 必须在运维 VPC 内</text>
-<rect x="230" y="40" width="210" height="200" rx="6" fill="#fdf1e6" stroke="#ec7211"/>
-<text x="335" y="64" text-anchor="middle" font-weight="600">闸门 1：Runtime 资源策略</text>
-<text x="245" y="92" font-size="12">Allow：上述两个角色</text>
-<text x="245" y="112" font-size="12">　InvokeAgentRuntime</text>
-<text x="245" y="132" font-size="12">　InvokeAgentRuntimeForUser</text>
-<text x="245" y="156" font-size="12" fill="#c7271a">Deny Principal:*</text>
-<text x="245" y="174" font-size="12" fill="#c7271a">　bedrock-agentcore:*（全部）</text>
-<text x="245" y="192" font-size="12" fill="#c7271a">　当 aws:SourceVpce ≠</text>
-<text x="245" y="210" font-size="12" fill="#c7271a">　运维 bedrock-agentcore VPCE</text>
-<text x="245" y="230" font-size="11" fill="#5b6673">Runtime 与 DEFAULT endpoint 都配置</text>
-<rect x="480" y="40" width="250" height="200" rx="6" fill="#e8f1fb" stroke="#0b5cad"/>
-<text x="605" y="64" text-anchor="middle" font-weight="600">闸门 2：Spoke 信任策略</text>
-<text x="495" y="92" font-size="12">Principal：Runtime 执行角色</text>
-<text x="495" y="112" font-size="12">sts:ExternalId = 约定值</text>
-<text x="495" y="132" font-size="12">aws:SourceVpce = 运维 STS VPCE</text>
-<text x="495" y="152" font-size="12">必须带会话标签</text>
-<text x="495" y="172" font-size="12">　TargetInstance = i-*</text>
-<text x="495" y="192" font-size="12">　标签键仅限 TargetInstance/BatchId</text>
-<text x="495" y="220" font-size="11" fill="#5b6673">TagSession 单独一条语句（无 ExternalId 上下文）</text>
-<rect x="770" y="40" width="320" height="200" rx="6" fill="#e9f6e6" stroke="#1d8102"/>
-<text x="930" y="64" text-anchor="middle" font-weight="600">闸门 3：Spoke 权限策略</text>
-<text x="785" y="92" font-size="12">读：DescribeInstanceInformation 等</text>
-<text x="785" y="112" font-size="12">写：SendCommand 仅限</text>
-<text x="785" y="132" font-size="12">　AWS-RunPatchBaseline / PatchDiagnose-*</text>
-<text x="785" y="152" font-size="12">　/ PatchRemediate-*（允许列表）</text>
-<text x="785" y="172" font-size="12">且实例 = ${aws:PrincipalTag/TargetInstance}</text>
-<text x="785" y="192" font-size="12" fill="#c7271a">Deny *：不经运维 VPCE（ssm/ec2/sts）</text>
-<text x="785" y="220" font-size="11" fill="#5b6673">无 Reboot/Stop/CancelCommand，无 RunShellScript</text>
-<path d="M190,140 L228,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
-<path d="M440,140 L478,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
-<path d="M730,140 L768,140" stroke="#232f3e" stroke-width="1.6" marker-end="url(#b1)"/>
-<text x="550" y="275" text-anchor="middle" font-size="12.5" fill="#232f3e">结果：一个诊断会话拿到的凭证，只能在运维 VPC 内、只能对"它负责的那一台实例"、只能执行预先审核的文档</text>
-</svg></div>
-<div class="cols3 small">
-  <div class="card"><h4>入站：IAM SigV4 + VPC 内网</h4>运维 VPC 建 bedrock-agentcore 接口终端节点（Private DNS）；资源策略对 <code>bedrock-agentcore:*</code> 拒绝一切非 <code>aws:SourceVpce</code> 路径。中国区无 Cognito，SSO 走 Identity Center + SigV4。</div>
-  <div class="card"><h4>出站：Hub-Spoke</h4>Runtime 为当前实例 AssumeRole，带会话标签 <code>TargetInstance=&lt;实例&gt;</code>；Spoke 策略用 <code>${aws:PrincipalTag/TargetInstance}</code>，凭证只能作用于这一台实例。</div>
-  <div class="card"><h4>人工接管：Identity Center</h4>值班 permission set 角色调用 InvokeAgentRuntimeForUser，<code>runtimeSessionId</code> 与自动诊断相同，<code>runtimeUserId</code> 为工程师本人；对话从 DynamoDB 恢复。</div>
-</div></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>8 / 24</span></div></section><section class="slide " data-i="9"><div class="sec">04 Q1 跨账号权限与网络</div><h2>实测：权限与网络正反向用例 14 / 14 符合预期</h2><div class="body"><table class="compact dense"><thead><tr><th>#</th><th>用例</th><th>预期</th><th>实测</th></tr></thead><tbody><tr><td>1</td><td>公网（VPC 外）调用 InvokeAgentRuntime / StopRuntimeSession</td><td><span class="no">拒绝</span></td><td>AccessDeniedException（资源策略显式拒绝）</td></tr><tr><td>2</td><td>VPC 内编排 Lambda 经终端节点调用 Runtime</td><td><span class="ok">允许</span></td><td>成功</td></tr><tr><td>3</td><td>受信任角色 + 正确 ExternalId，但经 NAT 访问公网 STS</td><td><span class="no">拒绝</span></td><td>AccessDenied</td></tr><tr><td>4</td><td>合法 Spoke 凭证拿到终端节点之外使用</td><td><span class="no">拒绝</span></td><td>UnauthorizedOperation</td></tr><tr><td>5 / 6</td><td>AssumeRole 不带 TargetInstance 标签 / ExternalId 错误</td><td><span class="no">拒绝</span></td><td>AccessDenied</td></tr><tr><td>7</td><td>绑定实例 A 的凭证，对实例 B 执行允许列表文档</td><td><span class="no">拒绝</span></td><td>AccessDeniedException</td></tr><tr><td>8 / 9</td><td>对实例 A 执行 AWS-RunShellScript / Reboot / Stop</td><td><span class="no">拒绝</span></td><td>AccessDeniedException / UnauthorizedOperation</td></tr><tr><td>10</td><td>Agent 会话调用 CancelCommand</td><td><span class="no">拒绝</span></td><td>implicitDeny（只给编排会话）</td></tr><tr><td>11</td><td>绑定实例 A 的凭证，对实例 A 执行允许列表文档</td><td><span class="ok">允许</span></td><td>成功</td></tr><tr><td>12</td><td>Runtime 经 NAT 调用全球区模型（Key 来自 Token Vault）</td><td><span class="ok">允许</span></td><td>成功，约 5.6 秒</td></tr><tr><td>13</td><td>值班角色 + runtimeUserId=工程师 接管会话</td><td><span class="ok">允许</span></td><td>成功，恢复 10 条历史消息</td></tr><tr><td>14</td><td>从 VPC 外访问长期记忆 OpenSearch 域</td><td><span class="no">不可达</span></td><td>无公网 endpoint，连接超时</td></tr></tbody></table></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>9 / 24</span></div></section><section class="slide " data-i="10"><div class="sec">05 Q2 Session 与编排</div><h2>为什么一台失败实例一个 Session</h2><div class="body">
+</div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>7 / 24</span></div></section><section class="slide " data-i="8"><div class="sec">04 Q1 跨账号权限与网络</div><h2>权限边界：三道闸门，层层收窄</h2><div class="body">
+<div class="gates">
+  <div class="gate who"><div class="gq">谁在调用</div><ul><li>编排 Lambda<small>自动诊断</small></li><li>值班工程师<small>人工接管</small></li></ul></div>
+  <i>→</i>
+  <div class="gate g1"><div class="gn">闸门 1</div><div class="gq">谁能调用 Agent？</div><p>只接受来自<b>运维 VPC 内网</b>的请求，公网调用一律拒绝。</p><small>Runtime 资源策略 + IAM 签名</small></div>
+  <i>→</i>
+  <div class="gate g2"><div class="gn">闸门 2</div><div class="gq">能进入哪个业务账号？</div><p>只有 Agent 自己的角色、经内网、并<b>声明要处理哪一台实例</b>，才能进入业务账号。</p><small>业务账号角色的信任策略</small></div>
+  <i>→</i>
+  <div class="gate g3"><div class="gn">闸门 3</div><div class="gq">进去后能做什么？</div><p>只能对<b>声明的那一台实例</b>执行预先审核过的几份 SSM 文档；不能重启、停机，也不能随意执行命令。</p><small>业务账号角色的权限策略</small></div>
+</div>
+<div class="gres">结果：每个诊断会话拿到的权限，<b>只够处理它负责的那一台机器</b>。即使凭证泄露，拿到 VPC 外也用不了，换一台实例也用不了。</div>
+<div class="note">业务账号无需与运维 VPC 打通网络；新增业务账号只需部署一个角色和几份 SSM 文档。</div>
+</div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>8 / 24</span></div></section><section class="slide " data-i="9"><div class="sec">04 Q1 跨账号权限与网络</div><h2>实测：权限与网络正反向用例 14 / 14 符合预期</h2><div class="body"><table class="compact dense"><thead><tr><th>#</th><th>用例</th><th>预期</th><th>实测</th></tr></thead><tbody><tr><td>1</td><td>公网（VPC 外）调用 InvokeAgentRuntime / StopRuntimeSession</td><td><span class="no">拒绝</span></td><td>AccessDeniedException（资源策略显式拒绝）</td></tr><tr><td>2</td><td>VPC 内编排 Lambda 经终端节点调用 Runtime</td><td><span class="ok">允许</span></td><td>成功</td></tr><tr><td>3</td><td>受信任角色 + 正确 ExternalId，但经 NAT 访问公网 STS</td><td><span class="no">拒绝</span></td><td>AccessDenied</td></tr><tr><td>4</td><td>合法 Spoke 凭证拿到终端节点之外使用</td><td><span class="no">拒绝</span></td><td>UnauthorizedOperation</td></tr><tr><td>5 / 6</td><td>AssumeRole 不带 TargetInstance 标签 / ExternalId 错误</td><td><span class="no">拒绝</span></td><td>AccessDenied</td></tr><tr><td>7</td><td>绑定实例 A 的凭证，对实例 B 执行允许列表文档</td><td><span class="no">拒绝</span></td><td>AccessDeniedException</td></tr><tr><td>8 / 9</td><td>对实例 A 执行 AWS-RunShellScript / Reboot / Stop</td><td><span class="no">拒绝</span></td><td>AccessDeniedException / UnauthorizedOperation</td></tr><tr><td>10</td><td>Agent 会话调用 CancelCommand</td><td><span class="no">拒绝</span></td><td>implicitDeny（只给编排会话）</td></tr><tr><td>11</td><td>绑定实例 A 的凭证，对实例 A 执行允许列表文档</td><td><span class="ok">允许</span></td><td>成功</td></tr><tr><td>12</td><td>Runtime 经 NAT 调用全球区模型（Key 来自 Token Vault）</td><td><span class="ok">允许</span></td><td>成功，约 5.6 秒</td></tr><tr><td>13</td><td>值班角色 + runtimeUserId=工程师 接管会话</td><td><span class="ok">允许</span></td><td>成功，恢复 10 条历史消息</td></tr><tr><td>14</td><td>从 VPC 外访问长期记忆 OpenSearch 域</td><td><span class="no">不可达</span></td><td>无公网 endpoint，连接超时</td></tr></tbody></table></div><div class="foot"><span>Patch Manager × Amazon Bedrock AgentCore：补丁批次智能值守方案</span><span>9 / 24</span></div></section><section class="slide " data-i="10"><div class="sec">05 Q2 Session 与编排</div><h2>为什么一台失败实例一个 Session</h2><div class="body">
 <div class="cols3">
   <div class="card"><h3>8 小时上限不再是约束</h3>批量执行是 Patch Manager 的原生能力；单台诊断 2 ~ 7 分钟，生命周期空闲 600 秒 / 最长 7200 秒。</div>
   <div class="card"><h3>故障隔离</h3>每个会话一个 microVM。某台诊断挂起、崩溃或超时只影响它自己，可单独 StopRuntimeSession。</div>

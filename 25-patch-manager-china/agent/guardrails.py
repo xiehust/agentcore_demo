@@ -26,7 +26,8 @@ _SECRETS = [
 ]
 _INJECTION = re.compile(
     r"(?i)(ignore (all |any )?(previous|prior|above) (instructions|rules)|disregard (the |your )?(instructions|rules|system)"
-    r"|you are now|new instructions|system prompt|as an ai|assistant:|AWS-RunShellScript|reboot (the |this )?instance"
+    r"|you are now|new instructions|system prompt|as an ai|assistant:|AWS-RunShellScript|AWS-RunPowerShellScript"
+    r"|reboot (the |this )?(instance|server)|restart-computer|stop-computer|shutdown(\.exe)? /[rs]|invoke-expression|\biex\b"
     r"|rm -rf /|curl [^|]*\|\s*(ba)?sh)")
 
 
@@ -95,9 +96,9 @@ class PatchGuardrails(HookProvider):
         if item.get("status") in state.TERMINAL and self.ctx.mode == "diagnose":
             return self._deny(event, f"instance already {item.get('status')}")
         if name == "run_remediation":
-            from tools import REMEDIATE_DOCS  # code-level allowlist, independent of the tool schema
-            if args.get("document") not in REMEDIATE_DOCS:
-                return self._deny(event, f"document {args.get('document')!r} is not allowlisted")
+            from tools import remediate_docs  # code-level per-platform allowlist, independent of the tool schema
+            if args.get("document") not in remediate_docs(self.ctx.platform):
+                return self._deny(event, f"document {args.get('document')!r} is not allowlisted for {self.ctx.platform}")
             if args.get("document") == "PatchRemediate-DisableRepo" and not re.fullmatch(r"[A-Za-z0-9._-]{1,64}", args.get("repo_id", "")):
                 return self._deny(event, "repo_id must match ^[A-Za-z0-9._-]{1,64}$")
             if not state.bump_counter(self.ctx.batch_id, self.ctx.instance_id, "remediations", MAX_REMEDIATIONS_PER_INSTANCE):

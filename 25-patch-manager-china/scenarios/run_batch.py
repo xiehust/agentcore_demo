@@ -1,6 +1,6 @@
 """Start one Step Functions patch batch and follow it until the report is written.
 
-usage: run_batch.py [label] [--patch-timeout 600] [--agent-timeout 2400] [--max-agents 10] [--min-free-pct 15] [--min-free-mb 500]
+usage: run_batch.py [label] [--patch-timeout 600] [--patch-timeout-windows 3600] [--agent-timeout-windows 5400] [--agent-timeout 2400] [--max-agents 10] [--min-free-pct 15] [--min-free-mb 500]
                     [--wave-hard-timeout 0 (=3x patch-timeout)] [--dispatch-grace 180] [--batch-timeout 14400]
 """
 import argparse
@@ -16,6 +16,8 @@ from common.config import BATCH_TABLE, load_state, save_state, session  # noqa: 
 ap = argparse.ArgumentParser()
 ap.add_argument("label", nargs="?", default="b")
 ap.add_argument("--patch-timeout", type=int, default=600)
+ap.add_argument("--patch-timeout-windows", type=int, default=3600, help="per-host patch timeout for Windows instances")
+ap.add_argument("--agent-timeout-windows", type=int, default=5400, help="per-host diagnosis timeout for Windows instances")
 ap.add_argument("--agent-timeout", type=int, default=2400)
 ap.add_argument("--remediation-limit", type=int, default=6)
 ap.add_argument("--max-agents", type=int, default=10, help="max concurrent agent sessions; extra failed hosts queue")
@@ -31,7 +33,7 @@ sfn = session().client("stepfunctions")
 table = session().resource("dynamodb").Table(BATCH_TABLE)
 batch_id = f"{a.label}-{time.strftime('%Y%m%d-%H%M%S')}"
 ex = sfn.start_execution(stateMachineArn=st["sfn_arn"], name=batch_id, input=json.dumps({
-    "batchId": batch_id, "patchTimeout": a.patch_timeout, "agentTimeout": a.agent_timeout, "remediationLimit": a.remediation_limit,
+    "batchId": batch_id, "patchTimeout": a.patch_timeout, "patchTimeoutWindows": a.patch_timeout_windows, "agentTimeoutWindows": a.agent_timeout_windows, "agentTimeout": a.agent_timeout, "remediationLimit": a.remediation_limit,
     "maxAgents": a.max_agents, "minFreePct": a.min_free_pct, "minFreeMB": a.min_free_mb,
     "waveHardTimeout": a.wave_hard_timeout, "dispatchGrace": a.dispatch_grace, "batchTimeout": a.batch_timeout}))
 save_state(last_batch=batch_id)

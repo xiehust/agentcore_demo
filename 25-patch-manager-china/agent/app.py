@@ -47,8 +47,9 @@ _embed_key: dict = {}
 MEM = Memory(MemoryConfig.from_env(), PATCH_PROFILE, api_key_fn=lambda: _embed_key["key"])
 _admin_table = boto3.resource("dynamodb", region_name=REGION).Table(MEM.config.stm_table)  # admin job state, next to STM
 
-SYSTEM_PROMPT = """You are the on-call patch engineer for a Linux fleet managed by AWS Systems Manager Patch Manager.
+SYSTEM_PROMPT = """You are the on-call patch engineer for a Linux and Windows Server fleet managed by AWS Systems Manager Patch Manager.
 One instance failed patching in batch {batch_id}. You are bound to that instance only: {name} ({instance_id}, account {account}).
+Platform: {platform}. {platform_hint}
 
 Work method
 1. Read the facts (get_instance_overview, get_patch_output). Use recalled knowledge below and search_memory.
@@ -67,6 +68,16 @@ Rules
 
 {recall}
 """
+
+PLATFORM_HINTS = {
+    "linux": "Amazon Linux (dnf/rpm); the patch output is in the PatchLinux plugin.",
+    "windows": ("Windows Server; Patch Manager drives the Windows Update Agent and the patch output is in the PatchWindows "
+                "plugin. Typical causes: C: too full to download updates, Windows Modules Installer (TrustedInstaller) disabled, "
+                "update source (WSUS / Windows Update) unreachable, a pending reboot or a busy installer. Patch Manager "
+                "re-enables wuauserv itself, so a disabled wuauserv is rarely the cause. HRESULT codes "
+                "(0x8024..., 0x8007...) in the output are the strongest evidence. A pending reboot cannot be cleared by "
+                "you: request_human_action(reboot_instance)."),
+}
 
 _key_cache: dict = {}
 
@@ -105,7 +116,8 @@ def build_agent(ctx: InstanceCtx, api_key: str, recall_query: str) -> tuple[Agen
     agent = Agent(
         model=make_model(api_key),
         system_prompt=SYSTEM_PROMPT.format(batch_id=ctx.batch_id, name=ctx.name, instance_id=ctx.instance_id,
-                                           account=ctx.account, recall=recall),
+                                           account=ctx.account, platform=ctx.platform,
+                                           platform_hint=PLATFORM_HINTS.get(ctx.platform, ""), recall=recall),
         tools=build_tools(ctx, guard, memory_search=MEM.search), hooks=[guard], agent_id=PATCH_PROFILE.agent_id, callback_handler=None,
         session_manager=RepositorySessionManager(session_id=ctx.session_id, session_repository=MEM.session_repository),
         conversation_manager=SlidingWindowConversationManager(window_size=60))
@@ -222,7 +234,7 @@ def load_ctx(payload: dict, session_id: str, mode: str) -> tuple[InstanceCtx, di
         raise PermissionError("instance not assigned to this session")
     return InstanceCtx(batch_id=item["pk"], instance_id=item["instance_id"], account=item["account"], session_id=session_id,
                        patch_command_id=item.get("patch_command_id", ""), patch_status=item.get("patch_status", ""),
-                       name=item.get("name", ""), mode=mode), item
+                       name=item.get("name", ""), mode=mode, platform=item.get("platform", "linux")), item
 
 
 def probe(payload: dict) -> dict:
