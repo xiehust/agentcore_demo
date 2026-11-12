@@ -69,6 +69,10 @@
 2. 进入感兴趣的目录，阅读其中的 README，按说明安装依赖、部署和运行。
 3. 完成后按 README 中的清理步骤删除创建的 AWS 资源。
 
+## Checks
+
+每次推送和提交拉取请求时，GitHub Actions 会运行 `./scripts/check.sh`，检查仓库根目录的 `README.md`、`CHANGELOG.md` 和 `docs/FAQ.md` 是否存在。也可在本地运行该脚本；缺失文件时脚本会列出文件名并以状态码 1 退出。
+
 ## 许可证
 
 [MIT License](LICENSE)
