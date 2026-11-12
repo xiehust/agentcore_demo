@@ -1,0 +1,93 @@
+{
+  "region": "us-east-1",
+  "account": "434444145045",
+  "ecr_repo": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-dsh-coldstart",
+  "model_id": "deepseek.v3.2",
+  "dsh_version": "0.2.2-rc.1",
+  "runtimes": {
+    "dsh_v2": {
+      "name": "dsh_coldstart_base_v2",
+      "arn": "arn:aws:bedrock-agentcore:us-east-1:434444145045:runtime/dsh_coldstart_base_v2-iRw1Rt7Vfp",
+      "image_uri": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-dsh-coldstart:dsh-0.2.2-rc.1",
+      "docker_size_bytes": 1105337345,
+      "ecr_size_bytes": 293053545,
+      "platform_version": "V2",
+      "env": {
+        "DSH_MODEL_ID": "deepseek.v3.2",
+        "DSH_PREWARM": "0"
+      },
+      "deployed_at": "2026-11-12T05:41:52.770753+00:00"
+    },
+    "dsh_prewarm_v2": {
+      "name": "dsh_coldstart_prewarm_v2",
+      "arn": "arn:aws:bedrock-agentcore:us-east-1:434444145045:runtime/dsh_coldstart_prewarm_v2-TYS2tl8uBz",
+      "image_uri": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-dsh-coldstart:dsh-0.2.2-rc.1",
+      "docker_size_bytes": 1105337345,
+      "ecr_size_bytes": 293053545,
+      "platform_version": "V2",
+      "env": {
+        "DSH_MODEL_ID": "deepseek.v3.2",
+        "DSH_PREWARM": "1"
+      },
+      "deployed_at": "2026-11-12T05:41:56.902881+00:00"
+    },
+    "dsh_pinctl_v2": {
+      "name": "dsh_coldstart_diag_v2",
+      "arn": "arn:aws:bedrock-agentcore:us-east-1:434444145045:runtime/dsh_coldstart_diag_v2-w6jy5tH4To",
+      "image_uri": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-dsh-coldstart:dsh-0.2.2-rc.1-pin",
+      "docker_size_bytes": 1142404460,
+      "ecr_size_bytes": 305065643,
+      "platform_version": "V2",
+      "env": {
+        "DSH_MODEL_ID": "deepseek.v3.2",
+        "DSH_PREWARM": "0"
+      },
+      "deployed_at": "2026-11-12T06:26:34.268631+00:00"
+    },
+    "dsh_pin_v2": {
+      "name": "dsh_coldstart_deepwarm_v2",
+      "arn": "arn:aws:bedrock-agentcore:us-east-1:434444145045:runtime/dsh_coldstart_deepwarm_v2-QG6hVWGHWG",
+      "image_uri": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-dsh-coldstart:dsh-0.2.2-rc.1-pin",
+      "docker_size_bytes": 1142404460,
+      "ecr_size_bytes": 305065643,
+      "platform_version": "V2",
+      "env": {
+        "DSH_MODEL_ID": "deepseek.v3.2",
+        "DSH_PREWARM": "3"
+      },
+      "deployed_at": "2026-11-12T06:26:38.894852+00:00"
+    }
+  },
+  "iam_role": "arn:aws:iam::434444145045:role/AgentCoreDshColdstartRole",
+  "deployed_at": "2026-11-12T06:26:55.603524+00:00",
+  "removed_runtimes": {
+    "dsh": {
+      "name": "dsh_coldstart_base",
+      "arn": "arn:aws:bedrock-agentcore:us-east-1:434444145045:runtime/dsh_coldstart_base-SOYSAe9VAa",
+      "image_uri": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-dsh-coldstart:dsh-0.2.2-rc.1",
+      "docker_size_bytes": 1105337345,
+      "ecr_size_bytes": 293053545,
+      "platform_version": "V1",
+      "env": {
+        "DSH_MODEL_ID": "deepseek.v3.2",
+        "DSH_PREWARM": "0"
+      },
+      "deployed_at": "2026-11-12T04:45:52.617603+00:00",
+      "deleted_at": "2026-11-12T09:01:29.206634+00:00"
+    },
+    "dsh_prewarm": {
+      "name": "dsh_coldstart_prewarm",
+      "arn": "arn:aws:bedrock-agentcore:us-east-1:434444145045:runtime/dsh_coldstart_prewarm-iuau6D5gbC",
+      "image_uri": "434444145045.dkr.ecr.us-east-1.amazonaws.com/agentcore-dsh-coldstart:dsh-0.2.2-rc.1",
+      "docker_size_bytes": 1105337345,
+      "ecr_size_bytes": 293053545,
+      "platform_version": "V1",
+      "env": {
+        "DSH_MODEL_ID": "deepseek.v3.2",
+        "DSH_PREWARM": "1"
+      },
+      "deployed_at": "2026-11-12T04:45:57.221157+00:00",
+      "deleted_at": "2026-11-12T09:01:29.206634+00:00"
+    }
+  }
+}
