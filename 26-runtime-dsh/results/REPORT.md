@@ -27,7 +27,7 @@ Two things are measured. **Cold start**: the first invoke of a new session only 
 - **`dsh_pinctl_v2` (V2): the first message is slow until its snapshot has been used a few times.** Cold agent turn number 1 served by the same snapshot: p50 64,383 ms (n=2); turn 11+: p50 6,469 ms (n=80) (every raw file, including superseded runs and smoke probes).
 - **`dsh_pin_v2` (V2): the first message is slow until its snapshot has been used a few times.** Cold agent turn number 1 served by the same snapshot: p50 15,202 ms (n=2); turn 11+: p50 4,645 ms (n=80) (every raw file, including superseded runs and smoke probes).
 - **Page pin (`dsh_pin_v2` against its control `dsh_pinctl_v2`, same image):** first message p50 6,531 ms (n=100) without it and p50 4,678 ms (n=100) with it; DSH boot p50 3,691 ms (n=100) without it and p50 2,002 ms (n=100) with it. The sample code is in the page pin section.
-- **Local Docker floor:** container start + first answer p50 4,413 ms (n=5), with a warm host page cache and no image pull.
+- **Local Docker, host page cache warm (a floor):** container start + first answer p50 3,712 ms (n=10), with no image pull. With the page cache evicted before each cold agent turn, so that `dsh` starts from disk: p50 6,410 ms (n=6).
 - **Reliability:** 0 failed out of 1600 requests sent; sessions stopped after measurement: 800/800.
 
 ## Cold start and first message by concurrency (end-to-end, ms)
@@ -387,16 +387,17 @@ if (PREWARM_LEVEL === 3) await startPinner();
 ## Local Docker vs AgentCore Runtime
 
 - **Local host:** aarch64, 8 CPUs, 61.7 GB RAM, kernel `6.12.113-138.209.amzn2023.aarch64`, Docker `25.0.18`
-- **Local run:** image `agentcore-dsh-coldstart:dsh-0.2.2-rc.1` (1,054 MB), model `deepseek.v3.2`, dsh `0.2.2-rc.1`, tested 2026-11-12T04:48:03.745683+00:00, 5 rounds, host page cache: warm, DSH pre-warm enabled: false
+- **Local run, page cache warm:** image `agentcore-dsh-coldstart:dsh-0.2.2-rc.1` (1,054 MB), model `deepseek.v3.2`, dsh `0.2.2-rc.1`, tested 2026-11-12T09:17:02.428565+00:00, 10 rounds, host page cache: warm, DSH pre-warm enabled: false, host load (1-minute average) 2.21 at the start and 2.94 at the end
+- **Local run, page cache evicted:** image `agentcore-dsh-coldstart:dsh-0.2.2-rc.1` (1,054 MB), model `deepseek.v3.2`, dsh `0.2.2-rc.1`, tested 2026-11-12T09:19:28.121960+00:00, 6 rounds, host page cache: evicted before each cold agent turn, DSH pre-warm enabled: false, host load (1-minute average) 2.12 at the start and 7.91 at the end
 - Locally, every round starts a brand-new container and sends it its first request. AgentCore figures pool every concurrency level run (c=1, c=10, c=30). Cells are p50 ms (number of samples).
 
-| metric | local Docker | `dsh_v2` (V2) · snapshot restore | `dsh_prewarm_v2` (V2) · snapshot restore | `dsh_pinctl_v2` (V2) · snapshot restore | `dsh_pin_v2` (V2) · snapshot restore |
-|---|---|---|---|---|---|
-| cold start (local: `docker run` → first healthy `/ping`; AgentCore: cold ping end-to-end) | 598 (5) | 2,014 (100) | 1,897 (100) | 2,050 (100) | 1,938 (100) |
-| first message · DSH boot | 2,588 (5) | 3,552 (100) | 3,514 (100) | 3,691 (100) | 2,002 (100) |
-| first message (local: container start + first agent request, per round; AgentCore: first message end-to-end) | 4,413 (5) | 6,437 (100) | 6,441 (100) | 6,531 (100) | 4,678 (100) |
+| metric | local Docker, page cache warm | local Docker, page cache evicted | `dsh_v2` (V2) · snapshot restore | `dsh_prewarm_v2` (V2) · snapshot restore | `dsh_pinctl_v2` (V2) · snapshot restore | `dsh_pin_v2` (V2) · snapshot restore |
+|---|---|---|---|---|---|---|
+| cold start (local: `docker run` → first healthy `/ping`; AgentCore: cold ping end-to-end) | 418 (10) | — | 2,014 (100) | 1,897 (100) | 2,050 (100) | 1,938 (100) |
+| first message · DSH boot | 2,151 (10) | 4,618 (6) | 3,552 (100) | 3,514 (100) | 3,691 (100) | 2,002 (100) |
+| first message (local: container start + first agent request, per round; AgentCore: first message end-to-end) | 3,712 (10) | 6,410 (6) | 6,437 (100) | 6,441 (100) | 6,531 (100) | 4,678 (100) |
 
-Local Docker runs with a warm host page cache and no image pull, so it is a floor, not a like-for-like cold start.
+How to read the two local columns. With the page cache warm, every file `dsh` reads is already in memory: that column is a floor, the best this machine can do. In the evicted run the files a first turn reads were dropped from the page cache before each first agent turn, so `dsh` starts from disk; that is the column to set beside a session restored from a snapshot, with the difference that it reads this machine's disk, not the platform's. Neither local column includes an image pull or the start of a microVM, and the eviction does not apply to the cold-start row.
 
 ## Success / errors
 

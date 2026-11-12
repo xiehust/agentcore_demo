@@ -62,6 +62,24 @@ def section(text: str, heading: str) -> str:
     return text.split(f"## {heading}", 1)[1].split("\n## ", 1)[0]
 
 
+# The same image again, with the page cache of DSH's files dropped before each first agent turn.
+LOCAL_EVICTED = {
+    **LOCAL, "tested_at": "2026-11-12T05:20:00+00:00", "page_cache": "evicted before each cold agent turn",
+    "host": {**LOCAL["host"], "loadavg_start": [2.1, 2.5, 2.8], "loadavg_end": [7.9, 4.4, 3.4]},
+    "summary": {},
+    "records": [
+        {"round": rnd, "sequence": seq, "phase": phase, "ok": True, "container_start_ms": start,
+         "client_total_ms": total, "dsh_boot_ms": boot, "first_text_ms": None, "dsh_total_ms": None,
+         "server": {"prewarm": {"enabled": False}}}
+        for rnd, seq, phase, start, total, boot in (
+            (1, "ping", "cold", 480.0, 3.0, None), (1, "agent", "cold", 500.0, 5800.0, 4500.0),
+            (1, "agent", "warm", None, 3300.0, 2100.0),
+            (2, "ping", "cold", 470.0, 2.8, None), (2, "agent", "cold", 520.0, 6000.0, 4700.0),
+            (2, "agent", "warm", None, 3200.0, 2200.0))
+    ],
+}
+
+
 class ReportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -86,12 +104,12 @@ class ReportTests(unittest.TestCase):
         cls.cells = {(c["runtime"], c["sequence"], c["phase"], c["concurrency"], c["boot_kind"]): c
                      for c in cls.summary["cells"]}
 
-    def generate(self, local=None):
-        path = self.results / "local_baseline.json"
-        if local is None:
-            path.unlink(missing_ok=True)
-        else:
-            path.write_text(json.dumps(local))
+    def generate(self, local=None, evicted=None):
+        for name, content in (("local_baseline.json", local), ("local_baseline_coldcache.json", evicted)):
+            if content is None:
+                (self.results / name).unlink(missing_ok=True)
+            else:
+                (self.results / name).write_text(json.dumps(content))
         with contextlib.redirect_stdout(io.StringIO()):
             code = gen_report.main(["--results", str(self.results), "--deployments", str(self.dep)])
         self.assertEqual(code, 0)
@@ -133,11 +151,12 @@ class ReportTests(unittest.TestCase):
                       "5 / 6 |", body)
         self.assertIn("| `dsh_prewarm` | — | `DSH_PREWARM=1`, `EXAMPLE_API_KEY=<hidden>` |", body)
         self.assertIn("by concurrency: c=1: 40% (4/10).", body)
-        self.assertIn("- **Local Docker floor:** container start + first answer p50 2,610 ms (n=2)", body)
+        self.assertIn("- **Local Docker, host page cache warm (a floor):** container start + first answer "
+                      "p50 2,610 ms (n=2), with no image pull.", body)
         self.assertIn("- **Reliability:** 2 failed out of 23 requests sent; sessions stopped after measurement: "
                       "12/12.", body)
         self.assertNotIn("snapshot", body)
-        self.assertNotIn("Local Docker floor", section(self.generate()[0], "Summary"))
+        self.assertNotIn("Local Docker", section(self.generate()[0], "Summary"))
         # the report is about the start of a session: nothing about later messages, nothing model-timed
         for absent in ("## Warm baseline", "follow-up", "first text", "DSH total", "1,550", "Page pin"):
             self.assertNotIn(absent, en)
@@ -246,6 +265,45 @@ class ReportTests(unittest.TestCase):
         self.assertIn("image `agentcore-dsh-coldstart:dsh-test` (1,054 MB)", en)
         self.assertIn("so it is a floor, not a like-for-like cold start", en)
         self.assertIn("只是下限", zh)
+
+    def test_local_run_with_the_page_cache_evicted_gets_its_own_column(self):
+        en, zh = self.generate(LOCAL, LOCAL_EVICTED)
+        assert_same_structure(self, en, zh)
+        body = section(en, "Local Docker vs AgentCore Runtime")
+        self.assertIn("| metric | local Docker, page cache warm | local Docker, page cache evicted | "
+                      "`dsh` · real boot | `dsh` · warm-pool hit |", body)
+        rows = {line.split(" | ")[0].lstrip("| "): [c.strip(" |") for c in line.split(" | ")[1:]]
+                for line in body.splitlines() if line.startswith("| ") and "---" not in line}
+        start = next(v for k, v in rows.items() if k.startswith("cold start"))
+        self.assertEqual(start[:3], ["420 (2)", "—", "6,007 (1)"])      # the eviction is not about the ping
+        self.assertEqual(rows["first message · DSH boot"][:3], ["950 (2)", "4,600 (2)", "1,200 (1)"])
+        first = next(v for k, v in rows.items() if k.startswith("first message (local"))
+        self.assertEqual(first[:3], ["2,610 (2)", "6,410 (2)", "9,020 (1)"])
+        self.assertTrue(all(len(v) == 6 for v in rows.values()))
+        # each local file says when it ran, with which cache state, and how loaded the host was
+        self.assertIn("- **Local run, page cache warm:** image `agentcore-dsh-coldstart:dsh-test` (1,054 MB), "
+                      "model `deepseek.test-model`, dsh `9.9.9`, tested 2026-11-12T05:10:00+00:00, 2 rounds, "
+                      "host page cache: warm, DSH pre-warm enabled: false\n", body)
+        self.assertIn("- **Local run, page cache evicted:** image `agentcore-dsh-coldstart:dsh-test` (1,054 MB), "
+                      "model `deepseek.test-model`, dsh `9.9.9`, tested 2026-11-12T05:20:00+00:00, 2 rounds, "
+                      "host page cache: evicted before each cold agent turn, DSH pre-warm enabled: false, "
+                      "host load (1-minute average) 2.1 at the start and 7.9 at the end\n", body)
+        self.assertIn("How to read the two local columns.", body)
+        self.assertIn("that column is a floor", body)
+        self.assertIn("so `dsh` starts from disk; that is the column to set beside a session restored from a "
+                      "snapshot", body)
+        self.assertNotIn("not a like-for-like cold start", body)
+        self.assertIn("- **Local Docker, host page cache warm (a floor):** container start + first answer "
+                      "p50 2,610 ms (n=2), with no image pull. With the page cache evicted before each cold "
+                      "agent turn, so that `dsh` starts from disk: p50 6,410 ms (n=2).", section(en, "Summary"))
+        self.assertIn("| 指标 | 本地 Docker,页缓存已预热 | 本地 Docker,页缓存已清除 |", zh)
+        self.assertIn("主机负载(1 分钟平均)开始时 2.1、结束时 7.9", zh)
+        # the evicted run means nothing without the warm one, and its absence changes nothing
+        self.assertNotIn("Local Docker", self.generate(None, LOCAL_EVICTED)[0].split("## Summary")[1])
+        en, _ = self.generate(LOCAL)
+        self.assertIn("| metric | local Docker | `dsh` · real boot |", en)
+        self.assertIn("so it is a floor, not a like-for-like cold start", en)
+        self.assertIn("- **Local run:** image", en)
 
     def test_missing_inputs(self):
         with tempfile.TemporaryDirectory() as empty, contextlib.redirect_stderr(io.StringIO()) as err:

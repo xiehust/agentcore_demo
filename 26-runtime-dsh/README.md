@@ -15,31 +15,25 @@
 
 p50，毫秒；合并并发 1 / 10 / 30 的样本。
 
-| 指标 | 本地 Docker | V2 · 原样 DSH | V2 + page pin |
-|---|---|---|---|
-| 冷启动：新 session 的 ping（只有平台） | 598 | 2,014 | 1,938 |
-| 第一条消息端到端 | 4,413 | 6,437 | 4,678 |
-| 其中 DSH 进程启动（spawn → 首个输出，不含模型） | 2,588 | 3,552 | 1,999 |
-| 第一条消息：新版本上线后同一快照的第 1 次使用 | — | 61,068 | 15,202 |
+| 指标 | 本地 Docker · 页缓存已热 | 本地 Docker · 页缓存清空 | V2 · 原样 DSH | V2 + page pin |
+|---|---|---|---|---|
+| 冷启动：新 session 的 ping（只有平台） | 418 | — | 2,014 | 1,938 |
+| DSH 进程启动（spawn → 首个输出，不含模型） | 2,151 | 4,618 | 3,552 | 1,999 |
+| 第一条消息端到端（平台启动 + DSH 进程启动 + 一次模型调用，到完整回答返回） | 3,712 | 6,410 | 6,437 | 4,678 |
+| 第一条消息：新版本上线后同一快照的第 1 次使用 | — | — | 61,068 | 15,202 |
 
-「冷启动」是新 session 的首次调用只返回时间戳，不跑 agent；「第一条消息」是把一次真实的 `dsh headless` 对话作为
-首次调用，计时到完整回答返回（包含一次模型调用，提示词很短）。本地 Docker 一列的冷启动是 `docker run` 到
-`/ping` 健康，第一条消息是容器启动加首次回答。
-V2 两列的「DSH 进程启动」取同一快照被用过 10 次之后的样本；「第 1 次使用」每列只有 2 个样本。
+「冷启动」是新 session 的首次调用只返回时间戳；「第一条消息」是首次调用就跑一次真实的 `dsh headless` 对话。
+本地「页缓存清空」一列在第一条消息前清掉了 DSH 要读的 3,630 个文件的缓存，它才与快照恢复后的 session 可比。
+V2 的「DSH 进程启动」取同一快照用过 10 次之后的样本；「第 1 次使用」每列只有 2 个样本。
 
-1. **每个新 session 都从快照恢复，冷启动稳定在约 2.0 秒，与并发无关**：并发 1、10、30 的 p50 分别是
-   2,014、1,995、2,027 毫秒。日志里每个 runtime 只在创建时启动过两次容器，之后的 session 都来自这两个快照。
-2. **原样的 DSH 有一个大坑：新版本上线后的头几个 session，第一条消息要 40–60 秒。**
-   时间全在 `dsh` 进程启动上（约 52 秒）。它随同一快照被使用的次数下降
-   （第 1 次 61 秒，第 2 次 44 秒，第 3 次 28 秒，第 4 次 15 秒，第 5 次 12 秒），第 6 次起稳定在约 6.4 秒，
-   与 runtime 存在多久无关。稳定之后 DSH 启动仍要约 3.5 秒，比本地 Docker 的约 2.6 秒慢。
-3. **page pin 解决了大部分问题**：同一镜像、同时部署的一组对照，pin 之后第 1 次使用从 64.4 秒降到 15.2 秒，
-   第 3 次起约 4.9 秒；稳定后第一条消息约 4.7 秒（对照 6.5 秒），DSH 启动降到约 2.0 秒，比本地 Docker 还快。
-   代价是监听前多花约 0.1 秒、锁住 147 MB 内存（153,966,238 字节）直到首个回合结束。每个快照最初一两次使用仍要约 15 秒。
-4. **`DSH_PREWARM=1`（容器启动后先跑一次 `dsh headless --help`）没有可测量的收益。**
-   首次使用的 DSH 启动仍是约 53 秒。
+1. **冷启动稳定在约 2.0 秒，与并发无关**：每个新 session 都从快照恢复。
+2. **不带 page pin 时，新版本上线后的头几个 session 第一条消息要 40–60 秒**，时间都在 `dsh` 进程启动上；
+   同一快照用到第 6 次起稳定在约 6.4 秒。
+3. **带上 page pin 后**，第 1 次使用从 64.4 秒降到 15.2 秒，稳定后约 4.7 秒；DSH 启动约 2.0 秒，
+   与本地页缓存已热时相当。代价是锁住 147 MB 内存，直到首个回合结束。
+4. **`DSH_PREWARM=1`（启动后先跑一次 `dsh headless --help`）没有可测量的收益。**
 
-结论：在 V2 上部署 DSH 应当带上 page pin。不带时，每次发布新版本后的头几个 session 会遇到 40–60 秒的第一条消息。
+结论：在 V2 上部署 DSH 应当带上 page pin。
 
 ## V2 上为什么慢，page pin 做了什么
 
@@ -282,7 +276,8 @@ DEPLOY_KEYS="dsh_pin_v2" bash scripts/deploy.sh          # 只创建/更新指�
 uv sync
 RT="${V2// /,}"                                          # coldstart_test.py 的 --runtimes 用逗号分隔
 uv run python coldstart_test.py --smoke --runtimes "$RT" # 每个 runtime 各一次 ping 序列 + agent 序列
-python3 scripts/local_baseline.py --rounds 5             # 本地 Docker 基线 -> results/local_baseline.json
+python3 scripts/local_baseline.py --rounds 10            # 本地 Docker 基线（页缓存已热）-> results/local_baseline.json
+python3 scripts/local_baseline.py --rounds 6 --evict-page-cache   # 页缓存清空 -> results/local_baseline_coldcache.json
 uv run python coldstart_test.py --full --runtimes "$RT" --concurrency 1
 uv run python coldstart_test.py --full --runtimes "$RT" --concurrency 10 --rounds 3 --settle-seconds 60
 uv run python coldstart_test.py --full --runtimes "$RT" --concurrency 30 --rounds 2 --settle-seconds 0
@@ -311,7 +306,11 @@ runtime 每次创建或更新都会重新打快照，「同一快照的第几次
 - 一次 `Reply with exactly: pong` 对话的输入约 8,361 token（DSH 系统提示词），输出 3 token。
 - 基础镜像未压缩 1,054 MB，其中 DSH 的 `node_modules` 约 740 MB、69,477 个文件；压缩后 279 MB。
   一次对话实际只读其中 3,613 个文件、约 25 MB。
-- 本地 Docker 的页缓存已热、无需拉镜像，只有 5 轮，是下限而不是同条件对比。
+- 本地 Docker 两组数据都无需拉镜像，样本少（10 轮和 6 轮），并且受这台开发机上其他负载影响：
+  同一镜像在负载未记录的第一次测量里 DSH 启动是 2,588 毫秒，重测为 2,151 毫秒（重测时 1 分钟负载约 2.2–2.9）。
+  「页缓存清空」用 `dd iflag=nocache` 逐个文件丢弃缓存（用 `fincore` 验证过），只影响这些文件，不需要主机 root。
+  清缓存的循环会把主机 1 分钟负载抬到约 7.9，但它在计时开始前已经结束；同一轮里紧接着的第二条消息
+  DSH 启动为 2,164 毫秒，与页缓存已热的那组一致，所以 4.6 秒来自读盘而不是负载。
 - 矩阵之外的冒烟探测里有 1 次失败：`dsh_prewarm_v2` 在一次 68.6 秒的首回合之后，第二回合返回 502，原因未查明。
 
 ## 安全

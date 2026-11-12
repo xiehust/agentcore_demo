@@ -1,6 +1,8 @@
 """Generate results/REPORT.md (English) and results/REPORT.zh.md (Chinese)
 from results/summary.json, the raw files under results/raw, deployments.json
-and, when present, results/local_baseline.json (scripts/local_baseline.py).
+and, when present, results/local_baseline.json and
+results/local_baseline_coldcache.json (scripts/local_baseline.py, the second
+one with the page cache evicted before each first agent turn).
 The page-pin sample code is copied from app/pinner.py and app/server.mjs at
 generation time, so the report always shows the code that was measured.
 
@@ -193,6 +195,7 @@ def load_inputs(results_dir: Path, deployments_path: Path, app_dir: Path | None 
     if missing:
         raise ReportError(f"{results_dir / 'raw' / missing[0]} is listed in summary.json but missing.")
     local_path = results_dir / "local_baseline.json"
+    evicted_path = results_dir / "local_baseline_coldcache.json"
     return {
         "dep": json.loads(deployments_path.read_text()),
         "summary": summary,
@@ -200,6 +203,7 @@ def load_inputs(results_dir: Path, deployments_path: Path, app_dir: Path | None 
         "history": history,
         "smokes": smokes,
         "local": json.loads(local_path.read_text()) if local_path.exists() else None,
+        "local_evicted": json.loads(evicted_path.read_text()) if evicted_path.exists() else None,
         "pin": pin_sources(app_dir if app_dir is not None else HERE / "app"),
     }
 
@@ -234,8 +238,11 @@ def scope_inputs(data: dict, platforms: set | None) -> dict:
 class Report:
     def __init__(self, dep: dict, summary: dict, raws: list, smokes: list,
                  local: dict | None, lang: str, history: list | None = None,
-                 pin: dict | None = None, excluded: dict | None = None):
+                 pin: dict | None = None, excluded: dict | None = None,
+                 local_evicted: dict | None = None):
         self.dep, self.summary, self.local, self.lang = dep, summary, local, lang
+        # A second local run whose page cache was evicted; only meaningful beside the warm one.
+        self.local_evicted = local_evicted if local is not None else None
         self.conf = dep.get("runtimes", {})
         self.pin = pin or {}
         self.excluded = excluded or {}
@@ -501,12 +508,21 @@ class Report:
             parts.append(image_text(mine.get("image_uri")).rsplit(":", 1)[-1])
         return ", ".join(f"`{part}`" for part in parts) or DASH
 
-    def local_first_answer(self) -> list:
-        """Local Docker: container start + cold agent request, per round."""
-        records = (self.local or {}).get("records", [])
-        return [r["container_start_ms"] + r["client_total_ms"] for r in records
+    @staticmethod
+    def local_first_answer(local: dict | None) -> list:
+        """Local Docker: container start + first agent request, per round."""
+        return [r["container_start_ms"] + r["client_total_ms"] for r in (local or {}).get("records", [])
                 if r.get("ok") and r.get("sequence") == "agent" and r.get("phase") == "cold"
                 and r.get("container_start_ms") is not None and r.get("client_total_ms") is not None]
+
+    @staticmethod
+    def local_cell(local: dict, sequence: str, phase: str, metric: str) -> str:
+        """p50 (n) of one local metric: the file's own summary, else its records."""
+        entry = (local.get("summary") or {}).get(f"{sequence}.{phase}.{metric}")
+        if isinstance(entry, dict) and entry.get("n"):
+            return f"{fmt(entry.get('p50'))} ({entry['n']})"
+        return p50_n([r.get(metric) for r in local.get("records", [])
+                      if r.get("ok") and r.get("sequence") == sequence and r.get("phase") == phase])
 
     def summary_section(self) -> None:
         totals = self.totals
@@ -598,12 +614,20 @@ class Report:
                      f"pin section.",
                      f"- **Page pin(`{pinned}` 与同镜像的对照组 `{control}`):**第一条消息,不加时 {both[0]},"
                      f"加上后 {both[1]};DSH 启动,不加时 {both[2]},加上后 {both[3]}。示例代码见 page pin 一节。")
-        local_answer = self.local_first_answer()
+        local_answer = self.local_first_answer(self.local)
         if local_answer:
-            self.add(f"- **Local Docker floor:** container start + first answer "
-                     f"{self.sample(local_answer)}, with a warm host page cache and no image pull.",
-                     f"- **本地 Docker 下限:**容器启动 + 首次回答 {self.sample(local_answer)},"
-                     f"条件是主机页缓存已预热且无需拉取镜像。")
+            state = (self.local or {}).get("page_cache", DASH)
+            evicted = self.local_first_answer(self.local_evicted)
+            extra_en = extra_zh = ""
+            if evicted:
+                other = self.local_evicted.get("page_cache", DASH)
+                extra_en = (f" With the page cache {other}, so that `dsh` starts from disk: "
+                            f"{self.sample(evicted)}.")
+                extra_zh = f"页缓存 {other}(`dsh` 从磁盘启动)时:{self.sample(evicted)}。"
+            self.add(f"- **Local Docker, host page cache {state} (a floor):** container start + "
+                     f"first answer {self.sample(local_answer)}, with no image pull.{extra_en}",
+                     f"- **本地 Docker,主机页缓存 {state}(下限):**容器启动 + 首次回答 "
+                     f"{self.sample(local_answer)},无需拉取镜像。{extra_zh}")
         self.add(f"- **Reliability:** {totals['failures']} failed out of {totals['attempted']} "
                  f"requests sent; sessions stopped after measurement: "
                  f"{totals['sessions_stopped']}/{totals['sessions']}.\n",
@@ -1014,29 +1038,14 @@ class Report:
 
     # ------------------------------------------------------- local docker
     def local_docker(self) -> None:
-        local = self.local
+        local, evicted = self.local, self.local_evicted
         if local is None:
             return
-        records = [r for r in local.get("records", []) if r.get("ok")]
-        local_summary = local.get("summary") or {}
-
-        def local_cell(sequence, phase, metric) -> str:
-            entry = local_summary.get(f"{sequence}.{phase}.{metric}")
-            if isinstance(entry, dict) and entry.get("n"):
-                return f"{fmt(entry.get('p50'))} ({entry['n']})"
-            return p50_n([r.get(metric) for r in records
-                          if r.get("sequence") == sequence and r.get("phase") == phase])
-
-        start = local_cell("ping", "cold", "container_start_ms")
-        if start == DASH:
-            start = p50_n([r.get("container_start_ms") for r in records if r.get("phase") == "cold"])
-        first_answer = p50_n(self.local_first_answer())
-        host = local.get("host") or {}
-        prewarm = sorted({str(bool(r["server"]["prewarm"].get("enabled"))).lower()
-                          for r in local.get("records", [])
-                          if isinstance((r.get("server") or {}).get("prewarm"), dict)})
-        prewarm_text = ", ".join(prewarm) if prewarm else DASH
+        runs = [(local, self.tr("page cache warm", "页缓存已预热"))]
+        if evicted is not None:
+            runs.append((evicted, self.tr("page cache evicted", "页缓存已清除")))
         columns = [(r, k) for r in self.runtimes for k in self.kinds_for(r)]
+        host = local.get("host") or {}
 
         self.add("## Local Docker vs AgentCore Runtime\n", "## 本地 Docker vs AgentCore Runtime\n")
         self.add(f"- **Local host:** {host.get('machine', DASH)}, {host.get('cpus', DASH)} CPUs, "
@@ -1045,46 +1054,83 @@ class Report:
                  f"- **本地主机:**{host.get('machine', DASH)},{host.get('cpus', DASH)} 个 CPU,"
                  f"{host.get('mem_gb', DASH)} GB 内存,内核 `{host.get('kernel', DASH)}`,"
                  f"Docker `{host.get('docker', DASH)}`")
-        self.add(f"- **Local run:** image `{image_text(local.get('image'))}` "
-                 f"({megabytes(local.get('image_size_bytes'))}), model "
-                 f"`{local.get('model_id', DASH)}`, dsh `{local.get('dsh_version', DASH)}`, "
-                 f"tested {local.get('tested_at', DASH)}, {local.get('rounds', DASH)} rounds, "
-                 f"host page cache: {local.get('page_cache', DASH)}, DSH pre-warm enabled: "
-                 f"{prewarm_text}",
-                 f"- **本地测试:**镜像 `{image_text(local.get('image'))}`"
-                 f"({megabytes(local.get('image_size_bytes'))}),模型 "
-                 f"`{local.get('model_id', DASH)}`,dsh `{local.get('dsh_version', DASH)}`,"
-                 f"测试时间 {local.get('tested_at', DASH)},{local.get('rounds', DASH)} 轮,"
-                 f"主机页缓存:{local.get('page_cache', DASH)},DSH 预热开启:{prewarm_text}")
+        for run, label in runs:
+            prewarm = sorted({str(bool(r["server"]["prewarm"].get("enabled"))).lower()
+                              for r in run.get("records", [])
+                              if isinstance((r.get("server") or {}).get("prewarm"), dict)})
+            prewarm_text = ", ".join(prewarm) if prewarm else DASH
+            load = [(run.get("host") or {}).get(key) for key in ("loadavg_start", "loadavg_end")]
+            load_en = load_zh = ""
+            if all(isinstance(x, list) and x for x in load):
+                load_en = (f", host load (1-minute average) {load[0][0]} at the start and "
+                           f"{load[1][0]} at the end")
+                load_zh = f",主机负载(1 分钟平均)开始时 {load[0][0]}、结束时 {load[1][0]}"
+            name_en = "Local run" if len(runs) == 1 else f"Local run, {label}"
+            name_zh = "本地测试" if len(runs) == 1 else f"本地测试,{label}"
+            self.add(f"- **{name_en}:** image `{image_text(run.get('image'))}` "
+                     f"({megabytes(run.get('image_size_bytes'))}), model "
+                     f"`{run.get('model_id', DASH)}`, dsh `{run.get('dsh_version', DASH)}`, "
+                     f"tested {run.get('tested_at', DASH)}, {run.get('rounds', DASH)} rounds, "
+                     f"host page cache: {run.get('page_cache', DASH)}, DSH pre-warm enabled: "
+                     f"{prewarm_text}{load_en}",
+                     f"- **{name_zh}:**镜像 `{image_text(run.get('image'))}`"
+                     f"({megabytes(run.get('image_size_bytes'))}),模型 "
+                     f"`{run.get('model_id', DASH)}`,dsh `{run.get('dsh_version', DASH)}`,"
+                     f"测试时间 {run.get('tested_at', DASH)},{run.get('rounds', DASH)} 轮,"
+                     f"主机页缓存:{run.get('page_cache', DASH)},DSH 预热开启:{prewarm_text}{load_zh}")
         self.add(f"- Locally, every round starts a brand-new container and sends it its first "
                  f"request. AgentCore figures pool every concurrency level run ({self.levels}). "
                  f"Cells are p50 ms (number of samples).\n",
                  f"- 本地每一轮都新建一个容器并向它发送第一个请求。AgentCore 数据合并了所有已测并发档位"
                  f"({self.levels})。每格为 p50 毫秒(样本数)。\n")
-        self.L.append(self.tr("| metric | local Docker | ", "| 指标 | 本地 Docker | ")
-                      + " | ".join(f"{self.tag(r)} · {self.kind_labels[k]}" for r, k in columns) + " |")
-        self.L.append("|---|---|" + "---|" * len(columns))
+        local_titles = ([self.tr("local Docker", "本地 Docker")] if len(runs) == 1 else
+                        [self.tr(f"local Docker, {label}", f"本地 Docker,{label}") for _, label in runs])
+        self.L.append(self.tr("| metric | ", "| 指标 | ") + " | ".join(
+            local_titles + [f"{self.tag(r)} · {self.kind_labels[k]}" for r, k in columns]) + " |")
+        self.L.append("|---|" + "---|" * (len(runs) + len(columns)))
 
-        def compare(label, local_text, sequence, phase, metric) -> None:
+        def compare(label, local_cells, sequence, phase, metric) -> None:
             cols = [p50_n(self.vals(metric, runtime=r, sequence=sequence, phase=phase, boot=k))
                     for r, k in columns]
-            self.L.append(f"| {label} | {local_text} | " + " | ".join(cols) + " |")
+            self.L.append(f"| {label} | " + " | ".join(local_cells + cols) + " |")
 
+        start = self.local_cell(local, "ping", "cold", "container_start_ms")
+        if start == DASH:
+            start = p50_n([r.get("container_start_ms") for r in local.get("records", [])
+                           if r.get("ok") and r.get("phase") == "cold"])
+        # The eviction only touches the files a first agent turn reads, so the
+        # evicted run has no cold-start figure of its own.
         compare(self.tr("cold start (local: `docker run` → first healthy `/ping`; AgentCore: "
                         "cold ping end-to-end)",
                         "冷启动(本地:`docker run` → 首次 `/ping` 健康;AgentCore:冷 ping 端到端)"),
-                start, "ping", "cold", "total_ms")
+                [start] + [DASH] * (len(runs) - 1), "ping", "cold", "total_ms")
         compare(self.tr("first message · DSH boot", "第一条消息 · DSH 启动"),
-                local_cell("agent", "cold", "dsh_boot_ms"), "agent", "cold", "dsh_boot_ms")
+                [self.local_cell(run, "agent", "cold", "dsh_boot_ms") for run, _ in runs],
+                "agent", "cold", "dsh_boot_ms")
         compare(self.tr("first message (local: container start + first agent request, per "
                         "round; AgentCore: first message end-to-end)",
                         "第一条消息(本地:每轮的容器启动 + 首个 agent 请求;AgentCore:第一条消息端到端)"),
-                first_answer, "agent", "cold", "total_ms")
+                [p50_n(self.local_first_answer(run)) for run, _ in runs], "agent", "cold", "total_ms")
         self.L.append("")
-        self.add("Local Docker runs with a warm host page cache and no image pull, so it is a "
-                 "floor, not a like-for-like cold start.\n",
-                 "本地 Docker 在主机页缓存已预热、且无需拉取镜像的条件下运行,因此它只是下限,"
-                 "并非与 AgentCore 冷启动的同条件对比。\n")
+        if evicted is None:
+            self.add("Local Docker runs with a warm host page cache and no image pull, so it is a "
+                     "floor, not a like-for-like cold start.\n",
+                     "本地 Docker 在主机页缓存已预热、且无需拉取镜像的条件下运行,因此它只是下限,"
+                     "并非与 AgentCore 冷启动的同条件对比。\n")
+        else:
+            self.add("How to read the two local columns. With the page cache warm, every file "
+                     "`dsh` reads is already in memory: that column is a floor, the best this "
+                     "machine can do. In the evicted run the files a first turn reads were dropped "
+                     "from the page cache before each first agent turn, so `dsh` starts from "
+                     "disk; that is the column to set beside a session restored from a snapshot, "
+                     "with the difference that it reads this machine's disk, not the platform's. "
+                     "Neither local column includes an image pull or the start of a microVM, and "
+                     "the eviction does not apply to the cold-start row.\n",
+                     "两列本地数据的读法。页缓存已预热时,`dsh` 要读的每个文件都已在内存里:这一列是下限,"
+                     "是这台机器能做到的最好情况。页缓存已清除的那次运行,在每次首个 agent 对话之前,"
+                     "把第一次对话要读的文件从页缓存中清掉,因此 `dsh` 从磁盘启动;这一列才适合与"
+                     "从快照恢复的 session 对照,区别在于它读的是这台机器的磁盘,而不是平台的磁盘。"
+                     "两列本地数据都不包含镜像拉取和微VM启动,清除页缓存也不影响冷启动一行。\n")
 
     # ---------------------------------------------------- success / errors
     def errors(self) -> None:
@@ -1440,8 +1486,9 @@ class Report:
 
 def render(dep: dict, summary: dict, raws: list, smokes: list, local: dict | None,
            lang: str, history: list | None = None, pin: dict | None = None,
-           excluded: dict | None = None) -> str:
-    return Report(dep, summary, raws, smokes, local, lang, history, pin, excluded).render()
+           excluded: dict | None = None, local_evicted: dict | None = None) -> str:
+    return Report(dep, summary, raws, smokes, local, lang, history, pin, excluded,
+                  local_evicted).render()
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -1464,7 +1511,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     for lang, name in (("en", "REPORT.md"), ("zh", "REPORT.zh.md")):
         text = render(data["dep"], data["summary"], data["raws"], data["smokes"],
-                      data["local"], lang, data["history"], data["pin"], data["excluded"])
+                      data["local"], lang, data["history"], data["pin"], data["excluded"],
+                      data["local_evicted"])
         (results_dir / name).write_text(text)
         print(f"wrote {results_dir / name} ({text.count(chr(10)) + 1} lines)")
     return 0

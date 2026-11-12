@@ -56,7 +56,7 @@ def post(port: int, body: dict, timeout: float = 180.0) -> tuple[float, dict]:
     return (time.perf_counter() - t0) * 1000, data
 
 
-def start_container(image: str, port: int, region: str, prewarm: bool, env: dict) -> float:
+def start_container(image: str, port: int, region: str, prewarm: str, env: dict) -> float:
     """Start a new container; return ms from `docker run` to first healthy /ping."""
     subprocess.run(["docker", "rm", "-f", NAME], capture_output=True)
     t0 = time.perf_counter()
@@ -64,7 +64,7 @@ def start_container(image: str, port: int, region: str, prewarm: bool, env: dict
         "docker", "run", "-d", "--name", NAME, "--platform", "linux/arm64",
         "-p", f"127.0.0.1:{port}:8080",
         "-e", "AWS_ACCESS_KEY_ID", "-e", "AWS_SECRET_ACCESS_KEY", "-e", "AWS_SESSION_TOKEN",
-        "-e", f"AWS_REGION={region}", "-e", f"DSH_PREWARM={'1' if prewarm else '0'}",
+        "-e", f"AWS_REGION={region}", "-e", f"DSH_PREWARM={prewarm}",
         image, env=env,
     )
     deadline = t0 + 60
@@ -76,6 +76,21 @@ def start_container(image: str, port: int, region: str, prewarm: bool, env: dict
         except OSError:
             time.sleep(0.02)
     raise RuntimeError("container did not become healthy within 60 s")
+
+
+def evict_page_cache() -> int:
+    """Drop the host page cache for the files one DSH turn reads (the pin
+    manifest), from inside the container: `dd iflag=nocache count=0` advises the
+    kernel to drop a file's cached pages. Only these files are affected, nothing
+    else on the machine, and no root on the host is needed. Pages mapped by a
+    running process (the wrapper's own node binary) stay, as they would anywhere."""
+    paths = [l for l in (ROOT / "app" / "pin-manifest.txt").read_text().splitlines()
+             if l.strip() and not l.startswith("#")]
+    subprocess.run(
+        ["docker", "exec", "-i", "-u", "root", NAME, "sh", "-c",
+         'while IFS= read -r f; do dd if="$f" iflag=nocache count=0 status=none 2>/dev/null; done; sync'],
+        input="\n".join(paths) + "\n", text=True, check=True)
+    return len(paths)
 
 
 def record(rnd: int, sequence: str, phase: str, start_ms: float | None, total_ms: float, server: dict) -> dict:
@@ -132,27 +147,38 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--rounds", type=int, default=5)
     parser.add_argument("--port", type=int, default=18080)
-    parser.add_argument("--prewarm", action="store_true", help="run the DSH_PREWARM=1 variant")
+    parser.add_argument("--prewarm", action="store_true", help="shorthand for --runtime dsh_prewarm_v2")
+    parser.add_argument("--runtime", default=None,
+                        help="deployments.json key whose image and DSH_PREWARM value to run locally "
+                             "(default dsh_v2)")
     parser.add_argument("--prewarm-wait", type=float, default=6.0,
                         help="seconds to let the pre-warm finish before the first agent turn")
+    parser.add_argument("--evict-page-cache", action="store_true",
+                        help="before each cold agent turn, drop the page cache of the files a DSH turn "
+                             "reads, so DSH starts from disk instead of from memory")
     parser.add_argument("--out", default=None)
     args = parser.parse_args()
 
     deploy = json.loads((ROOT / "deployments.json").read_text())
-    key = "dsh_prewarm_v2" if args.prewarm else "dsh_v2"   # same image as the deployed runtimes
-    image = deploy["runtimes"][key]["image_uri"]
+    key = args.runtime or ("dsh_prewarm_v2" if args.prewarm else "dsh_v2")
+    image = deploy["runtimes"][key]["image_uri"]      # same image as the deployed runtime
+    prewarm = str(deploy["runtimes"][key].get("env", {}).get("DSH_PREWARM", "0"))
     region = deploy["region"]
     out = Path(args.out) if args.out else ROOT / "results" / (
-        "local_baseline_prewarm.json" if args.prewarm else "local_baseline.json")
+        ("local_baseline" if key == "dsh_v2" else f"local_baseline_{key}")
+        + ("_coldcache" if args.evict_page_cache else "") + ".json")
     env = aws_env()
+    load_start = os.getloadavg()
 
     records = []
     try:
         for rnd in range(1, args.rounds + 1):
             for sequence, body in (("ping", {"mode": "ping"}), ("agent", {"mode": "agent", "prompt": PROMPT})):
-                start_ms = start_container(image, args.port, region, args.prewarm, env)
-                if args.prewarm and sequence == "agent":
+                start_ms = start_container(image, args.port, region, prewarm, env)
+                if prewarm == "1" and sequence == "agent":
                     time.sleep(args.prewarm_wait)
+                if args.evict_page_cache and sequence == "agent":
+                    evict_page_cache()
                 for phase in ("cold", "warm"):
                     total_ms, server = post(args.port, body)
                     rec = record(rnd, sequence, phase, start_ms if phase == "cold" else None, total_ms, server)
@@ -168,6 +194,11 @@ def main() -> None:
         "host": {
             "machine": platform.machine(), "cpus": os.cpu_count(), "mem_gb": round(mem_kb / 1024 / 1024, 1),
             "kernel": platform.release(), "docker": sh("docker", "version", "--format", "{{.Server.Version}}"),
+            "cpu_part": next((l.split(":")[1].strip() for l in Path("/proc/cpuinfo").read_text().splitlines()
+                              if l.startswith("CPU part")), None),
+            # Other work on this machine slows DSH's start, so record how busy it was.
+            "loadavg_start": [round(x, 2) for x in load_start],
+            "loadavg_end": [round(x, 2) for x in os.getloadavg()],
         },
         "image": image,
         "image_size_bytes": int(sh("docker", "image", "inspect", "--format", "{{.Size}}", image)),
@@ -175,10 +206,11 @@ def main() -> None:
         "model_id": deploy["model_id"],
         "dsh_version": deploy["dsh_version"],
         "variant": key,
-        "prewarm_wait_s": args.prewarm_wait if args.prewarm else None,
+        "dsh_prewarm": prewarm,
+        "prewarm_wait_s": args.prewarm_wait if prewarm == "1" else None,
         "tested_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "rounds": args.rounds,
-        "page_cache": "warm",
+        "page_cache": "evicted before each cold agent turn" if args.evict_page_cache else "warm",
         "records": records,
         "summary": summarize(records),
     }
