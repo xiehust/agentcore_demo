@@ -4,6 +4,7 @@
 //   GET  /ping         -> {"status": "Healthy", "time_of_last_update": <epoch s>}
 //   POST /invocations  -> {"mode": "ping"}                      timestamps only
 //                         {"mode": "agent", "prompt": "<text>"} one `dsh headless` turn
+//   POST /warmup       -> build warmup lifecycle hook (V2), only when DSH_HOOK is set
 //
 // Every response carries the timestamps the benchmark client needs to split a
 // cold start into platform boot, DSH process boot and model time. All *_ts
@@ -38,6 +39,20 @@ const PREWARM_LEVEL = Number(process.env.DSH_PREWARM || 0);
 const PREWARM = PREWARM_LEVEL >= 1;
 const PIN_MANIFEST = process.env.PIN_MANIFEST || path.join(APP_DIR, 'pin-manifest.txt');
 const PIN_WAIT_MS = Number(process.env.PIN_WAIT_MS || 90000);
+// DSH_HOOK: what the build warmup lifecycle hook (POST /warmup) does in its
+// `disk` call. '' = no hook route; 'read' = read the manifest's files cold
+// (cache dropped per file first) and let go; 'pin' = the same cold reads by the
+// pinner, which then keeps the files mapped. The `memory` call has nothing left
+// to do: startup work already runs before listening.
+// Measured on AgentCore (2026-11-14): sessions are restored from the state
+// after the `memory` call; the `disk` call runs ~90 s later on a restored copy,
+// so what it leaves in memory (pin mode's mappings) never reaches a session.
+// To pin into the snapshot, combine DSH_PREWARM=3 with DSH_HOOK=read.
+const HOOK_MODE = process.env.DSH_HOOK || '';
+const WARMUP_PATH = '/warmup';
+const WARMUP_TYPE_HEADER = 'x-amzn-bedrock-agentcore-runtime-warmup-type';
+if (!['', 'read', 'pin'].includes(HOOK_MODE)) throw new Error(`DSH_HOOK must be "read" or "pin", got ${JSON.stringify(HOOK_MODE)}`);
+if (HOOK_MODE === 'pin' && PREWARM_LEVEL === 3) throw new Error('DSH_HOOK=pin and DSH_PREWARM=3 both pin; set one');
 const MAX_BODY_BYTES = 1024 * 1024;
 const MAX_OUTPUT_CHARS = 4000;
 
@@ -115,28 +130,34 @@ function runPrewarm() {
 // restored session finds DSH's files in memory instead of reading them cold.
 // Best effort: any failure is logged and the server starts anyway.
 let pinner = null;
-function startPinner() {
-  prewarm.start_ts = now();
+// Runs pinner.py and resolves with its result line. `hold` keeps the process
+// (and its mappings) as `pinner`; otherwise it is a read-only pass that exits.
+function runPinner(extraArgs = [], hold = true) {
   return new Promise((resolve) => {
     let settled = false;
     let out = '';
+    let child;
     const finish = (detail) => {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
-      prewarm.detail = detail;
-      prewarm.end_ts = now();
-      resolve();
+      resolve(detail);
     };
     const timer = setTimeout(() => finish({ error: `no result within ${PIN_WAIT_MS} ms` }), PIN_WAIT_MS);
     try {
-      pinner = spawn('python3', [path.join(APP_DIR, 'pinner.py'), PIN_MANIFEST], { stdio: ['pipe', 'pipe', 'inherit'] });
+      child = spawn('python3', [path.join(APP_DIR, 'pinner.py'), ...extraArgs, PIN_MANIFEST], { stdio: ['pipe', 'pipe', 'inherit'] });
     } catch (err) {
       return finish({ error: `spawn failed: ${err.code || err.name}` });
     }
-    pinner.on('error', (err) => { pinner = null; finish({ error: `spawn failed: ${err.code || err.name}` }); });
-    pinner.on('close', (code) => { pinner = null; prewarm.exit_code = code; finish({ error: `pinner exited with ${code}` }); });
-    pinner.stdout.on('data', (chunk) => {
+    if (hold) pinner = child;
+    const drop = () => { if (pinner === child) pinner = null; };
+    child.on('error', (err) => { drop(); finish({ error: `spawn failed: ${err.code || err.name}` }); });
+    child.on('close', (code) => {
+      drop();
+      if (hold) prewarm.exit_code = code;
+      finish({ error: `pinner exited with ${code}` });
+    });
+    child.stdout.on('data', (chunk) => {
       out += chunk.toString('utf8');
       const idx = out.indexOf('\n');
       if (idx < 0) return;
@@ -144,6 +165,12 @@ function startPinner() {
     });
   });
 }
+async function startPinner() {
+  prewarm.start_ts = now();
+  prewarm.detail = await runPinner();
+  prewarm.end_ts = now();
+}
+
 // Called after the first turn: the files are in the page cache now, so the
 // mappings are no longer needed.
 function releasePinner() {
@@ -151,6 +178,42 @@ function releasePinner() {
   pinner.kill('SIGKILL');
   pinner = null;
   prewarm.released_ts = now();
+}
+
+// Build warmup lifecycle hook. AgentCore calls POST /warmup twice while it
+// prepares a V2 runtime (create/update), `memory` first, then `disk`. Sessions
+// start from the state after `memory`; `disk` runs later on a restored copy and
+// only tells the platform which files to make available faster (measured
+// 2026-11-14). A 2xx means the work is done; anything else fails the
+// create/update, which is what a broken variant of this benchmark should do.
+// The work runs in a child process, so /ping keeps answering meanwhile.
+// runPinner() is the page-pin helper above.
+const hook = { mode: HOOK_MODE || null, memory_ts: null, disk_calls: 0, disk_start_ts: null, disk_end_ts: null, detail: null };
+async function handleWarmup(type, res) {
+  if (type === 'memory') {
+    hook.memory_ts = now();
+    console.log(JSON.stringify({ event: 'warmup', type, mode: HOOK_MODE }));
+    return send(res, 200, { type });
+  }
+  if (type !== 'disk') {
+    console.log(JSON.stringify({ event: 'warmup', type, mode: HOOK_MODE, ignored: true }));
+    return send(res, 200, { type, ignored: true });
+  }
+  hook.disk_calls += 1;
+  if (HOOK_MODE === 'pin' && pinner) return send(res, 200, { type, reused: true, detail: hook.detail });
+  hook.disk_start_ts = now();
+  const hold = HOOK_MODE === 'pin';
+  const detail = await runPinner(hold ? ['--evict'] : ['--evict', '--no-hold'], hold);
+  hook.disk_end_ts = now();
+  hook.detail = detail;
+  if (hold) {  // so the report's page-pin sections see this runtime as pinned
+    prewarm.detail = detail;
+    prewarm.start_ts = hook.disk_start_ts;
+    prewarm.end_ts = hook.disk_end_ts;
+  }
+  const ok = !detail.error && (detail.read ?? 0) > 0;
+  console.log(JSON.stringify({ event: 'warmup', type, mode: HOOK_MODE, ok, ms: Math.round((hook.disk_end_ts - hook.disk_start_ts) * 1000), detail }));
+  return send(res, ok ? 200 : 500, { type, detail });
 }
 
 // Load the SDK credential chain's modules at startup so they are part of the
@@ -265,6 +328,9 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'GET' && url === '/ping') {
     return send(res, 200, { status: 'Healthy', time_of_last_update: lastUpdate });
   }
+  if (HOOK_MODE && req.method === 'POST' && url === WARMUP_PATH) {
+    return handleWarmup(String(req.headers[WARMUP_TYPE_HEADER] || '').toLowerCase(), res);
+  }
   if (req.method !== 'POST' || url !== '/invocations') return send(res, 404, { error: 'not found' });
 
   const requestTs = now();
@@ -280,7 +346,7 @@ const server = http.createServer(async (req, res) => {
   const mode = payload.mode ?? 'ping';
   const base = {
     mode, proc_start_ts: PROC_START_TS, request_ts: requestTs, invocation_seq: seq,
-    image_tag: IMAGE_TAG, dsh_version: dshVersion, node_version: process.version, prewarm,
+    image_tag: IMAGE_TAG, dsh_version: dshVersion, node_version: process.version, prewarm, hook,
   };
   if (mode === 'ping') return send(res, 200, { ...base, response_ts: now() });
   if (mode !== 'agent') return send(res, 400, { error: 'mode must be "ping" or "agent"' });
@@ -309,7 +375,7 @@ if (PREWARM_LEVEL === 3) await startPinner();
 server.listen(PORT, HOST, () => {
   console.log(JSON.stringify({
     event: 'listening', host: HOST, port: PORT, dsh_version: dshVersion, model: MODEL_ID,
-    region: REGION, prewarm: PREWARM_LEVEL, prewarm_detail: prewarm.detail,
+    region: REGION, prewarm: PREWARM_LEVEL, prewarm_detail: prewarm.detail, hook: HOOK_MODE || null,
     boot_ms: Math.round((now() - PROC_START_TS) * 1000),
   }));
   if (PREWARM_LEVEL === 1) runPrewarm();

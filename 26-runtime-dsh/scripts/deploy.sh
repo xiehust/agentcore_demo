@@ -9,6 +9,16 @@
 #   dsh_coldstart_diag_v2     platform V2, pin image, DSH_PREWARM=0: control for the page-pin test
 #   dsh_coldstart_deepwarm_v2 platform V2, pin image, DSH_PREWARM=3: page pin before listening
 #                             (both keep the names they were first created with)
+#   dsh_coldstart_hook_v2     platform V2, pin image, build warmup hook: the disk call reads the
+#                             manifest's files cold (DSH_HOOK=read), no pin
+#   dsh_coldstart_hookpin_v2  platform V2, pin image, build warmup hook: the disk call pins the
+#                             manifest's files after reading them cold (DSH_HOOK=pin). The disk
+#                             call runs on a restored copy, so the pin never reaches a session.
+#   dsh_coldstart_pinhook_v2  platform V2, pin image, page pin before listening (DSH_PREWARM=3)
+#                             plus the disk-call read of dsh_coldstart_hook_v2 (DSH_HOOK=read)
+#
+# FORCE_UPDATE=1 updates the target runtimes even when their image is unchanged,
+# which makes AgentCore take a fresh V2 snapshot of each.
 #
 # Runtimes use the default inbound auth (SigV4 / IAM); nothing is public.
 set -euo pipefail
@@ -25,18 +35,42 @@ POLICY_NAME=AgentCoreDshColdstartPolicy
 IDLE_TIMEOUT=60
 MAX_IMAGE_BYTES=$((2048 * 1024 * 1024))   # AgentCore quota: max 2048 MB image
 PIN_TAG="${PIN_TAG:-${TAG}-pin}"   # same DSH; adds the page pinner, its manifest and python3
-KEYS=(dsh_v2 dsh_prewarm_v2 dsh_pinctl_v2 dsh_pin_v2)
+KEYS=(dsh_v2 dsh_prewarm_v2 dsh_pinctl_v2 dsh_pin_v2 dsh_hook_v2 dsh_hookpin_v2 dsh_pinhook_v2)
 declare -A NAME=([dsh_v2]=dsh_coldstart_base_v2 [dsh_prewarm_v2]=dsh_coldstart_prewarm_v2
-                 [dsh_pinctl_v2]=dsh_coldstart_diag_v2 [dsh_pin_v2]=dsh_coldstart_deepwarm_v2)
-declare -A PREWARM=([dsh_v2]=0 [dsh_prewarm_v2]=1 [dsh_pinctl_v2]=0 [dsh_pin_v2]=3)
-declare -A PLATFORM=([dsh_v2]=V2 [dsh_prewarm_v2]=V2 [dsh_pinctl_v2]=V2 [dsh_pin_v2]=V2)
+                 [dsh_pinctl_v2]=dsh_coldstart_diag_v2 [dsh_pin_v2]=dsh_coldstart_deepwarm_v2
+                 [dsh_hook_v2]=dsh_coldstart_hook_v2 [dsh_hookpin_v2]=dsh_coldstart_hookpin_v2
+                 [dsh_pinhook_v2]=dsh_coldstart_pinhook_v2)
+declare -A PREWARM=([dsh_v2]=0 [dsh_prewarm_v2]=1 [dsh_pinctl_v2]=0 [dsh_pin_v2]=3
+                    [dsh_hook_v2]=0 [dsh_hookpin_v2]=0 [dsh_pinhook_v2]=3)
+declare -A HOOK=([dsh_v2]= [dsh_prewarm_v2]= [dsh_pinctl_v2]= [dsh_pin_v2]=
+                 [dsh_hook_v2]=read [dsh_hookpin_v2]=pin [dsh_pinhook_v2]=read)   # DSH_HOOK; empty = no lifecycle hook
+declare -A PLATFORM=([dsh_v2]=V2 [dsh_prewarm_v2]=V2 [dsh_pinctl_v2]=V2 [dsh_pin_v2]=V2
+                     [dsh_hook_v2]=V2 [dsh_hookpin_v2]=V2 [dsh_pinhook_v2]=V2)
 declare -A TAGOF=([dsh_v2]=$TAG [dsh_prewarm_v2]=$TAG
-                  [dsh_pinctl_v2]=$PIN_TAG [dsh_pin_v2]=$PIN_TAG)
+                  [dsh_pinctl_v2]=$PIN_TAG [dsh_pin_v2]=$PIN_TAG
+                  [dsh_hook_v2]=$PIN_TAG [dsh_hookpin_v2]=$PIN_TAG [dsh_pinhook_v2]=$PIN_TAG)
 read -r -a TARGET_KEYS <<< "${DEPLOY_KEYS:-${KEYS[*]}}"
 
 ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 ECR_URI="${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/${REPO}"
 echo "Account: $ACCOUNT  Region: $REGION  Repo: $ECR_URI  Model: $MODEL_ID  Targets: ${TARGET_KEYS[*]}"
+
+runtime_id_for() {
+    local id
+    id=$(aws bedrock-agentcore-control list-agent-runtimes --region "$REGION" \
+        --query "agentRuntimes[?agentRuntimeName=='$1'].agentRuntimeId" --output text \
+        | awk 'NF && $1 != "None" {print $1; exit}')
+    echo "${id:-None}"
+}
+# Runtimes this run tracks: the targets plus every other key whose runtime
+# still exists. Keys whose runtime is gone move to removed_runtimes.
+KNOWN=()
+for key in "${KEYS[@]}"; do
+    if [[ " ${TARGET_KEYS[*]} " == *" $key "* ]] || [ "$(runtime_id_for "${NAME[$key]}")" != "None" ]; then
+        KNOWN+=("$key")
+    fi
+done
+echo "Tracked: ${KNOWN[*]}"
 
 # ---------------------------------------------------------------- 1. ECR repo
 if aws ecr describe-repositories --repository-names "$REPO" --region "$REGION" >/dev/null 2>&1; then
@@ -67,7 +101,7 @@ for key in "${TARGET_KEYS[@]}"; do
         PUSHED[$tag]=1
     fi
 done
-for key in "${KEYS[@]}"; do
+for key in "${KNOWN[@]}"; do
     tag="${TAGOF[$key]}"
     [ -n "${ECR_BYTES[$tag]:-}" ] && continue
     ECR_BYTES[$tag]=$(aws ecr describe-images --repository-name "$REPO" --region "$REGION" \
@@ -129,24 +163,27 @@ JSON
 ROLE_ARN="arn:aws:iam::${ACCOUNT}:role/${ROLE_NAME}"
 
 # ------------------------------------------------------------- 4. runtimes
-runtime_id_for() {
-    local id
-    id=$(aws bedrock-agentcore-control list-agent-runtimes --region "$REGION" \
-        --query "agentRuntimes[?agentRuntimeName=='$1'].agentRuntimeId" --output text \
-        | awk 'NF && $1 != "None" {print $1; exit}')
-    echo "${id:-None}"
-}
 runtime_config() {   # $1 = key
+    local env="\"DSH_MODEL_ID\": \"$MODEL_ID\", \"DSH_PREWARM\": \"${PREWARM[$1]}\""
+    local hooks=""
+    if [ -n "${HOOK[$1]}" ]; then
+        env+=", \"DSH_HOOK\": \"${HOOK[$1]}\""
+        # UpdateAgentRuntime replaces the whole hook configuration, so every
+        # update of a hooked runtime sends it again.
+        hooks=', "hooksConfiguration": {"build": {"warmup": {"action": {"httpPost": {"path": "/warmup", "port": 8080}}}}}'
+    fi
     cat <<JSON
   "agentRuntimeArtifact": {"containerConfiguration": {"containerUri": "$ECR_URI:${TAGOF[$1]}"}},
   "networkConfiguration": {"networkMode": "PUBLIC"},
   "protocolConfiguration": {"serverProtocol": "HTTP"},
   "roleArn": "$ROLE_ARN",
   "platformVersion": "${PLATFORM[$1]}",
-  "environmentVariables": {"DSH_MODEL_ID": "$MODEL_ID", "DSH_PREWARM": "${PREWARM[$1]}"},
-  "lifecycleConfiguration": {"idleRuntimeSessionTimeout": $IDLE_TIMEOUT}
+  "environmentVariables": {$env},
+  "lifecycleConfiguration": {"idleRuntimeSessionTimeout": $IDLE_TIMEOUT}$hooks
 JSON
 }
+# create/update go through boto3: the AWS CLI may predate hooksConfiguration.
+put_runtime() { uv run --quiet python scripts/put_runtime.py "$@" --region "$REGION"; }
 
 for key in "${TARGET_KEYS[@]}"; do
     name="${NAME[$key]}"
@@ -155,20 +192,18 @@ for key in "${TARGET_KEYS[@]}"; do
     if [ "$rid" != "None" ]; then
         current_uri=$(aws bedrock-agentcore-control get-agent-runtime --region "$REGION" \
             --agent-runtime-id "$rid" --query 'agentRuntimeArtifact.containerConfiguration.containerUri' --output text)
-        if [ "$current_uri" = "$ECR_URI:$tag" ] && [ "${PUSHED[$tag]}" != "1" ]; then
+        if [ "$current_uri" = "$ECR_URI:$tag" ] && [ "${PUSHED[$tag]}" != "1" ] && [ "${FORCE_UPDATE:-0}" != "1" ]; then
             echo "Runtime $name exists with this image — skipping"
             continue
         fi
-        echo "Runtime $name exists; image changed — updating"
-        aws bedrock-agentcore-control update-agent-runtime --region "$REGION" \
-            --agent-runtime-id "$rid" --cli-input-json "{ $(runtime_config "$key") }" >/dev/null
+        echo "Runtime $name exists; image changed or FORCE_UPDATE=1 — updating"
+        put_runtime update --id "$rid" <<< "{ $(runtime_config "$key") }" >/dev/null
         continue
     fi
     echo "Creating runtime $name"
     created=0
     for attempt in 1 2 3 4 5 6; do
-        if out=$(aws bedrock-agentcore-control create-agent-runtime --region "$REGION" \
-            --cli-input-json "{ \"agentRuntimeName\": \"$name\", $(runtime_config "$key") }" 2>&1); then
+        if out=$(put_runtime create <<< "{ \"agentRuntimeName\": \"$name\", $(runtime_config "$key") }" 2>&1); then
             created=1
             break
         fi
@@ -190,7 +225,7 @@ declare -A ARN CREATED
 while :; do
     all_ready=1
     line=""
-    for key in "${KEYS[@]}"; do
+    for key in "${KNOWN[@]}"; do
         rid=$(runtime_id_for "${NAME[$key]}")
         read -r st arn pv created < <(aws bedrock-agentcore-control get-agent-runtime --region "$REGION" \
             --agent-runtime-id "$rid" --query '[status, agentRuntimeArn, platformVersion, lastUpdatedAt]' --output text)
@@ -217,11 +252,11 @@ done
 
 # ------------------------------------------------- 6. write deployments.json
 export ACCOUNT REGION ECR_URI MODEL_ID DSH_VERSION ROLE_ARN
-export KEY_LIST="${KEYS[*]}"
-for key in "${KEYS[@]}"; do
+export KEY_LIST="${KNOWN[*]}"
+for key in "${KNOWN[@]}"; do
     tag="${TAGOF[$key]}"
     export "ARN_${key}=${ARN[$key]}" "NAME_${key}=${NAME[$key]}" "PREWARM_${key}=${PREWARM[$key]}" \
-        "PLATFORM_${key}=${PLATFORM[$key]}" "TAG_${key}=${tag}" "CREATED_${key}=${CREATED[$key]}" \
+        "PLATFORM_${key}=${PLATFORM[$key]}" "HOOK_${key}=${HOOK[$key]}" "TAG_${key}=${tag}" "CREATED_${key}=${CREATED[$key]}" \
         "ECRB_${key}=${ECR_BYTES[$tag]}" "DOCKERB_${key}=${DOCKER_BYTES[$tag]}"
 done
 python3 - <<'EOF'
@@ -231,9 +266,13 @@ now = datetime.datetime.now(datetime.timezone.utc).isoformat()
 # Runtimes that were measured and later deleted stay on record, so their raw
 # results can still be labelled.
 try:
-    removed = json.load(open("deployments.json")).get("removed_runtimes", {})
+    old = json.load(open("deployments.json"))
 except (OSError, ValueError):
-    removed = {}
+    old = {}
+removed = old.get("removed_runtimes", {})
+for key, conf in old.get("runtimes", {}).items():
+    if key not in e["KEY_LIST"].split() and key not in removed:
+        removed[key] = {**conf, "deleted_at": None, "note": f"runtime not found at deploy {now}"}
 doc = {
     "region": e["REGION"],
     "account": e["ACCOUNT"],
@@ -248,7 +287,10 @@ doc = {
             "docker_size_bytes": int(e[f"DOCKERB_{key}"]),
             "ecr_size_bytes": int(e[f"ECRB_{key}"]),
             "platform_version": e[f"PLATFORM_{key}"],
-            "env": {"DSH_MODEL_ID": e["MODEL_ID"], "DSH_PREWARM": e[f"PREWARM_{key}"]},
+            "env": {"DSH_MODEL_ID": e["MODEL_ID"], "DSH_PREWARM": e[f"PREWARM_{key}"],
+                    **({"DSH_HOOK": e[f"HOOK_{key}"]} if e[f"HOOK_{key}"] else {})},
+            **({"hooks": {"build": {"warmup": {"httpPost": {"path": "/warmup", "port": 8080}}}}}
+               if e[f"HOOK_{key}"] else {}),
             "deployed_at": e[f"CREATED_{key}"],   # lastUpdatedAt: when this version (and its V2 snapshot) was made
         }
         for key in e["KEY_LIST"].split()
