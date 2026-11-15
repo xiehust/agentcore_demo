@@ -3,15 +3,34 @@
 把 [DeepSeek Harness](https://www.deepseek.com/en/harness/)（npm `@deepseek-ai/dsh`，`dsh headless` 一次性模式）
 原样装进容器，部署到 Amazon Bedrock AgentCore Runtime，测量两件事：**冷启动**（新 session 的平台启动耗时）
 和**第一条消息**（新 session 上第一次真实对话要等多久）。测试对象是平台版本 V2（每个新 session 从快照恢复），
-与同一镜像的本地 Docker 对比，并验证 page pin 优化（示例代码见下文）。模型为 Bedrock 上的 DeepSeek V3.2
-（`deepseek.v3.2`）。
+与同一镜像的本地 Docker 对比，并验证两种优化：page pin（示例代码见下文）和 AgentCore 的
+[build warmup lifecycle hook](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-lifecycle-hooks.html)。
+模型为 Bedrock 上的 DeepSeek V3.2（`deepseek.v3.2`）。
 
 不在范围内的两件事：同一 session 上的后续消息（主要反映 DSH 和模型，而不是 session 的启动），以及平台版本 V1
 （两个 V1 runtime 测完后已删除并从部署脚本中移除，其原始数据保留在 `results/raw/`，但本文和报告都不讨论）。
 
-完整数据见 [results/REPORT.zh.md](results/REPORT.zh.md) · [English](results/REPORT.md)。
+完整数据见 [results/REPORT.zh.md](results/REPORT.zh.md) · [English](results/REPORT.md)（page pin，2026-11-12）
+和 [results/HOOKS.zh.md](results/HOOKS.zh.md)（lifecycle hook，2026-11-14）。
 
-## 核心结论（2026-11-12，us-east-1，平台 V2，4 个 runtime，1,600 个请求，0 失败）
+## 核心结论：hook 与 page pin 怎么选
+
+11-14 同一次实验里的对比，p50（DSH 启动 = spawn → 首个输出，不含模型）：
+
+| | 不优化 | page pin | lifecycle hook |
+|---|---|---|---|
+| 新版本第 1 次使用：DSH 启动 | 47.6 秒 | 7.3 秒 | **4.9 秒** |
+| 稳定态（同一快照用过 10 次后）：DSH 启动 | 3.3 秒 | **2.0 秒** | 3.4 秒 |
+| 稳定态：第一条消息端到端 | 6.1 秒 | **4.7 秒** | 6.5 秒 |
+| 代价 | — | 常驻 pinner，锁住 147 MB 内存直到首个回合结束 | 每次创建/更新最多多 120 秒 |
+
+- **hook 管「刚上线」**：新版本头几个 session 不再慢 40 多秒，而且比 pin 还快。
+- **pin 管「稳定态」**：之后每个新 session 的第一条消息快约 1.4 秒，hook 在这一点上没有作用。
+- **两者不要同时开**：叠加后第 1 次使用介于两者之间，稳定态退回到不优化的水平。
+
+11-12 单独测 page pin 时稳定态结果相同（DSH 启动 2.0 秒、端到端 4.7 秒），见下文。
+
+## Page pin 测试（2026-11-12，us-east-1，平台 V2，4 个 runtime，1,600 个请求，0 失败）
 
 p50，毫秒；合并并发 1 / 10 / 30 的样本。
 
@@ -33,11 +52,170 @@ V2 的「DSH 进程启动」取同一快照用过 10 次之后的样本；「第
    与本地页缓存已热时相当。代价是锁住 147 MB 内存，直到首个回合结束。
 4. **`DSH_PREWARM=1`（启动后先跑一次 `dsh headless --help`）没有可测量的收益。**
 
-结论：在 V2 上部署 DSH 应当带上 page pin。
+结论（11-12）：在 V2 上部署 DSH 应当带上 page pin。11-14 加测 lifecycle hook 后修正为二选一，见下一节。
+
+## Lifecycle hook 测试（2026-11-14，us-east-1，平台 V2，5 个 runtime，2,056 个请求，0 失败）
+
+5 个 runtime 用同一镜像，差别只在环境变量和 hook 配置；每个 runtime 创建/更新 3 次（3 个版本），每个版本
+先跑 smoke（测第 1 次使用），最后一个版本上跑与 11-12 相同的并发 1 / 10 / 30 矩阵。
+DSH 进程启动（spawn → 首个输出，不含模型），按「同一快照的第几次冷 agent 调用」分组，p50 毫秒：
+
+| 做法 | 第 1 次 | 第 2 次 | 第 3–5 次 | 第 6–10 次 | 第 11 次起（稳定态） |
+|---|---|---|---|---|---|
+| 对照：不 pin、无 hook（`dsh_pinctl_v2`） | 47,582 | 32,200 | 8,640 | 7,672 | 3,316 |
+| page pin（`dsh_pin_v2`） | 7,330 | 6,240 | 4,916 | 2,268 | **1,971** |
+| hook：`disk` 调用冷读清单（`dsh_hook_v2`） | **4,917** | 3,510 | 3,685 | 4,023 | 3,398 |
+| hook：`disk` 调用里 pin（`dsh_hookpin_v2`） | 5,536 | 3,542 | 4,391 | 3,500 | 3,670 |
+| 监听前 pin + `disk` 调用读（`dsh_pinhook_v2`） | 6,655 | 4,236 | 3,208 | 4,050 | 3,432 |
+
+第 1 次使用每组 3–4 个样本，稳定态每组 81 个。冷启动 ping 五组都在 1.8–1.9 秒，hook 不影响平台启动。
+11-12 与 11-14 是两次独立测试（runtime 重建过），数字不要跨表直接比较；同一张表内可比。
+
+1. **hook 消除了新版本上线后的慢启动**：第 1 次使用从 47.6 秒降到 4.9 秒，比 page pin（7.3 秒）还好，
+   第 2–10 次也平稳，没有 pin 那样逐次下降的过程。
+2. **hook 不改善稳定态**：用过 10 次之后与对照相同（3.4 秒 vs 3.3 秒）；只有 page pin 能到 2.0 秒。
+3. **两者叠加拿不到两边的好处**：在 `disk` 调用里 pin 无效（原因见下）；监听前 pin 再加 `disk` 调用，
+   第 1 次使用与 pin 相当，但 pin 的稳定态收益消失（3.4 秒），尽管恢复出来的 session 里 pinner 仍持有
+   3,629 个文件的映射。原因未查明。
+
+建议：在意新版本刚上线时头几个用户的体验 → 用 hook（不锁定 147 MB 内存，也不用常驻 pinner 进程；
+当前实现借 `pinner.py` 读文件，换成任何能顺序读完清单的代码都行）；
+在意稳定态每条第一条消息再快约 1.4 秒 → 用 page pin。不要两者同时开。
+
+### 实测到的 hook 行为
+
+文档只说 `memory`、`disk` 两次调用的顺序和共享的 120 秒预算；以下是从构建日志
+（`/aws/bedrock-agentcore/runtimes/<id>-DEFAULT` 中 `build-logs-*`）和包装器返回的时间戳看到的：
+
+- **快照取在 `memory` 调用之后、`disk` 调用之前**：恢复出来的 session 里 `hook.memory_ts` 有值，
+  `hook.disk_calls` 都是 0。所以 hook 的 `memory` 调用相当于「`/ping` 健康之后、打快照之前」的最后一次初始化机会。
+- **`disk` 调用是一次「录制」**：它在 `memory` 之后约 86–100 秒，在一个从快照恢复的副本上执行；读 147 MB 用了
+  12–25 秒（冷读快照盘）。平台据此让之后的 session 更快拿到这些文件。它留在内存里的东西不会进入任何 session，
+  所以在 `disk` 调用里 pin 没有意义。
+- 如果文件已被 pin，`disk` 调用的读全部命中内存（3,629 个文件约 100 毫秒），平台看不到这些读。
+- 每次创建/更新，平台起 **2 个**构建实例，各自走一遍 `/ping` → `memory` → `disk`，各有完整的 120 秒预算；
+  session 也来自这两个快照（`proc_start_ts` 相差约 5 秒），「第几次使用」要按快照分别计数。
+
+### hook 的实现（核心代码）
+
+整体分三块：包装器提供 `POST /warmup`（[`app/server.mjs`](app/server.mjs)），`disk` 调用复用 pinner 冷读清单
+（[`app/pinner.py`](app/pinner.py) 的 `--evict --no-hold`），部署时给 runtime 加上 `hooksConfiguration`
+（[`scripts/deploy.sh`](scripts/deploy.sh)）。下面的代码与仓库文件一致。
+
+**1. 开关（`app/server.mjs`）** — `DSH_HOOK` 决定 `disk` 调用做什么，不设置时没有 `/warmup` 路由：
+
+```javascript
+// DSH_HOOK: what the build warmup lifecycle hook (POST /warmup) does in its
+// `disk` call. '' = no hook route; 'read' = read the manifest's files cold
+// (cache dropped per file first) and let go; 'pin' = the same cold reads by the
+// pinner, which then keeps the files mapped. The `memory` call has nothing left
+// to do: startup work already runs before listening.
+// Measured on AgentCore (2026-11-14): sessions are restored from the state
+// after the `memory` call; the `disk` call runs ~90 s later on a restored copy,
+// so what it leaves in memory (pin mode's mappings) never reaches a session.
+// To pin into the snapshot, combine DSH_PREWARM=3 with DSH_HOOK=read.
+const HOOK_MODE = process.env.DSH_HOOK || '';
+const WARMUP_PATH = '/warmup';
+const WARMUP_TYPE_HEADER = 'x-amzn-bedrock-agentcore-runtime-warmup-type';
+if (!['', 'read', 'pin'].includes(HOOK_MODE)) throw new Error(`DSH_HOOK must be "read" or "pin", got ${JSON.stringify(HOOK_MODE)}`);
+if (HOOK_MODE === 'pin' && PREWARM_LEVEL === 3) throw new Error('DSH_HOOK=pin and DSH_PREWARM=3 both pin; set one');
+```
+
+**2. hook 处理函数（`app/server.mjs`）** — `memory` 直接返回；`disk` 在子进程里冷读清单，读完才返回 200，
+失败返回 500 让创建/更新失败。子进程不阻塞事件循环，所以 hook 运行期间 `/ping` 照常响应（实测约 1 毫秒）：
+
+```javascript
+// Build warmup lifecycle hook. AgentCore calls POST /warmup twice while it
+// prepares a V2 runtime (create/update), `memory` first, then `disk`. Sessions
+// start from the state after `memory`; `disk` runs later on a restored copy and
+// only tells the platform which files to make available faster (measured
+// 2026-11-14). A 2xx means the work is done; anything else fails the
+// create/update, which is what a broken variant of this benchmark should do.
+// The work runs in a child process, so /ping keeps answering meanwhile.
+// runPinner() is the page-pin helper above.
+const hook = { mode: HOOK_MODE || null, memory_ts: null, disk_calls: 0, disk_start_ts: null, disk_end_ts: null, detail: null };
+async function handleWarmup(type, res) {
+  if (type === 'memory') {
+    hook.memory_ts = now();
+    console.log(JSON.stringify({ event: 'warmup', type, mode: HOOK_MODE }));
+    return send(res, 200, { type });
+  }
+  if (type !== 'disk') {
+    console.log(JSON.stringify({ event: 'warmup', type, mode: HOOK_MODE, ignored: true }));
+    return send(res, 200, { type, ignored: true });
+  }
+  hook.disk_calls += 1;
+  if (HOOK_MODE === 'pin' && pinner) return send(res, 200, { type, reused: true, detail: hook.detail });
+  hook.disk_start_ts = now();
+  const hold = HOOK_MODE === 'pin';
+  const detail = await runPinner(hold ? ['--evict'] : ['--evict', '--no-hold'], hold);
+  hook.disk_end_ts = now();
+  hook.detail = detail;
+  if (hold) {  // so the report's page-pin sections see this runtime as pinned
+    prewarm.detail = detail;
+    prewarm.start_ts = hook.disk_start_ts;
+    prewarm.end_ts = hook.disk_end_ts;
+  }
+  const ok = !detail.error && (detail.read ?? 0) > 0;
+  console.log(JSON.stringify({ event: 'warmup', type, mode: HOOK_MODE, ok, ms: Math.round((hook.disk_end_ts - hook.disk_start_ts) * 1000), detail }));
+  return send(res, ok ? 200 : 500, { type, detail });
+}
+```
+
+路由（在 `/invocations` 之前判断；平台的 `GET /ping`、`POST /invocations` 不受影响）：
+
+```javascript
+  if (HOOK_MODE && req.method === 'POST' && url === WARMUP_PATH) {
+    return handleWarmup(String(req.headers[WARMUP_TYPE_HEADER] || '').toLowerCase(), res);
+  }
+```
+
+**3. 冷读（`app/pinner.py`，完整文件见下文示例代码）** — `--evict` 让每个文件在读之前先丢掉页缓存，
+保证读真的落到盘上、平台看得到；`--no-hold` 读完就退出，不做 `mmap`：
+
+```python
+EVICT = "--evict" in sys.argv[1:]
+HOLD = "--no-hold" not in sys.argv[1:]
+```
+
+```python
+            if EVICT:
+                os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
+```
+
+**4. runtime 配置（`scripts/deploy.sh`）** — `UpdateAgentRuntime` 会整体替换 hook 配置，所以每次更新都重新带上；
+创建/更新走 boto3（[`scripts/put_runtime.py`](scripts/put_runtime.py)）：
+
+```bash
+runtime_config() {   # $1 = key
+    local env="\"DSH_MODEL_ID\": \"$MODEL_ID\", \"DSH_PREWARM\": \"${PREWARM[$1]}\""
+    local hooks=""
+    if [ -n "${HOOK[$1]}" ]; then
+        env+=", \"DSH_HOOK\": \"${HOOK[$1]}\""
+        # UpdateAgentRuntime replaces the whole hook configuration, so every
+        # update of a hooked runtime sends it again.
+        hooks=', "hooksConfiguration": {"build": {"warmup": {"action": {"httpPost": {"path": "/warmup", "port": 8080}}}}}'
+    fi
+    cat <<JSON
+  "agentRuntimeArtifact": {"containerConfiguration": {"containerUri": "$ECR_URI:${TAGOF[$1]}"}},
+  "networkConfiguration": {"networkMode": "PUBLIC"},
+  "protocolConfiguration": {"serverProtocol": "HTTP"},
+  "roleArn": "$ROLE_ARN",
+  "platformVersion": "${PLATFORM[$1]}",
+  "environmentVariables": {$env},
+  "lifecycleConfiguration": {"idleRuntimeSessionTimeout": $IDLE_TIMEOUT}$hooks
+JSON
+}
+```
+
+各取值：`DSH_HOOK=read` 是上表的 hook；`DSH_HOOK=pin` 在 `disk` 调用里冷读后 pin（实测无效，保留作对照）；
+`DSH_HOOK=read` 可与 `DSH_PREWARM=3` 组合，`DSH_HOOK=pin` 不行。没有设置 `DSH_HOOK` 时 `/warmup` 返回 404。
+hook 只支持平台 V2 + microVM；调用不重试，失败或超过 120 秒都会让创建/更新失败。
 
 ## V2 上为什么慢，page pin 做了什么
 
-V2 在容器第一次 `/ping` 返回 200 时打快照，之后每个新 session 从快照恢复、不再启动容器。
+V2 在容器第一次 `/ping` 返回 200 时打快照（配置了 lifecycle hook 时改为在 `memory` 调用之后），
+之后每个新 session 从快照恢复、不再启动容器。
 `agentcore-e-layer-best-practices` 的解释是：打快照前页缓存会被清空，首个请求要执行的程序文件不在快照里，
 恢复后要从按需加载的快照盘上冷读。`dsh headless` 每个回合新起一个 Node 进程，一个回合要打开
 3,630 个文件（146.8 MB，其中 Node 二进制 118 MB），正好撞上这一点。只把文件读进页缓存的预热因此无效。
@@ -83,6 +261,12 @@ blocks; the pages go into the snapshot with it.
 Protocol with the wrapper: print exactly one JSON line on stdout, then hold the
 mappings until stdin closes or the process is killed.
 
+Options (used by the build warmup lifecycle hook, see server.mjs):
+  --evict    drop each file's cached pages (posix_fadvise DONTNEED) right before
+             reading it, so the read really goes to the disk: the platform's
+             disk warmup call is meant to see those reads.
+  --no-hold  read only: print the result line and exit without mapping.
+
 Adapted from the page-pin recipe in agentcore-e-layer-best-practices (§6.4);
 the byte cap is raised because DSH reads far more than that recipe's example.
 """
@@ -92,7 +276,10 @@ import os
 import sys
 import time
 
-MANIFEST = sys.argv[1] if len(sys.argv) > 1 else "/opt/dsh/pin-manifest.txt"
+ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
+EVICT = "--evict" in sys.argv[1:]
+HOLD = "--no-hold" not in sys.argv[1:]
+MANIFEST = ARGS[0] if ARGS else "/opt/dsh/pin-manifest.txt"
 DEADLINE_S = float(os.environ.get("PIN_DEADLINE_S", "60"))
 MAX_BYTES = int(os.environ.get("PIN_MAX_BYTES", str(1024 << 20)))
 CHUNK = 1 << 20
@@ -118,21 +305,24 @@ def pin(paths, deadline):
             if st.st_size == 0 or total + st.st_size > MAX_BYTES:  # never pin part of a file
                 skipped += 1
                 continue
+            if EVICT:
+                os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
             off = 0
             while off < st.st_size:
                 n = os.preadv(fd, [buf], off)  # read into the page cache first
                 if n == 0:
                     break
                 off += n
-            maps.append(mmap.mmap(fd, off, prot=mmap.PROT_READ,
-                                  flags=mmap.MAP_SHARED | mmap.MAP_POPULATE))
+            if HOLD:
+                maps.append(mmap.mmap(fd, off, prot=mmap.PROT_READ,
+                                      flags=mmap.MAP_SHARED | mmap.MAP_POPULATE))
             seen.add(key)
             total += off
         except (OSError, ValueError):
             skipped += 1
         finally:
             os.close(fd)
-    return maps, total, skipped
+    return maps, total, skipped, len(seen)
 
 
 def main():
@@ -142,10 +332,14 @@ def main():
             paths = [line.strip() for line in handle if line.strip() and not line.startswith("#")]
     except OSError:
         paths = []
-    maps, total, skipped = pin(paths, started + DEADLINE_S)
-    print(json.dumps({"files": len(maps), "bytes": total, "skipped": skipped, "listed": len(paths),
-                      "ms": round((time.monotonic() - started) * 1000), "max_bytes": MAX_BYTES}), flush=True)
-    sys.stdin.buffer.read()  # hold the mappings until the wrapper lets go
+    maps, total, skipped, read = pin(paths, started + DEADLINE_S)
+    result = {"files": len(maps), "bytes": total, "skipped": skipped, "listed": len(paths),
+              "ms": round((time.monotonic() - started) * 1000), "max_bytes": MAX_BYTES}
+    if EVICT or not HOLD:  # keys added with the hook options; the default line is unchanged
+        result.update(read=read, evict=EVICT, hold=HOLD)
+    print(json.dumps(result), flush=True)
+    if HOLD:
+        sys.stdin.buffer.read()  # hold the mappings until the wrapper lets go
 
 
 if __name__ == "__main__":
@@ -162,28 +356,34 @@ pin 失败只记录，不阻止服务启动：
 // restored session finds DSH's files in memory instead of reading them cold.
 // Best effort: any failure is logged and the server starts anyway.
 let pinner = null;
-function startPinner() {
-  prewarm.start_ts = now();
+// Runs pinner.py and resolves with its result line. `hold` keeps the process
+// (and its mappings) as `pinner`; otherwise it is a read-only pass that exits.
+function runPinner(extraArgs = [], hold = true) {
   return new Promise((resolve) => {
     let settled = false;
     let out = '';
+    let child;
     const finish = (detail) => {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
-      prewarm.detail = detail;
-      prewarm.end_ts = now();
-      resolve();
+      resolve(detail);
     };
     const timer = setTimeout(() => finish({ error: `no result within ${PIN_WAIT_MS} ms` }), PIN_WAIT_MS);
     try {
-      pinner = spawn('python3', [path.join(APP_DIR, 'pinner.py'), PIN_MANIFEST], { stdio: ['pipe', 'pipe', 'inherit'] });
+      child = spawn('python3', [path.join(APP_DIR, 'pinner.py'), ...extraArgs, PIN_MANIFEST], { stdio: ['pipe', 'pipe', 'inherit'] });
     } catch (err) {
       return finish({ error: `spawn failed: ${err.code || err.name}` });
     }
-    pinner.on('error', (err) => { pinner = null; finish({ error: `spawn failed: ${err.code || err.name}` }); });
-    pinner.on('close', (code) => { pinner = null; prewarm.exit_code = code; finish({ error: `pinner exited with ${code}` }); });
-    pinner.stdout.on('data', (chunk) => {
+    if (hold) pinner = child;
+    const drop = () => { if (pinner === child) pinner = null; };
+    child.on('error', (err) => { drop(); finish({ error: `spawn failed: ${err.code || err.name}` }); });
+    child.on('close', (code) => {
+      drop();
+      if (hold) prewarm.exit_code = code;
+      finish({ error: `pinner exited with ${code}` });
+    });
+    child.stdout.on('data', (chunk) => {
       out += chunk.toString('utf8');
       const idx = out.indexOf('\n');
       if (idx < 0) return;
@@ -191,6 +391,12 @@ function startPinner() {
     });
   });
 }
+async function startPinner() {
+  prewarm.start_ts = now();
+  prewarm.detail = await runPinner();
+  prewarm.end_ts = now();
+}
+
 // Called after the first turn: the files are in the page cache now, so the
 // mappings are no longer needed.
 function releasePinner() {
@@ -248,14 +454,20 @@ scripts/local_baseline.py ──HTTP 127.0.0.1──▶ 本地 Docker 中的同�
 `first_text_ts` / `exit_ts`，客户端据此把第一条消息拆成平台部分和 DSH 进程启动（两者都不含模型时间），并确认每个探测
 都是**快照恢复**（包装器进程早于请求启动，且许多 session 共用同一个进程启动时间）。
 
-| key | runtime 名称 | 平台 | 镜像 tag | `DSH_PREWARM` | 说明 |
-|---|---|---|---|---|---|
-| `dsh_v2` | `dsh_coldstart_base_v2` | V2 | `dsh-0.2.2-rc.1` | 0 | 原样 DSH |
-| `dsh_prewarm_v2` | `dsh_coldstart_prewarm_v2` | V2 | `dsh-0.2.2-rc.1` | 1 | 启动后先跑一次 `dsh headless --help` |
-| `dsh_pinctl_v2` | `dsh_coldstart_diag_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 0 | page pin 的对照组 |
-| `dsh_pin_v2` | `dsh_coldstart_deepwarm_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 3 | page pin |
+| key | runtime 名称 | 平台 | 镜像 tag | `DSH_PREWARM` | `DSH_HOOK` | 说明 |
+|---|---|---|---|---|---|---|
+| `dsh_v2` | `dsh_coldstart_base_v2` | V2 | `dsh-0.2.2-rc.1` | 0 | — | 原样 DSH（11-12） |
+| `dsh_prewarm_v2` | `dsh_coldstart_prewarm_v2` | V2 | `dsh-0.2.2-rc.1` | 1 | — | 启动后先跑一次 `dsh headless --help`（11-12） |
+| `dsh_pinctl_v2` | `dsh_coldstart_diag_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 0 | — | page pin 与 hook 的对照组 |
+| `dsh_pin_v2` | `dsh_coldstart_deepwarm_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 3 | — | page pin |
+| `dsh_hook_v2` | `dsh_coldstart_hook_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 0 | `read` | lifecycle hook（11-14） |
+| `dsh_hookpin_v2` | `dsh_coldstart_hookpin_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 0 | `pin` | hook 的 `disk` 调用里 pin（11-14） |
+| `dsh_pinhook_v2` | `dsh_coldstart_pinhook_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 3 | `read` | 监听前 pin + hook（11-14） |
 
-最后两个 runtime 沿用了最初创建时的名称，名称与现在的用途不对应。`-pin` 镜像比基础镜像多了 pinner、
+`dsh_pinctl_v2`、`dsh_pin_v2` 沿用了最初创建时的名称，名称与现在的用途不对应。
+`dsh_v2`、`dsh_prewarm_v2` 只在 11-12 测过，11-14 时已不存在、没有重建（记在 `deployments.json` 的
+`removed_runtimes` 里）。11-14 的 5 个 runtime 用同一个 `-pin` 镜像（带 `/warmup` 处理逻辑；
+不设 `DSH_HOOK` 时行为与 11-12 相同）。`-pin` 镜像比基础镜像多了 pinner、
 清单和 python3（1,089 MB，ECR 压缩后 291 MB）；ping / agent 的处理逻辑相同。
 
 ## 运行
@@ -270,9 +482,11 @@ TAG=dsh-0.2.2-rc.1-pin bash scripts/build_image.sh       # pin 镜像
 bash scripts/gen_pin_manifest.sh                         # 追踪一个回合 -> app/pin-manifest.txt
 TAG=dsh-0.2.2-rc.1-pin bash scripts/build_image.sh       # 带上清单重新构建
 bash scripts/test_local.sh                               # 本地合约测试：/ping、ping、两次 agent 对话
-V2="dsh_v2 dsh_prewarm_v2 dsh_pinctl_v2 dsh_pin_v2"      # 本文范围内的 4 个 runtime
-DEPLOY_KEYS="$V2" bash scripts/deploy.sh                 # ECR + IAM 角色 + 这 4 个 runtime -> deployments.json（幂等）
+V2="dsh_v2 dsh_prewarm_v2 dsh_pinctl_v2 dsh_pin_v2"      # 11-12 的 4 个 runtime
+# 11-14 的 hook 测试：V2="dsh_pinctl_v2 dsh_pin_v2 dsh_hook_v2 dsh_hookpin_v2 dsh_pinhook_v2"
+DEPLOY_KEYS="$V2" bash scripts/deploy.sh                 # ECR + IAM 角色 + 这些 runtime -> deployments.json（幂等）
 DEPLOY_KEYS="dsh_pin_v2" bash scripts/deploy.sh          # 只创建/更新指定 runtime，不打扰其他的
+FORCE_UPDATE=1 DEPLOY_KEYS="$V2" bash scripts/deploy.sh  # 镜像没变也更新，让每个 runtime 打新快照（用于测第 1 次使用）
 uv sync
 RT="${V2// /,}"                                          # coldstart_test.py 的 --runtimes 用逗号分隔
 uv run python coldstart_test.py --smoke --runtimes "$RT" # 每个 runtime 各一次 ping 序列 + agent 序列
@@ -288,7 +502,10 @@ uv run python -m unittest discover -s tests              # 客户端与报告生
 逐请求原始数据在 `results/raw/*.json`，聚合统计在 `results/summary.json`。
 `results/raw/` 里还留有两个已删除的 V1 runtime（`dsh`、`dsh_prewarm`）的数据，不带 `--platforms V2`
 生成报告会把它们也写进去。
-runtime 每次创建或更新都会重新打快照，「同一快照的第几次使用」从头计数；创建或更新约需 3.5 分钟。
+runtime 每次创建或更新都会重新打快照，「同一快照的第几次使用」从头计数；创建或更新约需 3.5 分钟，
+带 hook 时最多再多 120 秒。`deploy.sh` 只管理目标 runtime 和仍然存在的 runtime；创建/更新走
+[`scripts/put_runtime.py`](scripts/put_runtime.py)（boto3），因为 2.38.0 及更早的 AWS CLI 不认 `hooksConfiguration`
+（2.40.3 已支持）。
 
 测试客户端是单进程多线程：同一轮的请求由 `threading.Barrier` 一起放行，并发 30 时各请求开始计时的时间
 相差 p50 26.9 毫秒、最大 33.5 毫秒。`--processes auto` 可改用多个 worker 进程（并发 100 以上建议开启），
@@ -328,5 +545,5 @@ Runtime 空闲时不计费（按微VM活跃秒数计费，session 空闲 60 秒�
 
 ```bash
 bash scripts/cleanup.sh --dry-run   # 列出将删除的资源
-bash scripts/cleanup.sh --yes       # 删除 4 个 runtime、ECR 仓库、IAM 角色
+bash scripts/cleanup.sh --yes       # 删除 deployments.json 里记录的 runtime、ECR 仓库、IAM 角色
 ```

@@ -166,7 +166,7 @@ def pin_sources(app_dir: Path) -> dict:
             out["hooks"] = wrapper[start:end + 2]
         out["calls"] = [line.strip() for line in wrapper.splitlines()
                         if ("startPinner(" in line or "releasePinner(" in line)
-                        and not line.lstrip().startswith("function")]
+                        and not line.lstrip().startswith(("function", "async function"))]
     manifest = read("pin-manifest.txt")
     if manifest:
         out["manifest_files"] = sum(1 for line in manifest.splitlines()
