@@ -11,8 +11,10 @@ mappings until stdin closes or the process is killed.
 
 Options (used by the build warmup lifecycle hook, see server.mjs):
   --evict    drop each file's cached pages (posix_fadvise DONTNEED) right before
-             reading it, so the read really goes to the disk: the platform's
-             disk warmup call is meant to see those reads.
+             reading it. On AgentCore the disk warmup call runs on a freshly
+             restored microVM whose file cache is already empty, so this is a
+             no-op there; it only matters where the files are still cached
+             (local tests). Kept so the measured hook variants stay unchanged.
   --no-hold  read only: print the result line and exit without mapping.
 
 Adapted from the page-pin recipe in agentcore-e-layer-best-practices (§6.4);

@@ -58,7 +58,9 @@ DSH 进程启动（spawn → 首个输出，不含模型），按「同一快照
   session 也确实来自两个快照（`proc_start_ts` 相差约 5 秒）。表中的「第几次」按每个快照分别计数。
 - 恢复出来的 session 里 `hook.memory_ts` 有值、`hook.disk_calls` 为 0：快照在 `memory` 之后、`disk` 之前。
 - `disk` 调用在 `memory` 之后约 86–100 秒开始，读 147 MB 用 12–25 秒，说明它读的是冷的快照盘。
-  这与文档「AgentCore Runtime 根据这些读取让新 session 更快拿到这些文件」一致：`disk` 调用是一次「录制」。
+  AWS 的 [blog](https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/)（2026-11-13）证实了这两条：`memory` 调用在冻结之前，`disk` 调用在「a separate microVM
+  that restores the snapshot to check it. Nothing from this call is snapshotted」，作用是决定恢复后的 session 先拉哪些块。
+- 同一快照越用越快的原因，blog 的解释是镜像块第一次被读时从快照存储拉取，「then cached closer to the host」。
 
 ## 局限
 
