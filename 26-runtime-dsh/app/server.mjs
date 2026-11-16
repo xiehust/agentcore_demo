@@ -12,7 +12,10 @@
 import http from 'node:http';
 import { spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import {
+  mkdirSync, writeFileSync, readFileSync, copyFileSync, chmodSync, statSync, readdirSync,
+  symlinkSync, realpathSync, statfsSync, openSync, readSync, closeSync,
+} from 'node:fs';
 import { performance } from 'node:perf_hooks';
 import path from 'node:path';
 import os from 'node:os';
@@ -34,11 +37,14 @@ const IMAGE_TAG = process.env.IMAGE_TAG || 'dev';
 const AGENT_TIMEOUT_MS = Number(process.env.AGENT_TIMEOUT_MS || 120000);
 // DSH_PREWARM: 0 = off; 1 = boot the headless profile once after listening;
 // 3 = page pin: before listening, map the files a first turn reads so they
-// stay in memory when the platform snapshots the started container (V2).
+// stay in memory when the platform snapshots the started container (V2);
+// 4 = RAM disk: before listening, copy those files to SHM_DIR (/dev/shm) and
+// run DSH from there, so a restored session reads them from memory.
 const PREWARM_LEVEL = Number(process.env.DSH_PREWARM || 0);
 const PREWARM = PREWARM_LEVEL >= 1;
 const PIN_MANIFEST = process.env.PIN_MANIFEST || path.join(APP_DIR, 'pin-manifest.txt');
 const PIN_WAIT_MS = Number(process.env.PIN_WAIT_MS || 90000);
+const SHM_DIR = process.env.SHM_DIR || '/dev/shm/dsh';
 // DSH_HOOK: what the build warmup lifecycle hook (POST /warmup) does in its
 // `disk` call. '' = no hook route; 'read' = read the manifest's files cold
 // (cache dropped per file first) and let go; 'pin' = the same cold reads by the
@@ -53,6 +59,7 @@ const WARMUP_PATH = '/warmup';
 const WARMUP_TYPE_HEADER = 'x-amzn-bedrock-agentcore-runtime-warmup-type';
 if (!['', 'read', 'pin'].includes(HOOK_MODE)) throw new Error(`DSH_HOOK must be "read" or "pin", got ${JSON.stringify(HOOK_MODE)}`);
 if (HOOK_MODE === 'pin' && PREWARM_LEVEL === 3) throw new Error('DSH_HOOK=pin and DSH_PREWARM=3 both pin; set one');
+if (![0, 1, 3, 4].includes(PREWARM_LEVEL)) throw new Error(`DSH_PREWARM must be 0, 1, 3 or 4, got ${process.env.DSH_PREWARM}`);
 const MAX_BODY_BYTES = 1024 * 1024;
 const MAX_OUTPUT_CHARS = 4000;
 
@@ -180,6 +187,107 @@ function releasePinner() {
   prewarm.released_ts = now();
 }
 
+// RAM-disk staging (level 4). AWS's fast-session-startup blog: memory,
+// including RAM-backed file systems such as /dev/shm, comes back whole with a
+// V2 snapshot, while files read from the image are fetched again by every new
+// session. Before listening, mirror APP_DIR under SHM_DIR: files in the
+// manifest are copied, every other entry of the directories on their paths
+// becomes a symlink back to the image, so code paths outside the manifest
+// still resolve (from the image, at image speed). The node binary and the
+// libraries it loads are copied too when SHM_DIR is not mounted noexec; on a
+// noexec mount, ELF files (native addons) stay on the image, because they
+// cannot be mapped executable from there.
+// Best effort: on any failure DSH runs from the image as usual. The copies
+// stay in memory for the whole session (pin releases its pages after turn 1).
+const shm = { staged: false, node: null, entry: null, libdir: null };
+function mountOf(dir) {
+  let best = null;
+  for (const line of readFileSync('/proc/self/mounts', 'utf8').split('\n')) {
+    const [, mnt, type, opts] = line.split(' ');
+    if (!mnt) continue;
+    const inside = dir === mnt || dir.startsWith(mnt === '/' ? '/' : `${mnt}/`);
+    if (inside && (!best || mnt.length > best.mnt.length)) best = { mnt, type, opts };
+  }
+  return best;
+}
+function isElf(file) {
+  const fd = openSync(file, 'r');
+  try {
+    const head = Buffer.alloc(4);
+    return readSync(fd, head, 0, 4, 0) === 4 && head.equals(Buffer.from([0x7f, 0x45, 0x4c, 0x46]));
+  } finally {
+    closeSync(fd);
+  }
+}
+function stageToShm() {
+  prewarm.start_ts = now();
+  const detail = { copied: 0, bytes: 0, links: 0, dirs: 0, elf_on_image: 0, exec: false, ms: null,
+                   mount: null, free_bytes: null, tmpfs: [], error: null };
+  try {
+    const listed = readFileSync(PIN_MANIFEST, 'utf8').split('\n')
+      .map((line) => line.trim()).filter((line) => line && !line.startsWith('#'));
+    const hot = new Set(listed.filter((p) => p.startsWith(`${APP_DIR}/`)));
+    const dirs = new Set([APP_DIR]);
+    for (const p of hot) for (let d = path.dirname(p); d.length > APP_DIR.length; d = path.dirname(d)) dirs.add(d);
+    detail.tmpfs = readFileSync('/proc/self/mounts', 'utf8').split('\n')  // RAM-backed mounts, for the record
+      .map((line) => line.split(' ')).filter((f) => f[2] === 'tmpfs' || f[2] === 'ramfs')
+      .map((f) => `${f[1]} ${f[3]}`);
+    mkdirSync(SHM_DIR, { recursive: true });
+    const mnt = mountOf(SHM_DIR);
+    detail.mount = mnt ? `${mnt.mnt} ${mnt.type} ${mnt.opts}` : null;
+    const fsStat = statfsSync(SHM_DIR);
+    detail.free_bytes = fsStat.bavail * fsStat.bsize;
+    detail.exec = !(mnt && mnt.opts.split(',').includes('noexec'));
+    const mirror = (p) => path.join(SHM_DIR, 'app', path.relative(APP_DIR, p));
+    const stageable = (p) => detail.exec || !isElf(p) || (detail.elf_on_image += 1, false);
+    const size = (p) => { try { return statSync(p).size; } catch { return 0; } };
+    const libs = listed.filter((f) => /^\/(usr\/)?lib\//.test(f) && f.includes('.so'));
+    const need = [...hot].filter((p) => detail.exec || !isElf(p)).reduce((sum, p) => sum + size(p), 0)
+      + (detail.exec ? size(process.execPath) + libs.reduce((sum, p) => sum + size(p), 0) : 0);
+    if (need * 1.1 > detail.free_bytes) throw new Error(`needs ${need} bytes, ${detail.free_bytes} free`);
+    const copy = (from, to, mode) => {
+      copyFileSync(from, to);
+      chmodSync(to, mode);
+      detail.copied += 1;
+      detail.bytes += statSync(to).size;
+    };
+    const build = (dir) => {
+      mkdirSync(mirror(dir), { recursive: true });
+      detail.dirs += 1;
+      for (const ent of readdirSync(dir, { withFileTypes: true })) {
+        const p = path.join(dir, ent.name);
+        if (dirs.has(p) && ent.isDirectory()) build(p);
+        else if (hot.has(p) && ent.isFile() && stageable(p)) copy(p, mirror(p), statSync(p).mode & 0o777);
+        else { symlinkSync(p, mirror(p)); detail.links += 1; }
+      }
+    };
+    build(APP_DIR);
+    if (detail.exec) {
+      const bin = path.join(SHM_DIR, 'bin');
+      const lib = path.join(SHM_DIR, 'lib');
+      mkdirSync(bin, { recursive: true });
+      mkdirSync(lib, { recursive: true });
+      copy(process.execPath, path.join(bin, 'node'), 0o755);
+      for (const p of libs) {
+        const soname = path.basename(p).match(/^(.*?\.so(?:\.\d+)?)/)[1];  // libstdc++.so.6.0.30 -> libstdc++.so.6
+        copy(p, path.join(lib, soname), 0o755);
+      }
+      shm.node = path.join(bin, 'node');
+      shm.libdir = lib;
+    }
+    shm.entry = mirror(realpathSync(DSH_BIN));
+    statSync(shm.entry);  // the entry script must be a real copy
+    shm.staged = true;
+  } catch (err) {
+    detail.error = String(err.message || err).slice(0, 300);
+    shm.staged = false;
+    shm.node = shm.libdir = shm.entry = null;
+  }
+  prewarm.end_ts = now();
+  detail.ms = Math.round((prewarm.end_ts - prewarm.start_ts) * 1000);
+  prewarm.detail = detail;
+}
+
 // Build warmup lifecycle hook. AgentCore calls POST /warmup twice while it
 // prepares a V2 runtime (create/update), `memory` first, then `disk`. Sessions
 // start from the state after `memory`; `disk` runs later on a restored copy and
@@ -231,7 +339,7 @@ async function runAgent(prompt) {
   const result = {
     ok: false, exit_code: null, spawn_ts: null, first_output_ts: null, first_text_ts: null,
     exit_ts: null, model: MODEL_ID, output: '', error: null, usage: null,
-    stop_reason: null, cred_source: null,
+    stop_reason: null, cred_source: null, ran_from: 'image',
   };
   let env;
   try {
@@ -246,7 +354,17 @@ async function runAgent(prompt) {
   return new Promise((resolve) => {
     result.spawn_ts = now();
     // The task is passed on stdin (`-`), never through a shell or argv.
-    const child = spawn(DSH_BIN, ['headless', '--json', '--approval-policy', 'never', '-'], {
+    const dshArgs = ['headless', '--json', '--approval-policy', 'never', '-'];
+    let cmd = DSH_BIN;
+    let args = dshArgs;
+    if (shm.staged) {  // run the staged copy: node and DSH from the RAM disk
+      cmd = shm.node || process.execPath;
+      args = [shm.entry, ...dshArgs];
+      if (shm.node) env.PATH = `${path.dirname(shm.node)}:${env.PATH || ''}`;
+      if (shm.libdir) env.LD_LIBRARY_PATH = shm.libdir;
+      result.ran_from = shm.node ? 'shm' : 'shm-js';
+    }
+    const child = spawn(cmd, args, {
       cwd: WORKDIR, env, stdio: ['pipe', 'pipe', 'pipe'],
     });
     let stderrTail = '';
@@ -372,6 +490,7 @@ mkdirSync(WORKDIR, { recursive: true });
 writeProfilePatch();
 await warmCredentialChain();
 if (PREWARM_LEVEL === 3) await startPinner();
+if (PREWARM_LEVEL === 4) stageToShm();
 server.listen(PORT, HOST, () => {
   console.log(JSON.stringify({
     event: 'listening', host: HOST, port: PORT, dsh_version: dshVersion, model: MODEL_ID,

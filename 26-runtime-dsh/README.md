@@ -3,7 +3,7 @@
 把 [DeepSeek Harness](https://www.deepseek.com/en/harness/)（npm `@deepseek-ai/dsh`，`dsh headless` 一次性模式）
 原样装进容器，部署到 Amazon Bedrock AgentCore Runtime，测量两件事：**冷启动**（新 session 的平台启动耗时）
 和**第一条消息**（新 session 上第一次真实对话要等多久）。测试对象是平台版本 V2（每个新 session 从快照恢复），
-与同一镜像的本地 Docker 对比，并验证两种优化：page pin（示例代码见下文）和 AgentCore 的
+与同一镜像的本地 Docker 对比，并验证三种优化：page pin（示例代码见下文）、拷进 `/dev/shm`，以及 AgentCore 的
 [build warmup lifecycle hook](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-lifecycle-hooks.html)。
 模型为 Bedrock 上的 DeepSeek V3.2（`deepseek.v3.2`）。
 
@@ -13,22 +13,45 @@
 完整数据见 [results/REPORT.zh.md](results/REPORT.zh.md) · [English](results/REPORT.md)（page pin，2026-11-12）
 和 [results/HOOKS.zh.md](results/HOOKS.zh.md)（lifecycle hook，2026-11-14）。
 
-## 核心结论：hook 与 page pin 怎么选
+## 核心结论：hook、page pin 与 /dev/shm 怎么选
 
-11-14 同一次实验里的对比，p50（DSH 启动 = spawn → 首个输出，不含模型）：
+11-16 同一次实验里的对比，p50（DSH 启动 = spawn → 首个输出，不含模型；稳定态 = 同一快照用过 10 次之后）：
 
-| | 不优化 | page pin | lifecycle hook |
-|---|---|---|---|
-| 新版本第 1 次使用：DSH 启动 | 47.6 秒 | 7.3 秒 | **4.9 秒** |
-| 稳定态（同一快照用过 10 次后）：DSH 启动 | 3.3 秒 | **2.0 秒** | 3.4 秒 |
-| 稳定态：第一条消息端到端 | 6.1 秒 | **4.7 秒** | 6.5 秒 |
-| 代价 | — | 常驻 pinner，锁住 147 MB 内存直到首个回合结束 | 每次创建/更新最多多 120 秒 |
+| | 不优化 | page pin | lifecycle hook | /dev/shm（只放 JS） |
+|---|---|---|---|---|
+| 新版本第 1 次使用：DSH 启动 | 52.2 秒 | 8.0 秒 | **5.5 秒** | 12.0 秒 |
+| 稳定态：DSH 启动 | 3.3 秒 | 4.1 秒（11-12、11-14 两次都是 2.0 秒） | 3.9 秒 | **2.0 秒** |
+| 稳定态：第一条消息端到端 | 5.9 秒 | 6.9 秒（11-14 为 4.6 秒） | 6.7 秒 | **4.6 秒** |
+| 代价 | — | 常驻 pinner，锁住 147 MB 直到首个回合结束 | 每次创建/更新最多多 120 秒 | 每个 session 在内存盘里持有 25 MB |
 
-- **hook 管「刚上线」**：新版本头几个 session 不再慢 40 多秒，而且比 pin 还快。
-- **pin 管「稳定态」**：之后每个新 session 的第一条消息快约 1.4 秒，hook 在这一点上没有作用。
-- **两者不要同时开**：叠加后第 1 次使用介于两者之间，稳定态退回到不优化的水平。
+- **hook 管「刚上线」**：新版本头几个 session 不再慢 40 多秒，三种做法里最快。
+- **/dev/shm 管「稳定态」**：每个新 session 的第一条消息比不优化快约 1.3 秒，机制是 AWS
+  [blog](https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/) 写明的（内存盘随快照完整恢复）。AgentCore 里的 `/dev/shm` 只有 64 MB 且 `noexec`，
+  只能放 DSH 的 JS 文件，Node 二进制（118 MB）仍从镜像读，所以第 1 次使用（12 秒）不如 pin 和 hook。
+- **page pin 的稳定态收益这次没有复现**：配置、镜像、pin 住的文件（3,629 个）都与前两次相同，稳定态却从
+  2.0 秒变成 4.1 秒，原因未查明。它依赖的是没有文档的行为，不再推荐。
+- **hook 与 pin 不要同时开**（11-14 测过）。hook + /dev/shm 的组合还没测：hook 的 `disk` 调用正好可以预读仍留在
+  镜像上的 Node 二进制和原生插件，可能同时拿到两边的好处。
 
-11-12 单独测 page pin 时稳定态结果相同（DSH 启动 2.0 秒、端到端 4.7 秒），见下文。
+### 本实现里 hook 的两次调用各做了什么
+
+hook 只有一个端点 `POST /warmup`，平台调用两次，用请求头 `X-Amzn-Bedrock-AgentCore-Runtime-Warmup-Type`
+区分 `memory` 和 `disk`：
+
+- **`memory`（打快照之前）：什么都不做，只记一个时间戳就返回 200**（实测 0.0 秒）。该进快照的启动工作
+  （写 DSH 的 profile、加载 AWS SDK 凭证链模块、`DSH_PREWARM=3` 时启动 pinner）在 `server.listen()` 之前
+  就做完了，平台第一次 `/ping` 成功时它们已经在内存里。这与
+  [AWS 的这篇 blog](https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/)
+  一致：hook 是 init 的补充，能放进 init 的就放进 init。记下的 `hook.memory_ts` 只用作证据：恢复出来的 session
+  里它有值、`hook.disk_calls` 为 0，说明快照打在 `memory` 之后、`disk` 之前。
+- **`disk`（在一个从快照恢复的副本上）：按清单把 DSH 一个回合要读的 3,630 个文件（147 MB）冷读一遍**，读完才返回
+  200。这次调用留在内存里的东西不会进快照，它的作用是让平台知道恢复后的 session 先拉哪些块——第 1 次使用
+  从 47.6 秒降到 4.9 秒靠的就是它。
+
+`memory` 调用是「`/ping` 健康之后、冻结之前」的最后一次机会，做在这里的事会进快照。对 DSH 还有两种用法没有实现：
+把 pinner 挪到这里启动（效果应与现在相同，只是 `/ping` 早一点健康），或把 DSH 读到的文件拷进 `/dev/shm`
+（blog 推荐的做法：内存盘里的文件随快照完整恢复，可能同时拿到 pin 的稳定态和 hook 的首次表现，代价是每个
+session 持有这 147 MB 内存）。
 
 ## Page pin 测试（2026-11-12，us-east-1，平台 V2，4 个 runtime，1,600 个请求，0 失败）
 
@@ -52,7 +75,8 @@ V2 的「DSH 进程启动」取同一快照用过 10 次之后的样本；「第
    与本地页缓存已热时相当。代价是锁住 147 MB 内存，直到首个回合结束。
 4. **`DSH_PREWARM=1`（启动后先跑一次 `dsh headless --help`）没有可测量的收益。**
 
-结论（11-12）：在 V2 上部署 DSH 应当带上 page pin。11-14 加测 lifecycle hook 后修正为二选一，见下一节。
+结论（11-12）：在 V2 上部署 DSH 应当带上 page pin。11-14 加测 lifecycle hook 后修正为与 hook 二选一；11-16 复测时
+pin 的稳定态收益没有复现（4.1 秒），见开头的核心结论。
 
 ## Lifecycle hook 测试（2026-11-14，us-east-1，平台 V2，5 个 runtime，2,056 个请求，0 失败）
 
@@ -84,14 +108,16 @@ DSH 进程启动（spawn → 首个输出，不含模型），按「同一快照
 
 ### 实测到的 hook 行为
 
-文档只说 `memory`、`disk` 两次调用的顺序和共享的 120 秒预算；以下是从构建日志
-（`/aws/bedrock-agentcore/runtimes/<id>-DEFAULT` 中 `build-logs-*`）和包装器返回的时间戳看到的：
+以下是从构建日志（`/aws/bedrock-agentcore/runtimes/<id>-DEFAULT` 中 `build-logs-*`）和包装器返回的时间戳
+看到的，前两条与 AWS 的 [fast session startup blog](https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/)（2026-11-13）写的一致：
 
 - **快照取在 `memory` 调用之后、`disk` 调用之前**：恢复出来的 session 里 `hook.memory_ts` 有值，
-  `hook.disk_calls` 都是 0。所以 hook 的 `memory` 调用相当于「`/ping` 健康之后、打快照之前」的最后一次初始化机会。
-- **`disk` 调用是一次「录制」**：它在 `memory` 之后约 86–100 秒，在一个从快照恢复的副本上执行；读 147 MB 用了
-  12–25 秒（冷读快照盘）。平台据此让之后的 session 更快拿到这些文件。它留在内存里的东西不会进入任何 session，
-  所以在 `disk` 调用里 pin 没有意义。
+  `hook.disk_calls` 都是 0。blog 的说法是：`memory` 调用在构建用的微VM上、冻结之前执行，「Anything your agent
+  loads here and keeps in memory is part of the snapshot」。
+- **`disk` 调用在一个从快照恢复的副本上执行，不进快照**：blog 的说法是它跑在「a separate microVM that restores
+  the snapshot to check it. Nothing from this call is snapshotted」，作用是「shapes what restored sessions fetch
+  first」。实测它在 `memory` 之后约 86–100 秒开始，读 147 MB 用了 12–25 秒（冷读快照盘）。所以在 `disk` 调用里
+  pin 没有意义。
 - 如果文件已被 pin，`disk` 调用的读全部命中内存（3,629 个文件约 100 毫秒），平台看不到这些读。
 - 每次创建/更新，平台起 **2 个**构建实例，各自走一遍 `/ping` → `memory` → `disk`，各有完整的 120 秒预算；
   session 也来自这两个快照（`proc_start_ts` 相差约 5 秒），「第几次使用」要按快照分别计数。
@@ -170,8 +196,9 @@ async function handleWarmup(type, res) {
   }
 ```
 
-**3. 冷读（`app/pinner.py`，完整文件见下文示例代码）** — `--evict` 让每个文件在读之前先丢掉页缓存，
-保证读真的落到盘上、平台看得到；`--no-hold` 读完就退出，不做 `mmap`：
+**3. 冷读（`app/pinner.py`，完整文件见下文示例代码）** — `--no-hold` 读完就退出，不做 `mmap`。
+`--evict` 在读每个文件之前先 `fadvise(DONTNEED)`；`disk` 调用所在的恢复副本上文件缓存本来就是空的，所以它在
+AgentCore 上不起作用，只在本地测试（文件还在缓存里）时有区别，保留它是为了与已测的变体一致：
 
 ```python
 EVICT = "--evict" in sys.argv[1:]
@@ -212,13 +239,175 @@ JSON
 `DSH_HOOK=read` 可与 `DSH_PREWARM=3` 组合，`DSH_HOOK=pin` 不行。没有设置 `DSH_HOOK` 时 `/warmup` 返回 404。
 hook 只支持平台 V2 + microVM；调用不重试，失败或超过 120 秒都会让创建/更新失败。
 
+## /dev/shm 测试（2026-11-16，us-east-1，平台 V2，4 个 runtime，1,660 个请求，0 失败）
+
+依据 AWS 的 [fast session startup blog](https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/)：「Anything in a RAM-backed file system such as `/dev/shm`, is
+available at memory speed from the first access」，并且对 `tsc` 这类每次单独起进程的工具链建议「Copy them to
+`/dev/shm` or a ramfs mount during init」。`dsh_shm_v2`（`DSH_PREWARM=4`）在监听之前把清单里的文件拷进
+`/dev/shm`，之后每个回合从那里运行 DSH。与 `dsh_pinctl_v2`、`dsh_pin_v2`、`dsh_hook_v2` 一起，按 11-14 的做法测：
+每个 runtime 3 个版本（每个版本先 smoke 测第 1 次使用），最后一个版本上跑并发 1 / 10 / 30 的矩阵。
+
+DSH 启动，按「同一快照的第几次冷 agent 调用」分组，p50 秒（样本数）：
+
+| 第几次 | 不优化 | page pin | hook | /dev/shm |
+|---|---|---|---|---|
+| 1 | 52.2 (5) | 8.0 (5) | **5.5** (5) | 12.0 (4) |
+| 2 | 40.0 (2) | 5.1 (2) | 5.8 (2) | 9.3 (2) |
+| 3–5 | 10.9 (6) | 3.4 (6) | 4.0 (6) | 4.2 (6) |
+| 6–10 | 6.3 (10) | 3.4 (10) | 4.2 (10) | 5.8 (10) |
+| 11–20 | 3.5 (20) | 3.3 (20) | 3.9 (20) | 2.6 (20) |
+| 21–40 | 3.4 (32) | 4.1 (34) | 4.0 (39) | **2.0** (36) |
+| 41 起 | 3.1 (29) | 4.1 (27) | 3.9 (22) | **1.9** (25) |
+
+冷启动 ping 四组都在 1.8–2.0 秒；同一 session 的第二个回合（热）DSH 启动四组都是 1.9 秒。
+
+实测到的 AgentCore 微VM：
+
+- `/dev/shm` 是 64 MB 的 tmpfs，挂载选项 `nosuid,nodev,noexec`。其他 tmpfs（`/dev`、`/run/containerd` 等）
+  也都是 64 MB，挂载权限 `mode=755`，按此推断以普通用户 `node` 运行的容器写不进去（未实测）；容器也不能自己挂载。
+- 因为 `noexec`，Node 二进制和 2 个原生插件（`.node`）放进去也无法以可执行方式映射（本地复现：
+  `failed to map segment from shared object`），只能留在镜像上。实际放进去的是 3,613 个 JS 等文件、25 MB，
+  启动阶段耗时 0.3–0.7 秒。
+- 本地对照（清掉镜像文件的页缓存后跑一个回合）：从镜像读 4.4–4.5 秒；`/dev/shm` 只放 JS 2.5 秒；
+  `/dev/shm` 可执行、连 Node 和库一起放 2.1–2.2 秒（AgentCore 上做不到）。
+
+### /dev/shm 的实现（核心代码）
+
+[`app/server.mjs`](app/server.mjs) 在监听之前调用 `stageToShm()`。清单里 `/opt/dsh` 下的文件按原目录结构拷进
+`/dev/shm/dsh/app`，这些目录里的其他条目建成指回镜像的符号链接，所以清单之外的代码路径照样能用（只是从镜像读）。
+挂载允许执行时连 Node 和它的库一起拷；`noexec` 时 ELF 文件留在镜像上。任何一步失败都退回从镜像运行：
+
+```javascript
+// RAM-disk staging (level 4). AWS's fast-session-startup blog: memory,
+// including RAM-backed file systems such as /dev/shm, comes back whole with a
+// V2 snapshot, while files read from the image are fetched again by every new
+// session. Before listening, mirror APP_DIR under SHM_DIR: files in the
+// manifest are copied, every other entry of the directories on their paths
+// becomes a symlink back to the image, so code paths outside the manifest
+// still resolve (from the image, at image speed). The node binary and the
+// libraries it loads are copied too when SHM_DIR is not mounted noexec; on a
+// noexec mount, ELF files (native addons) stay on the image, because they
+// cannot be mapped executable from there.
+// Best effort: on any failure DSH runs from the image as usual. The copies
+// stay in memory for the whole session (pin releases its pages after turn 1).
+const shm = { staged: false, node: null, entry: null, libdir: null };
+function mountOf(dir) {
+  let best = null;
+  for (const line of readFileSync('/proc/self/mounts', 'utf8').split('\n')) {
+    const [, mnt, type, opts] = line.split(' ');
+    if (!mnt) continue;
+    const inside = dir === mnt || dir.startsWith(mnt === '/' ? '/' : `${mnt}/`);
+    if (inside && (!best || mnt.length > best.mnt.length)) best = { mnt, type, opts };
+  }
+  return best;
+}
+function isElf(file) {
+  const fd = openSync(file, 'r');
+  try {
+    const head = Buffer.alloc(4);
+    return readSync(fd, head, 0, 4, 0) === 4 && head.equals(Buffer.from([0x7f, 0x45, 0x4c, 0x46]));
+  } finally {
+    closeSync(fd);
+  }
+}
+function stageToShm() {
+  prewarm.start_ts = now();
+  const detail = { copied: 0, bytes: 0, links: 0, dirs: 0, elf_on_image: 0, exec: false, ms: null,
+                   mount: null, free_bytes: null, tmpfs: [], error: null };
+  try {
+    const listed = readFileSync(PIN_MANIFEST, 'utf8').split('\n')
+      .map((line) => line.trim()).filter((line) => line && !line.startsWith('#'));
+    const hot = new Set(listed.filter((p) => p.startsWith(`${APP_DIR}/`)));
+    const dirs = new Set([APP_DIR]);
+    for (const p of hot) for (let d = path.dirname(p); d.length > APP_DIR.length; d = path.dirname(d)) dirs.add(d);
+    detail.tmpfs = readFileSync('/proc/self/mounts', 'utf8').split('\n')  // RAM-backed mounts, for the record
+      .map((line) => line.split(' ')).filter((f) => f[2] === 'tmpfs' || f[2] === 'ramfs')
+      .map((f) => `${f[1]} ${f[3]}`);
+    mkdirSync(SHM_DIR, { recursive: true });
+    const mnt = mountOf(SHM_DIR);
+    detail.mount = mnt ? `${mnt.mnt} ${mnt.type} ${mnt.opts}` : null;
+    const fsStat = statfsSync(SHM_DIR);
+    detail.free_bytes = fsStat.bavail * fsStat.bsize;
+    detail.exec = !(mnt && mnt.opts.split(',').includes('noexec'));
+    const mirror = (p) => path.join(SHM_DIR, 'app', path.relative(APP_DIR, p));
+    const stageable = (p) => detail.exec || !isElf(p) || (detail.elf_on_image += 1, false);
+    const size = (p) => { try { return statSync(p).size; } catch { return 0; } };
+    const libs = listed.filter((f) => /^\/(usr\/)?lib\//.test(f) && f.includes('.so'));
+    const need = [...hot].filter((p) => detail.exec || !isElf(p)).reduce((sum, p) => sum + size(p), 0)
+      + (detail.exec ? size(process.execPath) + libs.reduce((sum, p) => sum + size(p), 0) : 0);
+    if (need * 1.1 > detail.free_bytes) throw new Error(`needs ${need} bytes, ${detail.free_bytes} free`);
+    const copy = (from, to, mode) => {
+      copyFileSync(from, to);
+      chmodSync(to, mode);
+      detail.copied += 1;
+      detail.bytes += statSync(to).size;
+    };
+    const build = (dir) => {
+      mkdirSync(mirror(dir), { recursive: true });
+      detail.dirs += 1;
+      for (const ent of readdirSync(dir, { withFileTypes: true })) {
+        const p = path.join(dir, ent.name);
+        if (dirs.has(p) && ent.isDirectory()) build(p);
+        else if (hot.has(p) && ent.isFile() && stageable(p)) copy(p, mirror(p), statSync(p).mode & 0o777);
+        else { symlinkSync(p, mirror(p)); detail.links += 1; }
+      }
+    };
+    build(APP_DIR);
+    if (detail.exec) {
+      const bin = path.join(SHM_DIR, 'bin');
+      const lib = path.join(SHM_DIR, 'lib');
+      mkdirSync(bin, { recursive: true });
+      mkdirSync(lib, { recursive: true });
+      copy(process.execPath, path.join(bin, 'node'), 0o755);
+      for (const p of libs) {
+        const soname = path.basename(p).match(/^(.*?\.so(?:\.\d+)?)/)[1];  // libstdc++.so.6.0.30 -> libstdc++.so.6
+        copy(p, path.join(lib, soname), 0o755);
+      }
+      shm.node = path.join(bin, 'node');
+      shm.libdir = lib;
+    }
+    shm.entry = mirror(realpathSync(DSH_BIN));
+    statSync(shm.entry);  // the entry script must be a real copy
+    shm.staged = true;
+  } catch (err) {
+    detail.error = String(err.message || err).slice(0, 300);
+    shm.staged = false;
+    shm.node = shm.libdir = shm.entry = null;
+  }
+  prewarm.end_ts = now();
+  detail.ms = Math.round((prewarm.end_ts - prewarm.start_ts) * 1000);
+  prewarm.detail = detail;
+}
+```
+
+每个回合用拷好的入口脚本启动 DSH（`noexec` 时 Node 仍是镜像上的那个）：
+
+```javascript
+    const dshArgs = ['headless', '--json', '--approval-policy', 'never', '-'];
+    let cmd = DSH_BIN;
+    let args = dshArgs;
+    if (shm.staged) {  // run the staged copy: node and DSH from the RAM disk
+      cmd = shm.node || process.execPath;
+      args = [shm.entry, ...dshArgs];
+      if (shm.node) env.PATH = `${path.dirname(shm.node)}:${env.PATH || ''}`;
+      if (shm.libdir) env.LD_LIBRARY_PATH = shm.libdir;
+      result.ran_from = shm.node ? 'shm' : 'shm-js';
+    }
+```
+
 ## V2 上为什么慢，page pin 做了什么
 
 V2 在容器第一次 `/ping` 返回 200 时打快照（配置了 lifecycle hook 时改为在 `memory` 调用之后），
-之后每个新 session 从快照恢复、不再启动容器。
-`agentcore-e-layer-best-practices` 的解释是：打快照前页缓存会被清空，首个请求要执行的程序文件不在快照里，
-恢复后要从按需加载的快照盘上冷读。`dsh headless` 每个回合新起一个 Node 进程，一个回合要打开
-3,630 个文件（146.8 MB，其中 Node 二进制 118 MB），正好撞上这一点。只把文件读进页缓存的预热因此无效。
+之后每个新 session 从快照恢复、不再启动容器。AWS 的 [fast session startup blog](https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/) 写明了恢复后的三条规律：
+
+- **内存完整恢复**：进程持有的东西、以及 `/dev/shm` 这类内存盘里的文件，从第一次访问起就是内存速度。
+- **文件读取不会带过去**：打快照前文件缓存会被清空，所以 init 阶段读一遍文件，对恢复后的 session 没有帮助。
+- **镜像文件按需拉取**：每个块第一次被读时从快照存储拉取，「and is then cached closer to the host」。
+  这就是同一快照越用越快、几次之后进入稳定态的原因。
+
+`dsh headless` 每个回合新起一个 Node 进程（blog 点名的反模式：handler 里起的子进程每个新 session 都要从镜像
+重新读二进制和库），一个回合要打开 3,630 个文件（146.8 MB，其中 Node 二进制 118 MB），正好撞上后两条。
+只把文件读进页缓存的预热因此无效。
 
 page pin（[`app/pinner.py`](app/pinner.py)，改写自该知识库 §6.4 的做法）：
 
@@ -238,9 +427,8 @@ page pin（[`app/pinner.py`](app/pinner.py)，改写自该知识库 §6.4 的做
 - pin 只保得住文件内容，保不住目录项和 inode（知识库的说法）；实测每个快照最初一两次使用的 DSH 启动仍要 6–9 秒。
 - 清单只覆盖一次 `Reply with exactly: pong` 回合读到的文件；用到 git、ripgrep 等工具的回合会读到清单之外的文件。
 - 清单依赖基础镜像和 DSH 版本，升级任一个都要重新生成。
-- 「打快照前清空页缓存」来自知识库的实测结论，AWS 的
-  [runtime-v2-optimize](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-v2-optimize.html)
-  文档（2026-11-12 核对）没有写这一点，也没有提 page pin；本测试的对照结果与它一致。
+- 「打快照前清空页缓存」最初来自知识库的实测结论；AWS 的 [blog](https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/)（2026-11-13）已写明这一点。
+  AWS 的文档和 blog 都没有提 page pin，blog 对放不进进程的文件推荐的是 init 时拷到 `/dev/shm`，或用 build hook。
 
 ### 示例代码
 
@@ -263,8 +451,10 @@ mappings until stdin closes or the process is killed.
 
 Options (used by the build warmup lifecycle hook, see server.mjs):
   --evict    drop each file's cached pages (posix_fadvise DONTNEED) right before
-             reading it, so the read really goes to the disk: the platform's
-             disk warmup call is meant to see those reads.
+             reading it. On AgentCore the disk warmup call runs on a freshly
+             restored microVM whose file cache is already empty, so this is a
+             no-op there; it only matters where the files are still cached
+             (local tests). Kept so the measured hook variants stay unchanged.
   --no-hold  read only: print the result line and exit without mapping.
 
 Adapted from the page-pin recipe in agentcore-e-layer-best-practices (§6.4);
@@ -463,6 +653,7 @@ scripts/local_baseline.py ──HTTP 127.0.0.1──▶ 本地 Docker 中的同�
 | `dsh_hook_v2` | `dsh_coldstart_hook_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 0 | `read` | lifecycle hook（11-14） |
 | `dsh_hookpin_v2` | `dsh_coldstart_hookpin_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 0 | `pin` | hook 的 `disk` 调用里 pin（11-14） |
 | `dsh_pinhook_v2` | `dsh_coldstart_pinhook_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 3 | `read` | 监听前 pin + hook（11-14） |
+| `dsh_shm_v2` | `dsh_coldstart_shm_v2` | V2 | `dsh-0.2.2-rc.1-pin` | 4 | — | 监听前把清单文件拷进 `/dev/shm`（11-16） |
 
 `dsh_pinctl_v2`、`dsh_pin_v2` 沿用了最初创建时的名称，名称与现在的用途不对应。
 `dsh_v2`、`dsh_prewarm_v2` 只在 11-12 测过，11-14 时已不存在、没有重建（记在 `deployments.json` 的
@@ -484,6 +675,7 @@ TAG=dsh-0.2.2-rc.1-pin bash scripts/build_image.sh       # 带上清单重新构
 bash scripts/test_local.sh                               # 本地合约测试：/ping、ping、两次 agent 对话
 V2="dsh_v2 dsh_prewarm_v2 dsh_pinctl_v2 dsh_pin_v2"      # 11-12 的 4 个 runtime
 # 11-14 的 hook 测试：V2="dsh_pinctl_v2 dsh_pin_v2 dsh_hook_v2 dsh_hookpin_v2 dsh_pinhook_v2"
+# 11-16 的 /dev/shm 测试：V2="dsh_pinctl_v2 dsh_pin_v2 dsh_hook_v2 dsh_shm_v2"
 DEPLOY_KEYS="$V2" bash scripts/deploy.sh                 # ECR + IAM 角色 + 这些 runtime -> deployments.json（幂等）
 DEPLOY_KEYS="dsh_pin_v2" bash scripts/deploy.sh          # 只创建/更新指定 runtime，不打扰其他的
 FORCE_UPDATE=1 DEPLOY_KEYS="$V2" bash scripts/deploy.sh  # 镜像没变也更新，让每个 runtime 打新快照（用于测第 1 次使用）
