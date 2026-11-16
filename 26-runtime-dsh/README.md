@@ -381,11 +381,85 @@ hook 只支持平台 V2 + microVM；调用不重试，失败或超过 120 秒都
 
 ### 3. 组合
 
-- **/dev/shm + hook（推荐）**：`DSH_PREWARM=4` + `DSH_HOOK=read`，不需要额外代码。hook 的 `disk` 调用照旧按清单读
-  文件（3,629 个文件、154 MB，用 13.7–15.3 秒），其中真正起作用的是仍在镜像上的 Node 二进制和原生插件。稳定态比只用
-  /dev/shm 慢约 0.5 秒，原因未查明。
-- **pin + hook（不要用）**：在 `disk` 调用里 pin 无效（那次调用不进快照）；监听前 pin 再加 hook，第 1 次使用与 pin 相当，
-  但 pin 的稳定态收益消失。
+#### /dev/shm + hook（推荐）
+
+不需要新代码：同一个包装器同时打开两个开关，`DSH_PREWARM=4`（启动阶段拷进 `/dev/shm`）和 `DSH_HOOK=read`
+（`disk` 调用按清单读文件）。两部分在不同时刻起作用：
+
+| 时刻 | 在哪个微VM上 | 做了什么 | 作用 |
+|---|---|---|---|
+| 启动，`server.listen()` 之前 | 构建用的微VM | `stageToShm()`：3,613 个 JS 等文件（25 MB）拷进 `/dev/shm` | 这些文件随快照在内存里恢复 |
+| `memory` 调用 | 同上，冻结之前 | 只记时间戳 | — |
+| 打快照 | — | 内存（含 `/dev/shm`）和磁盘一起冻结 | — |
+| `disk` 调用 | 从快照测试恢复的另一个微VM | 按清单冷读 3,629 个文件（154 MB，从镜像路径读，13.7–15.3 秒） | 平台据此预取块；真正有用的是仍在镜像上的 Node 二进制、共享库和 2 个原生插件 |
+| 每个回合 | 每个 session 的微VM | 用 `/dev/shm` 里的入口脚本起 DSH，Node 仍是镜像上的那个 | JS 从内存读，Node 二进制从已预取的块读 |
+
+**1. 启动顺序（`app/server.mjs`）** — 拷贝在监听之前同步做完，所以平台第一次 `/ping` 成功时 `/dev/shm` 已经就绪：
+
+```javascript
+mkdirSync(WORKDIR, { recursive: true });
+writeProfilePatch();
+await warmCredentialChain();
+if (PREWARM_LEVEL === 3) await startPinner();
+if (PREWARM_LEVEL === 4) stageToShm();
+server.listen(PORT, HOST, () => {
+  console.log(JSON.stringify({
+    event: 'listening', host: HOST, port: PORT, dsh_version: dshVersion, model: MODEL_ID,
+    region: REGION, prewarm: PREWARM_LEVEL, prewarm_detail: prewarm.detail, hook: HOOK_MODE || null,
+    boot_ms: Math.round((now() - PROC_START_TS) * 1000),
+  }));
+  if (PREWARM_LEVEL === 1) runPrewarm();
+});
+```
+
+**2. 允许的组合（`app/server.mjs`）** — `DSH_PREWARM=4` 可以和 `DSH_HOOK=read` 一起用；只有 `DSH_HOOK=pin` 与
+`DSH_PREWARM=3` 互斥：
+
+```javascript
+if (!['', 'read', 'pin'].includes(HOOK_MODE)) throw new Error(`DSH_HOOK must be "read" or "pin", got ${JSON.stringify(HOOK_MODE)}`);
+if (HOOK_MODE === 'pin' && PREWARM_LEVEL === 3) throw new Error('DSH_HOOK=pin and DSH_PREWARM=3 both pin; set one');
+if (![0, 1, 3, 4].includes(PREWARM_LEVEL)) throw new Error(`DSH_PREWARM must be 0, 1, 3 or 4, got ${process.env.DSH_PREWARM}`);
+```
+
+**3. `disk` 调用与每个回合**：`disk` 调用走「2. lifecycle hook」核心代码里的 `handleWarmup()`，`DSH_HOOK=read` 时执行的是
+
+```javascript
+  const detail = await runPinner(hold ? ['--evict'] : ['--evict', '--no-hold'], hold);
+```
+
+每个回合怎么从 `/dev/shm` 起 DSH，见「1. /dev/shm」核心代码的最后一段。
+
+**4. runtime 配置** — `scripts/deploy.sh` 为 `dsh_shmhook_v2` 生成；下面是 `get-agent-runtime` 读回的实际配置（节选）：
+
+```json
+{
+    "platformVersion": "V2",
+    "environmentVariables": {
+        "DSH_HOOK": "read",
+        "DSH_MODEL_ID": "deepseek.v3.2",
+        "DSH_PREWARM": "4"
+    },
+    "hooksConfiguration": {
+        "build": {
+            "warmup": {
+                "action": {
+                    "httpPost": {
+                        "path": "/warmup",
+                        "port": 8080
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+稳定态比只用 /dev/shm 慢约 0.5 秒（2.5 vs 1.9 秒），原因未查明。只读 Node 二进制、库和原生插件（不读已在 `/dev/shm`
+里的 JS）可以缩短 `disk` 调用，但没有测过。
+
+#### pin + hook（不要用）
+
+在 `disk` 调用里 pin 无效（那次调用不进快照）；监听前 pin 再加 hook，第 1 次使用与 pin 相当，但 pin 的稳定态收益消失。
 
 ### 4. page pin（不作首选）
 
