@@ -18,6 +18,8 @@
 #                             plus the disk-call read of dsh_coldstart_hook_v2 (DSH_HOOK=read)
 #   dsh_coldstart_shm_v2      platform V2, pin image, before listening copy the manifest's files
 #                             to /dev/shm and run DSH from there (DSH_PREWARM=4)
+#   dsh_coldstart_shmhook_v2  platform V2, pin image, /dev/shm staging (DSH_PREWARM=4) plus the
+#                             disk-call read of dsh_coldstart_hook_v2 (DSH_HOOK=read)
 #
 # FORCE_UPDATE=1 updates the target runtimes even when their image is unchanged,
 # which makes AgentCore take a fresh V2 snapshot of each.
@@ -37,21 +39,22 @@ POLICY_NAME=AgentCoreDshColdstartPolicy
 IDLE_TIMEOUT=60
 MAX_IMAGE_BYTES=$((2048 * 1024 * 1024))   # AgentCore quota: max 2048 MB image
 PIN_TAG="${PIN_TAG:-${TAG}-pin}"   # same DSH; adds the page pinner, its manifest and python3
-KEYS=(dsh_v2 dsh_prewarm_v2 dsh_pinctl_v2 dsh_pin_v2 dsh_hook_v2 dsh_hookpin_v2 dsh_pinhook_v2 dsh_shm_v2)
+KEYS=(dsh_v2 dsh_prewarm_v2 dsh_pinctl_v2 dsh_pin_v2 dsh_hook_v2 dsh_hookpin_v2 dsh_pinhook_v2 dsh_shm_v2 dsh_shmhook_v2)
 declare -A NAME=([dsh_v2]=dsh_coldstart_base_v2 [dsh_prewarm_v2]=dsh_coldstart_prewarm_v2
                  [dsh_pinctl_v2]=dsh_coldstart_diag_v2 [dsh_pin_v2]=dsh_coldstart_deepwarm_v2
                  [dsh_hook_v2]=dsh_coldstart_hook_v2 [dsh_hookpin_v2]=dsh_coldstart_hookpin_v2
-                 [dsh_pinhook_v2]=dsh_coldstart_pinhook_v2 [dsh_shm_v2]=dsh_coldstart_shm_v2)
+                 [dsh_pinhook_v2]=dsh_coldstart_pinhook_v2 [dsh_shm_v2]=dsh_coldstart_shm_v2
+                 [dsh_shmhook_v2]=dsh_coldstart_shmhook_v2)
 declare -A PREWARM=([dsh_v2]=0 [dsh_prewarm_v2]=1 [dsh_pinctl_v2]=0 [dsh_pin_v2]=3
-                    [dsh_hook_v2]=0 [dsh_hookpin_v2]=0 [dsh_pinhook_v2]=3 [dsh_shm_v2]=4)
+                    [dsh_hook_v2]=0 [dsh_hookpin_v2]=0 [dsh_pinhook_v2]=3 [dsh_shm_v2]=4 [dsh_shmhook_v2]=4)
 declare -A HOOK=([dsh_v2]= [dsh_prewarm_v2]= [dsh_pinctl_v2]= [dsh_pin_v2]=
-                 [dsh_hook_v2]=read [dsh_hookpin_v2]=pin [dsh_pinhook_v2]=read [dsh_shm_v2]=)   # DSH_HOOK; empty = no lifecycle hook
+                 [dsh_hook_v2]=read [dsh_hookpin_v2]=pin [dsh_pinhook_v2]=read [dsh_shm_v2]= [dsh_shmhook_v2]=read)   # DSH_HOOK; empty = no lifecycle hook
 declare -A PLATFORM=([dsh_v2]=V2 [dsh_prewarm_v2]=V2 [dsh_pinctl_v2]=V2 [dsh_pin_v2]=V2
-                     [dsh_hook_v2]=V2 [dsh_hookpin_v2]=V2 [dsh_pinhook_v2]=V2 [dsh_shm_v2]=V2)
+                     [dsh_hook_v2]=V2 [dsh_hookpin_v2]=V2 [dsh_pinhook_v2]=V2 [dsh_shm_v2]=V2 [dsh_shmhook_v2]=V2)
 declare -A TAGOF=([dsh_v2]=$TAG [dsh_prewarm_v2]=$TAG
                   [dsh_pinctl_v2]=$PIN_TAG [dsh_pin_v2]=$PIN_TAG
                   [dsh_hook_v2]=$PIN_TAG [dsh_hookpin_v2]=$PIN_TAG [dsh_pinhook_v2]=$PIN_TAG
-                  [dsh_shm_v2]=$PIN_TAG)
+                  [dsh_shm_v2]=$PIN_TAG [dsh_shmhook_v2]=$PIN_TAG)
 read -r -a TARGET_KEYS <<< "${DEPLOY_KEYS:-${KEYS[*]}}"
 
 ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
