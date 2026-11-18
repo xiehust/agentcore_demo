@@ -1,6 +1,6 @@
-"""Deploy the reroute PoC: 2 Lambdas, 2 IAM roles, 1 Gateway (AWS_IAM inbound), targets.
+"""Deploy the reroute PoC: 1 Lambda (interceptor), 2 IAM roles, 1 Gateway (AWS_IAM inbound), targets.
 
-    .venv/bin/python deploy.py [--cn-provider mock|exa|anysearch]
+    .venv/bin/python deploy.py [--cn-provider anysearch|bocha|exa]
 
 --cn-provider picks where Chinese queries go (sets the interceptor's DST_TOOL); default anysearch.
 Writes resource IDs to state.json so the test scripts / cleanup.py can find them.
@@ -21,7 +21,7 @@ HERE = Path(__file__).parent
 STATE = HERE / "state.json"
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--cn-provider", choices=["mock", "exa", "anysearch"], default="anysearch")
+ap.add_argument("--cn-provider", choices=["anysearch", "bocha", "exa"], default="anysearch")
 CN_PROVIDER = ap.parse_args().cn_provider
 
 sess = boto3.Session(region_name=REGION)
@@ -85,14 +85,13 @@ lambda_role = ensure_role(
     managed=["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"],
 )
 
-# 2. Lambdas
+# 2. Lambda (interceptor)
 interceptor_arn = ensure_lambda(f"{PREFIX}-interceptor", HERE / "lambdas/interceptor.py", lambda_role,
                                 extra=[HERE / "lambdas/normalize.py"])
-mockexa_arn = ensure_lambda(f"{PREFIX}-mockexa", HERE / "lambdas/mock_exa.py", lambda_role)
-state.update(interceptor_arn=interceptor_arn, mockexa_arn=mockexa_arn)
+state.update(interceptor_arn=interceptor_arn)
 save()
 
-# 3. Gateway service role: invoke the two Lambdas + Web Search, nothing else
+# 3. Gateway service role: invoke the interceptor + Web Search, nothing else
 gw_role = ensure_role(
     f"{PREFIX}-gateway-role",
     {"Version": "2012-10-17", "Statement": [{
@@ -101,7 +100,7 @@ gw_role = ensure_role(
                       "ArnLike": {"aws:SourceArn": f"arn:aws:bedrock-agentcore:{REGION}:{ACCOUNT}:*"}},
     }]},
     inline={"Version": "2012-10-17", "Statement": [
-        {"Effect": "Allow", "Action": "lambda:InvokeFunction", "Resource": [interceptor_arn, mockexa_arn]},
+        {"Effect": "Allow", "Action": "lambda:InvokeFunction", "Resource": [interceptor_arn]},
         {"Effect": "Allow", "Action": "bedrock-agentcore:InvokeWebSearch",
          "Resource": f"arn:aws:bedrock-agentcore:{REGION}:aws:tool/web-search.v1"},
     ]},
@@ -161,32 +160,14 @@ if "websearch_target_id" not in state:
     state["websearch_target_id"] = t["targetId"]
     save()
 
-if "mockexa_target_id" not in state:
-    t = ctl.create_gateway_target(
-        gatewayIdentifier=gid, name="mockexa",
-        targetConfiguration={"mcp": {"lambda": {
-            "lambdaArn": mockexa_arn,
-            "toolSchema": {"inlinePayload": [{
-                "name": "web_search_exa",
-                "description": "Mock Exa search (PoC).",
-                "inputSchema": {"type": "object", "properties": {
-                    "query": {"type": "string"}, "numResults": {"type": "integer"}},
-                    "required": ["query"]},
-            }]},
-        }}},
-        credentialProviderConfigurations=[{"credentialProviderType": "GATEWAY_IAM_ROLE"}],
-    )
-    state["mockexa_target_id"] = t["targetId"]
-    save()
-
-for key in ("websearch_target_id", "mockexa_target_id"):
-    wait_ready(lambda k=key: ctl.get_gateway_target(gatewayIdentifier=gid, targetId=state[k]), key)
+wait_ready(lambda: ctl.get_gateway_target(gatewayIdentifier=gid, targetId=state["websearch_target_id"]), "websearch")
 
 # 6. Third-party MCP targets, keys held in AgentCore Identity
-#    (run store_exa_key.py / store_anysearch_key.py first; a target is skipped if its key is not stored)
+#    (run store_anysearch_key.py / store_bocha_key.py / store_exa_key.py first; a target is skipped if its key is not stored)
 MCP_TARGETS = {
     "exa": {"endpoint": "https://mcp.exa.ai/mcp", "header": "x-api-key", "prefix": None},
     "anysearch": {"endpoint": "https://api.anysearch.com/mcp", "header": "Authorization", "prefix": "Bearer "},
+    "bocha": {"endpoint": "https://mcp.bochaai.com/mcp", "header": "Authorization", "prefix": "Bearer "},
 }
 wid = ctl.get_gateway(gatewayIdentifier=gid)["workloadIdentityDetails"]["workloadIdentityArn"]
 
@@ -233,9 +214,9 @@ for name, cfg in MCP_TARGETS.items():
         ensure_mcp_target(name, cfg)
 
 # 7. Point the interceptor's Chinese route at the chosen provider
-DST_TOOLS = {"mock": "mockexa___web_search_exa", "exa": "exa___web_search_exa", "anysearch": "anysearch___search"}
+DST_TOOLS = {"exa": "exa___web_search_exa", "anysearch": "anysearch___search", "bocha": "bocha___bocha_web_search"}
 cn = CN_PROVIDER
-if cn != "mock" and f"{cn}_target_id" not in state:
+if f"{cn}_target_id" not in state:
     raise SystemExit(f"--cn-provider {cn}: target not deployed, store its key first")
 lam.update_function_configuration(FunctionName=f"{PREFIX}-interceptor",
                                   Environment={"Variables": {"DST_TOOL": DST_TOOLS[cn]}})

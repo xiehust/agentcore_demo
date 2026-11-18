@@ -2,7 +2,7 @@
 
 import sys
 
-from test import call, rpc  # reuses SigV4 MCP client; importing runs nothing heavy
+from mcp_client import call, rpc  # SigV4 MCP client
 
 EXA_TOOL = "exa___web_search_exa"
 

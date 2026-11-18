@@ -1,4 +1,4 @@
-"""Delete everything deploy.py created (targets, gateway, Lambdas, IAM roles)."""
+"""Delete everything deploy.py created (targets, gateway, interceptor Lambda, IAM roles, API key providers)."""
 
 import json
 import time
@@ -16,7 +16,7 @@ ctl, lam, iam = sess.client("bedrock-agentcore-control"), sess.client("lambda"),
 
 gid = state.get("gateway_id")
 if gid:
-    for k in ("websearch_target_id", "mockexa_target_id", "exa_target_id", "anysearch_target_id"):
+    for k in ("websearch_target_id", "exa_target_id", "anysearch_target_id", "bocha_target_id"):
         if state.get(k):
             try:
                 ctl.delete_gateway_target(gatewayIdentifier=gid, targetId=state[k])
@@ -31,14 +31,14 @@ if gid:
     except ctl.exceptions.ResourceNotFoundException:
         pass
 
-for name in ("exa", "anysearch"):
+for name in ("exa", "anysearch", "bocha"):
     if state.get(f"{name}_provider_arn"):
         try:
             ctl.delete_api_key_credential_provider(name=f"{PREFIX}-{name}")
         except ctl.exceptions.ResourceNotFoundException:
             pass
 
-for fn in (f"{PREFIX}-interceptor", f"{PREFIX}-mockexa"):
+for fn in (f"{PREFIX}-interceptor",):
     try:
         lam.delete_function(FunctionName=fn)
     except lam.exceptions.ResourceNotFoundException:

@@ -2,7 +2,7 @@
 
 Unified tool result text (JSON):
 {
-  "provider": "agentcore-web-search" | "exa" | "anysearch",
+  "provider": "agentcore-web-search" | "exa" | "anysearch" | "bocha",
   "results": [
     {"title": str, "url": str, "publishedDate": "YYYY-MM-DD" | null,
      "author": str | null, "text": str}
@@ -103,6 +103,36 @@ def from_anysearch(text):
     return results
 
 
+BOCHA_FIELD = re.compile(r"^(Title|URL|Description|Published date|Site name):\s?(.*)$")
+
+
+def from_bocha(text):
+    """Parse Bocha's text: blank-line separated blocks of Title/URL/Description/Published date/Site name.
+
+    Description may span several lines; it runs until the next known field.
+    """
+    results = []
+    for block in re.split(r"\n\n(?=Title: )", text.strip()):
+        fields, current = {}, None
+        for line in block.splitlines():
+            m = BOCHA_FIELD.match(line)
+            if m:
+                current = m.group(1)
+                fields[current] = m.group(2)
+            elif current == "Description":
+                fields["Description"] += "\n" + line
+        if "URL" not in fields:
+            continue
+        results.append({
+            "title": fields.get("Title", "").strip(),
+            "url": fields["URL"].strip(),
+            "publishedDate": _date(fields.get("Published date", "").strip()),
+            "author": None,
+            "text": fields.get("Description", "").strip(),
+        })
+    return results
+
+
 def normalize_text(text):
     """Return (provider, unified_json_text) or (None, text) if the format is unknown."""
     try:
@@ -113,7 +143,11 @@ def normalize_text(text):
     except ValueError:
         pass
     if text.lstrip().startswith("Title:"):
-        unified = {"provider": "exa", "results": from_exa(text)}
+        # Exa and Bocha both start with "Title:"; Bocha uses Description / Published date / Site name.
+        if re.search(r"^(Description|Published date|Site name):", text, re.M):
+            unified = {"provider": "bocha", "results": from_bocha(text)}
+        else:
+            unified = {"provider": "exa", "results": from_exa(text)}
         return unified["provider"], json.dumps(unified, ensure_ascii=False)
     if text.lstrip().startswith("## Search Results"):
         unified = {"provider": "anysearch", "results": from_anysearch(text)}

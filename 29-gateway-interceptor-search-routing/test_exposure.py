@@ -4,12 +4,13 @@ import json
 import sys
 from pathlib import Path
 
-from test import call, rpc
+from mcp_client import call, rpc
 
 EXPOSED = "websearch___WebSearch"
 CN = json.loads((Path(__file__).parent / "state.json").read_text()).get("cn_provider", "exa")
-HIDDEN = ["exa___web_search_exa", "exa___agent_run", "mockexa___web_search_exa",
-          "anysearch___search", "anysearch___extract", "anysearch___score"]
+HIDDEN = ["exa___web_search_exa", "exa___agent_run",
+          "anysearch___search", "anysearch___extract", "anysearch___score",
+          "bocha___bocha_web_search", "bocha___bocha_ai_search"]
 results = []
 
 
