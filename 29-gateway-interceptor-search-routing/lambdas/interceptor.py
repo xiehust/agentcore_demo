@@ -1,7 +1,8 @@
 """Gateway interceptor (REQUEST + RESPONSE) for language-based search routing.
 
 REQUEST:
-  - tools/call `websearch___WebSearch` with a mostly-CJK query is rewritten to DST_TOOL.
+  - tools/call `websearch___WebSearch` with a mostly-CJK query is rewritten to DST_TOOL
+    (mock Exa, real Exa or AnySearch; arguments are mapped per provider).
   - tools/call on any other tool is rejected (only EXPOSED_TOOL is public).
 RESPONSE:
   - tools/list result is filtered down to EXPOSED_TOOL.
@@ -43,12 +44,23 @@ def on_request(body):
 
     args = params.get("arguments") or {}
     if is_chinese(args.get("query", "")):
-        new_args = {"query": args["query"], "objective": args["query"]}  # Exa requires objective
-        if "maxResults" in args:
-            new_args["numResults"] = args["maxResults"]
+        new_args = map_args(DST_TOOL, args)
         body = {**body, "params": {**params, "name": DST_TOOL, "arguments": new_args}}
         print(json.dumps({"rerouted_to": DST_TOOL, "out": body}, ensure_ascii=False))
     return {"transformedGatewayRequest": {"body": body}}
+
+
+def map_args(dst, args):
+    """Translate WebSearch arguments into the destination tool's schema."""
+    if dst.startswith("anysearch___"):
+        out = {"query": args["query"]}
+        if "maxResults" in args:
+            out["max_results"] = min(int(args["maxResults"]), 10)  # AnySearch caps at 10
+        return out
+    out = {"query": args["query"], "objective": args["query"]}  # Exa requires objective
+    if "maxResults" in args:
+        out["numResults"] = args["maxResults"]
+    return out
 
 
 def normalize_tool_result(body):

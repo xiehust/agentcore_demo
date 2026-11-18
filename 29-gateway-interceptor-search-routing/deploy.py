@@ -1,8 +1,12 @@
-"""Deploy the reroute PoC: 2 Lambdas, 2 IAM roles, 1 Gateway (AWS_IAM inbound), 2 targets.
+"""Deploy the reroute PoC: 2 Lambdas, 2 IAM roles, 1 Gateway (AWS_IAM inbound), targets.
 
-Writes resource IDs to state.json so test.py / cleanup.py can find them.
+    .venv/bin/python deploy.py [--cn-provider mock|exa|anysearch]
+
+--cn-provider picks where Chinese queries go (sets the interceptor's DST_TOOL); default anysearch.
+Writes resource IDs to state.json so the test scripts / cleanup.py can find them.
 """
 
+import argparse
 import io
 import json
 import time
@@ -15,6 +19,10 @@ REGION = "us-east-1"
 PREFIX = "ic-reroute-poc"
 HERE = Path(__file__).parent
 STATE = HERE / "state.json"
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--cn-provider", choices=["mock", "exa", "anysearch"], default="anysearch")
+CN_PROVIDER = ap.parse_args().cn_provider
 
 sess = boto3.Session(region_name=REGION)
 iam = sess.client("iam")
@@ -174,18 +182,26 @@ if "mockexa_target_id" not in state:
 for key in ("websearch_target_id", "mockexa_target_id"):
     wait_ready(lambda k=key: ctl.get_gateway_target(gatewayIdentifier=gid, targetId=state[k]), key)
 
-# 6. Real Exa MCP target, key held in AgentCore Identity (run store_exa_key.py first)
-if "exa_provider_arn" in state:
-    provider = ctl.get_api_key_credential_provider(name=f"{PREFIX}-exa")
-    wid = ctl.get_gateway(gatewayIdentifier=gid)["workloadIdentityDetails"]["workloadIdentityArn"]
+# 6. Third-party MCP targets, keys held in AgentCore Identity
+#    (run store_exa_key.py / store_anysearch_key.py first; a target is skipped if its key is not stored)
+MCP_TARGETS = {
+    "exa": {"endpoint": "https://mcp.exa.ai/mcp", "header": "x-api-key", "prefix": None},
+    "anysearch": {"endpoint": "https://api.anysearch.com/mcp", "header": "Authorization", "prefix": "Bearer "},
+}
+wid = ctl.get_gateway(gatewayIdentifier=gid)["workloadIdentityDetails"]["workloadIdentityArn"]
+
+
+def ensure_mcp_target(name, cfg):
+    provider_arn = state[f"{name}_provider_arn"]
+    provider = ctl.get_api_key_credential_provider(name=f"{PREFIX}-{name}")
     iam.put_role_policy(
-        RoleName=f"{PREFIX}-gateway-role", PolicyName="exa-identity",
+        RoleName=f"{PREFIX}-gateway-role", PolicyName=f"{name}-identity",
         PolicyDocument=json.dumps({"Version": "2012-10-17", "Statement": [
             {"Effect": "Allow",
              "Action": ["bedrock-agentcore:GetResourceApiKey", "bedrock-agentcore:GetWorkloadAccessToken"],
              "Resource": [
                  f"arn:aws:bedrock-agentcore:{REGION}:{ACCOUNT}:token-vault/default",
-                 state["exa_provider_arn"],
+                 provider_arn,
                  f"arn:aws:bedrock-agentcore:{REGION}:{ACCOUNT}:workload-identity-directory/default",
                  wid,
              ]},
@@ -193,22 +209,38 @@ if "exa_provider_arn" in state:
              "Resource": provider["apiKeySecretArn"]["secretArn"]},
         ]}),
     )
-    if "exa_target_id" not in state:
+    if f"{name}_target_id" not in state:
         time.sleep(10)  # IAM propagation
+        api_key_cfg = {"providerArn": provider_arn, "credentialLocation": "HEADER",
+                       "credentialParameterName": cfg["header"]}
+        if cfg["prefix"]:
+            api_key_cfg["credentialPrefix"] = cfg["prefix"]
         t = ctl.create_gateway_target(
-            gatewayIdentifier=gid, name="exa",
-            targetConfiguration={"mcp": {"mcpServer": {"endpoint": "https://mcp.exa.ai/mcp"}}},
+            gatewayIdentifier=gid, name=name,
+            targetConfiguration={"mcp": {"mcpServer": {"endpoint": cfg["endpoint"]}}},
             credentialProviderConfigurations=[{
                 "credentialProviderType": "API_KEY",
-                "credentialProvider": {"apiKeyCredentialProvider": {
-                    "providerArn": state["exa_provider_arn"],
-                    "credentialLocation": "HEADER",
-                    "credentialParameterName": "x-api-key",
-                }},
+                "credentialProvider": {"apiKeyCredentialProvider": api_key_cfg},
             }],
         )
-        state["exa_target_id"] = t["targetId"]
+        state[f"{name}_target_id"] = t["targetId"]
         save()
-    wait_ready(lambda: ctl.get_gateway_target(gatewayIdentifier=gid, targetId=state["exa_target_id"]), "exa")
+    wait_ready(lambda: ctl.get_gateway_target(gatewayIdentifier=gid, targetId=state[f"{name}_target_id"]), name)
+
+
+for name, cfg in MCP_TARGETS.items():
+    if f"{name}_provider_arn" in state:
+        ensure_mcp_target(name, cfg)
+
+# 7. Point the interceptor's Chinese route at the chosen provider
+DST_TOOLS = {"mock": "mockexa___web_search_exa", "exa": "exa___web_search_exa", "anysearch": "anysearch___search"}
+cn = CN_PROVIDER
+if cn != "mock" and f"{cn}_target_id" not in state:
+    raise SystemExit(f"--cn-provider {cn}: target not deployed, store its key first")
+lam.update_function_configuration(FunctionName=f"{PREFIX}-interceptor",
+                                  Environment={"Variables": {"DST_TOOL": DST_TOOLS[cn]}})
+lam.get_waiter("function_updated_v2").wait(FunctionName=f"{PREFIX}-interceptor")
+state["cn_provider"] = cn
+save()
 
 print(json.dumps(state, indent=2))

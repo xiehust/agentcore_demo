@@ -27,7 +27,7 @@ and the target receives the rewritten name and arguments.
 ```bash
 printf %s "$EXA_KEY" | .venv/bin/python store_exa_key.py   # key -> AgentCore Identity
 .venv/bin/python deploy.py                                 # adds `exa` MCP target (x-api-key header)
-# set interceptor env DST_TOOL=exa___web_search_exa
+# then: .venv/bin/python deploy.py --cn-provider exa   (sets DST_TOOL)
 .venv/bin/python test_exa.py
 ```
 
@@ -53,7 +53,7 @@ so their control cases now fail by design.
 The RESPONSE stage rewrites every successful `tools/call` result (see `lambdas/normalize.py`) into:
 
 ```json
-{"provider": "agentcore-web-search | exa",
+{"provider": "agentcore-web-search | anysearch | exa",
  "results": [{"title": "", "url": "", "publishedDate": "YYYY-MM-DD | null", "author": "str | null", "text": ""}]}
 ```
 
@@ -65,3 +65,25 @@ original request (`websearch___WebSearch`) even when the REQUEST stage rerouted 
 .venv/bin/python test_format.py     # 6 cases
 .venv/bin/python test_exposure.py   # still 6/6
 ```
+
+## AnySearch (default Chinese route)
+
+```bash
+printf %s "<anysearch key>" | .venv/bin/python store_anysearch_key.py   # key -> AgentCore Identity
+.venv/bin/python deploy.py --cn-provider anysearch                       # adds `anysearch` MCP target, sets DST_TOOL
+.venv/bin/python test_exposure.py   # 9 cases
+.venv/bin/python test_format.py     # 6 cases
+```
+
+- Target `https://api.anysearch.com/mcp`; the Gateway injects `Authorization: Bearer <key>`
+  (`credentialParameterName=Authorization`, `credentialPrefix="Bearer "`). The
+  `X-Anysearch-Client` header from AnySearch's sample config is not required.
+- `maxResults` maps to `max_results` (capped at 10). Only general search is used, no `domain`/`sub_domain`.
+- AnySearch returns Markdown (`### N. Title`, `- **URL**:`, trailing ` date: Aug 14, 2026`);
+  `normalize.py` parses it into the unified format. Relative dates ("2 days ago") become `null`.
+- Its extra tools (`batch_search`, `extract`, `get_sub_domains`, `score`) are hidden and rejected.
+  AnySearch asks agents to submit `score` feedback; this PoC does not.
+- `deploy.py --cn-provider mock|exa|anysearch` switches the Chinese route; tests read `cn_provider` from `state.json`.
+
+Result (2026-11-18): test_exposure 9/9, test_format 6/6. An invalid key called directly
+returns `isError: true`, so successful searches through the Gateway confirm the stored key is used.
