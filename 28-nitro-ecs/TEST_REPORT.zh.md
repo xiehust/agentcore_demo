@@ -8,6 +8,7 @@
 - 性能批次请求 5 轮，实际执行 2 轮、4 次 DSH 调用。4 次均正常完成，但仅 **3/4** 最终答案精确符合 `pong`；第 2 轮 warm 错答触发失败并停止。不能标为性能测试通过，也不能删除该慢样本。
 - 磁盘隔离的 **13 项行为断言均通过**：同一 EC2 上 task 独立 guest/文件、根文件系统只读，task 重建后三处临时 marker 不保留，另一 task 不受影响。最终批次退出/清理状态见资源章节。
 - Nitro Sandbox **不支持 VM snapshot/restore 或 pause/resume**。恢复应采用应用 checkpoint + 外部持久化，不等同于完整进程/内存快照。
+- 2026-11-18 的 CPU 超分目标 1:2 实测**未达到目标**：16 个 CPU 未设限 task 被 Managed Instances 调度到 4 台 `m7g.2xlarge`，每 task 吞吐约等于单 task 基线。详细 placement、吞吐与清理证据见 `results/overcommit-1to2-20261118.json`。同日改用单宿主复测：限定 `m7g.large`（2 vCPU）容量池后，**4 个 Sandbox 落在同一台宿主，1:2 达成**；并发时每 task 吞吐 0.50× 基线，聚合 2.00× 基线（见下文“单宿主复测”）。
 
 ## 环境与方法
 
@@ -79,6 +80,60 @@
 
 这验证的是 task 文件可见性和生命周期行为，不是安全擦除、内核逃逸、宿主对抗或 IOPS/QoS 隔离测试。多个 task 仍共享实例级 EBS 吞吐/IOPS；默认每 task 20 GiB 临时存储不能当作持久化磁盘。
 
+## CPU 超分目标 1:2 实测（2026-11-18）
+
+本次把 task-level `cpu` 留空，task memory 设为 512 MiB；基线和并发阶段各运行 10 秒、单 Node worker 的 CPU-bound 探针，不调用 DSH 或 Bedrock。8-vCPU `m7g.2xlarge` 的目标是 16 个 Sandbox。任务定义的可信执行配置为 `ISOLATED_SANDBOX`，ECS 返回的 `cpu` 为 `0`；宿主 EC2 的 `EnclaveOptions.Enabled` 为 `true`。CloudFormation 创建任务定义是为了绕过本次 AWS MCP ECS SDK 模型不认识 `TrustedExecutionConfiguration` 的限制；本次运行使用 MCP 直接调用 ECS/Lambda API，不是通过本地 `overcommit.py` 发起。
+
+| 指标 | 实测 |
+|---|---:|
+| 目标任务数 | 16（8 vCPU × 2） |
+| 实际宿主数 / CPU 总量 | 4 台 `m7g.2xlarge` / 32 vCPU |
+| 每宿主 Sandbox 数 | 5、5、5、1 |
+| 总体密度 / 单宿主最高密度 | 0.50 / 0.625 Sandbox 每 vCPU |
+| 单 task 基线 | 779.91 M ops/s（1 个样本） |
+| 并发 16 task 平均 / 中位吞吐 | 784.21 / 783.80 M ops/s |
+| 并发 task 吞吐范围 | 779.19–791.06 M ops/s |
+| 并发均值 / 单 task 基线 | 1.006× |
+
+**判定：`target_not_observed`。** 调度器扩展到 4 台宿主，而不是在一台 8-vCPU 宿主上运行 16 个 Sandbox；并发 task 的单任务吞吐也没有明显低于基线。因此这次没有观测到 1:2 CPU 竞争，不能宣称 ECS 达到超分。该结果只说明本次容量池/任务设置下未达到目标，不证明 ECS 所有配置都无法超分；公开文档没有给出把 capacity provider 因子精确设为 2× 的 API 字段，需先确认该控制参数如何暴露，再做可控的密度对照。
+
+运行完成后，16 个 task 均停止、4 台 ECS Managed Instances 均由 ECS 回收、临时 probe Lambda 和日志组删除、CPU 测试镜像 tag 删除、临时 task definition 注销。原有 cluster、IAM、SG、ECR repository 和原始镜像未删除。结构化指标见 `results/overcommit-1to2-20261118.json`。
+
+## CPU 超分 1:2 单宿主复测（2026-11-18，`overcommit.py` 端到端）
+
+上一轮的 `m7g.2xlarge` 池把 16 个 task 扩散到 4 台宿主。ECS Managed Instances 的 `memberOf` 只支持 subnet/AZ/arch/instance-type 属性，不能按 instance-id 固定宿主，因此本轮新建只允许 `m7g.large`（2 vCPU、8 GiB、Graviton 每核 1 线程）的专用容量池，目标为 4 个 Sandbox。`overcommit.py` 一旦发现 task 落到第二台宿主即失败。本轮由本地 `overcommit.py` + AWS CLI 端到端执行，task 级 `cpu` 未设置，memory 512 MiB，基线和并发各 10 秒单线程 CPU 探针。
+
+| 指标 | 实测 |
+|---|---:|
+| 宿主 | 1 台 `m7g.large`（`i-0a74b91637ac12cc8`），2 vCPU / 2 核 / 每核 1 线程 |
+| Sandbox 数 / 密度 | 4 / **2.0 每 vCPU** |
+| 启动到 ready | 首个 73.7 s（含宿主冷启动）；后 3 个 22.0–22.2 s |
+| 单 task 基线 | 773.86 M ops/s |
+| 4 task 并发吞吐 | 379.3–395.4 M ops/s，均值 387.44 M |
+| 并发均值 / 基线 | **0.501×** |
+| 聚合 / 基线 | **2.00×**（= 2 个物理核） |
+
+ECS 调度视图（`DescribeContainerInstances`）：注册 CPU 2048、MEMORY 6088 MiB。4 个 task 后 CPU 剩余仍为 2048，说明未设 `cpu` 的 task 不占 CPU 调度额度；MEMORY 每 task 扣 774 MiB（512 MiB 请求 + 约 262 MiB Sandbox 开销），4 个后剩 2992 MiB。按内存估算可放约 7 个，但后续探测实测每宿主上限是 5 个（见下文），即 `m7g.large` 最高 2.5:1。此外，`m7g.large` 最多 3 个 ENI，但 4 个 awsvpc task 照常运行（账户 `awsvpcTrunking` 为 disabled），因此本例中宿主 ENI 数量不是 Sandbox 数的上限。
+
+**判定：`passed`。** 一台宿主上运行 2 倍于 vCPU 数的 Nitro Sandbox，CPU 按核公平分时：每 task 约降为一半，总吞吐等于物理核数，未见额外损耗。这是 CPU-bound 的经验测量：单样本、10 秒、单线程，不代表 I/O 或内存密集负载，也不是性能承诺。上一轮 `m7g.2xlarge` 每宿主只放 5 个 task 的原因见下一节：每台宿主最多 5 个 Sandbox，与机型大小无关。
+
+清理：4 个 task 已停止并注销实验 task definition，删除容量池 `dsh-nitro-ecs-20261117-oc-m7g-large`（`INACTIVE/DELETE_COMPLETE`，EC2 已由 ECS 终止），删除 probe Lambda 及其日志组，注销 revision 4。保留 ECR 镜像 tag `nitro-cpu-oversub-20261118`、cluster、IAM、SG。证据：`results/overcommit-1to2-m7g-large-20261118/results.json`（含逐 task CPU 样本和每次放置后的宿主资源快照）。
+
+## 为什么 `m7g.2xlarge` 会扩散：每宿主 5 个 Sandbox 上限（2026-11-18）
+
+**结论：不是部署代码问题，也不是 CPU、内存或 ENI 不够。ECS Managed Instances 每台宿主最多只放 5 个 `ISOLATED_SANDBOX` task**；`m7g.large` 与 `m7g.2xlarge` 实测都是 5。公开文档未写明该上限，`DescribeContainerInstances` 的资源里也看不到。
+
+| 证据 | 观察 |
+|---|---|
+| 首轮 CloudTrail | 首轮由 AWS MCP 发起：两个单 task 基线后，`RunTask count=10` 与 `count=5` 相隔 1 秒提交。宿主 A 当时已有 1 个 task，只接收 4 个（共 5 个），余下 11 个挂起；4 秒内 ECS 再 `CreateFleet` 3 台 `m7g.2xlarge`，分布为 5/5/1。CloudFormation 创建的容量池参数与 `configuration.py` 一致（8 vCPU / 32 GiB / `m7g.2xlarge` / Nitro 开） |
+| 用仓库脚本顺序复测 `m7g.2xlarge` | `overcommit.py` 每次 count=1、等 ready 再启动下一个：第 1–5 个同宿主，第 6 个不放到该宿主，而是触发新建实例（该 AZ 当时 `InsufficientInstanceCapacity`）。第 5 个后宿主仍剩 CPU 8192、MEMORY 23864 MiB |
+| `m7g.large` 探上限 | 目标 10 个：第 1–5 个同宿主，第 6 个落到新宿主。第 5 个后剩 MEMORY 2218 MiB，仍够约 2 个 774 MiB 的 Sandbox |
+| ENI | 每个 task ENI 都是 `branch` 类型（Managed Instances 自动 trunking，与账户 `awsvpcTrunking=disabled` 无关），且不挂在宿主实例上；按 attachment 查宿主 ENI 返回 0。`m7g.large` 最多 3 个 ENI 仍放了 5 个，ENI 不是上限 |
+
+据此，单宿主可达的 Sandbox/vCPU 比例由宿主大小决定：`m7g.large` 最高 2.5:1，`m7g.xlarge` 1.25:1，`m7g.2xlarge` 0.625:1。所以 8 vCPU 宿主无论怎么调度都放不下 1:2 所需的 16 个；要提高密度应使用小机型。旁证：EC2 Firecracker 路线（`27-nitro-ec2`）中 Nitro Enclaves 驱动报告 `pcie_slots_total=20`、可用 slot 由宿主配置决定（该 `m7g.xlarge` 为 4）。Managed Instances 宿主无法登录读取该 sysfs，因此“ECS 为每台宿主配置 5 个 Sandbox slot”只是推断，未证实。上限是否随区域、机型族或版本变化未测，生产规划前请向 AWS 确认。
+
+证据：`results/overcommit-1to2-m7g-2xlarge-seq-20261118/`、`results/overcommit-cap-m7g-large-20261118/`（含每次放置后的宿主资源、宿主 ENI 与 task ENI 快照）。两次复测的容量池、task、probe Lambda、日志组均已删除，3 台实例已由 ECS 终止。
+
 ## 原始证据与失败
 
 - `results/run-20261117-ecs/results.json`：性能原始结果，`status=failed`，错误 `DSH answer is not exactly pong`；保留各轮回合及启动信息。
@@ -111,4 +166,4 @@ ECR 镜像、CloudWatch 日志、IAM roles/profile、SG、空 cluster 和 task d
 
 `ISOLATED_SANDBOX` 信任 parent；要防 parent 读取敏感数据需 confidential + attestation/KMS + 应用内加密设计，不能仅依赖 EBS/SSE-KMS。Confidential 的 EFS 限制见官方 ECS 文档。
 
-本地校验：**20 项 Python unittest + 1 项 Node test 均通过**，Node/Bash 语法与 Python compileall 通过。新增测试覆盖历史任务记录缺失与其他查询错误的区分、只追踪当前已确认任务的失败启动清理、已受理 StopTask 不重放且等待真实 STOPPED。单测不计入云端性能/隔离样本。
+2026-11-17 初版本地校验：**20 项 Python unittest + 1 项 Node test 均通过**，Node/Bash 语法与 Python compileall 通过。2026-11-18 加入 CPU 探针与超分测量后，当前本地套件（含单宿主复测改动）**28 项 Python unittest + 1 项 Node test 均通过**，Node/Bash 语法、Python 编译与 HTML 桌面/移动检查通过。CPU 超分云端样本由 AWS MCP 直接 API 编排；由于当前 MCP ECS SDK 模型不含 `TrustedExecutionConfiguration`，首轮不是通过 `overcommit.py` 启动；单宿主复测已由 `overcommit.py` 端到端完成。单测不计入云端性能/隔离样本。

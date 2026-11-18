@@ -47,6 +47,25 @@ python3 benchmark.py --mode isolation --out results/isolation-only
 python3 deploy.py register --image-tag YOUR_EXISTING_TAG
 ```
 
+## CPU 超分实验：目标 1:2
+
+`overcommit.py` 是 **ECS Managed Instances + Nitro Sandbox** 的 CPU 密度压测，不适用于 Fargate。AWS 文档说明 task-level `cpu` 留空时任务可共享宿主机核心，Managed Instances capacity provider 控制超分因子（最高 5×/vCPU）；但当前公开 API 示例没有说明如何指定一个精确的 2× 因子。因此本实验不声称配置出保证值，而是创建一个**不含 task-level `cpu`** 的实验任务定义，按宿主机每个 vCPU 启动 2 个 Sandbox，再记录实际放置密度和 CPU 吞吐。如果 ECS 把任务扩散到多个宿主，结果会报告实际比例，不会算作达到 1:2。
+
+示例容量池是 `m7g.2xlarge`（8 vCPU），目标为 16 个 Sandbox task。实验使用 512 MiB task memory、无模型的 CPU-bound 探针；先测一个 task 的单任务基线，再同时压测目标 task。结果包括每个 EC2 宿主的 task/vCPU 比例、每 task 吞吐、相对基线吞吐及清理状态。`cpu` 未设置意味着**没有每 task CPU 保底/上限**，结果是经验测量，不是性能承诺。该实验会启动付费 ECS/EC2 容量，请只在专用测试环境运行。
+
+Managed Instances 的 `memberOf` 不支持按 instance-id 固定宿主，而且实测**每台宿主最多 5 个 Sandbox，与机型大小无关**（`m7g.large`、`m7g.2xlarge` 都是 5），所以 8 vCPU 宿主放不下 16 个，任务会扩散到多台宿主。这不是部署代码问题，详见 `TEST_REPORT.zh.md`。可用 `--tasks-per-vcpu N` 探测单宿主上限。要在**一台机器**上测 1:2，新建只允许 `m7g.large`（2 vCPU）的专用容量池，目标为 4 个 Sandbox；`overcommit.py` 默认在任务落到第二台宿主时立即失败（`--allow-multiple-hosts` 可关闭）。
+
+```bash
+bash scripts/build_push.sh nitro-cpu-oversub-1to2
+python3 deploy.py capacity --instance-type m7g.large   # 专用容量池 + 重建 probe Lambda
+python3 overcommit.py --duration-seconds 10 --out results/overcommit-1to2-m7g-large
+python3 cleanup.py
+```
+
+2026-11-18 单宿主实测：4 个 Sandbox 同在一台 `m7g.large`，并发时每 task 吞吐 0.50× 基线、聚合 2.00×，见 `TEST_REPORT.zh.md`。
+
+脚本停止本次启动的 task，并注销临时 task definition；Managed Instances 宿主由 ECS 容量池回收，不要手动 terminate。若目标密度未观测到，命令以失败状态退出，但保留 `results.json` 和逐 task CPU 证据。CPU 配额说明见 [ECS Nitro Sandbox CPU 文档](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ict-getting-started.html)。
+
 遇到 AZ 无容量，先确认已有任务停止，再创建新的**专用**容量池，显式保留 Nitro 开关：
 
 ```bash
@@ -183,4 +202,4 @@ bash -n scripts/build_push.sh
 
 单测使用本地 fixture/mock，不计入云端性能样本。可重复的云端实验由 `benchmark.py` 驱动，证据包含每次 RunTask ack、task/host/guest identity、每次 probe 和最终 `results.json`；失败样本独立保留，不能只挑成功样本报告。
 
-文件分工：`deploy.py` 基础设施和任务注册；`configuration.py` Nitro/卷/IAM 配置；`app/server.mjs` DSH 和磁盘探针；`app/probe_handler.py` 私网探测；`benchmark.py` 冷启动/隔离实验；`cleanup.py` 回收；`TEST_REPORT.zh.md` 实测结果。
+文件分工：`deploy.py` 基础设施和任务注册；`configuration.py` Nitro/卷/IAM 配置；`app/server.mjs` DSH、磁盘和 CPU 探针；`app/probe_handler.py` 私网探测；`benchmark.py` 冷启动/隔离实验；`overcommit.py` 目标 1:2 CPU 密度实验；`cleanup.py` 回收；`TEST_REPORT.zh.md` 历史实测结果。

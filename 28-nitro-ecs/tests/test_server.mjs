@@ -48,6 +48,13 @@ test('loopback wrapper validates paths, symlinks, body size, startup and busy ga
     assert.equal((await invoked.json()).result.ok, true);
     const invalid = await fetch(endpoint + '/invoke', { method: 'POST', body: JSON.stringify({ mode: 'shell' }) });
     assert.equal(invalid.status, 400);
+    const cpu = await fetch(endpoint + '/cpu', { method: 'POST', body: JSON.stringify({ duration_ms: 1000 }) });
+    const cpuResult = await cpu.json();
+    assert.equal(cpu.status, 200);
+    assert.ok(cpuResult.operations > 0);
+    assert.ok(cpuResult.operations_per_second > 0);
+    const invalidCpu = await fetch(endpoint + '/cpu', { method: 'POST', body: JSON.stringify({ duration_ms: 10 }) });
+    assert.equal(invalidCpu.status, 400);
     assert.equal((await fetch(endpoint + '/missing')).status, 404);
   } finally {
     child.kill('SIGTERM');

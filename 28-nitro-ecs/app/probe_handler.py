@@ -16,7 +16,7 @@ def handler(event, context):
     if address.version != 4 or address not in ipaddress.ip_network(os.environ["ALLOWED_CIDR"]):
         raise ValueError("target is outside the demo VPC")
     route = event.get("route", "/health")
-    if route not in ("/health", "/invoke", "/fs", "/metadata", "/storage"):
+    if route not in ("/health", "/invoke", "/fs", "/metadata", "/storage", "/cpu"):
         raise ValueError("unknown route")
     payload = event.get("body")
     data = None if payload is None else json.dumps(payload).encode()

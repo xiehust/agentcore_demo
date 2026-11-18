@@ -83,6 +83,25 @@ function storageProbe() {
   }) };
 }
 
+function cpuProbe(body) {
+  if (!Number.isInteger(body.duration_ms) || body.duration_ms < 1000 || body.duration_ms > 30000) {
+    throw new Error('invalid CPU probe duration');
+  }
+  const started = performance.now();
+  const deadline = started + body.duration_ms;
+  let operations = 0;
+  let checksum = 2166136261;
+  while (performance.now() < deadline) {
+    for (let index = 0; index < 4096; index++) {
+      checksum = Math.imul(checksum ^ (operations + index), 16777619);
+    }
+    operations += 4096;
+  }
+  const elapsedMs = performance.now() - started;
+  return { cpu_probe_ms: elapsedMs, operations,
+    operations_per_second: operations * 1000 / elapsedMs, checksum: checksum >>> 0 };
+}
+
 async function runDsh(body) {
   if (!['startup', 'agent'].includes(body.mode)) throw new Error('invalid mode');
   if (body.mode === 'agent' && (typeof body.prompt !== 'string' || !body.prompt.trim() || body.prompt.length > 4000)) {
@@ -192,6 +211,7 @@ const server = http.createServer(async (req, res) => {
   try {
     const body = await readBody(req);
     if (req.url === '/fs') return send(res, 200, fileOperation(body));
+    if (req.url === '/cpu') return send(res, 200, cpuProbe(body));
     if (req.url === '/invoke') return send(res, 200, { result: await runDsh(body) });
     send(res, 404, { error: 'not found' });
   } catch { send(res, 400, { error: 'invalid request or operation' }); }

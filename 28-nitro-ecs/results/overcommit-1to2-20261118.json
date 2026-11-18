@@ -1,0 +1,47 @@
+{
+  "tested_at": "2026-11-18 UTC",
+  "status": "target_not_observed",
+  "launch_type": "MANAGED_INSTANCES",
+  "isolation_mode": "ISOLATED_SANDBOX",
+  "task_cpu": "unset (DescribeTasks returned 0)",
+  "task_memory_mib": 512,
+  "cpu_probe_seconds": 10,
+  "cpu_probe": "single-thread Node arithmetic loop; no DSH or model calls",
+  "target": {
+    "host_vcpus": 8,
+    "sandbox_tasks_per_host_vcpu": 2,
+    "sandbox_task_count": 16
+  },
+  "placement": {
+    "instance_type": "m7g.2xlarge",
+    "host_count": 4,
+    "host_vcpus_total": 32,
+    "sandbox_tasks_per_host": [5, 5, 5, 1],
+    "overall_sandbox_tasks_per_vcpu": 0.5,
+    "max_host_sandbox_tasks_per_vcpu": 0.625
+  },
+  "throughput": {
+    "baseline_samples": 1,
+    "baseline_operations_per_second": 779906986.3798602,
+    "concurrent_samples": 16,
+    "concurrent_mean_operations_per_second": 784209431.797444,
+    "concurrent_median_operations_per_second": 783799888.7849308,
+    "concurrent_min_operations_per_second": 779194006.2756691,
+    "concurrent_max_operations_per_second": 791059567.9022702,
+    "concurrent_mean_vs_baseline": 1.005516613509971,
+    "aggregate_baseline_task_equivalents": 16.088265816159534
+  },
+  "interpretation": "ECS spread the 16 tasks across four 8-vCPU hosts, so the requested 1:2 density and CPU contention were not observed. The result does not establish that every ECS configuration is unable to oversubscribe.",
+  "cleanup": {
+    "tasks_stopped": 16,
+    "managed_instances_terminated": 4,
+    "probe_lambda_deleted": true,
+    "probe_lambda_log_group_deleted": true,
+    "temporary_s3_bucket_deleted": true,
+    "test_image_tag_deleted": true,
+    "temporary_task_definition_stack_deleted": true,
+    "capacity_provider": "INACTIVE / DELETE_COMPLETE",
+    "provider_cluster_association": "removed",
+    "cloudformation_provider_stack": "deleted"
+  }
+}
