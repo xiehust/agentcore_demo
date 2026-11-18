@@ -28,6 +28,17 @@ class ProbeTests(unittest.TestCase):
                 probe.handler({'ip': '10.0.0.10', 'route': '/invoke', 'body': {'mode': 'agent'}}, self.context)
             request.assert_called_once()
 
+    def test_cpu_probe_route_is_allowed(self):
+        response = Mock()
+        response.__enter__ = Mock(return_value=response)
+        response.__exit__ = Mock(return_value=False)
+        response.read.return_value = b'{"operations_per_second":123}'
+        with patch.dict(os.environ, {'ALLOWED_CIDR': '10.0.0.0/16'}), \
+                patch.object(probe.HTTP, 'open', return_value=response) as request:
+            result = probe.handler({'ip': '10.0.0.10', 'route': '/cpu', 'body': {'duration_ms': 1000}}, self.context)
+            self.assertEqual(result['response']['operations_per_second'], 123)
+            request.assert_called_once()
+
     def test_health_retries_connect_failure(self):
         response = Mock()
         response.__enter__ = Mock(return_value=response)

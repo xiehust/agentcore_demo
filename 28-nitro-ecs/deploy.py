@@ -115,18 +115,38 @@ def finish(args,state,aws):
     print(json.dumps({k:state[k] for k in ('cluster','capacity_provider','image_tag_uri','function','status')},indent=2))
 
 
+def dedicated_capacity(args, state, aws):
+    """Create a fresh single-shape provider, then recreate the private probe Lambda."""
+    name = state['prefix'] + '-oc-' + args.instance_type.replace('.', '-') + (('-' + args.suffix) if args.suffix else '')
+    created = state.setdefault('capacity_providers_created', [])
+    if name in created:
+        raise ValueError(name + ' was already created; inspect it, do not recreate resources')
+    state['capacity_provider'] = name
+    created.append(name)
+    write_json(args.state, state)
+    aws.call('ecs', 'create-capacity-provider', capacity_provider(state, args.instance_type))
+    state['capacity_instance_type'] = args.instance_type
+    write_json(args.state, state)
+    finish(args, state, aws)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=('create','finish','register'))
+    parser.add_argument('action',choices=('create','finish','register','capacity'))
     parser.add_argument('--region',default='us-east-1')
     parser.add_argument('--name',default='dsh-nitro-ecs-20261117')
     parser.add_argument('--subnet')
     parser.add_argument('--image-tag')
+    parser.add_argument('--instance-type',default='m7g.2xlarge')
+    parser.add_argument('--suffix',help='distinguish a re-created dedicated provider name')
     parser.add_argument('--state',type=Path,default=ROOT/'state.json')
     args=parser.parse_args()
     if args.action=='create':
         if not args.subnet: parser.error('create requires a private subnet with NAT egress')
         deploy(args)
+    elif args.action=='capacity':
+        state=json.loads(args.state.read_text()); aws=AWS(state['region'])
+        dedicated_capacity(args,state,aws)
     elif args.action=='finish':
         state=json.loads(args.state.read_text()); aws=AWS(state['region'])
         finish(args,state,aws)
@@ -143,7 +163,8 @@ def main():
         state['task_definition_arn']=result['taskDefinitionArn']; state['status']='ready'
         write_json(args.state,state)
         write_json(ROOT/'generated/task-definition.json',definition)
-        write_json(ROOT/'generated/capacity-provider.json',capacity_provider(state))
+        write_json(ROOT/'generated/capacity-provider.json',
+            capacity_provider(state,state.get('capacity_instance_type','m7g.2xlarge')))
         print('Registered '+state['task_definition_arn'])
 
 

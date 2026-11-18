@@ -1,0 +1,40 @@
+{
+  "attachments": [],
+  "capacityProviderName": "dsh-nitro-ecs-20261117-oc-m7g-2xlarge",
+  "clusterArn": "arn:aws:ecs:us-east-1:434444145045:cluster/dsh-nitro-ecs-20261117",
+  "containers": [],
+  "cpu": "0",
+  "createdAt": "2026-11-18T12:01:28.191000+00:00",
+  "desiredStatus": "STOPPED",
+  "enableExecuteCommand": false,
+  "group": "family:dsh-nitro-ecs-20261117-cpu-oversub",
+  "healthStatus": "UNKNOWN",
+  "lastStatus": "STOPPED",
+  "launchType": "MANAGED_INSTANCES",
+  "memory": "512",
+  "overrides": {
+    "containerOverrides": [
+      {
+        "name": "dsh",
+        "environment": [
+          {
+            "name": "BENCH_RUN_ID",
+            "value": "a2291e3572954590a60ec2f2a32a07b9"
+          }
+        ]
+      }
+    ],
+    "inferenceAcceleratorOverrides": []
+  },
+  "stopCode": "TaskFailedToStart",
+  "stoppedAt": "2026-11-18T12:01:31.399000+00:00",
+  "stoppedReason": "ResourceInitializationError: Unable to launch instance(s) for capacity provider dsh-nitro-ecs-20261117-oc-m7g-2xlarge. InsufficientInstanceCapacity: We currently do not have sufficient m7g.2xlarge capacity in the Availability Zone you requested (us-east-1c). Our system will be working on provisioning additional capacity. You can currently get m7g.2xlarge capacity by not specifying an Availability Zone in your request or choosing us-east-1a, us-east-1b, us-east-1d, us-east-1f. RequestId: e2ee888d-b503-42bc-b031-c5216f32427e",
+  "stoppingAt": "2026-11-18T12:01:31.399000+00:00",
+  "tags": [],
+  "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/b748ad4eccd4490381fffd3783340658",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:434444145045:task-definition/dsh-nitro-ecs-20261117-cpu-oversub:3",
+  "version": 2,
+  "trustedExecutionSummary": {
+    "isolationMode": "ISOLATED_SANDBOX"
+  }
+}

@@ -43,11 +43,11 @@ class Runner:
                                self.out/f'probe-{self.probe_index:04d}.json')
         if not result.get('ok'): raise RuntimeError('probe did not succeed')
         return result
-    def launch(self, label):
+    def launch(self, label, task_definition_arn=None):
         print('Launching '+label,flush=True)
         start=time.perf_counter(); run_id=uuid.uuid4().hex
         response=self.aws.call('ecs','run-task',{'cluster':self.state['cluster'],
-            'taskDefinition':self.state['task_definition_arn'], 'count':1,'clientToken':run_id,
+            'taskDefinition':task_definition_arn or self.state['task_definition_arn'], 'count':1,'clientToken':run_id,
             'capacityProviderStrategy':[{'capacityProvider':self.state['capacity_provider'],'weight':1}],
             'networkConfiguration':{'awsvpcConfiguration':{'subnets':[self.state['subnet_id']],
                 'securityGroups':[self.state['task_sg']],'assignPublicIp':'DISABLED'}},

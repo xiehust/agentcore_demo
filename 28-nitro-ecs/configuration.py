@@ -1,27 +1,33 @@
 """Verified ECS Managed Instances/Nitro task and storage configuration generators."""
-def capacity_provider(state):
+INSTANCE_SHAPES = {"m7g.large": (2, 8192), "m7g.xlarge": (4, 16384), "m7g.2xlarge": (8, 32768)}
+
+
+def capacity_provider(state, instance_type="m7g.2xlarge"):
+    if instance_type not in INSTANCE_SHAPES:
+        raise ValueError("unsupported instance type: " + str(instance_type))
+    vcpus, memory_mib = INSTANCE_SHAPES[instance_type]
     return {"name": state["capacity_provider"], "cluster": state["cluster"],
         "managedInstancesProvider": {
             "infrastructureRoleArn": state["infrastructure_role_arn"],
             "instanceLaunchTemplate": {
                 "ec2InstanceProfileArn": state["instance_profile_arn"],
                 "networkConfiguration": {"subnets": [state["subnet_id"]], "securityGroups": [state["host_sg"]]},
-                "instanceRequirements": {"vCpuCount": {"min": 8, "max": 8},
-                    "memoryMiB": {"min": 32768, "max": 32768}, "allowedInstanceTypes": ["m7g.2xlarge"]},
+                "instanceRequirements": {"vCpuCount": {"min": vcpus, "max": vcpus},
+                    "memoryMiB": {"min": memory_mib, "max": memory_mib}, "allowedInstanceTypes": [instance_type]},
                 "storageConfiguration": {"storageSizeGiB": 80},
                 "capacityOptionType": "ON_DEMAND", "monitoring": "BASIC", "nitroEnclavesEnabled": True},
             "infrastructureOptimization": {"scaleInAfter": 300}, "propagateTags": "CAPACITY_PROVIDER"},
         "tags": [{"key": "Project", "value": "dsh-nitro-ecs"}]}
 
 
-def task_definition(state, family=None, efs=None, task_role=None):
+def task_definition(state, family=None, efs=None, task_role=None, cpu="2048", memory="4096"):
     volume = {"name": "workspace", "host": {}}
     if efs:
         volume = {"name": "workspace", "efsVolumeConfiguration": {"fileSystemId": efs["filesystem_id"],
             "rootDirectory": "/", "transitEncryption": "ENABLED",
             "authorizationConfig": {"accessPointId": efs["access_point_id"], "iam": "ENABLED"}}}
-    return {"family": family or state["family"], "requiresCompatibilities": ["MANAGED_INSTANCES"],
-        "networkMode": "awsvpc", "cpu": "2048", "memory": "4096",
+    definition = {"family": family or state["family"], "requiresCompatibilities": ["MANAGED_INSTANCES"],
+        "networkMode": "awsvpc", "memory": str(memory),
         "runtimePlatform": {"cpuArchitecture": "ARM64", "operatingSystemFamily": "LINUX"},
         "taskRoleArn": task_role or state["task_role_arn"], "executionRoleArn": state["execution_role_arn"],
         "trustedExecutionConfiguration": {"isolationMode": "ISOLATED_SANDBOX"},
@@ -37,6 +43,9 @@ def task_definition(state, family=None, efs=None, task_role=None):
             "logConfiguration": {"logDriver": "awslogs", "options": {
                 "awslogs-group": state["log_group"], "awslogs-region": state["region"], "awslogs-stream-prefix": "task"}},
             "stopTimeout": 30}]}
+    if cpu is not None:
+        definition["cpu"] = str(cpu)
+    return definition
 
 
 def efs_client_policy(filesystem_arn, access_point_arn):

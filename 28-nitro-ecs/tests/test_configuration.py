@@ -21,6 +21,11 @@ class ConfigurationTests(unittest.TestCase):
         self.assertEqual(task['networkMode'],'awsvpc')
         self.assertNotIn('ephemeralStorage',task)
         self.assertTrue(task['containerDefinitions'][0]['readonlyRootFilesystem'])
+    def test_cpu_unset_task_definition_for_oversubscription(self):
+        task=task_definition(self.state(),family='cpu-oversub',cpu=None,memory=512)
+        self.assertNotIn('cpu',task)
+        self.assertEqual(task['memory'],'512')
+        self.assertEqual(task['trustedExecutionConfiguration']['isolationMode'],'ISOLATED_SANDBOX')
     def test_private_volumes_do_not_export_a_host_path(self):
         for volume in task_definition(self.state())['volumes']:
             self.assertEqual(volume['host'],{})
@@ -29,6 +34,14 @@ class ConfigurationTests(unittest.TestCase):
         template=capacity_provider(self.state())['managedInstancesProvider']['instanceLaunchTemplate']
         self.assertTrue(template['nitroEnclavesEnabled'])
         self.assertNotIn('localStorageConfiguration',template)
+    def test_capacity_provider_pins_one_instance_shape(self):
+        requirements=capacity_provider(self.state(),'m7g.large')['managedInstancesProvider'][
+            'instanceLaunchTemplate']['instanceRequirements']
+        self.assertEqual(requirements['allowedInstanceTypes'],['m7g.large'])
+        self.assertEqual(requirements['vCpuCount'],{'min':2,'max':2})
+        self.assertEqual(requirements['memoryMiB'],{'min':8192,'max':8192})
+        with self.assertRaises(ValueError):
+            capacity_provider(self.state(),'t4g.large')
     def test_efs_is_tls_and_iam_scoped_per_access_point(self):
         task=task_definition(self.state(),efs={'filesystem_id':'fs-test','access_point_id':'fsap-test'})
         volume=task['volumes'][0]['efsVolumeConfiguration']

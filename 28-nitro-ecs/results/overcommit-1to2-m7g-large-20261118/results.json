@@ -1,0 +1,218 @@
+{
+  "tested_at": "2026-11-18T10:26:01.424479+00:00",
+  "isolation_mode": "ISOLATED_SANDBOX",
+  "target_host_vcpu_to_sandbox_tasks": "1:2",
+  "task_level_cpu": "unset",
+  "task_memory_mib": 512,
+  "capacity_provider": "dsh-nitro-ecs-20261117-oc-m7g-large",
+  "single_host_required": true,
+  "host_resource_snapshots": [
+    {
+      "after": "cpu-baseline",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "running_tasks": 1,
+      "pending_tasks": 0,
+      "registered": {
+        "CPU": 2048,
+        "MEMORY": 6088,
+        "PORTS": 0,
+        "PORTS_UDP": 0
+      },
+      "remaining": {
+        "CPU": 2048,
+        "MEMORY": 5314,
+        "PORTS": 0,
+        "PORTS_UDP": 0
+      }
+    },
+    {
+      "after": "cpu-target-02",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "running_tasks": 2,
+      "pending_tasks": 0,
+      "registered": {
+        "CPU": 2048,
+        "MEMORY": 6088,
+        "PORTS": 0,
+        "PORTS_UDP": 0
+      },
+      "remaining": {
+        "CPU": 2048,
+        "MEMORY": 4540,
+        "PORTS": 0,
+        "PORTS_UDP": 0
+      }
+    },
+    {
+      "after": "cpu-target-03",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "running_tasks": 3,
+      "pending_tasks": 0,
+      "registered": {
+        "CPU": 2048,
+        "MEMORY": 6088,
+        "PORTS": 0,
+        "PORTS_UDP": 0
+      },
+      "remaining": {
+        "CPU": 2048,
+        "MEMORY": 3766,
+        "PORTS": 0,
+        "PORTS_UDP": 0
+      }
+    },
+    {
+      "after": "cpu-target-04",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "running_tasks": 4,
+      "pending_tasks": 0,
+      "registered": {
+        "CPU": 2048,
+        "MEMORY": 6088,
+        "PORTS": 0,
+        "PORTS_UDP": 0
+      },
+      "remaining": {
+        "CPU": 2048,
+        "MEMORY": 2992,
+        "PORTS": 0,
+        "PORTS_UDP": 0
+      }
+    }
+  ],
+  "cpu_probe_seconds": 10,
+  "status": "passed",
+  "tasks": [
+    {
+      "label": "cpu-baseline",
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/60caf466e1054107b3f10ead7e285702",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "boot_id": "f4bcb6c4-6004-42c0-8b2e-3839a05a071c",
+      "client_submit_to_ready_ms": 73739.79814397171
+    },
+    {
+      "label": "cpu-target-02",
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/ffb2914c57634ddb8f661e145172286e",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "boot_id": "3e83e864-cb2d-4798-863a-99e901acd79a",
+      "client_submit_to_ready_ms": 21955.366163980216
+    },
+    {
+      "label": "cpu-target-03",
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/fab3b6b7c8b54732971061ef561409f3",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "boot_id": "254be88c-0a23-4559-92bb-46dae756d7e6",
+      "client_submit_to_ready_ms": 22199.557179992553
+    },
+    {
+      "label": "cpu-target-04",
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/1edc5ed90d3348c2a6221ed99b024dff",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "boot_id": "6e8f0974-b9b2-4298-9704-80b0c6d44b35",
+      "client_submit_to_ready_ms": 21961.02323400555
+    }
+  ],
+  "cpu_samples": [
+    {
+      "label": "cpu-target-02",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "operations_per_second": 391340273.925502,
+      "cpu_probe_ms": 10000.046150999995,
+      "operations": 3913420800,
+      "checksum": 1978494405
+    },
+    {
+      "label": "cpu-baseline",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "operations_per_second": 395362022.4429462,
+      "cpu_probe_ms": 10000.04856200001,
+      "operations": 3953639424,
+      "checksum": 4044905925
+    },
+    {
+      "label": "cpu-target-03",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "operations_per_second": 379348075.8342923,
+      "cpu_probe_ms": 10000.045746,
+      "operations": 3793498112,
+      "checksum": 3162082757
+    },
+    {
+      "label": "cpu-target-04",
+      "instance_id": "i-0a74b91637ac12cc8",
+      "operations_per_second": 383719274.6518994,
+      "cpu_probe_ms": 10000.04659,
+      "operations": 3837210624,
+      "checksum": 32542149
+    }
+  ],
+  "cleanup_errors": [],
+  "task_definition_arn": "arn:aws:ecs:us-east-1:434444145045:task-definition/dsh-nitro-ecs-20261117-cpu-oversub:2",
+  "task_definition_cpu_omitted": true,
+  "task_count_is_target_not_guaranteed_ratio": true,
+  "baseline_host": {
+    "instance_id": "i-0a74b91637ac12cc8",
+    "instance_type": "m7g.large",
+    "vcpus": 2,
+    "cores": 2,
+    "threads_per_core": 1
+  },
+  "target_sandbox_tasks": 4,
+  "baseline_cpu": {
+    "label": "cpu-baseline",
+    "instance_id": "i-0a74b91637ac12cc8",
+    "operations_per_second": 773856967.187072,
+    "cpu_probe_ms": 10000.046386,
+    "operations": 7738605568,
+    "checksum": 1635147205
+  },
+  "placement": [
+    {
+      "instance_id": "i-0a74b91637ac12cc8",
+      "instance_type": "m7g.large",
+      "vcpus": 2,
+      "cores": 2,
+      "threads_per_core": 1,
+      "sandbox_tasks": 4,
+      "sandbox_tasks_per_vcpu": 2.0
+    }
+  ],
+  "host_resources_before_cpu_load": {
+    "instance_id": "i-0a74b91637ac12cc8",
+    "running_tasks": 4,
+    "pending_tasks": 0,
+    "registered": {
+      "CPU": 2048,
+      "MEMORY": 6088,
+      "PORTS": 0,
+      "PORTS_UDP": 0
+    },
+    "remaining": {
+      "CPU": 2048,
+      "MEMORY": 2992,
+      "PORTS": 0,
+      "PORTS_UDP": 0
+    }
+  },
+  "concurrent_probe_started_at": "2026-11-18T10:28:42.035066+00:00",
+  "concurrent_probe_finished_at": "2026-11-18T10:28:53.390154+00:00",
+  "summary": {
+    "target_tasks_per_vcpu": 2,
+    "max_observed_tasks_per_vcpu": 2.0,
+    "target_density_observed": true,
+    "baseline_operations_per_second": 773856967.187072,
+    "concurrent_task_operations_per_second": {
+      "n": 4,
+      "min": 379348075.8342923,
+      "max": 395362022.4429462,
+      "mean": 387442411.71366,
+      "p50": 383719274.6518994,
+      "p90": 395362022.4429462,
+      "p99": 395362022.4429462
+    },
+    "mean_task_rate_vs_single_task": 0.5006641125452318,
+    "aggregate_rate_in_baseline_task_equivalents": 2.002656450180927,
+    "host_count": 1
+  },
+  "task_definition_deregistered": true
+}

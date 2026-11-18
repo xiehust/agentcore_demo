@@ -1,0 +1,40 @@
+{
+  "tasks": [
+    {
+      "attachments": [],
+      "capacityProviderName": "dsh-nitro-ecs-20261117-oc-m7g-large-cap",
+      "clusterArn": "arn:aws:ecs:us-east-1:434444145045:cluster/dsh-nitro-ecs-20261117",
+      "containers": [],
+      "cpu": "0",
+      "createdAt": "2026-11-18T12:20:47.541000+00:00",
+      "desiredStatus": "RUNNING",
+      "enableExecuteCommand": false,
+      "group": "family:dsh-nitro-ecs-20261117-cpu-oversub",
+      "lastStatus": "PROVISIONING",
+      "launchType": "MANAGED_INSTANCES",
+      "memory": "512",
+      "overrides": {
+        "containerOverrides": [
+          {
+            "name": "dsh",
+            "environment": [
+              {
+                "name": "BENCH_RUN_ID",
+                "value": "f23e99044dd142ba954d1eb999d83d84"
+              }
+            ]
+          }
+        ],
+        "inferenceAcceleratorOverrides": []
+      },
+      "tags": [],
+      "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/b07c74e4349e4ea984baf717e1601355",
+      "taskDefinitionArn": "arn:aws:ecs:us-east-1:434444145045:task-definition/dsh-nitro-ecs-20261117-cpu-oversub:4",
+      "version": 1,
+      "trustedExecutionSummary": {
+        "isolationMode": "ISOLATED_SANDBOX"
+      }
+    }
+  ],
+  "failures": []
+}
