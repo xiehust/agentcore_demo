@@ -4,10 +4,10 @@ import json
 import sys
 from pathlib import Path
 
-from test import call
+from mcp_client import call
 
 EXPOSED = "websearch___WebSearch"
-# Chinese-route provider chosen by `deploy.py --cn-provider` (mock has no unified format, so not tested here)
+# Chinese-route provider chosen by `deploy.py --cn-provider`
 CN = json.loads((Path(__file__).parent / "state.json").read_text()).get("cn_provider", "exa")
 KEYS = {"title", "url", "publishedDate", "author", "text"}
 results = []

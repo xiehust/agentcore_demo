@@ -1,89 +1,88 @@
-# Gateway REQUEST interceptor reroute PoC
+# Gateway interceptor: route web search by query language
 
 [中文](README.md)
 
-Checks whether an AgentCore Gateway REQUEST interceptor can reroute a `tools/call`
-to a different target by rewriting `params.name`.
+An AgentCore Gateway interceptor (one Lambda at REQUEST + RESPONSE) routes a single
+search tool by query language:
 
-- `websearch` target: AgentCore Web Search connector (`websearch___WebSearch`)
-- `mockexa` target: Lambda standing in for Exa (`mockexa___web_search_exa`)
-- `lambdas/interceptor.py`: if the query is >= 30% CJK, rewrites the tool name to
-  `mockexa___web_search_exa` and maps `maxResults` -> `numResults`
+- English queries go to **AgentCore Web Search** (`websearch___WebSearch`).
+- Chinese queries (>= 30% CJK characters) are rewritten to a third-party MCP search target:
+  **AnySearch** (default), **Bocha** or **Exa**, selected with `deploy.py --cn-provider`.
+
+The agent sees only `websearch___WebSearch`; the third-party tools are hidden from
+`tools/list` and rejected on direct call. All providers return one unified result format.
 
 Gateway inbound auth is AWS_IAM (SigV4). Region us-east-1.
 
+## Run
+
 ```bash
 uv venv .venv && uv pip install --python .venv/bin/python boto3 requests
-.venv/bin/python deploy.py    # writes state.json
-.venv/bin/python test.py      # 4 cases
-.venv/bin/python cleanup.py   # deletes targets, gateway, Lambdas, IAM roles
+
+# store the key(s) you need in AgentCore Identity (read from stdin, never written to disk)
+printf %s "<anysearch key>" | .venv/bin/python store_anysearch_key.py
+printf %s "<bocha key>"     | .venv/bin/python store_bocha_key.py
+printf %s "<exa key>"       | .venv/bin/python store_exa_key.py
+
+.venv/bin/python deploy.py --cn-provider anysearch   # or bocha / exa; sets the interceptor's DST_TOOL
+.venv/bin/python test_exposure.py                    # 10 cases
+.venv/bin/python test_format.py                      # 6 cases
+.venv/bin/python cleanup.py                          # deletes everything, incl. API key providers
 ```
 
-Result (2026-11-18): 4/4 passed. The Gateway routes on the rewritten tool name,
-and the target receives the rewritten name and arguments.
+`deploy.py` creates a target only for providers whose key is stored. Tests read the
+current route (`cn_provider`) from `state.json`. `test_exa.py` is an early test that
+calls Exa directly; with tool hiding on, its control case fails by design.
 
-## Real Exa
+## Targets and credentials
 
-```bash
-printf %s "$EXA_KEY" | .venv/bin/python store_exa_key.py   # key -> AgentCore Identity
-.venv/bin/python deploy.py                                 # adds `exa` MCP target (x-api-key header)
-# then: .venv/bin/python deploy.py --cn-provider exa   (sets DST_TOOL)
-.venv/bin/python test_exa.py
-```
+| target | endpoint | header injected by the Gateway |
+|---|---|---|
+| `websearch` | AgentCore Web Search connector | Gateway IAM role |
+| `anysearch` | `https://api.anysearch.com/mcp` | `Authorization: Bearer <key>` (`credentialPrefix="Bearer "`) |
+| `bocha` | `https://mcp.bochaai.com/mcp` | `Authorization: Bearer <key>` |
+| `exa` | `https://mcp.exa.ai/mcp` | `x-api-key: <key>` |
 
-Exa's `web_search_exa` requires `objective`, so the interceptor fills it with the query.
-Result (2026-11-18): 3/3 passed; Chinese query rewritten to Exa returned Exa results.
+AnySearch's sample `X-Anysearch-Client` header is not required. For AnySearch and Bocha an
+invalid key returns `isError: true`, so successful searches through the Gateway confirm the
+stored key is used.
 
-## Single exposed tool (REQUEST + RESPONSE interceptor)
+## Argument mapping
 
-The same Lambda now runs at both interception points:
-- RESPONSE: `tools/list` is filtered to `websearch___WebSearch` only.
-- REQUEST: `tools/call` on any other tool is short-circuited with JSON-RPC error -32602.
-
-```bash
-.venv/bin/python deploy.py          # adds RESPONSE interception point via update_gateway
-.venv/bin/python test_exposure.py   # 6 cases
-```
-
-Result (2026-11-18): 6/6 passed. `test.py` / `test_exa.py` call hidden tools directly,
-so their control cases now fail by design.
+| WebSearch | AnySearch `search` | Bocha `bocha_web_search` | Exa `web_search_exa` |
+|---|---|---|---|
+| `query` | `query` | `query` | `query` |
+| `maxResults` | `max_results` (capped at 10) | `count` | `numResults` |
+| - | - | - (`freshness` defaults to `noLimit`) | `objective` (required, filled with query) |
 
 ## Unified result format
 
-The RESPONSE stage rewrites every successful `tools/call` result (see `lambdas/normalize.py`) into:
+The RESPONSE stage rewrites each successful `tools/call` result (`lambdas/normalize.py`) into:
 
 ```json
-{"provider": "agentcore-web-search | anysearch | exa",
+{"provider": "agentcore-web-search | anysearch | bocha | exa",
  "results": [{"title": "", "url": "", "publishedDate": "YYYY-MM-DD | null", "author": "str | null", "text": ""}]}
 ```
 
-The result envelope is reduced to `content` + `isError` (Exa's `_meta` is dropped).
-The provider is detected from the payload, because the RESPONSE stage sees the
-original request (`websearch___WebSearch`) even when the REQUEST stage rerouted it.
+The envelope is reduced to `content` + `isError`. The RESPONSE stage sees the original
+request (`websearch___WebSearch`) even after rerouting, so the provider is detected from the payload:
 
-```bash
-.venv/bin/python test_format.py     # 6 cases
-.venv/bin/python test_exposure.py   # still 6/6
-```
+| provider | raw format | detected by |
+|---|---|---|
+| AgentCore Web Search | JSON | JSON with `results` |
+| AnySearch | Markdown (`### N. Title`, `- **URL**:`, trailing ` date: Aug 14, 2026`) | starts with `## Search Results` |
+| Bocha | text: `Title/URL/Description/Published date/Site name`, blank-line separated | starts with `Title:` and has a Bocha-only field |
+| Exa | text: `Title/URL/Published/Author/Highlights`, `---` separated | starts with `Title:`, no Bocha fields |
 
-## AnySearch (default Chinese route)
+## Findings (2026-11-18)
 
-```bash
-printf %s "<anysearch key>" | .venv/bin/python store_anysearch_key.py   # key -> AgentCore Identity
-.venv/bin/python deploy.py --cn-provider anysearch                       # adds `anysearch` MCP target, sets DST_TOOL
-.venv/bin/python test_exposure.py   # 9 cases
-.venv/bin/python test_format.py     # 6 cases
-```
+- The Gateway routes on the tool name rewritten by the REQUEST interceptor (not documented; verified by test).
+- RESPONSE still runs after a REQUEST short-circuit (documented).
+- Third-party targets bring extra tools (Exa `agent_run`/`web_fetch_exa`; AnySearch `batch_search`/`extract`/`get_sub_domains`/`score`; Bocha `bocha_ai_search`); all hidden and rejected.
 
-- Target `https://api.anysearch.com/mcp`; the Gateway injects `Authorization: Bearer <key>`
-  (`credentialParameterName=Authorization`, `credentialPrefix="Bearer "`). The
-  `X-Anysearch-Client` header from AnySearch's sample config is not required.
-- `maxResults` maps to `max_results` (capped at 10). Only general search is used, no `domain`/`sub_domain`.
-- AnySearch returns Markdown (`### N. Title`, `- **URL**:`, trailing ` date: Aug 14, 2026`);
-  `normalize.py` parses it into the unified format. Relative dates ("2 days ago") become `null`.
-- Its extra tools (`batch_search`, `extract`, `get_sub_domains`, `score`) are hidden and rejected.
-  AnySearch asks agents to submit `score` feedback; this PoC does not.
-- `deploy.py --cn-provider mock|exa|anysearch` switches the Chinese route; tests read `cn_provider` from `state.json`.
+## Limitations
 
-Result (2026-11-18): test_exposure 9/9, test_format 6/6. An invalid key called directly
-returns `isError: true`, so successful searches through the Gateway confirm the stored key is used.
+- Text parsing depends on each provider's current format; unknown formats pass through unchanged.
+  Bocha and Exa both start with `Title:` and are told apart by field names.
+- AnySearch relative dates ("2 days ago") become `null`; AnySearch's requested `score` feedback is not sent.
+- Chinese queries leave AWS for a third-party provider; check compliance requirements.

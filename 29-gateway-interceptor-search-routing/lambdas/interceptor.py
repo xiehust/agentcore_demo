@@ -2,7 +2,7 @@
 
 REQUEST:
   - tools/call `websearch___WebSearch` with a mostly-CJK query is rewritten to DST_TOOL
-    (mock Exa, real Exa or AnySearch; arguments are mapped per provider).
+    (AnySearch, Bocha or Exa; arguments are mapped per provider).
   - tools/call on any other tool is rejected (only EXPOSED_TOOL is public).
 RESPONSE:
   - tools/list result is filtered down to EXPOSED_TOOL.
@@ -16,7 +16,7 @@ import re
 from normalize import normalize_text
 
 EXPOSED_TOOL = "websearch___WebSearch"
-DST_TOOL = os.environ.get("DST_TOOL", "mockexa___web_search_exa")
+DST_TOOL = os.environ.get("DST_TOOL", "anysearch___search")
 CJK = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]")
 CJK_RATIO = 0.3
 
@@ -52,6 +52,11 @@ def on_request(body):
 
 def map_args(dst, args):
     """Translate WebSearch arguments into the destination tool's schema."""
+    if dst.startswith("bocha___"):
+        out = {"query": args["query"]}
+        if "maxResults" in args:
+            out["count"] = int(args["maxResults"])
+        return out
     if dst.startswith("anysearch___"):
         out = {"query": args["query"]}
         if "maxResults" in args:
