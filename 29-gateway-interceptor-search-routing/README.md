@@ -135,7 +135,6 @@ aws lambda update-function-configuration \
 ## 局限
 
 - Exa MCP 返回的是纯文本，这里靠解析文本转换格式。Exa 改了格式时，转换代码会原样放行原文，不会报错。生产环境建议改用 Exa REST API（返回 JSON），或者对"无法识别格式"加告警。
-- Exa MCP 没有 key 也能用免费额度搜索，所以测试通过不能证明 key 被用上了。请在 Exa 后台的 usage 页面确认。
 - 暴露的工具名固定写在代码里（`EXPOSED_TOOL`）。Gateway 上如果还有其他业务工具，要改成白名单集合。
 - 中文 query 会发给第三方（Exa），数据会离开 AWS，需要评估是否符合合规要求。
 - interceptor 对 Gateway 上的每个请求都会执行，Lambda 冷启动会增加延迟，可以考虑 provisioned concurrency。
