@@ -53,6 +53,7 @@
 | [24-China-regions](24-China-regions/VALIDATION_REPORT.md) | 中国区（宁夏、北京）Code Interpreter 与 Runtime 冷启动/并发压测验证报告，子目录含各项测试代码、原始结果与证据。 |
 | [25-patch-manager-china](25-patch-manager-china/README.md) | 中国区 Patch Manager 批次 × AgentCore 自动值守实测：VPC 模式 Runtime + SourceVpce 收口、跨账号 Hub-Spoke（session tag 绑定单实例）、每台失败实例一个 session 的按实例流水线编排（Step Functions）、自建记忆独立模块 agentmem（DynamoDB STM + OpenSearch/Titan LTM，对齐 AgentCore Memory 策略，与 agent 代码解耦、可复用）、代码 + IAM 护栏、会话隔离实测；附客户方案说明 SOLUTION.zh.html 与架构设计 ARCHITECTURE.zh.html。 |
 | [26-runtime-dsh](26-runtime-dsh/README.md) | DeepSeek Harness（`dsh headless`）Agent 部署到 Runtime 平台 V2（快照恢复）的冷启动与第一条消息实测：拆解平台部分与 DSH 进程启动，验证 page pin 优化（含示例代码），并与同一镜像的本地 Docker 基线对比。 |
+| [27-nitro-ec2](27-nitro-ec2/README.md) | EC2 + Firecracker Nitro Sandboxes 中 DSH 的真实部署与冷启动测试：CLI 两模式各 20 轮、真实 Agent 4 轮后答案断言触发保护；含原始证据、分阶段计时及 [冷启动报告](27-nitro-ec2/TEST_REPORT.zh.md)；另有 direct/confidential 双 Sandbox [独立磁盘隔离与持久化实测](27-nitro-ec2/DISK_ISOLATION_REPORT.zh.md)。 |
 
 ### 评估、优化与支付
 

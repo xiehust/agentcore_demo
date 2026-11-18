@@ -1,0 +1,50 @@
+{
+  "capacityProviderArn": "arn:aws:ecs:us-east-1:434444145045:capacity-provider/dsh-nitro-ecs-20261117-mi-c",
+  "name": "dsh-nitro-ecs-20261117-mi-c",
+  "cluster": "dsh-nitro-ecs-20261117",
+  "status": "ACTIVE",
+  "managedInstancesProvider": {
+    "infrastructureRoleArn": "arn:aws:iam::434444145045:role/dsh-nitro-ecs-20261117-infra",
+    "instanceLaunchTemplate": {
+      "ec2InstanceProfileArn": "arn:aws:iam::434444145045:instance-profile/ecsInstanceRole-dsh-nitro-ecs-20261117",
+      "networkConfiguration": {
+        "subnets": [
+          "subnet-0a7f0244b95036cef"
+        ],
+        "securityGroups": [
+          "sg-008454db23713ae9d"
+        ]
+      },
+      "storageConfiguration": {
+        "storageSizeGiB": 80
+      },
+      "monitoring": "BASIC",
+      "capacityOptionType": "ON_DEMAND",
+      "instanceMetadataTagsPropagation": true,
+      "instanceRequirements": {
+        "vCpuCount": {
+          "min": 8,
+          "max": 8
+        },
+        "memoryMiB": {
+          "min": 32768,
+          "max": 32768
+        },
+        "allowedInstanceTypes": [
+          "m7g.2xlarge"
+        ]
+      },
+      "nitroEnclavesEnabled": true
+    },
+    "propagateTags": "CAPACITY_PROVIDER",
+    "infrastructureOptimization": {
+      "scaleInAfter": 300
+    },
+    "autoRepairConfiguration": {
+      "actionsStatus": "ENABLED"
+    }
+  },
+  "updateStatus": "CREATE_COMPLETE",
+  "tags": [],
+  "type": "MANAGED_INSTANCES"
+}

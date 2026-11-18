@@ -1,0 +1,1517 @@
+{
+  "tested_at": "2026-11-17T15:48:48.907674+00:00",
+  "rounds_requested": 5,
+  "isolation_mode": "ISOLATED_SANDBOX",
+  "records": [],
+  "status": "failed",
+  "isolation_checks": [
+    {
+      "name": "same_physical_EC2_instance",
+      "passed": true
+    },
+    {
+      "name": "different_guest_boots",
+      "passed": true
+    },
+    {
+      "name": "isolation-A_root_readonly",
+      "passed": true
+    },
+    {
+      "name": "isolation-B_root_readonly",
+      "passed": true
+    },
+    {
+      "name": "B_cannot_see_A_new_file",
+      "passed": true
+    },
+    {
+      "name": "same_filename_different_content",
+      "passed": true
+    },
+    {
+      "name": "DSH_HOME_task_private",
+      "passed": true
+    },
+    {
+      "name": "tmp_task_private",
+      "passed": true
+    },
+    {
+      "name": "new_task_new_guest",
+      "passed": true
+    },
+    {
+      "name": "ephemeral_workspace_not_persistent",
+      "passed": true
+    },
+    {
+      "name": "ephemeral_DSH_HOME_not_persistent",
+      "passed": true
+    },
+    {
+      "name": "ephemeral_tmp_not_persistent",
+      "passed": true
+    },
+    {
+      "name": "B_unaffected",
+      "passed": true
+    }
+  ],
+  "isolation_tasks": [
+    {
+      "label": "isolation-A",
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/78ee5633ce7c4d0d878c1aa60288f0b1",
+      "run_id": "9baa3a6267944b239e5094b96db651b9",
+      "ip": "10.0.3.65",
+      "client_submit_to_running_ms": 26969.670379010495,
+      "client_submit_to_ready_ms": 28265.95814997563,
+      "task": {
+        "attachments": [
+          {
+            "id": "78ee5633ce7c4d0d878c1aa60288f0b1",
+            "type": "ElasticNetworkInterface",
+            "status": "ATTACHED",
+            "details": [
+              {
+                "name": "macAddress",
+                "value": "12:ff:ed:c8:b3:cd"
+              },
+              {
+                "name": "networkInterfaceId",
+                "value": "eni-098b06f94bd15f85f"
+              },
+              {
+                "name": "privateDnsName",
+                "value": "ip-10-0-3-65.ec2.internal"
+              },
+              {
+                "name": "privateIPv4Address",
+                "value": "10.0.3.65"
+              },
+              {
+                "name": "subnetId",
+                "value": "subnet-0a7f0244b95036cef"
+              }
+            ]
+          }
+        ],
+        "attributes": [
+          {
+            "name": "ecs.cpu-architecture",
+            "value": "arm64"
+          }
+        ],
+        "availabilityZone": "us-east-1c",
+        "capacityProviderName": "dsh-nitro-ecs-20261117-mi-c",
+        "clusterArn": "arn:aws:ecs:us-east-1:434444145045:cluster/dsh-nitro-ecs-20261117",
+        "connectivity": "CONNECTED",
+        "connectivityAt": "2026-11-17T15:48:52.242000+00:00",
+        "containerInstanceArn": "arn:aws:ecs:us-east-1:434444145045:container-instance/dsh-nitro-ecs-20261117/0431e197d4a043798465f4fb609b050f",
+        "containers": [
+          {
+            "containerArn": "arn:aws:ecs:us-east-1:434444145045:container/dsh-nitro-ecs-20261117/78ee5633ce7c4d0d878c1aa60288f0b1/0c54d74a-26f8-409d-a02a-e2dd30c8bcdf",
+            "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/78ee5633ce7c4d0d878c1aa60288f0b1",
+            "name": "dsh",
+            "image": "434444145045.dkr.ecr.us-east-1.amazonaws.com/dsh-nitro-ecs-20261117@sha256:2e22ea4d1efeb0d0b50d2916e99ff59629a8c50b7933991b26498906c79b89eb",
+            "imageDigest": "sha256:2e22ea4d1efeb0d0b50d2916e99ff59629a8c50b7933991b26498906c79b89eb",
+            "runtimeId": "78ee5633ce7c4d0d878c1aa60288f0b1-3340986296",
+            "lastStatus": "RUNNING",
+            "networkBindings": [],
+            "networkInterfaces": [
+              {
+                "attachmentId": "78ee5633ce7c4d0d878c1aa60288f0b1",
+                "privateIpv4Address": "10.0.3.65"
+              }
+            ],
+            "healthStatus": "UNKNOWN",
+            "cpu": "0"
+          }
+        ],
+        "cpu": "2048",
+        "createdAt": "2026-11-17T15:48:52.242000+00:00",
+        "desiredStatus": "RUNNING",
+        "enableExecuteCommand": false,
+        "group": "family:dsh-nitro-ecs-20261117",
+        "healthStatus": "UNKNOWN",
+        "lastStatus": "RUNNING",
+        "launchType": "MANAGED_INSTANCES",
+        "memory": "4096",
+        "overrides": {
+          "containerOverrides": [
+            {
+              "name": "dsh",
+              "environment": [
+                {
+                  "name": "BENCH_RUN_ID",
+                  "value": "9baa3a6267944b239e5094b96db651b9"
+                }
+              ]
+            }
+          ],
+          "inferenceAcceleratorOverrides": []
+        },
+        "pullStartedAt": "2026-11-17T15:49:11.256000+00:00",
+        "pullStoppedAt": "2026-11-17T15:49:11.377000+00:00",
+        "startedAt": "2026-11-17T15:49:16.902000+00:00",
+        "tags": [],
+        "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/78ee5633ce7c4d0d878c1aa60288f0b1",
+        "taskDefinitionArn": "arn:aws:ecs:us-east-1:434444145045:task-definition/dsh-nitro-ecs-20261117:3",
+        "version": 3,
+        "trustedExecutionSummary": {
+          "isolationMode": "ISOLATED_SANDBOX"
+        }
+      },
+      "host": {
+        "containerInstanceArn": "arn:aws:ecs:us-east-1:434444145045:container-instance/dsh-nitro-ecs-20261117/0431e197d4a043798465f4fb609b050f",
+        "ec2InstanceId": "i-05e8d28165b8a0758",
+        "capacityProviderName": "dsh-nitro-ecs-20261117-mi-c",
+        "version": 12,
+        "remainingResources": [
+          {
+            "name": "CPU",
+            "type": "INTEGER",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 6144
+          },
+          {
+            "name": "MEMORY",
+            "type": "INTEGER",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 23218
+          },
+          {
+            "name": "PORTS",
+            "type": "STRINGSET",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 0,
+            "stringSetValue": []
+          },
+          {
+            "name": "PORTS_UDP",
+            "type": "STRINGSET",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 0,
+            "stringSetValue": []
+          }
+        ],
+        "registeredResources": [
+          {
+            "name": "CPU",
+            "type": "INTEGER",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 8192
+          },
+          {
+            "name": "MEMORY",
+            "type": "INTEGER",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 27734
+          },
+          {
+            "name": "PORTS",
+            "type": "STRINGSET",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 0,
+            "stringSetValue": []
+          },
+          {
+            "name": "PORTS_UDP",
+            "type": "STRINGSET",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 0,
+            "stringSetValue": []
+          }
+        ],
+        "status": "ACTIVE",
+        "agentConnected": true,
+        "runningTasksCount": 1,
+        "pendingTasksCount": 0,
+        "attributes": [
+          {
+            "name": "ecs.capability.secrets.asm.environment-variables"
+          },
+          {
+            "name": "ecs.ami-id",
+            "value": "ami-0d2bb695ef3bc2351"
+          },
+          {
+            "name": "ecs.capability.extensible-ephemeral-storage"
+          },
+          {
+            "name": "ecs.capability.secrets.asm.bootstrap.log-driver"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.none"
+          },
+          {
+            "name": "ecs.capability.ecr-endpoint"
+          },
+          {
+            "name": "ecs.capability.ipv6-only"
+          },
+          {
+            "name": "ecs.capability.task-cpu-mem-limit"
+          },
+          {
+            "name": "ecs.capability.secrets.ssm.bootstrap.log-driver"
+          },
+          {
+            "name": "ecs.capability.efsAuth"
+          },
+          {
+            "name": "ecs.capability.full-sync"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.30"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.31"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.32"
+          },
+          {
+            "name": "ecs.capability.storage.ebs-supported-instance"
+          },
+          {
+            "name": "ecs.capability.sysctl-settings"
+          },
+          {
+            "name": "ecs.capability.firelens.options.config.file"
+          },
+          {
+            "name": "ecs.capability.task-eni-multiple-interfaces"
+          },
+          {
+            "name": "ecs.capability.logging-driver.awsfirelens.log-driver-buffer-limit"
+          },
+          {
+            "name": "ecs.availability-zone",
+            "value": "us-east-1c"
+          },
+          {
+            "name": "ecs.capability.aws-appmesh"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.24"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.splunk"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.25"
+          },
+          {
+            "name": "ecs.capability.mi"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.26"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.27"
+          },
+          {
+            "name": "ecs.capability.container-restart-policy"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.privileged-container"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+          },
+          {
+            "name": "ecs.cpu-architecture",
+            "value": "arm64"
+          },
+          {
+            "name": "ecs.capability.pid-mode"
+          },
+          {
+            "name": "ecs.capability.firelens.fluentbit"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+          },
+          {
+            "name": "ecs.capability.service-connect-v1"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.20"
+          },
+          {
+            "name": "ecs.os-type",
+            "value": "linux"
+          },
+          {
+            "name": "ecs.capability.task-eni-block-instance-metadata"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.22"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.23"
+          },
+          {
+            "name": "ecs.capability.private-registry-authentication.secretsmanager"
+          },
+          {
+            "name": "ecs.capability.task-eia"
+          },
+          {
+            "name": "ecs.capability.gmsa-domainless"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.syslog"
+          },
+          {
+            "name": "ecs.capability.imds-iam-roles"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awsfirelens"
+          },
+          {
+            "name": "ecs.capability.nitro-enclaves"
+          },
+          {
+            "name": "ecs.capability.storage.s3-files"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.json-file"
+          },
+          {
+            "name": "ecs.capability.execution-role-awslogs"
+          },
+          {
+            "name": "ecs.vpc-id",
+            "value": "vpc-013652ef94def6946"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+          },
+          {
+            "name": "ecs.capability.task-eni"
+          },
+          {
+            "name": "ecs.capability.firelens.fluentd"
+          },
+          {
+            "name": "ecs.capability.efs"
+          },
+          {
+            "name": "ecs.capability.execution-role-ecr-pull"
+          },
+          {
+            "name": "ecs.capability.storage.ebs-task-volume-attach"
+          },
+          {
+            "name": "ecs.capability.task-eni.ipv6"
+          },
+          {
+            "name": "ecs.capability.container-health-check"
+          },
+          {
+            "name": "ecs.os-family",
+            "value": "LINUX"
+          },
+          {
+            "name": "ecs.capability.execute-command"
+          },
+          {
+            "name": "ecs.subnet-id",
+            "value": "subnet-0a7f0244b95036cef"
+          },
+          {
+            "name": "ecs.instance-type",
+            "value": "m7g.2xlarge"
+          },
+          {
+            "name": "ecs.capability.firelens.non-root-user"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.task-iam-role-network-host"
+          },
+          {
+            "name": "ecs.capability.execution-role-splunk"
+          },
+          {
+            "name": "ecs.capability.increased-task-cpu-limit"
+          },
+          {
+            "name": "ecs.capability.network.container-port-range"
+          },
+          {
+            "name": "ecs.capability.fault-injection"
+          },
+          {
+            "name": "ecs.capability.container-ordering"
+          },
+          {
+            "name": "ecs.capability.cni-plugin-version"
+          },
+          {
+            "name": "ecs.capability.env-files.s3"
+          },
+          {
+            "name": "ecs.capability.pid-ipc-namespace-sharing"
+          },
+          {
+            "name": "ecs.capability.secrets.ssm.environment-variables"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+          }
+        ],
+        "registeredAt": "2026-11-17T15:40:50.894000+00:00",
+        "attachments": [],
+        "tags": []
+      },
+      "ready": {
+        "run_id": "9baa3a6267944b239e5094b96db651b9",
+        "boot_id": "093e5e94-bb37-436d-9d43-80e1e91e7f66",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "uid": 1000,
+        "workdir": "/workspace",
+        "dsh_home": "/workspace/.dsh",
+        "process_boot_ms": 1443.934772,
+        "mount": [
+          "/dev/vdb2 /workspace xfs rw,seclabel,noatime,inode64,logbufs=8,logbsize=32k,noquota 0 0",
+          "/dev/vdb2 /tmp xfs rw,seclabel,noatime,inode64,logbufs=8,logbsize=32k,noquota 0 0"
+        ]
+      }
+    },
+    {
+      "label": "isolation-B",
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/4624d9843d9b48cba88a1fe1c7e25182",
+      "run_id": "32f85e4b1fb2462cb7f38ba2d2925eb7",
+      "ip": "10.0.3.39",
+      "client_submit_to_running_ms": 20572.842149995267,
+      "client_submit_to_ready_ms": 21906.281345000025,
+      "task": {
+        "attachments": [
+          {
+            "id": "4624d9843d9b48cba88a1fe1c7e25182",
+            "type": "ElasticNetworkInterface",
+            "status": "ATTACHED",
+            "details": [
+              {
+                "name": "macAddress",
+                "value": "12:ff:e2:57:96:2b"
+              },
+              {
+                "name": "networkInterfaceId",
+                "value": "eni-00cc17e31ff1dbe2b"
+              },
+              {
+                "name": "privateDnsName",
+                "value": "ip-10-0-3-39.ec2.internal"
+              },
+              {
+                "name": "privateIPv4Address",
+                "value": "10.0.3.39"
+              },
+              {
+                "name": "subnetId",
+                "value": "subnet-0a7f0244b95036cef"
+              }
+            ]
+          }
+        ],
+        "attributes": [
+          {
+            "name": "ecs.cpu-architecture",
+            "value": "arm64"
+          }
+        ],
+        "availabilityZone": "us-east-1c",
+        "capacityProviderName": "dsh-nitro-ecs-20261117-mi-c",
+        "clusterArn": "arn:aws:ecs:us-east-1:434444145045:cluster/dsh-nitro-ecs-20261117",
+        "connectivity": "CONNECTED",
+        "connectivityAt": "2026-11-17T15:49:21.747000+00:00",
+        "containerInstanceArn": "arn:aws:ecs:us-east-1:434444145045:container-instance/dsh-nitro-ecs-20261117/0431e197d4a043798465f4fb609b050f",
+        "containers": [
+          {
+            "containerArn": "arn:aws:ecs:us-east-1:434444145045:container/dsh-nitro-ecs-20261117/4624d9843d9b48cba88a1fe1c7e25182/624b9e0f-f903-40c2-91f8-1cd5cb2d874c",
+            "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/4624d9843d9b48cba88a1fe1c7e25182",
+            "name": "dsh",
+            "image": "434444145045.dkr.ecr.us-east-1.amazonaws.com/dsh-nitro-ecs-20261117@sha256:2e22ea4d1efeb0d0b50d2916e99ff59629a8c50b7933991b26498906c79b89eb",
+            "imageDigest": "sha256:2e22ea4d1efeb0d0b50d2916e99ff59629a8c50b7933991b26498906c79b89eb",
+            "runtimeId": "4624d9843d9b48cba88a1fe1c7e25182-3340986296",
+            "lastStatus": "RUNNING",
+            "networkBindings": [],
+            "networkInterfaces": [
+              {
+                "attachmentId": "4624d9843d9b48cba88a1fe1c7e25182",
+                "privateIpv4Address": "10.0.3.39"
+              }
+            ],
+            "healthStatus": "UNKNOWN",
+            "cpu": "0"
+          }
+        ],
+        "cpu": "2048",
+        "createdAt": "2026-11-17T15:49:21.747000+00:00",
+        "desiredStatus": "RUNNING",
+        "enableExecuteCommand": false,
+        "group": "family:dsh-nitro-ecs-20261117",
+        "healthStatus": "UNKNOWN",
+        "lastStatus": "RUNNING",
+        "launchType": "MANAGED_INSTANCES",
+        "memory": "4096",
+        "overrides": {
+          "containerOverrides": [
+            {
+              "name": "dsh",
+              "environment": [
+                {
+                  "name": "BENCH_RUN_ID",
+                  "value": "32f85e4b1fb2462cb7f38ba2d2925eb7"
+                }
+              ]
+            }
+          ],
+          "inferenceAcceleratorOverrides": []
+        },
+        "pullStartedAt": "2026-11-17T15:49:32.515000+00:00",
+        "pullStoppedAt": "2026-11-17T15:49:32.628000+00:00",
+        "startedAt": "2026-11-17T15:49:37.544000+00:00",
+        "tags": [],
+        "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/4624d9843d9b48cba88a1fe1c7e25182",
+        "taskDefinitionArn": "arn:aws:ecs:us-east-1:434444145045:task-definition/dsh-nitro-ecs-20261117:3",
+        "version": 3,
+        "trustedExecutionSummary": {
+          "isolationMode": "ISOLATED_SANDBOX"
+        }
+      },
+      "host": {
+        "containerInstanceArn": "arn:aws:ecs:us-east-1:434444145045:container-instance/dsh-nitro-ecs-20261117/0431e197d4a043798465f4fb609b050f",
+        "ec2InstanceId": "i-05e8d28165b8a0758",
+        "capacityProviderName": "dsh-nitro-ecs-20261117-mi-c",
+        "version": 13,
+        "remainingResources": [
+          {
+            "name": "CPU",
+            "type": "INTEGER",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 4096
+          },
+          {
+            "name": "MEMORY",
+            "type": "INTEGER",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 18702
+          },
+          {
+            "name": "PORTS",
+            "type": "STRINGSET",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 0,
+            "stringSetValue": []
+          },
+          {
+            "name": "PORTS_UDP",
+            "type": "STRINGSET",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 0,
+            "stringSetValue": []
+          }
+        ],
+        "registeredResources": [
+          {
+            "name": "CPU",
+            "type": "INTEGER",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 8192
+          },
+          {
+            "name": "MEMORY",
+            "type": "INTEGER",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 27734
+          },
+          {
+            "name": "PORTS",
+            "type": "STRINGSET",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 0,
+            "stringSetValue": []
+          },
+          {
+            "name": "PORTS_UDP",
+            "type": "STRINGSET",
+            "doubleValue": 0.0,
+            "longValue": 0,
+            "integerValue": 0,
+            "stringSetValue": []
+          }
+        ],
+        "status": "ACTIVE",
+        "agentConnected": true,
+        "runningTasksCount": 2,
+        "pendingTasksCount": 0,
+        "attributes": [
+          {
+            "name": "ecs.capability.secrets.asm.environment-variables"
+          },
+          {
+            "name": "ecs.ami-id",
+            "value": "ami-0d2bb695ef3bc2351"
+          },
+          {
+            "name": "ecs.capability.extensible-ephemeral-storage"
+          },
+          {
+            "name": "ecs.capability.secrets.asm.bootstrap.log-driver"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.none"
+          },
+          {
+            "name": "ecs.capability.ecr-endpoint"
+          },
+          {
+            "name": "ecs.capability.ipv6-only"
+          },
+          {
+            "name": "ecs.capability.task-cpu-mem-limit"
+          },
+          {
+            "name": "ecs.capability.secrets.ssm.bootstrap.log-driver"
+          },
+          {
+            "name": "ecs.capability.efsAuth"
+          },
+          {
+            "name": "ecs.capability.full-sync"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.30"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.31"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.32"
+          },
+          {
+            "name": "ecs.capability.storage.ebs-supported-instance"
+          },
+          {
+            "name": "ecs.capability.sysctl-settings"
+          },
+          {
+            "name": "ecs.capability.firelens.options.config.file"
+          },
+          {
+            "name": "ecs.capability.task-eni-multiple-interfaces"
+          },
+          {
+            "name": "ecs.capability.logging-driver.awsfirelens.log-driver-buffer-limit"
+          },
+          {
+            "name": "ecs.availability-zone",
+            "value": "us-east-1c"
+          },
+          {
+            "name": "ecs.capability.aws-appmesh"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.24"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.splunk"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.25"
+          },
+          {
+            "name": "ecs.capability.mi"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.26"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.27"
+          },
+          {
+            "name": "ecs.capability.container-restart-policy"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.privileged-container"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+          },
+          {
+            "name": "ecs.cpu-architecture",
+            "value": "arm64"
+          },
+          {
+            "name": "ecs.capability.pid-mode"
+          },
+          {
+            "name": "ecs.capability.firelens.fluentbit"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+          },
+          {
+            "name": "ecs.capability.service-connect-v1"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.20"
+          },
+          {
+            "name": "ecs.os-type",
+            "value": "linux"
+          },
+          {
+            "name": "ecs.capability.task-eni-block-instance-metadata"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.22"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.23"
+          },
+          {
+            "name": "ecs.capability.private-registry-authentication.secretsmanager"
+          },
+          {
+            "name": "ecs.capability.task-eia"
+          },
+          {
+            "name": "ecs.capability.gmsa-domainless"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.syslog"
+          },
+          {
+            "name": "ecs.capability.imds-iam-roles"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awsfirelens"
+          },
+          {
+            "name": "ecs.capability.nitro-enclaves"
+          },
+          {
+            "name": "ecs.capability.storage.s3-files"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.logging-driver.json-file"
+          },
+          {
+            "name": "ecs.capability.execution-role-awslogs"
+          },
+          {
+            "name": "ecs.vpc-id",
+            "value": "vpc-013652ef94def6946"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+          },
+          {
+            "name": "ecs.capability.task-eni"
+          },
+          {
+            "name": "ecs.capability.firelens.fluentd"
+          },
+          {
+            "name": "ecs.capability.efs"
+          },
+          {
+            "name": "ecs.capability.execution-role-ecr-pull"
+          },
+          {
+            "name": "ecs.capability.storage.ebs-task-volume-attach"
+          },
+          {
+            "name": "ecs.capability.task-eni.ipv6"
+          },
+          {
+            "name": "ecs.capability.container-health-check"
+          },
+          {
+            "name": "ecs.os-family",
+            "value": "LINUX"
+          },
+          {
+            "name": "ecs.capability.execute-command"
+          },
+          {
+            "name": "ecs.subnet-id",
+            "value": "subnet-0a7f0244b95036cef"
+          },
+          {
+            "name": "ecs.instance-type",
+            "value": "m7g.2xlarge"
+          },
+          {
+            "name": "ecs.capability.firelens.non-root-user"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.task-iam-role-network-host"
+          },
+          {
+            "name": "ecs.capability.execution-role-splunk"
+          },
+          {
+            "name": "ecs.capability.increased-task-cpu-limit"
+          },
+          {
+            "name": "ecs.capability.network.container-port-range"
+          },
+          {
+            "name": "ecs.capability.fault-injection"
+          },
+          {
+            "name": "ecs.capability.container-ordering"
+          },
+          {
+            "name": "ecs.capability.cni-plugin-version"
+          },
+          {
+            "name": "ecs.capability.env-files.s3"
+          },
+          {
+            "name": "ecs.capability.pid-ipc-namespace-sharing"
+          },
+          {
+            "name": "ecs.capability.secrets.ssm.environment-variables"
+          },
+          {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+          }
+        ],
+        "registeredAt": "2026-11-17T15:40:50.894000+00:00",
+        "attachments": [],
+        "tags": []
+      },
+      "ready": {
+        "run_id": "32f85e4b1fb2462cb7f38ba2d2925eb7",
+        "boot_id": "2b435a53-0e6f-43eb-b5df-9e495d1ca127",
+        "dsh_version": "0.2.2-rc.1",
+        "node_version": "v24.22.3",
+        "uid": 1000,
+        "workdir": "/workspace",
+        "dsh_home": "/workspace/.dsh",
+        "process_boot_ms": 4051.306639,
+        "mount": [
+          "/dev/vdb2 /workspace xfs rw,seclabel,noatime,inode64,logbufs=8,logbsize=32k,noquota 0 0",
+          "/dev/vdb2 /tmp xfs rw,seclabel,noatime,inode64,logbufs=8,logbsize=32k,noquota 0 0"
+        ]
+      }
+    }
+  ],
+  "storage_probes": [
+    {
+      "run_id": "9baa3a6267944b239e5094b96db651b9",
+      "boot_id": "093e5e94-bb37-436d-9d43-80e1e91e7f66",
+      "dsh_version": "0.2.2-rc.1",
+      "node_version": "v24.22.3",
+      "uid": 1000,
+      "workdir": "/workspace",
+      "dsh_home": "/workspace/.dsh",
+      "root_write_error": "EROFS",
+      "filesystems": [
+        {
+          "path": "/workspace",
+          "type": 1481003842,
+          "capacity_bytes": 21354229760,
+          "available_bytes": 21030141952
+        },
+        {
+          "path": "/workspace/.dsh",
+          "type": 1481003842,
+          "capacity_bytes": 21354229760,
+          "available_bytes": 21030141952
+        },
+        {
+          "path": "/tmp",
+          "type": 1481003842,
+          "capacity_bytes": 21354229760,
+          "available_bytes": 21030141952
+        }
+      ]
+    },
+    {
+      "run_id": "32f85e4b1fb2462cb7f38ba2d2925eb7",
+      "boot_id": "2b435a53-0e6f-43eb-b5df-9e495d1ca127",
+      "dsh_version": "0.2.2-rc.1",
+      "node_version": "v24.22.3",
+      "uid": 1000,
+      "workdir": "/workspace",
+      "dsh_home": "/workspace/.dsh",
+      "root_write_error": "EROFS",
+      "filesystems": [
+        {
+          "path": "/workspace",
+          "type": 1481003842,
+          "capacity_bytes": 21354229760,
+          "available_bytes": 21029224448
+        },
+        {
+          "path": "/workspace/.dsh",
+          "type": 1481003842,
+          "capacity_bytes": 21354229760,
+          "available_bytes": 21029224448
+        },
+        {
+          "path": "/tmp",
+          "type": 1481003842,
+          "capacity_bytes": 21354229760,
+          "available_bytes": 21029224448
+        }
+      ]
+    }
+  ],
+  "isolation_recreated_task": {
+    "label": "isolation-A-recreated",
+    "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/6a163735fd084323ba6a4716c9d79a74",
+    "run_id": "f5ff33482e6a44bca95480db43febe80",
+    "ip": "10.0.3.41",
+    "client_submit_to_running_ms": 20402.249857026618,
+    "client_submit_to_ready_ms": 22069.096056045964,
+    "task": {
+      "attachments": [
+        {
+          "id": "6a163735fd084323ba6a4716c9d79a74",
+          "type": "ElasticNetworkInterface",
+          "status": "ATTACHED",
+          "details": [
+            {
+              "name": "macAddress",
+              "value": "12:ff:ce:4d:e8:99"
+            },
+            {
+              "name": "networkInterfaceId",
+              "value": "eni-080e70c8cf5eeda28"
+            },
+            {
+              "name": "privateDnsName",
+              "value": "ip-10-0-3-41.ec2.internal"
+            },
+            {
+              "name": "privateIPv4Address",
+              "value": "10.0.3.41"
+            },
+            {
+              "name": "subnetId",
+              "value": "subnet-0a7f0244b95036cef"
+            }
+          ]
+        }
+      ],
+      "attributes": [
+        {
+          "name": "ecs.cpu-architecture",
+          "value": "arm64"
+        }
+      ],
+      "availabilityZone": "us-east-1c",
+      "capacityProviderName": "dsh-nitro-ecs-20261117-mi-c",
+      "clusterArn": "arn:aws:ecs:us-east-1:434444145045:cluster/dsh-nitro-ecs-20261117",
+      "connectivity": "CONNECTED",
+      "connectivityAt": "2026-11-17T15:51:24.297000+00:00",
+      "containerInstanceArn": "arn:aws:ecs:us-east-1:434444145045:container-instance/dsh-nitro-ecs-20261117/0431e197d4a043798465f4fb609b050f",
+      "containers": [
+        {
+          "containerArn": "arn:aws:ecs:us-east-1:434444145045:container/dsh-nitro-ecs-20261117/6a163735fd084323ba6a4716c9d79a74/44704a98-4819-4a4f-845c-bc15c5aeeaaf",
+          "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/6a163735fd084323ba6a4716c9d79a74",
+          "name": "dsh",
+          "image": "434444145045.dkr.ecr.us-east-1.amazonaws.com/dsh-nitro-ecs-20261117@sha256:2e22ea4d1efeb0d0b50d2916e99ff59629a8c50b7933991b26498906c79b89eb",
+          "imageDigest": "sha256:2e22ea4d1efeb0d0b50d2916e99ff59629a8c50b7933991b26498906c79b89eb",
+          "runtimeId": "6a163735fd084323ba6a4716c9d79a74-3340986296",
+          "lastStatus": "RUNNING",
+          "networkBindings": [],
+          "networkInterfaces": [
+            {
+              "attachmentId": "6a163735fd084323ba6a4716c9d79a74",
+              "privateIpv4Address": "10.0.3.41"
+            }
+          ],
+          "healthStatus": "UNKNOWN",
+          "cpu": "0"
+        }
+      ],
+      "cpu": "2048",
+      "createdAt": "2026-11-17T15:51:24.297000+00:00",
+      "desiredStatus": "RUNNING",
+      "enableExecuteCommand": false,
+      "group": "family:dsh-nitro-ecs-20261117",
+      "healthStatus": "UNKNOWN",
+      "lastStatus": "RUNNING",
+      "launchType": "MANAGED_INSTANCES",
+      "memory": "4096",
+      "overrides": {
+        "containerOverrides": [
+          {
+            "name": "dsh",
+            "environment": [
+              {
+                "name": "BENCH_RUN_ID",
+                "value": "f5ff33482e6a44bca95480db43febe80"
+              }
+            ]
+          }
+        ],
+        "inferenceAcceleratorOverrides": []
+      },
+      "pullStartedAt": "2026-11-17T15:51:33.772000+00:00",
+      "pullStoppedAt": "2026-11-17T15:51:33.872000+00:00",
+      "startedAt": "2026-11-17T15:51:40.377000+00:00",
+      "tags": [],
+      "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/6a163735fd084323ba6a4716c9d79a74",
+      "taskDefinitionArn": "arn:aws:ecs:us-east-1:434444145045:task-definition/dsh-nitro-ecs-20261117:3",
+      "version": 3,
+      "trustedExecutionSummary": {
+        "isolationMode": "ISOLATED_SANDBOX"
+      }
+    },
+    "host": {
+      "containerInstanceArn": "arn:aws:ecs:us-east-1:434444145045:container-instance/dsh-nitro-ecs-20261117/0431e197d4a043798465f4fb609b050f",
+      "ec2InstanceId": "i-05e8d28165b8a0758",
+      "capacityProviderName": "dsh-nitro-ecs-20261117-mi-c",
+      "version": 15,
+      "remainingResources": [
+        {
+          "name": "CPU",
+          "type": "INTEGER",
+          "doubleValue": 0.0,
+          "longValue": 0,
+          "integerValue": 4096
+        },
+        {
+          "name": "MEMORY",
+          "type": "INTEGER",
+          "doubleValue": 0.0,
+          "longValue": 0,
+          "integerValue": 18702
+        },
+        {
+          "name": "PORTS",
+          "type": "STRINGSET",
+          "doubleValue": 0.0,
+          "longValue": 0,
+          "integerValue": 0,
+          "stringSetValue": []
+        },
+        {
+          "name": "PORTS_UDP",
+          "type": "STRINGSET",
+          "doubleValue": 0.0,
+          "longValue": 0,
+          "integerValue": 0,
+          "stringSetValue": []
+        }
+      ],
+      "registeredResources": [
+        {
+          "name": "CPU",
+          "type": "INTEGER",
+          "doubleValue": 0.0,
+          "longValue": 0,
+          "integerValue": 8192
+        },
+        {
+          "name": "MEMORY",
+          "type": "INTEGER",
+          "doubleValue": 0.0,
+          "longValue": 0,
+          "integerValue": 27734
+        },
+        {
+          "name": "PORTS",
+          "type": "STRINGSET",
+          "doubleValue": 0.0,
+          "longValue": 0,
+          "integerValue": 0,
+          "stringSetValue": []
+        },
+        {
+          "name": "PORTS_UDP",
+          "type": "STRINGSET",
+          "doubleValue": 0.0,
+          "longValue": 0,
+          "integerValue": 0,
+          "stringSetValue": []
+        }
+      ],
+      "status": "ACTIVE",
+      "agentConnected": true,
+      "runningTasksCount": 2,
+      "pendingTasksCount": 0,
+      "attributes": [
+        {
+          "name": "ecs.capability.secrets.asm.environment-variables"
+        },
+        {
+          "name": "ecs.ami-id",
+          "value": "ami-0d2bb695ef3bc2351"
+        },
+        {
+          "name": "ecs.capability.extensible-ephemeral-storage"
+        },
+        {
+          "name": "ecs.capability.secrets.asm.bootstrap.log-driver"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.none"
+        },
+        {
+          "name": "ecs.capability.ecr-endpoint"
+        },
+        {
+          "name": "ecs.capability.ipv6-only"
+        },
+        {
+          "name": "ecs.capability.task-cpu-mem-limit"
+        },
+        {
+          "name": "ecs.capability.secrets.ssm.bootstrap.log-driver"
+        },
+        {
+          "name": "ecs.capability.efsAuth"
+        },
+        {
+          "name": "ecs.capability.full-sync"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.30"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.31"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.32"
+        },
+        {
+          "name": "ecs.capability.storage.ebs-supported-instance"
+        },
+        {
+          "name": "ecs.capability.sysctl-settings"
+        },
+        {
+          "name": "ecs.capability.firelens.options.config.file"
+        },
+        {
+          "name": "ecs.capability.task-eni-multiple-interfaces"
+        },
+        {
+          "name": "ecs.capability.logging-driver.awsfirelens.log-driver-buffer-limit"
+        },
+        {
+          "name": "ecs.availability-zone",
+          "value": "us-east-1c"
+        },
+        {
+          "name": "ecs.capability.aws-appmesh"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.24"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.splunk"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.25"
+        },
+        {
+          "name": "ecs.capability.mi"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.26"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.27"
+        },
+        {
+          "name": "ecs.capability.container-restart-policy"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.privileged-container"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        },
+        {
+          "name": "ecs.cpu-architecture",
+          "value": "arm64"
+        },
+        {
+          "name": "ecs.capability.pid-mode"
+        },
+        {
+          "name": "ecs.capability.firelens.fluentbit"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+          "name": "ecs.capability.service-connect-v1"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.20"
+        },
+        {
+          "name": "ecs.os-type",
+          "value": "linux"
+        },
+        {
+          "name": "ecs.capability.task-eni-block-instance-metadata"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.22"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.23"
+        },
+        {
+          "name": "ecs.capability.private-registry-authentication.secretsmanager"
+        },
+        {
+          "name": "ecs.capability.task-eia"
+        },
+        {
+          "name": "ecs.capability.gmsa-domainless"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.syslog"
+        },
+        {
+          "name": "ecs.capability.imds-iam-roles"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.awsfirelens"
+        },
+        {
+          "name": "ecs.capability.nitro-enclaves"
+        },
+        {
+          "name": "ecs.capability.storage.s3-files"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.logging-driver.json-file"
+        },
+        {
+          "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+          "name": "ecs.vpc-id",
+          "value": "vpc-013652ef94def6946"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+          "name": "ecs.capability.task-eni"
+        },
+        {
+          "name": "ecs.capability.firelens.fluentd"
+        },
+        {
+          "name": "ecs.capability.efs"
+        },
+        {
+          "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+          "name": "ecs.capability.storage.ebs-task-volume-attach"
+        },
+        {
+          "name": "ecs.capability.task-eni.ipv6"
+        },
+        {
+          "name": "ecs.capability.container-health-check"
+        },
+        {
+          "name": "ecs.os-family",
+          "value": "LINUX"
+        },
+        {
+          "name": "ecs.capability.execute-command"
+        },
+        {
+          "name": "ecs.subnet-id",
+          "value": "subnet-0a7f0244b95036cef"
+        },
+        {
+          "name": "ecs.instance-type",
+          "value": "m7g.2xlarge"
+        },
+        {
+          "name": "ecs.capability.firelens.non-root-user"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.task-iam-role-network-host"
+        },
+        {
+          "name": "ecs.capability.execution-role-splunk"
+        },
+        {
+          "name": "ecs.capability.increased-task-cpu-limit"
+        },
+        {
+          "name": "ecs.capability.network.container-port-range"
+        },
+        {
+          "name": "ecs.capability.fault-injection"
+        },
+        {
+          "name": "ecs.capability.container-ordering"
+        },
+        {
+          "name": "ecs.capability.cni-plugin-version"
+        },
+        {
+          "name": "ecs.capability.env-files.s3"
+        },
+        {
+          "name": "ecs.capability.pid-ipc-namespace-sharing"
+        },
+        {
+          "name": "ecs.capability.secrets.ssm.environment-variables"
+        },
+        {
+          "name": "com.amazonaws.ecs.capability.task-iam-role"
+        }
+      ],
+      "registeredAt": "2026-11-17T15:40:50.894000+00:00",
+      "attachments": [],
+      "tags": []
+    },
+    "ready": {
+      "run_id": "f5ff33482e6a44bca95480db43febe80",
+      "boot_id": "18437838-1055-40b0-b939-188ff85e49e6",
+      "dsh_version": "0.2.2-rc.1",
+      "node_version": "v24.22.3",
+      "uid": 1000,
+      "workdir": "/workspace",
+      "dsh_home": "/workspace/.dsh",
+      "process_boot_ms": 3860.98195,
+      "mount": [
+        "/dev/vdb2 /workspace xfs rw,seclabel,noatime,inode64,logbufs=8,logbsize=32k,noquota 0 0",
+        "/dev/vdb2 /tmp xfs rw,seclabel,noatime,inode64,logbufs=8,logbsize=32k,noquota 0 0"
+      ]
+    }
+  },
+  "cleanup_errors": [
+    {
+      "task": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/de0b52e95ec046d395b5292f32daf3ee",
+      "error": "RuntimeError"
+    }
+  ],
+  "rounds_executed": 0,
+  "summary": {
+    "client_submit_to_running_ms": {
+      "n": 0
+    },
+    "client_submit_to_ready_ms": {
+      "n": 0
+    },
+    "ecs_created_to_started_ms": {
+      "n": 0
+    },
+    "ecs_image_pull_ms": {
+      "n": 0
+    },
+    "cold": {
+      "first_event_ms": {
+        "n": 0
+      },
+      "first_text_ms": {
+        "n": 0
+      },
+      "total_ms": {
+        "n": 0
+      },
+      "credentials_ms": {
+        "n": 0
+      },
+      "probe_http_ms": {
+        "n": 0
+      },
+      "exact_pong_count": 0
+    },
+    "warm": {
+      "first_event_ms": {
+        "n": 0
+      },
+      "first_text_ms": {
+        "n": 0
+      },
+      "total_ms": {
+        "n": 0
+      },
+      "credentials_ms": {
+        "n": 0
+      },
+      "probe_http_ms": {
+        "n": 0
+      },
+      "exact_pong_count": 0
+    }
+  }
+}

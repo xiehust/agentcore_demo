@@ -1,0 +1,70 @@
+{
+  "verified_at": "2026-11-17T16:00:46.796276+00:00",
+  "region": "us-east-1",
+  "cluster": "dsh-nitro-ecs-20261117",
+  "running_tasks": 0,
+  "pending_tasks": 0,
+  "registered_container_instances": 0,
+  "active_task_arns": [],
+  "task_states": [
+    {
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/1e03bd8fab8b473ebdd2ba3016c3d6e0",
+      "status": "STOPPED"
+    },
+    {
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/359decabad5d477abd4e72c2efc5cf3f",
+      "status": "STOPPED"
+    },
+    {
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/86bb2e88b8b84c3b91b253b5263ff013",
+      "status": "STOPPED"
+    },
+    {
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/78ee5633ce7c4d0d878c1aa60288f0b1",
+      "status": "STOPPED"
+    },
+    {
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/4624d9843d9b48cba88a1fe1c7e25182",
+      "status": "STOPPED"
+    },
+    {
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/6a163735fd084323ba6a4716c9d79a74",
+      "status": "STOPPED"
+    }
+  ],
+  "unavailable_task_records": [
+    {
+      "arn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/de0b52e95ec046d395b5292f32daf3ee",
+      "reason": "MISSING"
+    }
+  ],
+  "capacity_providers": [
+    {
+      "name": "dsh-nitro-ecs-20261117-mi",
+      "status": "INACTIVE",
+      "update_status": "DELETE_COMPLETE"
+    },
+    {
+      "name": "dsh-nitro-ecs-20261117-mi-c",
+      "status": "INACTIVE",
+      "update_status": "DELETE_COMPLETE"
+    }
+  ],
+  "capacity_provider_failures": [],
+  "known_host_instances": [
+    {
+      "id": "i-05e8d28165b8a0758",
+      "state": "terminated"
+    }
+  ],
+  "probe_function_present": false,
+  "retained_resources": [
+    "ECR image",
+    "CloudWatch logs",
+    "IAM roles/profile",
+    "security groups",
+    "empty ECS cluster",
+    "task definition revisions"
+  ],
+  "passed": true
+}

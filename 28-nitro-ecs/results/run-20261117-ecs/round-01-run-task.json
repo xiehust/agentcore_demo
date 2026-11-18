@@ -1,0 +1,58 @@
+{
+  "tasks": [
+    {
+      "attachments": [],
+      "attributes": [
+        {
+          "name": "ecs.cpu-architecture",
+          "value": "arm64"
+        }
+      ],
+      "availabilityZone": "us-east-1c",
+      "capacityProviderName": "dsh-nitro-ecs-20261117-mi-c",
+      "clusterArn": "arn:aws:ecs:us-east-1:434444145045:cluster/dsh-nitro-ecs-20261117",
+      "containerInstanceArn": "arn:aws:ecs:us-east-1:434444145045:container-instance/dsh-nitro-ecs-20261117/0431e197d4a043798465f4fb609b050f",
+      "containers": [
+        {
+          "containerArn": "arn:aws:ecs:us-east-1:434444145045:container/dsh-nitro-ecs-20261117/359decabad5d477abd4e72c2efc5cf3f/7cc9cbe4-11cf-40be-aa5d-fc9e44f31347",
+          "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/359decabad5d477abd4e72c2efc5cf3f",
+          "name": "dsh",
+          "image": "434444145045.dkr.ecr.us-east-1.amazonaws.com/dsh-nitro-ecs-20261117@sha256:2e22ea4d1efeb0d0b50d2916e99ff59629a8c50b7933991b26498906c79b89eb",
+          "lastStatus": "PENDING",
+          "networkInterfaces": [],
+          "cpu": "0"
+        }
+      ],
+      "cpu": "2048",
+      "createdAt": "2026-11-17T15:41:59.844000+00:00",
+      "desiredStatus": "RUNNING",
+      "enableExecuteCommand": false,
+      "group": "family:dsh-nitro-ecs-20261117",
+      "lastStatus": "PROVISIONING",
+      "launchType": "MANAGED_INSTANCES",
+      "memory": "4096",
+      "overrides": {
+        "containerOverrides": [
+          {
+            "name": "dsh",
+            "environment": [
+              {
+                "name": "BENCH_RUN_ID",
+                "value": "38773374f3c94c50b0ae377fbb125016"
+              }
+            ]
+          }
+        ],
+        "inferenceAcceleratorOverrides": []
+      },
+      "tags": [],
+      "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/359decabad5d477abd4e72c2efc5cf3f",
+      "taskDefinitionArn": "arn:aws:ecs:us-east-1:434444145045:task-definition/dsh-nitro-ecs-20261117:3",
+      "version": 1,
+      "trustedExecutionSummary": {
+        "isolationMode": "ISOLATED_SANDBOX"
+      }
+    }
+  ],
+  "failures": []
+}

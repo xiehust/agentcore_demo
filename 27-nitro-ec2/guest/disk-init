@@ -1,0 +1,31 @@
+#!/bin/bash
+# Independent-disk test guest. Original cold-start init is unchanged.
+set -eu
+export PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+mkdir -p /run /tmp /workspace /home/dsh
+mount -t tmpfs tmpfs /run
+mount -t tmpfs tmpfs /tmp
+modprobe -a virtio_pci virtio_net virtio_blk ext4 vmw_vsock_virtio_transport nsm
+export BENCH_RUN_ID=unknown SANDBOX_ID=unknown
+GUEST_IP= HOST_IP=
+for arg in $(</proc/cmdline); do
+    case "$arg" in
+        bench_id=*) export BENCH_RUN_ID="${arg#bench_id=}" ;;
+        sandbox_id=*) export SANDBOX_ID="${arg#sandbox_id=}" ;;
+        guest_ip=*) GUEST_IP="${arg#guest_ip=}" ;;
+        host_ip=*) HOST_IP="${arg#host_ip=}" ;;
+    esac
+done
+[[ -n $GUEST_IP && -n $HOST_IP && $SANDBOX_ID != unknown ]]
+ip link set lo up
+ip addr add "$GUEST_IP/30" dev eth0
+ip link set eth0 up
+ip route add default via "$HOST_IP"
+# Fail closed: never use the RAM directory if the data drive is absent/unmountable.
+mount -t ext4 /dev/vda /workspace
+mkdir -p /workspace/.dsh
+export HOST="$GUEST_IP" DSH_WORKDIR=/workspace DSH_HOME=/workspace/.dsh
+exec /usr/local/bin/node /opt/dsh/disk-probe.mjs

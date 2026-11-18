@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="中文图解：使用 EC2 和 ECS Managed Instances 运行 Nitro Sandbox 中的 DSH，了解磁盘隔离、冷启动和无快照时的应用恢复。">
+<title>Nitro Sandbox 入门 · EC2 / ECS / DSH</title>
+<style>
+:root{--ink:#18263e;--muted:#50617a;--blue:#2563eb;--line:#dce4ef;--paper:#f4f7fb}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:26px}body{margin:0;color:var(--ink);background:var(--paper);font:16px/1.85 system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei","Droid Sans Fallback",sans-serif}
+a{color:#1e56b5;text-underline-offset:4px;overflow-wrap:anywhere}a:hover{color:#103c8c}a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #f59e0b;outline-offset:4px}
+.skip{position:absolute;top:-100px;left:16px;z-index:10;background:white;padding:10px}.skip:focus{top:12px}.hero{background:linear-gradient(115deg,#101e38,#19375e 65%,#194e68);color:white;padding:60px max(24px,calc((100vw - 1280px)/2));position:relative;overflow:hidden}.hero::after{content:"";position:absolute;border:1px solid #ffffff20;width:390px;height:390px;border-radius:50%;right:-90px;top:-200px;pointer-events:none}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;color:#adc9f7}.hero h1{font-size:clamp(32px,4.3vw,52px);line-height:1.25;margin:18px 0;letter-spacing:-.035em}.hero p{max-width:760px;color:#d5e3f5;margin:0 0 24px;font-size:18px}.hero-links{display:flex;flex-wrap:wrap;gap:12px}.hero-links a{padding:10px 19px;border:1px solid #708cac;border-radius:9px;text-decoration:none;font-weight:650;color:white}.hero-links a.primary{background:#dcebff;color:#153f76;border-color:#dcebff}.meta{margin-top:25px;font-size:13px;color:#c1d2e8}
+.layout{max-width:1328px;margin:auto;display:grid;grid-template-columns:222px minmax(0,1fr);gap:28px;padding:30px 24px 70px}aside{align-self:start;position:sticky;top:22px;max-height:calc(100vh - 44px);overflow:auto}nav{background:white;border:1px solid var(--line);border-radius:16px;padding:20px 12px}nav .nav-title{display:block;padding:0 10px 10px;font-size:12px;color:var(--muted);letter-spacing:.12em}nav a{display:block;padding:7px 10px;margin:3px 0;font-size:14px;line-height:1.5;color:var(--muted);border-radius:7px;text-decoration:none}nav a:hover,nav a[aria-current="location"]{color:#1d4ed8;background:#eff6ff}.sidebar-note{font-size:12px;line-height:1.7;color:var(--muted);padding:14px 10px}main{min-width:0}section{background:white;border:1px solid var(--line);border-radius:16px;padding:30px;margin-bottom:22px;scroll-margin-top:24px}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}.section-number{font:700 13px/1 monospace;color:#2563eb;padding:10px;background:#edf4ff;border-radius:8px;flex-shrink:0}h2{font-size:26px;line-height:1.4;margin:0;letter-spacing:-.025em}h3{font-size:20px;line-height:1.5;margin:28px 0 10px}p{margin:12px 0}.lead{color:var(--muted);margin-top:0}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0}.card{border:1px solid var(--line);border-radius:12px;padding:18px;background:#fbfcfe}.card strong{display:block;margin:7px 0;font-size:18px}.card p{font-size:14px;color:var(--muted);margin:7px 0 0}.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;color:#1d4ed8;background:#eaf2ff;padding:3px 9px;border-radius:20px}.badge.green{color:#167144;background:#e7f6ee}.badge.purple{color:#7c3aed;background:#f0eaff}.note{padding:15px 18px;border-left:4px solid var(--blue);background:#eff6ff;border-radius:0 9px 9px 0;margin:18px 0;font-size:14px}.note.warn{border-color:#d48b1c;background:#fff7e9}ul,ol{padding-left:24px}li{margin:7px 0}code{padding:2px 5px;background:#eef2f7;border-radius:4px;font:.9em/1.5 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;overflow-wrap:anywhere}.codebox{border-radius:11px;overflow:hidden;border:1px solid #2b3d58;margin:16px 0;background:#102036}.codebar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 14px;background:#1b304c;color:#c9d9ed;font-size:12px}.copy{border:1px solid #7590b0;border-radius:5px;background:transparent;color:white;padding:4px 12px;font:inherit;cursor:pointer}pre{margin:0;padding:18px;color:#e4eefb;overflow-x:auto;font-size:13px;line-height:1.75;tab-size:2}pre code{background:none;padding:0;font:inherit;color:inherit;overflow-wrap:normal}.table-wrap{overflow-x:auto;margin:18px 0}table{border-collapse:collapse;width:100%;font-size:14px;min-width:610px}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:13px 12px}th{background:#f0f5fc;font-size:13px;color:#385171}tr:last-child td{border-bottom:none}.step{display:flex;gap:11px;align-items:baseline}.step span{background:#2563eb;color:white;min-width:27px;height:27px;border-radius:50%;text-align:center;font-size:13px;line-height:27px}
+.diagram{margin:22px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}.diagram-scroll{overflow-x:auto;padding:18px;background:#fbfcff}svg{display:block;width:100%;min-width:720px;height:auto;font-family:system-ui,"PingFang SC","Microsoft YaHei","Droid Sans Fallback",sans-serif}svg .box{fill:white;stroke:#d1d5db;stroke-width:1.5}svg .label{fill:#18263e;font-size:17px;font-weight:650}svg .small{fill:#50617a;font-size:13px}svg .tiny{fill:#50617a;font-size:12px}figcaption{font-size:13px;padding:12px 17px;background:white;color:var(--muted);border-top:1px solid var(--line)}details{border:1px solid var(--line);border-radius:10px;padding:13px 17px;margin:17px 0}summary{cursor:pointer;font-weight:650}details p,details li{font-size:14px}.checklist{list-style:none;padding-left:0}.checklist label{display:flex;gap:10px;align-items:baseline;cursor:pointer}input[type=checkbox]{width:17px;height:17px;accent-color:var(--blue);flex-shrink:0}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.metric{padding:20px;border:1px solid var(--line);border-radius:12px;background:#fafcff}.metric .value{display:block;color:#1d4ed8;font-size:32px;font-weight:750;line-height:1.4}.metric small{display:block;color:var(--muted)}.sources{font-size:14px}footer{color:var(--muted);font-size:13px;padding:0 5px}.top{display:inline-block;margin-top:12px}#copy-status{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#102036;color:white;border-radius:8px;padding:8px 16px;font-size:13px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;max-width:90vw}#copy-status.visible{opacity:1}
+@media(max-width:1000px){.layout{grid-template-columns:180px minmax(0,1fr);gap:16px;padding:22px 18px}section{padding:24px}.cards{grid-template-columns:1fr}}@media(max-width:760px){.hero{padding:40px 20px}.hero p{font-size:16px}.layout{display:block;padding:18px 12px}aside{position:static;max-height:none;margin-bottom:18px}nav{display:grid;grid-template-columns:1fr 1fr;padding:12px}.nav-title{grid-column:1/-1}.sidebar-note{display:none}section{padding:22px 18px}h2{font-size:23px}.metrics{grid-template-columns:1fr}pre{padding:15px;font-size:12px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#copy-status{transition:none}}@media print{body{background:white;font-size:12px}.hero{background:white;color:var(--ink);padding:20px 0}.hero p,.eyebrow,.meta{color:var(--muted)}.hero-links,aside,.copy,#copy-status,.top{display:none}.layout{display:block;padding:0}section{border:none;border-radius:0;padding:12px 0}.codebox{border-color:#999;background:#f3f4f6}pre,.codebar{background:#f3f4f6;color:#172338;white-space:pre-wrap;overflow-wrap:anywhere}svg{min-width:0}.diagram-scroll{overflow:visible}table{min-width:0}h2,h3,figure,.codebox{break-inside:avoid}a{color:inherit}}
+</style>
+</head>
+<body>
+<a class="skip" href="#intro">跳到正文</a>
+<header class="hero" id="top">
+  <div class="eyebrow">A PRACTICAL BEGINNER’S GUIDE · AWS NITRO SANDBOXES</div>
+  <h1>把 Agent 放进独立的“小房间”</h1>
+  <p>从零理解 Nitro Sandbox，用 DSH 走通 EC2 与 ECS 两条路线。学会隔离工作目录、测量冷启动，以及在没有虚拟机快照时恢复任务进度。</p>
+  <div class="hero-links"><a class="primary" href="#ecs">推荐：从 ECS 开始 →</a><a href="#ec2">自己管理 EC2 →</a><a href="#snapshot">快照与恢复 →</a></div>
+  <div class="meta">中文入门教程 · 文档核对：2026-11-18 · 图形与样式完全离线 · 命令需你手动执行</div>
+</header>
+<div class="layout">
+<aside><nav aria-label="教程目录"><span class="nav-title">学习路线 / CONTENTS</span>
+  <a href="#intro">01 · 先理解是什么</a><a href="#architecture">02 · 看懂隔离边界</a><a href="#choose">03 · EC2 还是 ECS？</a><a href="#prepare">04 · 开始前的准备</a><a href="#ecs">05 · ECS 上手</a><a href="#ec2">06 · EC2 上手</a><a href="#disk">07 · 磁盘隔离与持久化</a><a href="#snapshot">08 · 没有快照怎么办？</a><a href="#performance">09 · 冷启动怎么测</a><a href="#troubleshoot">10 · 常见问题</a><a href="#cleanup">11 · 清理与自检</a><a href="#references">12 · 继续学习</a>
+</nav><p class="sidebar-note">先看概念，再选一条部署路线。不必两条都部署。手机上的大图、表格与代码可左右滑动。</p></aside>
+<main>
+<section id="intro">
+  <div class="section-head"><span class="section-number">01</span><h2>先理解：它解决什么问题？</h2></div>
+  <p class="lead">Agent 会执行命令、读写文件、调用工具。我们希望一个用户的运行环境不要影响另一个用户。</p>
+  <p>普通容器像同一套房里的不同房间：它们共享宿主内核。<strong>Nitro Sandbox 给工作负载单独的轻量虚拟机和 guest 内核</strong>，由 Nitro Hypervisor 提供 VM 隔离，适合运行不可信代码、Agent 工具与多租户工作负载。但它不替代身份认证、权限控制或数据加密。</p>
+  <div class="cards"><div class="card"><span class="badge">执行环境</span><strong>一个 task，一间房</strong><p>ECS 一个 task 对应一个 sandbox。同 task 多个容器不是多个租户边界。</p></div><div class="card"><span class="badge green">资源出口</span><strong>磁盘、网络、权限分开管</strong><p>私有工作目录、独立 ENI / SG、最小权限 task role，分别约束文件、网络与 AWS 操作。</p></div><div class="card"><span class="badge purple">威胁模型</span><strong>隔离不总等于保密</strong><p>想防 parent 读取敏感数据，还需要 confidential、证明核验与按测量值放钥。</p></div></div>
+  <div class="note"><strong>DSH 是什么？</strong>本仓库使用原版 <code>@deepseek-ai/dsh@0.2.2-rc.1</code>，通过 <code>dsh headless</code> 运行 Agent。ECS 的 HTTP wrapper 每次 <code>/invoke</code> 都启动新的 DSH 子进程。</div>
+  <div class="table-wrap"><table><thead><tr><th>术语</th><th>可以这样理解</th></tr></thead><tbody>
+  <tr><td>Parent instance</td><td>负责管理、设备与生命周期的父 EC2 实例，不是 guest 的操作系统。</td></tr><tr><td>Guest / sandbox</td><td>运行你代码的轻量虚拟机，有自己的内核和内存。</td></tr><tr><td>VMM / Firecracker</td><td>在 parent 上管理 guest 的监控程序；EC2 路线由你安装。</td></tr><tr><td>Task / task definition</td><td>ECS 中的一次运行 / 运行配方，定义容器、资源、网络和隔离模式。</td></tr><tr><td>Capacity provider</td><td>ECS 容量供应配置；Managed Instances 根据它管理 EC2。</td></tr><tr><td>Attestation</td><td>证明环境测量值的机制；配合策略核验身份与镜像，再决定是否释放密钥。</td></tr>
+  </tbody></table></div>
+</section>
+<section id="architecture">
+  <div class="section-head"><span class="section-number">02</span><h2>看图理解：parent 与 guest 的关系</h2></div>
+  <p class="lead">不是“在普通 EC2 里再套一层 KVM”。Parent 和 sandbox guest 都由 Nitro Hypervisor 管理。</p>
+  <figure class="diagram"><div class="diagram-scroll">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 335" role="img" aria-labelledby="arch-title arch-desc">
+    <title id="arch-title">Nitro Sandbox 隔离架构</title><desc id="arch-desc">Parent EC2 上的 VMM 通过 Nitro 设备管理独立 guest。Parent 与两个 guest 并列运行在 Nitro Hypervisor 上，每个 guest 拥有独立内核。</desc>
+    <defs><marker id="arch-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#2563eb"/></marker></defs>
+    <rect x="18" y="18" width="245" height="202" rx="12" class="box"/><text x="39" y="52" class="label">Parent EC2</text><text x="39" y="78" class="small">管理与设备面</text><rect x="37" y="95" width="207" height="54" rx="8" fill="#eff6ff" stroke="#bfdbfe"/><text x="54" y="128" class="label">VMM / Firecracker</text><text x="39" y="177" class="small">/dev/nitro_enclaves</text><text x="39" y="199" class="small">控制启动、停止、设备后端</text>
+    <rect x="307" y="18" width="232" height="202" rx="12" class="box"/><text x="329" y="52" class="label">Sandbox A</text><text x="329" y="78" class="small">租户 A / task A</text><rect x="327" y="95" width="192" height="54" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/><text x="346" y="128" class="label">DSH + 工作区 A</text><text x="329" y="177" class="small">Guest kernel A</text><text x="329" y="199" class="small">独立 guest 内存</text>
+    <rect x="569" y="18" width="232" height="202" rx="12" class="box"/><text x="591" y="52" class="label">Sandbox B</text><text x="591" y="78" class="small">租户 B / task B</text><rect x="589" y="95" width="192" height="54" rx="8" fill="#faf5ff" stroke="#e9d5ff"/><text x="608" y="128" class="label">DSH + 工作区 B</text><text x="591" y="177" class="small">Guest kernel B</text><text x="591" y="199" class="small">独立 guest 内存</text>
+    <path d="M263 122 H298" stroke="#2563eb" stroke-width="2" marker-end="url(#arch-arrow)"/><path d="M141 220 V247 M423 220 V247 M685 220 V247" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="18" y="247" width="783" height="64" rx="10" fill="#eaf2ff" stroke="#bfdbfe"/><text x="410" y="275" text-anchor="middle" class="label">AWS Nitro Hypervisor</text><text x="410" y="298" text-anchor="middle" class="small">VM 隔离边界 · parent 与 guest 并列，而非嵌套 KVM</text>
+  </svg></div><figcaption>图 1 · 蓝色表示管理路径的示意；灰线表示都运行在同一 Hypervisor 上，并非数据通道。Parent 仍参与设备与生命周期管理。</figcaption></figure>
+  <div class="table-wrap"><table><thead><tr><th>ECS 模式</th><th>防护边界</th><th>本教程</th></tr></thead><tbody>
+  <tr><td><code>SHARED</code></td><td>默认，不使用每 task 独立 Sandbox 隔离。</td><td>不作为目标</td></tr><tr><td><code>ISOLATED_SANDBOX</code></td><td>信任 parent；用独立 guest 内核隔离不同任务。</td><td>已实现 ECS 示例</td></tr><tr><td><code>CONFIDENTIAL_SANDBOX</code></td><td>把 parent 视为不可信；还需 attestation policy 与 KMS 核验后放钥。</td><td>介绍边界，未部署实测</td></tr>
+  </tbody></table></div>
+  <p>EC2 Firecracker 接口另有 <code>enclave.direct_mode</code>：默认 confidential；设为 <code>true</code> 时 parent 可以读写 guest RAM。<strong>不要把 EC2 direct 与 ECS isolated 当成同一个 API 枚举。</strong>需要分别按安全模型设计。</p>
+  <div class="note warn"><strong>机密模式不是万能保险箱。</strong>Parent 仍可影响设备、调度与可用性。应用把明文写入 parent 可接触的存储，或未经核验就接收密钥，数据依然可能泄漏。它也不同于传统 Nitro Enclaves 的应用模型。</div>
+</section>
+<section id="choose">
+  <div class="section-head"><span class="section-number">03</span><h2>选路线：先 ECS，还是先 EC2？</h2></div>
+  <div class="table-wrap"><table><thead><tr><th>选择项</th><th>ECS Managed Instances</th><th>EC2 + Firecracker</th></tr></thead><tbody>
+  <tr><td>适合谁</td><td>已会 Docker，希望快速运行 DSH</td><td>研究 guest 镜像、VMM 与低层行为</td></tr><tr><td>交付物</td><td>ECR 镜像 + task definition</td><td>EFI-stub kernel + initrd + VMM 配置</td></tr><tr><td>你管理什么</td><td>任务、IAM、网络、存储与容量策略</td><td>父 OS、内存池、Firecracker、guest、网络与磁盘</td></tr><tr><td>谁管理父 EC2</td><td>ECS 自动管理；不要手工停/终止它</td><td>你管理自己的专用父实例</td></tr><tr><td>持久化</td><td>外部 EFS / S3 / 数据库</td><td>独立数据盘后端 + 外部 checkpoint</td></tr><tr><td>现有代码</td><td><a href="README.md">28-nitro-ecs/</a></td><td><a href="../27-nitro-ec2/README.md">27-nitro-ec2/</a></td></tr>
+  </tbody></table></div>
+  <div class="note"><strong>首次上手：</strong>先跑 ECS 无模型磁盘隔离测试，确认部署与边界，再做真实 DSH 性能测试。需要对比 direct / confidential guest 启动时，再走 EC2 路线。</div>
+  <p>ECS 这项能力要求 <strong>Managed Instances</strong>；不是 Fargate，也不能用普通自管 EC2 capacity provider 的配置直接替代。不是任何 Nitro 系列实例、任何 ECS 运行方式都支持。</p>
+</section>
+<section id="prepare">
+  <div class="section-head"><span class="section-number">04</span><h2>开始前：账号、网络和版本</h2></div>
+  <ul class="checklist"><li><label><input type="checkbox">专用实验账号或独立资源，不直接操作生产集群。</label></li><li><label><input type="checkbox">已有私有子网与所需出站通路，不开放公网 SSH / 8080。</label></li><li><label><input type="checkbox">确认区域、支持实例、配额、AZ 容量及 CLI 对新 API 的支持。</label></li><li><label><input type="checkbox">ECS：AWS CLI v2、Python 3.11+、Docker/BuildKit、ARM64 构建能力。</label></li><li><label><input type="checkbox">EC2：支持的 AL2023 / 内核、Firecracker 1.18.0+、Node 24；用 SSM 连接。</label></li><li><label><input type="checkbox">真实 Agent：Bedrock 模型访问权限、最小权限运行角色与费用预算。</label></li></ul>
+  <div class="codebox"><div class="codebar"><span>本机终端 · 身份与工具检查</span></div><pre><code>aws sts get-caller-identity
+aws --version
+python3 --version
+docker buildx version</code></pre></div>
+  <div class="note warn"><strong>会产生费用。</strong>Sandbox 本身没有额外 premium，但 EC2、EBS、ECR、Logs、NAT、EFS、Lambda 和模型调用各有费用；ECS Managed Instances 另有标准管理费。本 HTML 不会自动运行命令或创建资源。</div>
+  <p>宿主、task 和 probe 需要相应 AWS 服务出站连通性。可使用现有 NAT；若用 endpoints，要逐一验证 ECR（含镜像层所需 S3）、Logs、ECS、凭证与 Bedrock 通路，不能只建一个 endpoint 就假设全部可用。</p>
+  <p><strong>注册 task definition / 运行任务是特权操作。</strong>不要允许不可信用户提交任意 task 配置；服务端应选择审查过的镜像、角色、卷和安全组。部署权限与 Agent 运行权限要分开。</p>
+</section>
+<section id="ecs">
+  <div class="section-head"><span class="section-number">05</span><h2>ECS 上手：从容器到独立 Sandbox</h2></div>
+  <p class="lead">复用已有脚手架，不需要在宿主上手工安装 Firecracker 或配置内存池。</p>
+  <figure class="diagram"><div class="diagram-scroll">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 288" role="img" aria-labelledby="ecs-title ecs-desc">
+    <title id="ecs-title">ECS 部署和请求路径</title><desc id="ecs-desc">本机推送 ARM64 镜像到 ECR，通过 ECS Managed Instances 启动隔离 task。本机用 IAM 签名调用私有 VPC 的 probe Lambda，Lambda 访问 task 私有 ENI，DSH 调用 Bedrock。</desc>
+    <defs><marker id="ecs-blue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#2563eb"/></marker><marker id="ecs-green" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#16a34a"/></marker></defs>
+    <rect x="14" y="24" width="161" height="91" rx="10" class="box"/><text x="34" y="59" class="label">本机 / BuildKit</text><text x="34" y="86" class="small">ARM64 image</text><rect x="236" y="24" width="161" height="91" rx="10" class="box"/><text x="256" y="59" class="label">Amazon ECR</text><text x="256" y="86" class="small">固定 image digest</text><path d="M175 69 H227" stroke="#16a34a" stroke-width="2" marker-end="url(#ecs-green)"/>
+    <rect x="451" y="18" width="354" height="226" rx="12" fill="#eff6ff" stroke="#bfdbfe"/><text x="469" y="47" class="small">ECS Managed Instances · 私有 VPC</text><rect x="474" y="68" width="308" height="150" rx="10" class="box"/><text x="495" y="98" class="label">ISOLATED_SANDBOX task</text><text x="495" y="123" class="small">独立 guest kernel · 2 vCPU / 4 GiB</text><rect x="494" y="144" width="126" height="51" rx="7" fill="#eff6ff"/><text x="510" y="175" class="small">HTTP → DSH</text><rect x="645" y="144" width="117" height="51" rx="7" fill="#f0fdf4"/><text x="660" y="175" class="small">/workspace</text><path d="M397 69 H442" stroke="#16a34a" stroke-width="2" marker-end="url(#ecs-green)"/>
+    <rect x="14" y="160" width="161" height="83" rx="10" class="box"/><text x="34" y="190" class="label">本机测试器</text><text x="34" y="217" class="small">IAM / SigV4 调用</text><rect x="236" y="160" width="161" height="83" rx="10" class="box"/><text x="256" y="190" class="label">Probe Lambda</text><text x="256" y="217" class="small">仅 SG → SG :8080</text><path d="M175 201 H227" stroke="#2563eb" stroke-width="2" marker-end="url(#ecs-blue)"/><path d="M397 201 H429 V169 H442" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#ecs-blue)"/>
+    <text x="451" y="270" class="small">DSH 用 task role 调 Bedrock；无公网 task IP / Function URL</text>
+  </svg></div><figcaption>图 2 · 绿色：镜像分发；蓝色：测试请求。Probe 通过 IAM 调用，不把 DSH 暴露到公网。</figcaption></figure>
+  <h3 class="step"><span>1</span>复制干净的实验目录</h3>
+  <p>从仓库根执行。已有 <code>28-nitro-ecs/state.json</code> 是历史记录，可能指向已清理环境；不要用它重新 create，也不覆盖历史结果。</p>
+  <div class="codebox"><div class="codebar"><span>本机终端 · 保留原有 state 与证据</span></div><pre><code>cd /path/to/agentcore_demo
+LAB=$(mktemp -d "$HOME/nitro-ecs-lab.XXXXXX")
+tar -C 28-nitro-ecs --exclude=state.json --exclude=generated \
+  --exclude=results --exclude=__pycache__ --exclude=probe.zip \
+  -cf - . | tar -C "$LAB" -xf -
+cd "$LAB"
+printf '实验目录：%s\n' "$LAB"</code></pre></div>
+  <p>后续命令都在这个新目录执行。保留新生成的 <code>state.json</code>，它关联本次资源，不要改成别人的集群。</p>
+  <h3 class="step"><span>2</span>创建专用集群与容量配置</h3>
+  <p>替换私有子网 ID。默认宿主 ARM64 <code>m7g.2xlarge</code>，task 2 vCPU / 4 GiB；先确认当前区域与 AZ 支持。</p>
+  <div class="codebox"><div class="codebar"><span>本机终端 · 开始创建收费资源</span></div><pre><code>python3 deploy.py create --region us-east-1 \
+  --name "dsh-nitro-workshop-$(date -u +%Y%m%d%H%M%S)" \
+  --subnet YOUR_PRIVATE_SUBNET</code></pre></div>
+  <p>脚本创建专用 ECS/ECR/IAM/probe 等资源并保存 state，不修改共享 VPC / NAT。你需拥有相应管理权限。</p>
+  <details><summary>背后的两个核心配置字段</summary><p>以下是<strong>字段摘录，不是完整可提交 JSON</strong>；分别属于容量配置与 task definition，不能混成一次 API。完整实现见 <a href="configuration.py">configuration.py</a>。</p>
+  <div class="codebox"><div class="codebar"><span>CreateCapacityProvider · 字段摘录</span></div><pre><code>{
+  "managedInstancesProvider": {
+    "instanceLaunchTemplate": {
+      "nitroEnclavesEnabled": true,
+      "storageConfiguration": { "storageSizeGiB": 80 }
+    }
+  }
+}</code></pre></div>
+  <div class="codebox"><div class="codebar"><span>RegisterTaskDefinition · 字段摘录</span></div><pre><code>{
+  "requiresCompatibilities": ["MANAGED_INSTANCES"],
+  "networkMode": "awsvpc", "cpu": "2048", "memory": "4096",
+  "runtimePlatform": {
+    "cpuArchitecture": "ARM64", "operatingSystemFamily": "LINUX"
+  },
+  "trustedExecutionConfiguration": { "isolationMode": "ISOLATED_SANDBOX" }
+}</code></pre></div>
+  <p>RunTask 用 <code>capacityProviderStrategy</code> 选择该 provider；DescribeTasks 的 <code>trustedExecutionSummary</code> 才是实际模式证据。</p></details>
+  <h3 class="step"><span>3</span>构建镜像并注册任务</h3>
+  <div class="codebox"><div class="codebar"><span>本机终端 · 读取本实验目录默认 state.json</span></div><pre><code>bash scripts/build_push.sh</code></pre></div>
+  <p>需要 ARM64 原生环境或 BuildKit 仿真。脚本使用 immutable tag，再把 task image 固定到 digest，不把本机 AWS 凭证放进镜像。不要用自定义 state 路径配合仍读取默认 state 的构建脚本。</p>
+  <h3 class="step"><span>4</span>先验证隔离，再测 Agent</h3>
+  <div class="codebox"><div class="codebar"><span>本机终端 · 无模型调用的隔离测试</span></div><pre><code>python3 benchmark.py --mode isolation --out results/first-isolation</code></pre></div>
+  <p>检查磁盘行为断言与<strong>整个 batch 最终状态</strong>。文件可见性通过不等于完整的防逃逸认证。确认费用预算后，才运行一次真实模型测试：</p>
+  <div class="codebox"><div class="codebar"><span>本机终端 · 可选，有 Bedrock 费用</span></div><pre><code>python3 benchmark.py --rounds 1 --mode performance \
+  --out results/first-performance</code></pre></div>
+  <p>关注回答是否正确，而非只有 HTTP 200。输出目录必须是新目录，不删除失败轮次后宣称全部成功。</p>
+  <h3 class="step"><span>5</span>核对实际模式并清理</h3>
+  <p>Benchmark 记录 task、<code>trustedExecutionSummary</code>、新 <code>boot_id</code> 和宿主信息，并停止测试 task。任务还运行时，可从控制台取本次 ARN 检查：</p>
+  <div class="codebox"><div class="codebar"><span>本机终端 · 先填本次真实值，不用旧 ARN</span></div><pre><code>REGION=us-east-1
+CLUSTER=YOUR_LIVE_CLUSTER_NAME
+TASK_ARN=YOUR_LIVE_TASK_ARN
+aws ecs describe-tasks --region "$REGION" \
+  --cluster "$CLUSTER" --tasks "$TASK_ARN" \
+  --query 'tasks[].{Status:lastStatus,Isolation:trustedExecutionSummary.isolationMode}'</code></pre></div>
+  <p>期望 <code>ISOLATED_SANDBOX</code>。停止很久的记录可能过期，要结合集群与容量状态判断。结束实验：</p>
+  <div class="codebox"><div class="codebar"><span>本机终端 · 在本次新实验目录执行</span></div><pre><code>python3 cleanup.py</code></pre></div>
+  <div class="note warn"><strong>出错不盲目重放。</strong>先审查新 state 和已创建资源再继续/清理。不要手工 terminate ECS 管理的 EC2，通过专用 provider 生命周期回收。</div>
+</section>
+<section id="ec2">
+  <div class="section-head"><span class="section-number">06</span><h2>EC2 上手：自己管理 Firecracker 与 guest</h2></div>
+  <p class="lead">统一使用 ARM64。父实例、内存池、VMM、guest 镜像都由你负责，与 ECS 路线互相独立。</p>
+  <div class="note"><strong>版本条件：</strong>示例要求 AL2023 kernel 6.18，至少 <code>6.18.51-120.162.amzn2023</code>，Firecracker 1.18.0+，guest EFI-stub kernel；confidential 还需对应 DMB 支持。不是所有 Nitro 机型都支持；不要选 flex、metal 或启用 nested virtualization 的配置，以当前官方支持列表为准。</div>
+  <h3 class="step"><span>1</span>创建自己的专用 parent</h3>
+  <p>填好私有子网、安全组和 SSM instance profile。SSM 角色与网络通路需先就绪，无需开放 SSH。这里只操作自己创建的实验 EC2。</p>
+  <div class="codebox"><div class="codebar"><span>本机终端 · ARM64 专用父实例</span></div><pre><code>REGION=us-east-1
+SUBNET_ID=YOUR_PRIVATE_SUBNET
+SG_ID=YOUR_PRIVATE_SECURITY_GROUP
+INSTANCE_PROFILE=YOUR_SSM_INSTANCE_PROFILE
+aws ec2 run-instances --region "$REGION" \
+  --image-id resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.18-arm64 \
+  --instance-type m7g.2xlarge \
+  --subnet-id "$SUBNET_ID" --security-group-ids "$SG_ID" \
+  --iam-instance-profile Name="$INSTANCE_PROFILE" \
+  --enclave-options Enabled=true \
+  --metadata-options HttpTokens=required \
+  --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=dsh-nitro-workshop}]'
+
+INSTANCE_ID=YOUR_NEW_INSTANCE_ID
+aws ssm start-session --target "$INSTANCE_ID" --region "$REGION"</code></pre></div>
+  <p>记录返回的 ID，等待 EC2 / SSM online 后连接；本机可能需要 Session Manager 插件。若 AMI 参数或机型不被区域支持，先查询支持条件，不退回未知旧内核。</p>
+  <h3 class="step"><span>2</span>配置内存池，重启一次</h3>
+  <div class="codebox"><div class="codebar"><span>Parent EC2 · 不是本机，也不是 guest</span></div><pre><code>sudo dnf install -y dracut nftables iproute kmod tar gzip xz curl
+uname -r
+sudo grubby --update-kernel=ALL --args='nitro_enclaves.mempool=8G@0'
+sudo reboot</code></pre></div>
+  <p>重新通过 SSM 连接后检查：</p>
+  <div class="codebox"><div class="codebar"><span>Parent EC2 · 重连后</span></div><pre><code>sudo modprobe nitro_enclaves
+sudo dmesg | grep 'nitro_enclaves: CMA pool'
+ls -l /dev/nitro_enclaves
+cat /sys/class/misc/nitro_enclaves/pcie_slots{,_total,_in_use}</code></pre></div>
+  <p><code>8G@0</code> 是启动时保留的示例 pool，不是每个 guest 自动分配 8 GiB。为 parent、设备 buffer 与多个 guest 留余量；guest RAM 总和不能简单顶满 pool。Slots 数量同样约束并发。</p>
+  <h3 class="step"><span>3</span>安装 Firecracker 与 Node 24</h3>
+  <div class="codebox"><div class="codebar"><span>Parent EC2 · 固定官方 release</span></div><pre><code>VERSION=1.18.0
+ARCH=$(uname -m)
+curl -sSfL -o firecracker.tgz \
+  "https://github.com/firecracker-microvm/firecracker/releases/download/v${VERSION}/firecracker-v${VERSION}-${ARCH}.tgz"
+tar -xzf firecracker.tgz
+sudo install -m755 \
+  "release-v${VERSION}-${ARCH}/firecracker-v${VERSION}-${ARCH}" \
+  /usr/local/bin/firecracker
+firecracker --version</code></pre></div>
+  <p>确认官方 release 来源，并按其发布信息核验制品。父机需要原生 Node 24 / npm，已有则跳过安装。ARM64 安装例子：</p>
+  <div class="codebox"><div class="codebar"><span>Parent EC2 · Bash，ARM64，校验失败停止</span></div><pre><code>set -euo pipefail
+NODE_VERSION=24.20.0
+NODE_DIST="node-v${NODE_VERSION}-linux-arm64"
+curl -sSfLO "https://nodejs.org/dist/v${NODE_VERSION}/${NODE_DIST}.tar.xz"
+curl -sSfLO "https://nodejs.org/dist/v${NODE_VERSION}/SHASUMS256.txt"
+awk -v archive="${NODE_DIST}.tar.xz" '$2 == archive' SHASUMS256.txt \
+  | sha256sum --check --strict -
+sudo tar -xJf "${NODE_DIST}.tar.xz" -C /opt
+export PATH="/opt/${NODE_DIST}/bin:$PATH"
+node --version
+npm --version</code></pre></div>
+  <p>摘要与包同源，主要验证下载完整性；更高供应链要求需核验发布签名。重连要重新设置 PATH，不混用 x86_64 Node 与 ARM64 DSH 原生插件。</p>
+  <h3 class="step"><span>4</span>构建最小 DSH guest</h3>
+  <p>通过受控渠道把你的仓库 checkout 放到 parent，再从 parent 仓库根复制一份干净源码：</p>
+  <div class="codebox"><div class="codebar"><span>Parent EC2 · 不复制历史制品或凭证</span></div><pre><code>cd /path/to/agentcore_demo
+LAB_EC2=$(mktemp -d "$HOME/nitro-ec2-lab.XXXXXX")
+tar -C 27-nitro-ec2 --exclude='artifacts*' --exclude='results*' \
+  --exclude='private-disks*' --exclude=credentials.json \
+  --exclude=__pycache__ -cf - . | tar -C "$LAB_EC2" -xf -
+cd "$LAB_EC2"
+mkdir -p artifacts-src/dsh
+cd artifacts-src/dsh
+npm init -y
+npm install --omit=dev --no-audit --no-fund '@deepseek-ai/dsh@0.2.2-rc.1'
+cd ../..
+sudo env DSH_DIR="$PWD/artifacts-src/dsh" NODE_BIN="$(command -v node)" \
+  bash scripts/build_guest.sh</code></pre></div>
+  <p>产物为 <code>artifacts/vmlinuz</code>、<code>initrd.img</code>、<code>manifest.json</code>、<code>SHA256SUMS</code>。只打包应用与运行依赖，不打包你的 HOME / credentials。已有输出目录时脚本拒绝覆盖。</p>
+  <h3 class="step"><span>5</span>做一次无模型启动测试</h3>
+  <div class="codebox"><div class="codebar"><span>Parent EC2 · 比较两种 guest 模式</span></div><pre><code>sudo python3 benchmark.py --rounds 1 --out results/first-startup-confidential
+sudo python3 benchmark.py --rounds 1 --direct-mode --out results/first-startup-direct</code></pre></div>
+  <p>验证 guest 启动和 <code>dsh headless --help</code>，<strong>不是模型对话，也不是完整机密应用</strong>。脚本负责 TAP、防火墙与测试清理，无需先建同名 TAP。</p>
+  <div class="note warn"><strong>不给 guest 继承父管理员身份。</strong>示例默认限制转发与父服务。放通出站时继续拒绝 <code>169.254.169.254</code>；NAT 后 guest 可能访问父 IMDS，IMDSv2 / hop limit 不能单独替代网络拒绝规则。</div>
+  <details><summary>Firecracker 配置长什么样？</summary><p>结构示意，<strong>不能原样直接启动</strong>：路径、TAP、init 与网络要准备。Benchmark 已负责这些。<code>enclave</code> 走 Nitro Sandbox，不是普通 <code>/dev/kvm</code>。</p>
+  <div class="codebox"><div class="codebar"><span>Firecracker · 配置结构示意</span></div><pre><code>{
+  "boot-source": {
+    "kernel_image_path": "/absolute/artifacts/vmlinuz",
+    "initrd_path": "/absolute/artifacts/initrd.img"
+  },
+  "machine-config": { "vcpu_count": 2, "mem_size_mib": 4096 },
+  "drives": [],
+  "network-interfaces": [
+    { "iface_id": "eth0", "host_dev_name": "YOUR_PREPARED_TAP" }
+  ],
+  "enclave": { "cpu_overcommit": true, "direct_mode": true, "debug_mode": false }
+}</code></pre></div><p>保留 <code>drives: []</code>。CPU overcommit 是共享资源，不等于独占核；running guest CPU/RAM 不能随意热调。Debug 会影响证明，生产机密流程不能沿用调试配置。</p></details>
+  <details><summary>可选：真实 Bedrock Agent 测试</summary><p>先确认模型、权限与费用。以下沿用 direct-mode 研究路径；只用<strong>短期最小权限</strong>凭证，不是 confidential 的 attested secret delivery。父机先安装当前 AWS CLI 并配置专用临时 profile，不导出管理员长期密钥。</p>
+  <div class="codebox"><div class="codebar"><span>Parent EC2 · 600 临时凭证文件，结束删除</span></div><pre><code>umask 077
+aws configure export-credentials --profile YOUR_TEMPORARY_PROFILE \
+  --format process &gt; credentials.json
+chmod 600 credentials.json
+sudo python3 benchmark.py --workload agent --direct-mode \
+  --credentials-file "$PWD/credentials.json" --region us-east-1 \
+  --model deepseek.v3.2 --rounds 1 --out results/first-agent
+rm -f -- credentials.json</code></pre></div><p>中途失败也需删除凭证、检查清理；不打印/分享内容，不提交 Git，也不记录 token 到日志。</p></details>
+</section>
+<section id="disk">
+  <div class="section-head"><span class="section-number">07</span><h2>磁盘：隔离、保密、持久化是三件事</h2></div>
+  <p class="lead">“B 看不到 A 的文件”不等于“parent 看不到”，更不等于“task 停了还能恢复”。</p>
+  <figure class="diagram"><div class="diagram-scroll">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" role="img" aria-labelledby="disk-title disk-desc">
+    <title id="disk-title">私有临时卷与租户持久卷</title><desc id="disk-desc">Task A、B 有各自临时 workspace。若需跨 task 恢复，可改为挂载 EFS 不同租户 Access Point，并限制 IAM、POSIX 路径与权限。</desc>
+    <defs><marker id="disk-green" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#16a34a"/></marker></defs>
+    <rect x="20" y="20" width="240" height="96" rx="10" class="box"/><text x="40" y="51" class="label">Task A · DSH</text><text x="40" y="78" class="small">/workspace · /tmp</text><text x="40" y="100" class="tiny">空 host volume：task 私有临时卷</text><rect x="20" y="165" width="240" height="96" rx="10" class="box"/><text x="40" y="196" class="label">Task B · DSH</text><text x="40" y="223" class="small">/workspace · /tmp</text><text x="40" y="245" class="tiny">不共享宿主 sourcePath</text>
+    <rect x="352" y="20" width="448" height="241" rx="12" fill="#f0fdf4" stroke="#bbf7d0"/><text x="375" y="52" class="label">可选持久化：Amazon EFS</text><text x="375" y="79" class="small">文件独立于 task 生命周期 · 另考虑保密</text><rect x="375" y="96" width="401" height="60" rx="8" class="box"/><text x="391" y="122" class="label">Access Point A → /tenants/tenant-a</text><text x="391" y="145" class="small">Role A + UID/GID 1000 + 0700</text><rect x="375" y="178" width="401" height="60" rx="8" class="box"/><text x="391" y="204" class="label">Access Point B → /tenants/tenant-b</text><text x="391" y="227" class="small">Role B + UID/GID 1000 + 0700</text>
+    <path d="M260 67 H302 V126 H343" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#disk-green)"/><path d="M260 212 H343" stroke="#16a34a" stroke-width="2" marker-end="url(#disk-green)"/><text x="24" y="289" class="small">绿色：启用 EFS 后的挂载关系；仅将工作卷改为 EFS，/tmp 仍保持临时私有。</text>
+  </svg></div><figcaption>图 3 · 路径名不等于访问控制。IAM、文件系统策略、Access Point 与 POSIX 权限一起限制挂载。</figcaption></figure>
+  <h3>ECS：默认临时卷配置</h3>
+  <div class="codebox"><div class="codebar"><span>Task definition · 字段摘录，其他必需容器字段未展示</span></div><pre><code>{
+  "volumes": [
+    { "name": "workspace", "host": {} },
+    { "name": "tmp", "host": {} }
+  ],
+  "containerDefinitions": [{
+    "name": "dsh", "readonlyRootFilesystem": true,
+    "mountPoints": [
+      { "sourceVolume": "workspace", "containerPath": "/workspace", "readOnly": false },
+      { "sourceVolume": "tmp", "containerPath": "/tmp", "readOnly": false }
+    ]
+  }]
+}</code></pre></div>
+  <p>空 <code>host: {}</code> 不指定宿主共享目录。Bootstrap 设置 <code>HOME=/workspace</code>、<code>DSH_HOME=/workspace/.dsh</code>，应用用 UID 1000；根文件系统只读，工作卷与临时卷可写。不给 Agent privileged、Docker socket 或共享宿主路径。</p>
+  <div class="table-wrap"><table><thead><tr><th>存储项</th><th>当前限制 / 注意事项</th></tr></thead><tbody>
+  <tr><td>每 task ephemeral</td><td>固定 20 GiB；镜像压缩/展开也占空间，不能用 <code>ephemeralStorage</code> 自由扩大。</td></tr><tr><td>Provider 实例数据盘</td><td>默认 80 GiB，可配 30–16,384 GiB；是宿主容量，不是每 task 80 GiB，多 task 共享 IOPS / 吞吐。</td></tr><tr><td>每 task EBS</td><td>不支持 <code>configuredAtLaunch=true</code> 的 task 独立 EBS。</td></tr><tr><td>EFS</td><td>用于外部持久化；本仓库 EFS / confidential 均未部署实测。现行文档讨论 EFS 支持与保密风险。</td></tr>
+  </tbody></table></div>
+  <h3>ECS：用 EFS 保存工作文件</h3>
+  <p>先创建<strong>加密 EFS</strong>、私有 mount targets 与租户 Access Point。2049 仅允许 task SG；启用 TLS / IAM authorization。Access Point 设 <code>/tenants/tenant-a</code>、UID/GID 1000、0700；task 的 <code>rootDirectory</code> 省略或设 <code>/</code>。</p>
+  <div class="codebox"><div class="codebar"><span>本机 · 新 ECS 实验目录内，只生成配置，不创建 EFS</span></div><pre><code>python3 examples/persistent_efs.py --state state.json --tenant tenant-a \
+  --filesystem-id fs-YOUR_ID --access-point-id fsap-YOUR_ID \
+  --task-role-arn arn:aws:iam::YOUR_ACCOUNT:role/YOUR_TENANT_TASK_ROLE \
+  --out generated/tenant-a</code></pre></div>
+  <p>替换真实 ID / ARN。输出 task definition、client policy、filesystem policy、Access Point settings；审查后自行创建/应用资源、注册任务。生成器面向 <code>ISOLATED_SANDBOX</code>，<strong>生成成功不是挂载验证通过</strong>。</p>
+  <div class="note warn"><strong>不要逐租户覆盖共享文件系统策略。</strong>输出 filesystem policy 是专用单租户示例，会拒绝其他 principal / Access Point、非 TLS 与 ClientRootAccess。共享 EFS 要统一审查所有租户映射。</div>
+  <p>TLS 在 guest 终止也不防 parent 使用自己的 IAM 身份旁路挂同一 EFS。<strong>EBS / EFS 服务端加密不等于对 parent 保密。</strong>防 parent 需应用先加密，并在 attestation 核验后才放解密密钥。不要沿用旧资料“confidential 一律不支持 EFS”的断言；当前组合仍需单独设计和验证。</p>
+  <h3>EC2：每个 guest 一个独立 raw 数据盘</h3>
+  <p>在 EC2 实验目录执行，准备独立 2 GiB ext4 后端并做并发隔离检查。这不是 ECS task EBS。</p>
+  <div class="codebox"><div class="codebar"><span>Parent EC2 · 新镜像、磁盘目录与结果目录</span></div><pre><code>sudo dnf install -y e2fsprogs
+sudo env OUTPUT_DIR="$PWD/artifacts-disk-first" \
+  DSH_DIR="$PWD/artifacts-src/dsh" NODE_BIN="$(command -v node)" \
+  bash scripts/build_disk_guest.sh
+sudo python3 disk_isolation.py \
+  --kernel artifacts-disk-first/vmlinuz --initrd artifacts-disk-first/initrd.img \
+  --manifest artifacts-disk-first/manifest.json --direct-mode \
+  --disk-root private-disks-first --concurrent-rounds 2 --out results/disks-first</code></pre></div>
+  <div class="codebox"><div class="codebar"><span>Firecracker · 独立块设备后端示意</span></div><pre><code>{
+  "drives": [{
+    "drive_id": "workspace", "path_on_host": "/absolute/tenant-a.raw",
+    "is_root_device": false, "is_read_only": false, "cache_type": "Writeback"
+  }]
+}</code></pre></div>
+  <p>B 使用另一份文件。普通 ext4 同一后端不能交给两个 guest 同时写，也不在 guest 运行时由 parent mount 修改；停止/卸载与 flush 后再做一致性检查。Raw 文件留在 parent EBS 可供新 guest 重用，但 parent 能读写它；confidential RAM 保护不会自动加密磁盘明文。</p>
+</section>
+<section id="snapshot">
+  <div class="section-head"><span class="section-number">08</span><h2>可以保存 Sandbox 快照吗？</h2></div>
+  <div class="note warn"><strong>当前不支持。</strong>Nitro Sandbox 不支持 snapshot / restore、pause / resume 或 live migration。Parent 不能 hibernate；stop、reboot、terminate parent 会停止其 sandboxes。底层用 Firecracker 不代表普通 Firecracker snapshot API 能绕过限制。</div>
+  <p>要“下次接着干”，先区分：<strong>文件恢复、应用进度恢复，不是 RAM 与进程快照。</strong></p>
+  <figure class="diagram"><div class="diagram-scroll">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" role="img" aria-labelledby="restore-title restore-desc">
+    <title id="restore-title">应用层 checkpoint 恢复</title><desc id="restore-desc">旧 task 完成工具步骤后保存文件、消息和 checkpoint。新 task 校验租户、版本和数据，重新启动进程并重建上下文，不恢复旧内存或连接。</desc>
+    <defs><marker id="restore-green" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#16a34a"/></marker><marker id="restore-purple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#9333ea"/></marker></defs>
+    <rect x="18" y="28" width="225" height="163" rx="10" class="box"/><text x="39" y="62" class="label">旧 task / guest</text><text x="39" y="94" class="small">完成一个 turn / 工具步骤</text><text x="39" y="120" class="small">Flush 文件 → 发布 checkpoint</text><text x="39" y="156" class="small">之后可停止并释放计算</text>
+    <rect x="299" y="28" width="221" height="163" rx="10" fill="#f0fdf4" stroke="#bbf7d0"/><text x="320" y="62" class="label">私有外部存储</text><text x="320" y="94" class="small">EFS / S3 / 数据库</text><text x="320" y="120" class="small">文件 + 对话 + 工具结果</text><text x="320" y="156" class="small">版本 / checksum / 操作 ID</text>
+    <rect x="576" y="28" width="225" height="163" rx="10" class="box"/><text x="597" y="62" class="label">新 task / guest</text><text x="597" y="94" class="small">重新启动应用进程</text><text x="597" y="120" class="small">验证租户、版本、完整性</text><text x="597" y="156" class="small">加载状态 → 重建上下文</text>
+    <path d="M243 108 H290" stroke="#16a34a" stroke-width="2" marker-end="url(#restore-green)"/><path d="M520 108 H567" stroke="#9333ea" stroke-width="2" marker-end="url(#restore-purple)"/><rect x="18" y="226" width="783" height="53" rx="9" fill="#fff7e9" stroke="#f1d29b"/><text x="410" y="258" text-anchor="middle" class="small">不保存：AWS 凭证 / token / RAM / socket / 原进程执行位置</text>
+  </svg></div><figcaption>图 4 · 绿色：保存持久状态；紫色：新环境逻辑恢复。仍要重新启动，不会从原指令地址继续。</figcaption></figure>
+  <div class="table-wrap"><table><thead><tr><th>目标</th><th>Workaround</th><th>限制</th></tr></thead><tbody>
+  <tr><td>保存工作文件</td><td>ECS 挂回租户 EFS；EC2 重用一致数据盘后端；或版本化文件归档。</td><td>只恢复文件，不自动恢复 DSH 会话。</td></tr><tr><td>接着完成任务</td><td>保存消息、工具结果、文件清单和进度，重建 Agent 上下文。</td><td>需应用实现；模型后续输出可能不同。</td></tr><tr><td>备份文件版本</td><td>EFS backup、私有对象归档、外部卷数据备份。</td><td>不是完整 Sandbox 快照；先保证写入一致性。</td></tr><tr><td>不重复初始化</td><td>维持运行中的 task 池，按租户严格分配。</td><td>持续计费、非暂停；故障/host 替换仍丢内存。</td></tr>
+  </tbody></table></div>
+  <h3>应用 checkpoint 设计示例</h3>
+  <div class="codebox"><div class="codebar"><span>设计示例 · 不是 DSH 自带格式或已实现的 resume API</span></div><pre><code>{
+  "schema_version": 1, "tenant_id": "tenant-a",
+  "session_id": "session-001", "checkpoint_id": "turn-0002",
+  "dsh_version": "0.2.2-rc.1", "completed_turn": 2,
+  "messages_ref": "private/messages/turn-0002.json",
+  "workspace_ref": "private/workspaces/turn-0002.tar",
+  "workspace_sha256": "REPLACE_WITH_VERIFIED_SHA256",
+  "completed_operation_ids": ["tool-operation-001"]
+}</code></pre></div>
+  <ol><li>在完整 turn / 工具操作结束时暂停应用写入，保存一致的文件与消息版本。</li><li>先写 immutable 数据，再用事务或原子指针发布 checkpoint；不能读到半份状态。</li><li>恢复先认证租户，校验版本、checksum、路径与解包安全，再加载文件和上下文。</li><li>重新获取短期凭证、建立网络；凭证、token、socket 不进入 checkpoint。</li><li>外部副作用用幂等 ID / 去重或人工核对。“外部动作完成、checkpoint 未保存”时不能盲目重做。</li></ol>
+  <div class="note"><strong>本仓库尚未实现会话恢复。</strong>每次请求 spawn 新 DSH；warm 是同 task 后续调用，不是长驻会话。保留 <code>/workspace/.dsh</code> 也不保证原生 DSH 自动续接；单独验证版本会话接口，没有接口时由应用显式传回消息与工具结果。</div>
+</section>
+<section id="performance">
+  <div class="section-head"><span class="section-number">09</span><h2>冷启动：先说明“冷”的是哪一层</h2></div>
+  <p class="lead">“Sandbox 2 秒”和“ECS 70 秒”可以同时成立，因为起点与包含工作不同。</p>
+  <figure class="diagram"><div class="diagram-scroll">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 216" role="img" aria-labelledby="perf-title perf-desc">
+    <title id="perf-title">冷启动阶段</title><desc id="perf-desc">ECS 端到端可能包含容量、调度镜像、guest、DSH 和模型；EC2 guest ready 从已运行父实例开始。等宽方块仅表示阶段，不是耗时比例。</desc>
+    <rect x="18" y="46" width="149" height="79" rx="8" fill="#eaf2ff" stroke="#bfdbfe"/><text x="92" y="77" text-anchor="middle" class="label">容量准备</text><text x="92" y="101" text-anchor="middle" class="small">EC2 / 注册</text><rect x="177" y="46" width="149" height="79" rx="8" fill="#eaf2ff" stroke="#bfdbfe"/><text x="251" y="77" text-anchor="middle" class="label">调度 / 镜像</text><text x="251" y="101" text-anchor="middle" class="small">网络 / 拉取</text><rect x="336" y="46" width="149" height="79" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/><text x="410" y="77" text-anchor="middle" class="label">Guest ready</text><text x="410" y="101" text-anchor="middle" class="small">内核 / 服务</text><rect x="495" y="46" width="149" height="79" rx="8" fill="#faf5ff" stroke="#e9d5ff"/><text x="569" y="77" text-anchor="middle" class="label">DSH 初始化</text><text x="569" y="101" text-anchor="middle" class="small">进程 / 上下文</text><rect x="654" y="46" width="149" height="79" rx="8" fill="#fff7e9" stroke="#f1d29b"/><text x="728" y="77" text-anchor="middle" class="label">模型首文本</text><text x="728" y="101" text-anchor="middle" class="small">Bedrock / 推理</text>
+    <text x="18" y="25" class="small">ECS：从零容量提交 RunTask 时，前两段也可能很明显</text><path d="M18 147 V158 H803 V147" fill="none" stroke="#2563eb" stroke-width="2"/><text x="410" y="185" text-anchor="middle" class="small">端到端等待 = 实际经历的阶段 + 探测 / API 开销（图不是耗时比例）</text>
+  </svg></div><figcaption>图 5 · 分开标注容量冷、镜像冷、task 冷、进程冷与模型请求。并行工作不能机械相加，端到端另测。</figcaption></figure>
+  <h3>已有实测的量级参考</h3>
+  <p><strong>以下为 2026-11-17 历史结果，不是本次复测。</strong>EC2 parent 已运行，本地制品且未清页缓存；ECS 用另一规格宿主和计时链路，不能直接算两条路线差多少倍。</p>
+  <div class="metrics"><div class="metric"><span class="badge">EC2 · DIRECT</span><span class="value">2.232 s</span><small>Guest ready p50 · 无模型 · 20 轮</small></div><div class="metric"><span class="badge purple">EC2 · CONFIDENTIAL</span><span class="value">3.570 s</span><small>Guest ready p50 · 无模型 · 20 轮</small></div><div class="metric"><span class="badge">ECS · 零注册容量</span><span class="value">70.368 s</span><small>RunTask 提交 → 观察到 RUNNING · 1 个 anchor</small></div><div class="metric"><span class="badge green">ECS · 热容量 / 新 TASK</span><span class="value">17.090–17.622 s</span><small>ECS createdAt → startedAt · 仅 2 个样本</small></div></div>
+  <div class="table-wrap"><table><thead><tr><th>历史测试</th><th>结果与限制</th></tr></thead><tbody>
+  <tr><td>EC2 环境</td><td>m7g.xlarge parent，guest 2 vCPU / 4 GiB，Node 24.20.0；本文建议 parent m7g.2xlarge，历史测量不是该配置保证。</td></tr><tr><td>EC2 真实 Agent</td><td>实际 4 轮，cold 精确回答 1/4、warm 2/4；不是成功性能批次，不只报延迟不报质量。</td></tr><tr><td>ECS 环境</td><td>m7g.2xlarge，task 2 vCPU / 4 GiB；拉取 128–130 ms 是缓存命中，不是镜像冷拉取。</td></tr><tr><td>ECS 真实 Agent</td><td>新 task 首 DSH 文本 3.325–3.353 s，包含模型；2 轮 4 请求，3/4 精确回答，batch failed。</td></tr><tr><td>ECS 磁盘测试</td><td>13 个行为断言通过，但历史 batch 因 STOPPED 记录过期的清理错误最终 failed；后续修代码不改变证据。</td></tr><tr><td>未实测</td><td>EFS 挂载、ECS confidential、checkpoint / resume。</td></tr>
+  </tbody></table></div>
+  <h3>你应该记录什么</h3>
+  <ul><li><strong>固定环境：</strong>区域/AZ、实例、CPU/RAM、模式、内核、DSH/Node、image digest 与模型。</li><li><strong>证明真的冷：</strong>新 ARN / boot_id，容量是否零、镜像缓存是否命中；首请求前不预热 DSH。</li><li><strong>拆开时钟：</strong>客户端 submit→ready、ECS created→started、pull、DSH spawn→首文本；首 status event 不是首文本。</li><li><strong>报告正确性：</strong>回答、失败、超时、cleanup 状态；样本足够才有意义地报告 p50/p95。</li><li><strong>优化有边界：</strong>小镜像、热容量、减少重复初始化可降部分等待，但不是 snapshot；跨租户热 task 复用需清理数据与身份。</li></ul>
+  <p>详见 <a href="TEST_REPORT.zh.md">ECS 实测报告</a> 与 <a href="../27-nitro-ec2/TEST_REPORT.zh.md">EC2 实测报告</a>。生产性能请按自己的环境、样本量与成功标准重测。</p>
+</section>
+<section id="troubleshoot">
+  <div class="section-head"><span class="section-number">10</span><h2>遇到问题，从哪层查？</h2></div>
+  <div class="table-wrap"><table><thead><tr><th>现象</th><th>先检查</th></tr></thead><tbody>
+  <tr><td>CLI 未知字段</td><td>CLI / API model 是否支持；不删 Nitro / isolation 字段来绕过报错。</td></tr><tr><td>ECS 长期 PENDING</td><td>Provider 开关、AZ 容量、配额、角色、私有网络与宿主注册；无宿主不等于 DSH 慢。</td></tr><tr><td>RUNNING 但 /health 不通</td><td>Task ENI、probe SG→task SG 8080、应用监听、CloudWatch 日志。</td></tr><tr><td>DSH AccessDenied / 无文本</td><td>Task role、region/model 支持、出站、临时凭证与应用错误；HTTP 200 不等于成功。</td></tr><tr><td>没有 /dev/nitro_enclaves</td><td>机型、enclave-options、内核、模块、重启后的 pool；仅配参数没 reboot 不够。</td></tr><tr><td>Guest 内存 / slots 不足</td><td>Pool、slots、已有 guests、parent/设备余量，不直接在生产机调整。</td></tr><tr><td>Native addon 加载失败</td><td>CPU 架构、glibc、原生库依赖是否一致并已打包。</td></tr><tr><td>新 task 文件丢了</td><td>是否临时卷？跨 task 保留需外部存储，不是增加宿主数据盘就会恢复。</td></tr><tr><td>EFS mount 失败</td><td>Mount target、2049、TLS、role/AP/filesystem policy、UID、权限、rootDirectory。</td></tr>
+  </tbody></table></div>
+  <details><summary>ECS 换 AZ 的注意事项</summary><p>历史 CLI 2.40.3 的 UpdateCapacityProvider 不接受 Nitro 字段，更新 launch template 后 describe 曾丢该开关，不把去掉字段再 update 当可靠迁移。<a href="scripts/move_capacity_az.py">move_capacity_az.py</a> 用创建新 provider → 核验 → 切换专用 cluster → 删除旧 provider，只适用于没有运行/待启动任务的专用 demo，不是生产无损迁移方案。</p></details>
+</section>
+<section id="cleanup">
+  <div class="section-head"><span class="section-number">11</span><h2>清理，而不只是退出终端</h2></div>
+  <div class="cards"><div class="card"><span class="badge">ECS</span><strong>按 state 清理容量</strong><p>新实验目录执行 <code>python3 cleanup.py</code>，核对 tasks 为零、provider 删除完成、probe 删除。</p></div><div class="card"><span class="badge green">EC2</span><strong>只处理自己的 parent</strong><p>退出实验 guest、保存结果。Stop 仍保留 EBS 费用；不用则核对 ID / 标签后 terminate。</p></div><div class="card"><span class="badge purple">数据</span><strong>保留项单独审查</strong><p>ECR、Logs、EFS、EBS、备份与 NAT 等不因 task 停止自动消失。</p></div></div>
+  <p>ECS cleanup 保留 ECR image、Logs、IAM roles/profile、SG 与空 cluster，便于检查与重用。不是删除全部资源、完全无费用，也不删除共享 VPC / NAT。</p>
+  <div class="note warn"><strong>下一段最后一条是破坏性操作。</strong>先人工核对它是本次手工创建的专用 EC2 parent，不是共享实例或 ECS Managed Instance。Terminate 后审查 EBS DeleteOnTermination 与其他保留卷，不能假设全删。</div>
+  <div class="codebox"><div class="codebar"><span>本机 · 只适用于你手工创建的专用 parent</span></div><pre><code>REGION=us-east-1
+INSTANCE_ID=YOUR_OWN_DEMO_PARENT_ID
+aws ec2 describe-instances --region "$REGION" --instance-ids "$INSTANCE_ID" \
+  --query 'Reservations[].Instances[].{Id:InstanceId,State:State.Name,Tags:Tags}'
+
+aws ec2 terminate-instances --region "$REGION" --instance-ids "$INSTANCE_ID"</code></pre></div>
+  <ul class="checklist"><li><label><input type="checkbox">保存实际结果，区分成功、失败与未实测。</label></li><li><label><input type="checkbox">核对 task / guest / provider / parent 最终状态，不只是返回码。</label></li><li><label><input type="checkbox">删除临时 credential 文件，检查制品/日志无密钥/token。</label></li><li><label><input type="checkbox">按本次资源标签审查存储、备份与网络账单。</label></li></ul>
+</section>
+<section id="references">
+  <div class="section-head"><span class="section-number">12</span><h2>继续学习</h2></div>
+  <h3>完整代码与证据</h3>
+  <ul class="sources"><li><a href="README.md">ECS README</a> · <a href="configuration.py">任务 / 容量配置</a> · <a href="deploy.py">部署</a> · <a href="benchmark.py">测试</a> · <a href="cleanup.py">清理</a></li><li><a href="examples/persistent_efs.py">EFS 配置生成器（未部署实测）</a> · <a href="TEST_REPORT.zh.md">ECS 历史实测报告</a></li><li><a href="../27-nitro-ec2/README.md">EC2 README</a> · <a href="../27-nitro-ec2/scripts/build_guest.sh">Guest 构建</a> · <a href="../27-nitro-ec2/disk_isolation.py">磁盘测试</a></li><li><a href="../27-nitro-ec2/TEST_REPORT.zh.md">EC2 历史报告</a> · <a href="../27-nitro-ec2/DISK_ISOLATION_REPORT.zh.md">EC2 磁盘行为报告</a></li></ul>
+  <h3>官方参考</h3>
+  <ol class="sources"><li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-ec2-nitro-sandboxes.html" target="_blank" rel="noopener noreferrer">EC2 Nitro Sandboxes 总览、支持条件与生命周期限制</a></li><li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-sandboxes-run-firecracker.html" target="_blank" rel="noopener noreferrer">EC2：用 Firecracker 运行 Nitro Sandboxes</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ict-overview.html" target="_blank" rel="noopener noreferrer">ECS：概览与存储</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ict-security-model.html" target="_blank" rel="noopener noreferrer">ECS：安全模型与 parent / EFS 信任边界</a></li><li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ict-considerations-and-limitations.html" target="_blank" rel="noopener noreferrer">ECS：注意事项与限制</a></li><li><a href="https://github.com/firecracker-microvm/firecracker/releases" target="_blank" rel="noopener noreferrer">Firecracker releases</a> · <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer">Node.js 官方下载</a></li></ol>
+  <p class="lead">支持区域、机型、版本与限制会变化。本文按 2026-11-18 核对文档，执行前再查对应区域当前条件。它是上手教程，不是生产部署审计或保密性认证。</p>
+</section>
+<footer>直接双击离线打开，或打印为 PDF。关闭 JavaScript 仍能读全文。复制按钮只复制文本，不执行命令。<br><a class="top" href="#top">回到顶部 ↑</a></footer>
+</main></div>
+<div id="copy-status" role="status" aria-live="polite"></div>
+<script>
+const copyStatus = document.getElementById('copy-status');
+let statusTimer;
+function announce(message) {
+  clearTimeout(statusTimer);
+  copyStatus.textContent = message;
+  copyStatus.classList.add('visible');
+  statusTimer = setTimeout(() => copyStatus.classList.remove('visible'), 3500);
+}
+document.querySelectorAll('.codebox').forEach(box => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'copy';
+  button.textContent = '复制';
+  button.setAttribute('aria-label', '复制代码：' + box.querySelector('.codebar span').textContent);
+  box.querySelector('.codebar').append(button);
+  button.addEventListener('click', async () => {
+    const code = box.querySelector('code');
+    try {
+      if (!navigator.clipboard) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(code.textContent);
+      announce('代码已复制；请替换占位符并核对执行位置。');
+    } catch {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(code);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      announce('代码已选中，请按 Ctrl+C / ⌘C 复制。');
+    }
+  });
+});
+if ('IntersectionObserver' in window) {
+  const links = [...document.querySelectorAll('nav a')];
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries.filter(entry => entry.isIntersecting);
+    if (!visible.length) return;
+    visible.sort((first, second) => first.boundingClientRect.top - second.boundingClientRect.top);
+    const current = '#' + visible[0].target.id;
+    links.forEach(link => {
+      if (link.getAttribute('href') === current) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }, { rootMargin: '-5% 0px -65% 0px', threshold: 0 });
+  document.querySelectorAll('main section').forEach(section => observer.observe(section));
+}
+</script>
+</body>
+</html>

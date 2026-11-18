@@ -1,0 +1,85 @@
+{
+    "SecurityGroups": [
+        {
+            "GroupId": "sg-0fd15d4ec4dcdc2ae",
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "UserIdGroupPairs": [],
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": []
+                }
+            ],
+            "VpcId": "vpc-013652ef94def6946",
+            "SecurityGroupArn": "arn:aws:ec2:us-east-1:434444145045:security-group/sg-0fd15d4ec4dcdc2ae",
+            "OwnerId": "434444145045",
+            "GroupName": "dsh-nitro-ecs-20261117-task_sg",
+            "Description": "Dedicated ECS Nitro DSH demo",
+            "IpPermissions": [
+                {
+                    "IpProtocol": "tcp",
+                    "FromPort": 8080,
+                    "ToPort": 8080,
+                    "UserIdGroupPairs": [
+                        {
+                            "UserId": "434444145045",
+                            "GroupId": "sg-032c91bd3595c68a1"
+                        }
+                    ],
+                    "IpRanges": [],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": []
+                }
+            ]
+        },
+        {
+            "GroupId": "sg-008454db23713ae9d",
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "UserIdGroupPairs": [],
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": []
+                }
+            ],
+            "VpcId": "vpc-013652ef94def6946",
+            "SecurityGroupArn": "arn:aws:ec2:us-east-1:434444145045:security-group/sg-008454db23713ae9d",
+            "OwnerId": "434444145045",
+            "GroupName": "dsh-nitro-ecs-20261117-host_sg",
+            "Description": "Dedicated ECS Nitro DSH demo",
+            "IpPermissions": []
+        },
+        {
+            "GroupId": "sg-032c91bd3595c68a1",
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "UserIdGroupPairs": [],
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": []
+                }
+            ],
+            "VpcId": "vpc-013652ef94def6946",
+            "SecurityGroupArn": "arn:aws:ec2:us-east-1:434444145045:security-group/sg-032c91bd3595c68a1",
+            "OwnerId": "434444145045",
+            "GroupName": "dsh-nitro-ecs-20261117-probe_sg",
+            "Description": "Dedicated ECS Nitro DSH demo",
+            "IpPermissions": []
+        }
+    ]
+}

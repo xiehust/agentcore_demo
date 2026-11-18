@@ -1,0 +1,40 @@
+{
+  "tasks": [
+    {
+      "attachments": [],
+      "capacityProviderName": "dsh-nitro-ecs-20261117-mi-c",
+      "clusterArn": "arn:aws:ecs:us-east-1:434444145045:cluster/dsh-nitro-ecs-20261117",
+      "containers": [],
+      "cpu": "2048",
+      "createdAt": "2026-11-17T15:40:46.788000+00:00",
+      "desiredStatus": "RUNNING",
+      "enableExecuteCommand": false,
+      "group": "family:dsh-nitro-ecs-20261117",
+      "lastStatus": "PROVISIONING",
+      "launchType": "MANAGED_INSTANCES",
+      "memory": "4096",
+      "overrides": {
+        "containerOverrides": [
+          {
+            "name": "dsh",
+            "environment": [
+              {
+                "name": "BENCH_RUN_ID",
+                "value": "29592a34ffca4918b69d519e56e7b8ed"
+              }
+            ]
+          }
+        ],
+        "inferenceAcceleratorOverrides": []
+      },
+      "tags": [],
+      "taskArn": "arn:aws:ecs:us-east-1:434444145045:task/dsh-nitro-ecs-20261117/1e03bd8fab8b473ebdd2ba3016c3d6e0",
+      "taskDefinitionArn": "arn:aws:ecs:us-east-1:434444145045:task-definition/dsh-nitro-ecs-20261117:3",
+      "version": 1,
+      "trustedExecutionSummary": {
+        "isolationMode": "ISOLATED_SANDBOX"
+      }
+    }
+  ],
+  "failures": []
+}
