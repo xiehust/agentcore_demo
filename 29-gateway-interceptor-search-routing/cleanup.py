@@ -16,7 +16,7 @@ ctl, lam, iam = sess.client("bedrock-agentcore-control"), sess.client("lambda"),
 
 gid = state.get("gateway_id")
 if gid:
-    for k in ("websearch_target_id", "mockexa_target_id", "exa_target_id"):
+    for k in ("websearch_target_id", "mockexa_target_id", "exa_target_id", "anysearch_target_id"):
         if state.get(k):
             try:
                 ctl.delete_gateway_target(gatewayIdentifier=gid, targetId=state[k])
@@ -31,11 +31,12 @@ if gid:
     except ctl.exceptions.ResourceNotFoundException:
         pass
 
-if state.get("exa_provider_arn"):
-    try:
-        ctl.delete_api_key_credential_provider(name=f"{PREFIX}-exa")
-    except ctl.exceptions.ResourceNotFoundException:
-        pass
+for name in ("exa", "anysearch"):
+    if state.get(f"{name}_provider_arn"):
+        try:
+            ctl.delete_api_key_credential_provider(name=f"{PREFIX}-{name}")
+        except ctl.exceptions.ResourceNotFoundException:
+            pass
 
 for fn in (f"{PREFIX}-interceptor", f"{PREFIX}-mockexa"):
     try:
