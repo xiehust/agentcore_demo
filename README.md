@@ -22,6 +22,7 @@
 |---|---|
 | [05-mcp-proxy](05-mcp-proxy/README.md) | 把飞书 MCP Server 通过 FastMCP 代理部署到 AgentCore Runtime（MCP 协议），使用 Cognito 鉴权、Secrets Manager 存放飞书应用凭证。 |
 | [19-gateway-token-exchange](19-gateway-token-exchange/README.md) | Gateway 调用受保护 MCP Server 时的 RFC 8693 On-Behalf-Of Token Exchange；提供零依赖本地闭环和真实 AWS 部署/清理脚本。 |
+| [29-gateway-interceptor-search-routing](29-gateway-interceptor-search-routing/README.md) | 用 Gateway REQUEST/RESPONSE interceptor 按 query 语言分流搜索：英文走 AgentCore Web Search，中文改写工具名转给 Exa（API key 存 AgentCore Identity）；只暴露一个搜索工具，两边结果统一成同一 JSON 格式；含部署、测试与清理脚本。 |
 
 ### Identity 与鉴权
 
