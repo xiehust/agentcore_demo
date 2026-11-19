@@ -42,7 +42,7 @@ def ensure_role(name, trust, inline=None, managed=None):
         arn = iam.get_role(RoleName=name)["Role"]["Arn"]
     except iam.exceptions.NoSuchEntityException:
         arn = iam.create_role(RoleName=name, AssumeRolePolicyDocument=json.dumps(trust))["Role"]["Arn"]
-        time.sleep(10)  # IAM propagation
+        time.sleep(10)  # nosemgrep: arbitrary-sleep -- wait for new IAM role to propagate
     if inline:
         iam.put_role_policy(RoleName=name, PolicyName="inline", PolicyDocument=json.dumps(inline))
     for m in managed or []:
@@ -72,7 +72,7 @@ def ensure_lambda(name, src, role_arn, extra=()):
                 )
                 break
             except lam.exceptions.InvalidParameterValueException:
-                time.sleep(5)  # role not assumable yet
+                time.sleep(5)  # nosemgrep: arbitrary-sleep -- role not assumable yet; retry
     lam.get_waiter("function_active_v2").wait(FunctionName=name)
     lam.get_waiter("function_updated_v2").wait(FunctionName=name)
     return lam.get_function(FunctionName=name)["Configuration"]["FunctionArn"]
@@ -129,7 +129,7 @@ def wait_ready(get, label):
             return
         if "FAIL" in s:
             raise RuntimeError(f"{label} status {s}: {get()}")
-        time.sleep(5)
+        time.sleep(5)  # nosemgrep: arbitrary-sleep -- polling interval while waiting for READY
     raise TimeoutError(label)
 
 
@@ -144,7 +144,7 @@ if set(gw["interceptorConfigurations"][0]["interceptionPoints"]) != INTERCEPTION
         protocolType=gw["protocolType"], authorizerType=gw["authorizerType"],
         interceptorConfigurations=interceptor_config,
     )
-    time.sleep(5)
+    time.sleep(5)  # nosemgrep: arbitrary-sleep -- let update_gateway leave READY before polling
     wait_ready(lambda: ctl.get_gateway(gatewayIdentifier=gid), "gateway update")
 
 # 5. Targets
@@ -191,7 +191,7 @@ def ensure_mcp_target(name, cfg):
         ]}),
     )
     if f"{name}_target_id" not in state:
-        time.sleep(10)  # IAM propagation
+        time.sleep(10)  # nosemgrep: arbitrary-sleep -- wait for the identity policy to propagate
         api_key_cfg = {"providerArn": provider_arn, "credentialLocation": "HEADER",
                        "credentialParameterName": cfg["header"]}
         if cfg["prefix"]:
