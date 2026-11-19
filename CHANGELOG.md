@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- `29-gateway-interceptor-search-routing`: Probe semgrep fixes — `mcp_client.py` calls `raise_for_status()`; intentional waits annotated with `nosemgrep: arbitrary-sleep`.
 - `29-gateway-interceptor-search-routing`: pinned `requirements.txt`; probe scripts use `requests` and accept only https URLs; the interceptor no longer logs user queries (Holmes CSR findings).
 - `29-gateway-interceptor-search-routing`: `harness_demo.py`, an AgentCore Managed Harness (GPT-6.1 Terra) that uses the routing Gateway for Chinese and English search.
 - `29-gateway-interceptor-search-routing`: Bocha as a Chinese search route (`--cn-provider bocha`); generic `probe_mcp.py`. The mock Exa Lambda and target are removed.

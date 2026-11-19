@@ -48,7 +48,7 @@ def ensure_role():
         arn = iam.get_role(RoleName=name)["Role"]["Arn"]
     except iam.exceptions.NoSuchEntityException:
         arn = iam.create_role(RoleName=name, AssumeRolePolicyDocument=json.dumps(trust))["Role"]["Arn"]
-        time.sleep(10)
+        time.sleep(10)  # nosemgrep: arbitrary-sleep -- wait for new IAM role to propagate
     model_name = MODEL_ID.split(".", 1)[1]  # openai.gpt-6.1-terra
     iam.put_role_policy(RoleName=name, PolicyName="inline", PolicyDocument=json.dumps({
         "Version": "2012-10-17", "Statement": [
@@ -87,7 +87,7 @@ def ensure_harness():
         except ctl.exceptions.ValidationException as e:
             if "assume" not in str(e).lower():
                 raise
-            time.sleep(10)  # role not assumable yet
+            time.sleep(10)  # nosemgrep: arbitrary-sleep -- role not assumable yet; retry
     harness = h["harness"]
     state.update(harness_arn=harness["arn"], harness_id=harness["harnessId"])
     STATE.write_text(json.dumps(state, indent=2))
@@ -97,7 +97,7 @@ def ensure_harness():
             break
         if "FAIL" in status:
             raise RuntimeError(ctl.get_harness(harnessId=state["harness_id"]))
-        time.sleep(5)
+        time.sleep(5)  # nosemgrep: arbitrary-sleep -- polling interval while waiting for READY
     return state["harness_arn"]
 
 

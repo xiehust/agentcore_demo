@@ -31,7 +31,7 @@ if gid:
     for _ in range(30):
         if not ctl.list_gateway_targets(gatewayIdentifier=gid).get("items"):
             break
-        time.sleep(5)
+        time.sleep(5)  # nosemgrep: arbitrary-sleep -- polling interval while targets are deleted
     try:
         ctl.delete_gateway(gatewayIdentifier=gid)
     except ctl.exceptions.ResourceNotFoundException:

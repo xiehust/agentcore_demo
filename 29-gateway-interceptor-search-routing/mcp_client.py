@@ -23,6 +23,7 @@ def rpc(method, params=None):
         "Content-Type": "application/json", "Accept": "application/json, text/event-stream"})
     SigV4Auth(creds, "bedrock-agentcore", REGION).add_auth(req)
     r = requests.post(URL, data=body, headers=dict(req.headers), timeout=60)
+    r.raise_for_status()  # JSON-RPC errors (e.g. -32602) still arrive as HTTP 200
     text = r.text
     if text.startswith("event:") or "data:" in text[:50]:
         text = next(line[5:].strip() for line in text.splitlines() if line.startswith("data:"))
