@@ -17,7 +17,7 @@ Gateway inbound auth is AWS_IAM (SigV4). Region us-east-1.
 ## Run
 
 ```bash
-uv venv .venv && uv pip install --python .venv/bin/python boto3 requests
+uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt   # pinned: boto3/botocore 1.44.5, requests 2.34.2
 
 # store the key(s) you need in AgentCore Identity (read from stdin, never written to disk)
 printf %s "<anysearch key>" | .venv/bin/python store_anysearch_key.py

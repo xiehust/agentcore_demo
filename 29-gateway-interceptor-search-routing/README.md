@@ -51,6 +51,7 @@ Agent ──SigV4──▶ AgentCore Gateway (入站认证 AWS_IAM)
 | `lambdas/interceptor.py` | REQUEST 和 RESPONSE 两个阶段的逻辑 |
 | `lambdas/normalize.py` | 把各家搜索结果转成统一格式 |
 | `mcp_client.py` | 测试脚本共用的 SigV4 MCP 客户端 |
+| `requirements.txt` | 固定版本的依赖（boto3、botocore、requests） |
 | `harness_demo.py` | 创建 AgentCore Managed Harness（GPT-6.1 Terra）挂载本 Gateway，运行中英文搜索示例 |
 | `test_exa.py` | 早期测试：路由到真实 Exa（3 个用例） |
 | `test_exposure.py` | 只暴露一个工具，隐藏工具不能直接调用，中文路由到所选 provider（10 个用例） |
@@ -65,7 +66,7 @@ Agent ──SigV4──▶ AgentCore Gateway (入站认证 AWS_IAM)
 需要一个可创建 IAM 角色、Lambda 和 AgentCore 资源的 AWS 账号，区域为 us-east-1。
 
 ```bash
-uv venv .venv && uv pip install --python .venv/bin/python boto3 requests
+uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
 ```
 
 ### 2. 保存第三方搜索的 API key
