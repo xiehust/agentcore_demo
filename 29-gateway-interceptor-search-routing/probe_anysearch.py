@@ -1,12 +1,13 @@
 """Probe the AnySearch MCP server directly: initialize, tools/list, one search.
 
 Key comes from stdin so it never lands in a file or argv:
-    printf %s "$ANYSEARCH_KEY" | .venv/bin/python probe_anysearch.py ["query"]
+    printf %s "<anysearch key>" | .venv/bin/python probe_anysearch.py ["query"]
 """
 
 import json
 import sys
-import urllib.request
+
+import requests
 
 URL = "https://api.anysearch.com/mcp"
 key = sys.stdin.read().strip()
@@ -29,10 +30,10 @@ def rpc(method, params=None, rid=1, notify=False):
     }
     if session:
         headers["Mcp-Session-Id"] = session
-    req = urllib.request.Request(URL, json.dumps(body).encode(), headers)
-    with urllib.request.urlopen(req, timeout=30) as r:
-        session = r.headers.get("Mcp-Session-Id") or session
-        raw = r.read().decode()
+    r = requests.post(URL, data=json.dumps(body), headers=headers, timeout=30)
+    r.raise_for_status()
+    session = r.headers.get("Mcp-Session-Id") or session
+    raw = r.text
     if notify:
         return None
     for line in raw.splitlines():  # SSE or plain JSON

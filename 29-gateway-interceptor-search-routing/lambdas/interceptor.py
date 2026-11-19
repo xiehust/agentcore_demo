@@ -46,7 +46,8 @@ def on_request(body):
     if is_chinese(args.get("query", "")):
         new_args = map_args(DST_TOOL, args)
         body = {**body, "params": {**params, "name": DST_TOOL, "arguments": new_args}}
-        print(json.dumps({"rerouted_to": DST_TOOL, "out": body}, ensure_ascii=False))
+        # Log routing metadata only; the query is user content and stays out of CloudWatch Logs.
+        print(json.dumps({"rerouted_to": DST_TOOL, "id": body.get("id")}))
     return {"transformedGatewayRequest": {"body": body}}
 
 

@@ -14,6 +14,12 @@ state = json.loads(STATE.read_text()) if STATE.exists() else {}
 sess = boto3.Session(region_name=REGION)
 ctl, lam, iam = sess.client("bedrock-agentcore-control"), sess.client("lambda"), sess.client("iam")
 
+if state.get("harness_id"):  # created by harness_demo.py
+    try:
+        ctl.delete_harness(harnessId=state["harness_id"])
+    except ctl.exceptions.ResourceNotFoundException:
+        pass
+
 gid = state.get("gateway_id")
 if gid:
     for k in ("websearch_target_id", "exa_target_id", "anysearch_target_id", "bocha_target_id"):
@@ -44,7 +50,7 @@ for fn in (f"{PREFIX}-interceptor",):
     except lam.exceptions.ResourceNotFoundException:
         pass
 
-for role in (f"{PREFIX}-gateway-role", f"{PREFIX}-lambda-role"):
+for role in (f"{PREFIX}-gateway-role", f"{PREFIX}-lambda-role", f"{PREFIX}-harness-role"):
     try:
         for p in iam.list_role_policies(RoleName=role)["PolicyNames"]:
             iam.delete_role_policy(RoleName=role, PolicyName=p)

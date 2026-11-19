@@ -51,6 +51,8 @@ Agent ──SigV4──▶ AgentCore Gateway (入站认证 AWS_IAM)
 | `lambdas/interceptor.py` | REQUEST 和 RESPONSE 两个阶段的逻辑 |
 | `lambdas/normalize.py` | 把各家搜索结果转成统一格式 |
 | `mcp_client.py` | 测试脚本共用的 SigV4 MCP 客户端 |
+| `requirements.txt` | 固定版本的依赖（boto3、botocore、requests） |
+| `harness_demo.py` | 创建 AgentCore Managed Harness（GPT-6.1 Terra）挂载本 Gateway，运行中英文搜索示例 |
 | `test_exa.py` | 早期测试：路由到真实 Exa（3 个用例） |
 | `test_exposure.py` | 只暴露一个工具，隐藏工具不能直接调用，中文路由到所选 provider（10 个用例） |
 | `test_format.py` | 两条路径的返回格式一致（6 个用例） |
@@ -64,7 +66,7 @@ Agent ──SigV4──▶ AgentCore Gateway (入站认证 AWS_IAM)
 需要一个可创建 IAM 角色、Lambda 和 AgentCore 资源的 AWS 账号，区域为 us-east-1。
 
 ```bash
-uv venv .venv && uv pip install --python .venv/bin/python boto3 requests
+uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
 ```
 
 ### 2. 保存第三方搜索的 API key
@@ -163,6 +165,30 @@ AnySearch 官方配置里的 `X-Anysearch-Client: mcp/1.0.0` 头实测不带也�
 - 暴露的工具名固定写在代码里（`EXPOSED_TOOL`）。Gateway 上如果还有其他业务工具，要改成白名单集合。
 - 中文 query 会发给第三方（AnySearch、博查或 Exa），数据会离开 AWS，需要评估是否符合合规要求。
 - interceptor 对 Gateway 上的每个请求都会执行，Lambda 冷启动会增加延迟，可以考虑 provisioned concurrency。
+- Harness 自带的 `web_fetch` 工具不经过 Gateway，不受拦截器约束。用 `allowedTools` 限制工具时，实测 `websearch___WebSearch`、`search`、`search___*` 三种写法都会让 Gateway 工具一起不可用，正确写法待确认。
+
+## 端到端示例：AgentCore Managed Harness
+
+`harness_demo.py` 创建一个托管 Agent，然后用它实际搜索：
+
+- 模型：`us.openai.gpt-6.1-terra`（Bedrock 推理配置文件）
+- 工具：`agentcore_gateway`，挂载本 Gateway，出站认证 `awsIam`（对应 Gateway 的 `AWS_IAM` 入站认证）
+- 执行角色 `ic-reroute-poc-harness-role`：只能调用这个模型、这个 Gateway 和写 `/aws/bedrock-agentcore/*` 日志
+- `memory={"disabled": {}}`：不指定时 Harness 会自动建一个托管 Memory，执行角色还需要它的读写权限（如 `bedrock-agentcore:ListEvents`），否则第一次调用就失败
+
+```bash
+.venv/bin/python harness_demo.py              # 依次问一个中文问题和一个英文问题
+.venv/bin/python harness_demo.py "<问题>"     # 问自定义问题
+```
+
+2026-11-18 实测（中文路由为 AnySearch）：
+
+| 问题 | 模型调用的工具 | 实际走到 | 返回来源 |
+|---|---|---|---|
+| 杭州西湖一年中什么时候去最好？ | `websearch___WebSearch`（拆成 2 次搜索） | AnySearch | 同程、携程、知乎等中文站点 |
+| What are AgentCore Gateway interceptors used for? | `websearch___WebSearch` | AgentCore Web Search | AWS 官方文档 |
+
+模型自己写搜索词，拦截器按搜索词的语言分流，提示词里不需要提 AnySearch。
 
 ## 清理
 
@@ -170,4 +196,4 @@ AnySearch 官方配置里的 `X-Anysearch-Client: mcp/1.0.0` 头实测不带也�
 .venv/bin/python cleanup.py
 ```
 
-会删除 Gateway targets、Gateway、interceptor Lambda、两个 IAM 角色和 AnySearch、博查、Exa 的 API key 凭证提供方，最后删除 `state.json`。Lambda 的 CloudWatch 日志组不会被删除。
+会删除 Harness（如果运行过 `harness_demo.py`）、Gateway targets、Gateway、interceptor Lambda、三个 IAM 角色和 AnySearch、博查、Exa 的 API key 凭证提供方，最后删除 `state.json`。Lambda 的 CloudWatch 日志组不会被删除。

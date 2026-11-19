@@ -6,9 +6,12 @@ Key comes from stdin so it never lands in a file or argv:
 
 import json
 import sys
-import urllib.request
+
+import requests
 
 url = sys.argv[1]
+if not url.startswith("https://"):
+    sys.exit("url must start with https://")
 key = sys.stdin.read().strip()
 session = None
 
@@ -27,10 +30,10 @@ def rpc(method, params=None, rid=1, notify=False):
     }
     if session:
         headers["Mcp-Session-Id"] = session
-    req = urllib.request.Request(url, json.dumps(body).encode(), headers)
-    with urllib.request.urlopen(req, timeout=30) as r:
-        session = r.headers.get("Mcp-Session-Id") or session
-        raw = r.read().decode()
+    r = requests.post(url, data=json.dumps(body), headers=headers, timeout=30)
+    r.raise_for_status()
+    session = r.headers.get("Mcp-Session-Id") or session
+    raw = r.text
     if notify:
         return None
     for line in raw.splitlines():  # SSE or plain JSON
